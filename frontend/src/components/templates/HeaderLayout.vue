@@ -132,8 +132,7 @@ header {
             left: 13px;
             top: 2px;
             z-index: 1;
-            border: 3px solid black;
-            box-shadow: -1px 1px 3px 0px black;
+            width: 10%;
         }
 
         .header--profil__picture {
