@@ -7,6 +7,11 @@ const routes = [
     name: 'home',
     component: HomeView
   },
+  {
+    path: '/event/:id',
+    name: 'event',
+    component: () => import(/* webpackChunkName: "event" */ '../views/events/EventView.vue')
+  }
 ]
 
 const router = createRouter({
