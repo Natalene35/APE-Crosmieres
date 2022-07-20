@@ -9,20 +9,26 @@
     </footer>
 </template>
 
+
 <script>
 export default {
     name: 'FooterLayout',
 }
 </script>
 
+
 <style lang="scss">
 footer {
-    background-color: #46BFC7;
+    background-color: $blue-bg-header;
     height: 4rem;
     font-weight: bold;
     font-size: small;
-    border-radius: 10px;
+    border-radius: 10px 10px;
     margin-top: 1.5rem;
+
+
+    
+    
 
     .footer--list {
         display: flex;
@@ -49,8 +55,10 @@ footer {
         margin: 0;
         margin-top: 2%;
 
+
         li:after {
             display: none;
+            
         }
     }
 }
