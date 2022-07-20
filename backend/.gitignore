@@ -1,7 +1,7 @@
 # Application
 web/app/plugins/*
 !web/app/plugins/.gitkeep
-!web/app/plugins/APE
+!web/app/plugins/ape
 web/app/mu-plugins/*/
 web/app/themes/twentytwentytwo/
 web/app/upgrade
