@@ -12,7 +12,7 @@
                 </div>
                 <div class="field field--error">
                     <label class="field__label">Mot de passe</label>
-                    <input v-model="password" class="inputbox" type="password" placeholder="votre mot de passe">
+                    <input v-model="password" class="inputbox" type="password" placeholder="Votre mot de passe">
                 </div>
                 <p class="succesregistration" v-for="succesMsg in succesLogin" v-bind:key="succesMsg">{{
                         succesMsg

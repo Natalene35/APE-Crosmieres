@@ -11,7 +11,11 @@
 
                 <div class="header--profil__picture">
                     <div class="header--nav__Inscription" style="margin-right: 4px;">Inscription /</div>
-                    <router-link class="header--nav__Connexion" v-bind:to="{ name: 'login' }">Connexion</router-link>
+                    <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
+                        class="header--login">Connexion
+                    </router-link>
+                    <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
+                        v-on:click="disconnect">Deconnection</a>
                 </div>
                 <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
                 <div class="header--burger__container">
@@ -72,7 +76,17 @@ export default {
             headerMenu.classList.toggle("active")
         },
 
-    }
+        disconnect() {
+            // On supprime dans le store les infos liéés à l'utilisateur 
+            this.$store.commit('deleteToken');
+            this.$store.commit('deleteUsername');
+            this.$store.commit('deleteUserID');
+            this.$store.commit('deleteRole');
+            // On redirige l'utilisateur
+            this.$router.push({ name: 'login' });
+        }
+    },
+
 }
 </script>
 
@@ -138,6 +152,13 @@ header {
             }
         }
 
+        .header--login {
+            color: $white;
+        }
+
+        .header--disconnect {
+            color: $red;
+        }
 
     }
 

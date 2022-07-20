@@ -26,7 +26,6 @@ export default {
             return role.data
         } catch(error) {
             return error.response.data
-        }
-        
+        } 
     }
 }
