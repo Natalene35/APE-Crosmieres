@@ -30,7 +30,7 @@
             <nav>
                 <div class="header--nav__Accueil">Accueil</div>
                 <div class="header--nav__Vente">Vente</div>
-                <router-link v-bind:to="{name: 'event'}">Evénement</router-link>
+                <!-- <router-link v-bind:to="{name: 'event'}">Evénement</router-link> -->
                 <div class="header--nav__Evenement">Evenement</div>
                 <div class="header--nav__Presentation">Présentation APE</div>
 
