@@ -32,7 +32,9 @@
             </div>
 
             <nav>
-                <div class="header--nav__Accueil">Accueil</div>
+                <div class="header--nav__Accueil">
+                    <router-link v-bind:to="{ name: 'home' }" class="header--accueil">Accueil</router-link>
+                </div>
                 <div class="header--nav__Vente">Vente</div>
                 <div class="header--nav__Evenement">Evenement</div>
                 <div class="header--nav__Presentation">Présentation APE</div>
@@ -42,12 +44,20 @@
         <!-- /*<--------------------MENU BURGER HIDDEN IN DESKTOP---------------------------->
         <div class="header--burger__menu">
             <ul>
-                <li class="header--nav__Accueil">Accueil</li>
+                <li class="header--nav__Accueil">
+                    <router-link v-bind:to="{ name: 'home' }" class="header--accueil">Accueil
+                    </router-link>
+                </li>
                 <li class="header--nav__Vente">Vente</li>
                 <li class="header--nav__Evenement">Evenement</li>
                 <li class="header--nav__Presentation">Présentation APE</li>
                 <li class="header--nav__Inscription">Inscription</li>
-                <li class="header--nav__Connexion">Connexion</li>
+                <li class="header--nav__Connexion">
+                    <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
+                        class="header--login">Connexion
+                    </router-link> <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
+                        v-on:click="disconnect">Deconnection</a>
+                </li>
             </ul>
             <div v-bind:class="'burger--menu__picture'">
                 <img v-bind:src="profilPic">
@@ -219,29 +229,46 @@ header {
         display: flex;
         flex-direction: column;
         list-style-type: none;
+        color: $white;
 
         .header--nav__Accueil {
             background-color: #85B689;
+
+            .header--accueil {
+                color: $white;
+            }
         }
 
         .header--nav__Vente {
             background-color: #FBAD18;
+            color: $white;
         }
 
         .header--nav__Evenement {
             background-color: #EF6852;
+            color: $white;
         }
 
         .header--nav__Presentation {
             background-color: #8FCED7;
+            color: $white;
         }
 
         .header--nav__Inscription {
             background-color: #F8AAA4;
+            color: $white;
         }
 
         .header--nav__Connexion {
             background-color: #946973;
+
+            .header--login {
+                color: $white;
+            }
+
+            .header--disconnect {
+                color: $white;
+            }
         }
 
         li {

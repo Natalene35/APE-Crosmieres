@@ -6,6 +6,12 @@
             </div>
             <div v-on:keyup.enter="login" class="content">
                 <h1 class="title">Connexion</h1>
+                <div class="push--message">
+                    <p v-for="succesMsg in succesLogin" v-bind:key="succesMsg">{{
+                            succesMsg
+                    }}</p>
+                    <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                </div>
                 <div class="field">
                     <label class="field__label">Nom utilisateur</label>
                     <input v-model="userName" class="inputbox" type="text" placeholder="Votre pseudo ou e-mail">
@@ -14,10 +20,6 @@
                     <label class="field__label">Mot de passe</label>
                     <input v-model="password" class="inputbox" type="password" placeholder="Votre mot de passe">
                 </div>
-                <p class="succesregistration" v-for="succesMsg in succesLogin" v-bind:key="succesMsg">{{
-                        succesMsg
-                }}</p>
-                <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
                 <button v-on:click="login" class="subscribe">Connexion</button>
             </div>
         </div>
@@ -50,10 +52,10 @@ export default {
             this.errors = [];
             // Form Content Validation
             if (!this.userName) {
-                this.errors.push("il me faut votre pseudo");
+                this.errors.push("Oups il faut ton pseudo");
             }
             if (!this.password) {
-                this.errors.push("Oups il manque le mot de passe");
+                this.errors.push("Oups il faut ton mot de passe");
             }
             // Send connection request
             if (this.errors.length === 0) {
@@ -89,7 +91,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-    color: #000;
+    color: $grey;
     font-family: 'Muli', sans-serif;
     font-size: 1rem;
     display: -ms-grid;
@@ -121,7 +123,6 @@ export default {
             width: 100%;
             height: auto;
             border-radius: 1em 1em 0 0;
-
             object-fit: cover;
             transform: translateY(-26%);
         }
@@ -142,7 +143,6 @@ export default {
             display: grid;
             place-items: center;
             padding: 0 2em;
-            margin-bottom: 1.8em;
         }
 
         .inputbox {
@@ -172,6 +172,27 @@ export default {
             width: 100%;
             margin-bottom: 1.3em;
             cursor: pointer;
+        }
+
+        .push--message {
+            color: $red;
+
+            p {
+                margin-bottom: 0.5rem;
+            }
+        }
+    }
+
+    @media (max-width: 425px) {
+        .container {
+            background-color: transparent;
+            box-shadow: none;
+            border-radius: none;
+
+
+            .img--container {
+                border-radius: none;
+            }
         }
     }
 }
