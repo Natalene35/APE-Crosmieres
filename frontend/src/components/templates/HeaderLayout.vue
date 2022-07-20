@@ -11,7 +11,7 @@
 
                 <div class="header--profil__picture">
                     <div class="header--nav__Inscription" style="margin-right: 4px;">Inscription /</div>
-                    <div class="header--nav__Connexion"> Connexion</div>
+                    <router-link class="header--nav__Connexion" v-bind:to="{ name: 'login' }">Connexion</router-link>
                 </div>
                 <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
                 <div class="header--burger__container">

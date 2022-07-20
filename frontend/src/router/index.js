@@ -7,6 +7,12 @@ const routes = [
     name: 'home',
     component: HomeView
   },
+
+  {
+    path: '/login',
+    name: 'login',
+     component: () => import(/* webpackChunkName: "login" */ '../views/login/UserLoginView.vue')
+  },
 ]
 
 const router = createRouter({
