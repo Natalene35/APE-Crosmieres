@@ -26,7 +26,7 @@
 
 <script>
 import illustrationPicture from '@/assets/images/tilleul.jpg'
-
+import UserLoginService from '@/services/login/UserLoginService'
 export default {
     // Nom de notre composant 
     name: 'UserLoginLayout',
@@ -46,29 +46,40 @@ export default {
 
     methods: {
         async login() {
-            // Remise à zéro du tableau des erreurs
+            // Reset error table
             this.errors = [];
-            // Validation du contenu du formulaire
+            // Form Content Validation
             if (!this.userName) {
-                this.errors.push("Il faut un Nom d'utilisateur");
+                this.errors.push("il me faut votre pseudo");
             }
             if (!this.password) {
-                this.errors.push("Oups, il manque le mot de passe");
+                this.errors.push("Oups il manque le mot de passe");
             }
-            // Envoie de la requete de connexion 
+            // Send connection request
             if (this.errors.length === 0) {
                 const response = await UserLoginService.login({
                     username: this.userName,
                     password: this.password,
                 })
 
+                console.log(response.data.id);
+                this.$store.commit('setUserID', response.data.id);
+
                 if (response.success === true) {
-                    // On affiche un message de réussite
+                    console.log(response);
+                    // We store your token in session in the store
+                    this.$store.commit('setToken', response.data.token);
+                    this.$store.commit('setUsername', response.data.nicename);
+
+                    // Recovering the role after having the token with another request
+                    const roles = await UserLoginService.getRoles(response.data.id);
+                    this.$store.commit('setRole', roles.roles[0]);
+                    // A success message is displayed
                     this.succesLogin.push("Connexion réussi");
-                    // redirection après l'affichage du message de réussite 
+                    // redirect after showing success message
                     setTimeout(() => this.$router.push({ name: 'home' }), 500);
                 } else {
-                    this.errors.push("Etrange quelque chose n'as pas fonctionner...");
+                    this.errors.push("Mauvais nom ou mot de passe");
                 }
             }
         }
