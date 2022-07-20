@@ -10,16 +10,16 @@
                 </h1>
 
                 <div class="header--profil__picture">
-                    <div class="header--nav__Inscription" style="margin-right: 4px;">Inscription /</div>
+                    <div class="header--nav__Inscription" style="margin-right: 0.3rem;">Inscription /</div>
                     <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
                         class="header--login">Connexion
                     </router-link>
                     <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
-                        v-on:click="disconnect">Deconnection</a>
+                        v-on:click="disconnect">Deconnection
+                    </a>
                 </div>
                 <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
                 <div class="header--burger__container">
-
                     <div id="menu_button">
                         <input type="checkbox" id="menu_checkbox" v-on:click="showMenu">
                         <label for="menu_checkbox" id="menu_label">
@@ -33,7 +33,8 @@
 
             <nav>
                 <div class="header--nav__Accueil">
-                    <router-link v-bind:to="{ name: 'home' }" class="header--accueil">Accueil</router-link>
+                    <router-link v-bind:to="{ name: 'home' }" class="header--accueil">Accueil
+                    </router-link>
                 </div>
                 <div class="header--nav__Vente">Vente</div>
                 <div class="header--nav__Evenement">Evenement</div>
@@ -55,8 +56,10 @@
                 <li class="header--nav__Connexion">
                     <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
                         class="header--login">Connexion
-                    </router-link> <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
-                        v-on:click="disconnect">Deconnection</a>
+                    </router-link>
+                    <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
+                        v-on:click="disconnect">Deconnection
+                    </a>
                 </li>
             </ul>
             <div v-bind:class="'burger--menu__picture'">
@@ -69,7 +72,7 @@
 
 <script>
 import profil from '@/assets/images/profil.svg'
-import logoAPE from '@/assets/images/logoAPE.jpeg'
+import logoAPE from '@/assets/images/logo-tampon-APE-140.png'
 export default {
     name: 'HeaderLayout',
     data() {
@@ -327,6 +330,10 @@ header {
                 font-size: 1.4rem;
                 text-align: start;
                 width: 60%;
+
+                .header--town {
+                    font-size: 1.4rem;
+                }
             }
 
             .header--profil__picture {
