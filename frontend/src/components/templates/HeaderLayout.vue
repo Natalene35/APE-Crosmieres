@@ -3,7 +3,7 @@
         <header>
             <div class="header--title">
 
-                <img class="header--title__logo" v-bind:src="LogoApe" alt="">
+                <img class="header--title__logo" v-bind:src="logoApe" alt="">
 
                 <h1><span>A</span>ssociation des <span>P</span>arents d'<span>E</span>leves <div class="header--town">de
                         Crosmières</div>
@@ -55,13 +55,13 @@
 
 <script>
 import profil from '@/assets/images/profil.svg'
-import LogoAPE from '@/assets/images/logoAPE.jpeg'
+import logoAPE from '@/assets/images/logoAPE.jpeg'
 export default {
     name: 'HeaderLayout',
     data() {
         return {
             profilPic: profil,
-            LogoApe: LogoAPE
+            logoApe: logoAPE
         }
     },
     methods: {
@@ -84,6 +84,8 @@ header {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    padding-bottom: 2rem;
+
 
     //<--------------BANNER------------>
     .header--title {
@@ -100,7 +102,8 @@ header {
         .header--title__logo {
             border-radius: 50%;
             position: absolute;
-            left: 10px;
+            left: 13px;
+            top: 2px;
             z-index: 1;
             border: 3px solid black;
             box-shadow: -1px 1px 3px 0px black;

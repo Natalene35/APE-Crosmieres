@@ -15,7 +15,7 @@ Config::define('WP_DISABLE_FATAL_ERROR_HANDLER', true);
 Config::define('SCRIPT_DEBUG', true);
 Config::define('DISALLOW_INDEXING', true);
 Config::define('FS_METHOD', 'direct');
-Config::define('WP_USE_THEMES', false);
+//Config::define('WP_USE_THEMES', false);
 
 ini_set('display_errors', '1');
 

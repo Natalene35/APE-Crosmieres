@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <HeaderLayout />
-    <HomePage />
-    <FooterLayout />
-  </div>
+  <HeaderLayout />
+  <HomePage />
+  <FooterLayout />
 </template>
 
 <script>
