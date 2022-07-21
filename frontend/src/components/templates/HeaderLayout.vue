@@ -5,7 +5,7 @@
 
                 <img class="header--title__logo" v-bind:src="logoApe" alt="">
 
-                <h1><span>A</span>ssociation des <span>P</span>arents d'<span>E</span>leves <div class="header--town">de
+                <h1><span>A</span>ssociation des <span>P</span>arents d'<span>E</span>lèves <div class="header--town">de
                         Crosmières</div>
                 </h1>
 
@@ -32,16 +32,19 @@
             </div>
 
             <nav>
+
                 <div class="header--nav__Accueil">
                     <router-link v-bind:to="{ name: 'home' }" class="header--accueil">Accueil
                     </router-link>
                 </div>
                 <div class="header--nav__Vente">Vente</div>
                 <div class="header--nav__Evenement">Evenement</div>
+
                 <div class="header--nav__Presentation">Présentation APE</div>
 
             </nav>
         </header>
+            
         <!-- /*<--------------------MENU BURGER HIDDEN IN DESKTOP---------------------------->
         <div class="header--burger__menu">
             <ul>
@@ -81,12 +84,14 @@ export default {
             logoApe: logoAPE
         }
     },
+
+
     methods: {
         showMenu() {
-            let headerMenu = document.querySelector(".header--burger__menu")
-            let body = document.querySelector("body")
-            body.classList.toggle("overflow--hidden")
-            headerMenu.classList.toggle("active")
+            let headerMenu = document.querySelector(".header--burger__menu");
+            let body = document.querySelector("body");
+            body.classList.toggle("overflow--hidden");
+            headerMenu.classList.toggle("active");
         },
 
         disconnect() {
@@ -107,12 +112,17 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap');
 @import "../../assets/animations/burgerAnim.scss";
 
+//see method showMenu
+//use for give priorioty for burger's menu (height 1000vh)
+.overflow--hidden {    
+    overflow: hidden;
+}
 header {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    padding-bottom: 2rem;
-
+    padding-bottom: 3%;
+    font-weight: bold;
 
     //<--------------BANNER------------>
     .header--title {
@@ -151,7 +161,7 @@ header {
 
         h1 {
             width: 100%;
-            font-size: 3rem;
+            font-size: 2.6rem;
             color: white;
             font-family: 'Merienda', cursive;
 
@@ -160,7 +170,8 @@ header {
             }
 
             .header--town {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                padding-top: 0.2rem;
             }
         }
 
@@ -181,6 +192,7 @@ header {
         width: 100%;
         height: 2rem;
         margin-top: 0.5rem;
+        font-weight: bold;
 
 
         .header--nav__Accueil {
@@ -317,6 +329,21 @@ header {
     .header--title__logo {
         height: 12vh;
     }
+    header {
+        nav {
+            align-items: center;
+           
+            div {
+                font-size: 0.8rem;
+                height: 2rem;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+            }
+        }
+
+    }
+
 }
 
 @media (max-width: 425px) {
@@ -331,8 +358,12 @@ header {
                 width: 60%;
 
                 .header--town {
-                    font-size: 1.4rem;
+
+                    font-size: 1rem;
+                    padding-top: 0.3rem;
                 }
+
+
             }
 
             .header--profil__picture {
@@ -343,12 +374,14 @@ header {
                 display: unset;
                 height: 100%;
                 display: contents;
+               
             }
         }
 
         nav {
             div {
                 display: none;
+            
             }
         }
 
@@ -356,6 +389,7 @@ header {
 
     .active {
         display: contents;
+         text-shadow: 1px 1px 1px black; 
 
         .header--profil__picture {
             width: 20px;
