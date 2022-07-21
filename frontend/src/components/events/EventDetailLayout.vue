@@ -1,6 +1,6 @@
 <template>
     <main>
-        <h2 class="event--card__title">Chevalier de Provence</h2>
+        <h2 class="event--card__title">{{ title }}</h2>
 
         <div class="event--card__date">Date de l'événement</div>
         <div class="event--card__location">Emplacement de l'événement</div>
