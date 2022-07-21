@@ -3,40 +3,38 @@ import axios from "axios";
 const apiClient = axios.create({
     baseURL: `http://apecrosmieres.local/wp-json/wp/v2`,
     headers: {
-        Accept: 'application/json, image/jpeg',
-        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4Mzk0MjU3LCJuYmYiOjE2NTgzOTQyNTcsImV4cCI6MTY1ODk5OTA1NywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiNTNiODQ4NDkzOTA5MDE1YmNjOGFhNDVmNzJhMmRiMDcifX19.4ywPovVHcd5ZEoqBvM15tNjiM3hXyLrqUnePAXHc2j8'
+        Accept: 'application/json',
+        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4NDMyODA5LCJuYmYiOjE2NTg0MzI4MDksImV4cCI6MTY1OTAzNzYwOSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiNTNiODQ4NDkzOTA5MDE1YmNjOGFhNDVmNzJhMmRiMDcifX19.N5ghA1L6DlwcQl1L7eDijKlb2p4gOyiZhtOeFf-cSq8'
 
     },
     timeout: 10000
 })
 
-// class UploadFilesService {
 export default {
 
-
-    upload(file, title, postId,onUploadProgress) {
+    // to upload a file
+    upload(file, title, postId, onUploadProgress) {
 
         apiClient.defaults.headers.common['Content-Type'] = "multipart/form-data";
 
         let formData = new FormData();
+        formData.append("title", 'event-' + title);
         formData.append("file", file);
-        this.title = 'event-' + title;
-        formData.append("title", this.title);
         formData.append("post", postId);
-        console.log(this.title);
-        console.log(postId);
-        console.log(formData);
 
-        return apiClient.post("/media", formData, {
+        return apiClient.post("/media", formData,
             onUploadProgress
-        });
+        );
     },
 
+    // to verify if files to upload exist
     getFiles() {
+
         return apiClient.get("/media");
     },
 
 
+    // create an event
     async addEvent(param) {
 
         apiClient.defaults.headers.common['Content-Type'] = "application/json";
@@ -49,10 +47,27 @@ export default {
         }
     },
 
-    async addMediaToEvent(postId, param) {
+
+    // to link media feature to an event
+    async addMediaToEvent(postId, mediaId) {
 
         apiClient.defaults.headers.common['Content-Type'] = "image/*";
+        apiClient.defaults.headers.common['Content-Disposition'] = "attachment";
 
+        try {
+            const response = await apiClient.post('/event/' + postId, {
+                featured_media: mediaId
+            });
+            return response
+        } catch (errors) {
+            return errors.response
+        }
+    },
+
+    // to view an event
+    async readEvent(postId, param) {
+        console.log(postId, param);
+        apiClient.defaults.headers.common['Content-Type'] = "application/json";
         try {
             const response = await apiClient.post('/event/' + postId, param);
             return response
@@ -61,5 +76,3 @@ export default {
         }
     },
 }
-// }
-// export default new UploadFilesService();

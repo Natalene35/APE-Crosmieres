@@ -58,7 +58,7 @@
 
       <div v-if="currentImage" class="progress">
         <div
-          class="progress-bar progress-bar-info"
+          class="progress-bar"
           role="progressbar"
           :aria-valuenow="progress"
           aria-valuemin="0"
@@ -78,6 +78,7 @@
           />
         </div>
       </div>
+      <div v-if="event !== null">{{ event }}</div>
 
       <div v-if="(lastImage = imageInfos[0])">
         vous venez de télécharger l'image {{ lastImage.title.rendered }} avec
@@ -100,12 +101,13 @@ export default {
       location: null,
       currentImage: undefined,
       previewImage: undefined,
-      progress: 0,
+      progress: 12,
       message: "",
       imageInfos: [],
       lastImage: {},
       errors: [],
       alerts: null,
+      event: null,
     };
   },
   methods: {
@@ -130,11 +132,11 @@ export default {
         .then((images) => {
           this.imageInfos = images.data;
           // pour executer la fct createpost avec l'id du média
-          let params = {
-            featured_media: this.imageInfos[0].id,
-          };
-          console.log(params, this.imageInfos[0].id, postId);
-          this.addMediaToEvent(postId, params);
+          EventService.addMediaToEvent(postId, this.imageInfos[0].id).then(
+            (response) => {
+              console.log(response);
+            }
+          );
         })
         .catch((err) => {
           this.progress = 0;
@@ -173,11 +175,12 @@ export default {
           content: this.content,
           date: this.eventDate,
           lieu: this.location,
+          status: "publish",
         };
+
         const response = await EventService.addEvent(params);
 
         //post id
-        console.log(response.data.id);
         this.upload(response.data.id);
         // this.alert.push("Evénement créé");
         // setTimeout(() => {
@@ -230,6 +233,37 @@ export default {
       font-size: 1.6rem;
       font-weight: 700;
     }
+
+    .progress {
+      width: 50%;
+      border-radius: 1rem;
+      background-color: #ffc107;
+      height: 1rem;
+      color: aliceblue;
+      font-weight: bold;
+      padding: 0.2rem;
+      margin-bottom: 1rem;
+    }
+    .progress-bar {
+      border-radius: 1rem;
+      background-color: aquamarine;
+      height: 1rem;
+      background: repeating-linear-gradient(
+          -60deg,
+          rgb(0, 0, 0, 0.5) 0,
+          black 10px,
+          #ffc107 10px,
+          white 20px
+        )
+        0 / 200%;
+      animation: progress-bar 1s linear infinite;
+    }
+    @keyframes progress-bar {
+      to {
+        background-position: 100% 0;
+      }
+    }
+
     .field {
       padding: 1rem;
       margin: 1rem;
