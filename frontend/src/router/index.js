@@ -13,6 +13,12 @@ const routes = [
     name: 'login',
      component: () => import(/* webpackChunkName: "login" */ '../views/login/UserLoginView.vue')
   },
+  
+  {
+    path: '/event/:id',
+    name: 'event',
+    component: () => import(/* webpackChunkName: "event" */ '../views/events/EventView.vue')
+  }
 ]
 
 const router = createRouter({
