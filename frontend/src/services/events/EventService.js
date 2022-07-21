@@ -22,7 +22,7 @@ export default {
     // Get an event by his id
     async find(id) {
         try {
-            const response = await apiClient.get("/event/" + id + "");
+            const response = await apiClient.get("/event/" + id + "?_embed");
             return response.data;
         } catch (error) {
             return error.response.data
