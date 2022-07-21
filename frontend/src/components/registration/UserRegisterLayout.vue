@@ -5,8 +5,8 @@
                 <img alt="" class="img" v-bind:src="picture">
             </div>
             <div class="content">
-                <h2 class="subtitle">Inscrivez vous</h2>
-                <h1 class="title">Pour participer !</h1>
+                <h1 class="title">Pour participer</h1>
+                <h2 class="subtitle">Inscrivez vous !</h2>
 
                 <label class="field__label">Prénom</label>
                 <input v-model="firstname" type="text" class="inputbox" placeholder="Votre prénom" name="firstname">
@@ -67,6 +67,7 @@ export default {
     data() {
         return {
             picture: illustrationPicture,
+            //Array for the push messages
             errors: [],
             succesRegistration: [],
             // Data of the form 
@@ -116,9 +117,8 @@ export default {
                 });
                 if (response.code === 200) {
                     console.log(response);
-                    // Affichage message de registration succes
-                    this.succesRegistration.push("User created successfully");
-                    // Remise à zero des inputs 
+
+                    // Reset the input in the form
                     this.username = null,
                         this.email = null,
                         this.password = null,
@@ -127,11 +127,14 @@ export default {
                         this.lastname = null,
                         this.passwordconfirm = null
 
-                    // Redirection
-                    setTimeout(() => this.$router.push({ name: 'login' }), 1000);
+                    // Push alert registration succes
+                    this.succesRegistration.push("Inscription réussi");
+
+                    // redirect after showing success message
+                    setTimeout(() => this.$router.push({ name: 'home' }), 1000);
                 }
                 else if (response.code === 406) {
-                    this.errors.push('Cette e§mail de compte existe déja');
+                    this.errors.push('Cette e-mail de compte existe déja');
                 } else {
                     this.errors.push("Oups une erreur, veuilliez recommencer");
                 }
@@ -250,7 +253,6 @@ export default {
             background-color: transparent;
             box-shadow: none;
             border-radius: none;
-
 
             .img--container {
                 border-radius: none;
