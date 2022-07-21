@@ -64,7 +64,6 @@ export default {
                     password: this.password,
                 })
 
-                console.log(response.data.id);
                 this.$store.commit('setUserID', response.data.id);
 
                 if (response.success === true) {

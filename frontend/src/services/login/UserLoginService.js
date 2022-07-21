@@ -14,6 +14,7 @@ export default {
         try {
             const response = await apiClient.post('/jwt-auth/v1/token', param);
             return response.data
+
         } catch (errors) {
             return errors.response.data
         }

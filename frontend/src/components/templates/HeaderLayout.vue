@@ -379,6 +379,7 @@ header {
         }
 
         nav {
+            height: 0;
             div {
                 display: none;
             
