@@ -50,6 +50,7 @@ export default {
                 flex-direction: column;
                 margin-bottom: 3rem;
                 box-sizing: border-box;
+                padding:1.5rem;
 
                 .event--card__img {
                     width: 6rem;
@@ -59,12 +60,14 @@ export default {
                 .event--card__title {
                     color: $grey;
                     font-weight: bold;
+                    padding-right: 2rem;
+                    padding-left: 2rem;
                    
                 }
 
                 .event--card__excerpt {
                     color: $grey;
-                    margin: 2.5rem;
+                    margin: 1rem 3rem 1rem 3rem;
 
                 }
             
