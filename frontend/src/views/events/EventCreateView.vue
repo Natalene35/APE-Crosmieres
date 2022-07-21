@@ -1,6 +1,6 @@
 <template>
   <HeaderLayout />
-  <EventCreateView />
+  <EventCreateLayout />
   <FooterLayout />
 </template>
 
@@ -8,14 +8,14 @@
 // @ is an alias to /src
 import HeaderLayout from "@/components/templates/HeaderLayout.vue";
 import FooterLayout from "@/components/templates/FooterLayout.vue";
-import EventCreateView from "@/components/events/EventCreateView.vue";
+import EventCreateLayout from "@/components/events/EventCreateLayout.vue";
 
 export default {
   name: "EventFormView",
   components: {
     HeaderLayout,
     FooterLayout,
-    EventCreateView,
+    EventCreateLayout,
   },
 };
 </script>

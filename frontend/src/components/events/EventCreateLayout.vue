@@ -7,6 +7,7 @@
       <p class="alert" v-if="alerts">
         {{ alerts }}
       </p>
+
       <div class="field">
         <label class="field__label">Titre de la publication </label>
         <input
@@ -28,9 +29,9 @@
         <label class="field__label">Date de l'événement </label>
         <input
           class="field__input"
-          type="text"
+          type="date"
           placeholder=""
-          v-model="eventdate"
+          v-model="eventDate"
         />
 
         <label class="field__label">Lieu de l'événement </label>
@@ -94,9 +95,9 @@ export default {
   data() {
     return {
       title: null,
-      content: "",
-      eventdate: "",
-      location: "",
+      content: null,
+      eventDate: null,
+      location: null,
       currentImage: undefined,
       previewImage: undefined,
       progress: 0,
@@ -114,23 +115,26 @@ export default {
       this.progress = 0;
       this.message = "";
     },
-    upload() {
+
+    // upload and send to wordpress
+    upload(postId) {
       this.progress = 0;
 
-      EventService.upload(
-        this.currentImage,
-        this.firstname,
-        this.lastname,
-        (event) => {
-          this.progress = Math.round((100 * event.loaded) / event.total);
-        }
-      )
+      EventService.upload(this.currentImage, this.title, postId, (event) => {
+        this.progress = Math.round((100 * event.loaded) / event.total);
+      })
         .then((response) => {
           this.message = response.data.message;
           return EventService.getFiles();
         })
         .then((images) => {
           this.imageInfos = images.data;
+          // pour executer la fct createpost avec l'id du média
+          let params = {
+            featured_media: this.imageInfos[0].id,
+          };
+          console.log(params, this.imageInfos[0].id, postId);
+          this.addMediaToEvent(postId, params);
         })
         .catch((err) => {
           this.progress = 0;
@@ -139,43 +143,46 @@ export default {
         });
     },
 
+    // to submit fiels and send datas to custom post 'event'
     async submitForm() {
       // Reset error table
       this.errors = [];
       this.alerts = null;
+
       // Form Content Validation
       if (!this.title) {
-        this.errors.push("Oups il faut un titre");
+        this.errors.push("Veuillez remplir un titre");
       }
       if (!this.content) {
-        this.errors.push("Oups il faut ajouter une description");
+        this.errors.push("Veuillez remplir une description");
       }
-      if (!this.eventdate) {
-        this.errors.push("Oups il faut ajouter une date");
+      if (!this.eventDate) {
+        this.errors.push("Veuillez remplir une date");
       }
       if (!this.location) {
-        this.errors.push("Oups il faut ajouter un lieu");
+        this.errors.push("Veuillez remplir un lieu");
       }
       setTimeout(() => {
         this.errors = [];
       }, 5000);
 
-      // Send connection request
+      // Send form request if no error
       if (this.errors.length === 0) {
-        const response = await EventService.addEvent({
+        let params = {
           title: this.title,
           content: this.content,
-          eventDate: this.eventDate,
-          location: this.location,
-        });
+          date: this.eventDate,
+          lieu: this.location,
+        };
+        const response = await EventService.addEvent(params);
 
         //post id
         console.log(response.data.id);
-
-        this.alert.push("Evénement créé");
-        setTimeout(() => {
-          this.alert = null;
-        }, 5000);
+        this.upload(response.data.id);
+        // this.alert.push("Evénement créé");
+        // setTimeout(() => {
+        //   this.alert = null;
+        // }, 5000);
 
         // TODO : pour voir le résultat direct
         // setTimeout(() => this.$router.push({ name: "home" }), 500);

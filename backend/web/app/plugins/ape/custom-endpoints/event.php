@@ -34,5 +34,5 @@ function ape_rest_add_event_handler($request)
     add_post_meta($post_id, 'date', $date);
 
     // return post's id or false
-    return $post_id > 0 ? $post_id : false;
+    return $post_id ? ["id" => $post_id] : false;
 };
