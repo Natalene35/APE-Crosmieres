@@ -6,8 +6,8 @@
         <div class="event--card__location">Emplacement de l'événement</div>
 
         <img class="img" v-bind:src="tilleulPic">
-        <div class="img" v-bind:style="'background-image:url(' + image +')'"></div>
-        
+        <div class="media-image" v-bind:style="'background-image:url(' + image + ')'"></div>
+
         <div class="event--card__content" v-html="content"></div>
 
         <img class="event--card__map" v-bind:src="mapPic">
@@ -68,30 +68,46 @@ export default {
         font-weight: bold;
         padding-bottom: 1rem;
     }
-    .event--card__date, .event--card__location, .event--card__img, .event--card__content, .event--card__map {
+
+    .event--card__date,
+    .event--card__location,
+    .event--card__img,
+    .event--card__content,
+    .event--card__map {
         padding: 1rem;
     }
+
     .event--card__img {
         width: 100%;
-   
+
         height: auto;
         margin: auto;
     }
+
     .event--card__map {
         width: 40%;
         margin: auto;
     }
+
     .event--card__content {
         width: 100%;
     }
 
     .img {
-            width: 58%;
-            height: auto;
-            border-radius: 1em 1em 0 0;
-            -o-object-fit: cover;
-            object-fit: cover;
-            transform: translateY(-2%);
-        }
+        width: 58%;
+        height: auto;
+        border-radius: 1em 1em 0 0;
+        -o-object-fit: cover;
+        object-fit: cover;
+        transform: translateY(-2%);
+    }
+
+    .media-image {
+        min-height: 300px;
+        background-position: center;
+        background-size: cover;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+    }
 }
 </style>
