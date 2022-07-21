@@ -45,7 +45,7 @@ export default {
             this.content = response.content.rendered;
             this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
             console.log(this.image)
-            this.link = response.link.rendered;
+            this.link = response.link;
         }
     }
 }
