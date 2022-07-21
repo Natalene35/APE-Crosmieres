@@ -29,6 +29,7 @@
 <script>
 import illustrationPicture from '@/assets/images/tilleul.jpg'
 import UserLoginService from '@/services/login/UserLoginService'
+
 export default {
     // Nom de notre composant 
     name: 'UserLoginLayout',
