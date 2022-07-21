@@ -1,8 +1,9 @@
 <?php
 /*
-* Plugin Name:  APE Crosmières
-* Version:      1.0
-* Author:       Le Brenn Julien
+* Plugin Name: APE Crosmières custom
+* Description: ajout de gestion d'évenements et ventes initiatives pour les Association de parent d'élèves
+* Author: Natalène D, Emilie P, Loïc D, Julien L et Christophe D
+* Version: 0.0.1
 */
 require __DIR__ . '/vendor/autoload.php';
 use Migration\Child_PostMigration;
