@@ -8,6 +8,7 @@ const routes = [
     component: HomeView
   },
 
+  //Road for login
   {
     path: '/login',
     name: 'login',
@@ -24,7 +25,14 @@ const routes = [
     path: '/sale/:id',
     name: 'sale',
     component: () => import(/* webpackChunkName: "sale" */ '../views/sales/SaleView.vue')
-  }
+  },
+
+  //Road for registration
+  {
+    path: '/registration',
+    name: 'registration',
+     component: () => import(/* webpackChunkName: "login" */ '../views/registration/UserRegisterView.vue')
+  },
 ]
 
 const router = createRouter({
