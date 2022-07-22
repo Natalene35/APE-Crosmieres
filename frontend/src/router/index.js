@@ -8,10 +8,18 @@ const routes = [
     component: HomeView
   },
 
+  //Road for login
   {
     path: '/login',
     name: 'login',
      component: () => import(/* webpackChunkName: "login" */ '../views/login/UserLoginView.vue')
+  },
+
+  //Road for registration
+  {
+    path: '/registration',
+    name: 'registration',
+     component: () => import(/* webpackChunkName: "login" */ '../views/registration/UserRegisterView.vue')
   },
 ]
 
