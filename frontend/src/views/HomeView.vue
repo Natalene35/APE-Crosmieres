@@ -2,6 +2,7 @@
 
   <HeaderLayout />
   <main>
+    <SalesHomeSliders />
     <EventsHomeLayout />
     <SalesHomeLayout />
   </main>
@@ -15,6 +16,7 @@ import HeaderLayout from '@/components/templates/HeaderLayout.vue'
 import EventsHomeLayout from '@/components/events/EventsHomeLayout.vue'
 import SalesHomeLayout from '@/components/sales/SalesHomeLayout.vue'
 import FooterLayout from '@/components/templates/FooterLayout.vue'
+import SalesHomeSliders from '@/components/sales/SalesHomeSliders.vue'
 
 
 export default {
@@ -24,7 +26,7 @@ export default {
     EventsHomeLayout,
     SalesHomeLayout,
     FooterLayout,
-    
+    SalesHomeSliders
 }
 }
 </script>
