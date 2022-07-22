@@ -24,8 +24,18 @@ export default {
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const role = await apiClient.get('/wp/v2/users/' + id + '?context=edit');
             return role.data
-        } catch(error) {
+        } catch (error) {
             return error.response.data
-        } 
-    }
+        }
+    },
+
+    async find(id) {
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+        try {
+            const response = await apiClient.get("/wp/v2/users/" + id + "?context=edit" );
+            return response.data;
+        } catch (error) {
+            return error.response.data
+        }
+    },
 }

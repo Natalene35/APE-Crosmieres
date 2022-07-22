@@ -58,7 +58,11 @@
                 <li class="header--nav__Evenement">Evenement</li>
                 <li class="header--nav__Presentation">Présentation APE</li>
                 <li class="header--nav__Inscription">
-                    <router-link v-bind:to="{ name: 'registration' }" class="header--nav__Inscription">Inscription
+                    <router-link v-if="!this.$store.getters.getUserID" v-bind:to="{ name: 'registration' }"
+                        class="header--nav__Inscription">Inscription
+                    </router-link>
+                    <router-link v-if="this.$store.getters.getUserID" v-bind:to="{ name: 'userprofil' }"
+                        class="header--nav__Inscription">Mon profil
                     </router-link>
                 </li>
                 <li class="header--nav__Connexion">

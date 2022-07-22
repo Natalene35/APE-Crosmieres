@@ -48,7 +48,6 @@ import illustrationPicture from "@/assets/images/surr-holidays.png"
 export default {
     name: "UserRegistrationLayout",
 
-
     data() {
         return {
             picture: illustrationPicture,
