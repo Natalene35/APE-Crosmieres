@@ -29,22 +29,6 @@
                 <label class="field__label">Confirmer le mot de passe</label>
                 <input v-model="passwordconfirm" class="inputbox" type="password" placeholder="Mot de passe" required>
 
-                <!--<div id="form">
-                    <label class="field__label">Nom et classe de votre enfant ?</label>
-                    <input v-model="child_name" type="text" class="inputbox" placeholder="Nom de votre enfant"
-                        name="child_name">
-                    <input type="radio" value="CP" v-model="child_room" />
-                    <label for="CP">CP</label>
-                    <input type="radio" value="CM1" v-model="child_room" />
-                    <label for="CM1">CM1</label>
-                    <input type="radio" value="CM2" v-model="child_room" />
-                    <label for="CM2">CM2</label>
-                    <input type="radio" value="CE1" v-model="child_room" />
-                    <label for="CE1">CE1</label>
-                    <input type="radio" value="CE2" v-model="child_room" />
-                    <label for="CE2">CE2</label>
-                </div>-->
-
                 <p class="succesregistration" v-for="succesMsg in succesRegistration" v-bind:key="succesMsg">{{
                         succesMsg
                 }}
@@ -63,6 +47,7 @@ import illustrationPicture from "@/assets/images/surr-holidays.png"
 
 export default {
     name: "UserRegistrationLayout",
+
 
     data() {
         return {
