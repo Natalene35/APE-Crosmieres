@@ -9,20 +9,19 @@
 
         <div class="event--card__content" v-html="content"></div>
 
-        <div>Lien de la vente</div>>
+        <a v-bind:href="link">Lien vers le site marchand</a>
     </section>
 </template>
 
 <script>
 import SaleService from "@/services/sales/SaleService";
 import tilleulPic from '@/assets/images/tilleul.jpg';
-import mapPic from '@/assets/images/map.jpg'
+
 export default {
     name: "SaleDetailLayout",
     data() {
         return {
             tilleulPic: tilleulPic,
-            mapPic: mapPic,
             title: null,
             date: null,
             content: null,
