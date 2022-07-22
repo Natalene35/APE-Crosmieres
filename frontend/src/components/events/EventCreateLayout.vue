@@ -1,14 +1,16 @@
 <template>
   <section class="wrapper">
     <div class="container">
-      <p class="error" v-for="error in errors" v-bind:key="error">
-        {{ error }}
-      </p>
-      <p class="alert" v-if="alerts">
-        {{ alerts }}
-      </p>
-
       <div class="field">
+        <div class="field__title">
+          <img
+            class="logo--img"
+            src="../../assets/images/jelly-message-sent-by-character.png"
+            alt=""
+          />
+          <h1 class="title">Ajout d'un événement</h1>
+        </div>
+
         <label class="field__label">Titre de la publication </label>
         <input
           class="field__input"
@@ -50,7 +52,12 @@
           ref="file"
           @change="selectImage"
         />
-
+        <p class="error" v-for="error in errors" v-bind:key="error">
+          {{ error }}
+        </p>
+        <p class="alert" v-if="alerts">
+          {{ alerts }}
+        </p>
         <button class="btn btn-success btn-sm float-right" @click="submitForm">
           Soumettre
         </button>
@@ -71,21 +78,17 @@
 
       <div v-if="previewImage">
         <div>
-          <img
-            class="preview my-3 img-thumbnail rounded"
-            :src="previewImage"
-            alt=""
-          />
+          <img class="preview" :src="previewImage" alt="" />
         </div>
       </div>
-      <div v-if="event !== null">{{ event }}</div>
-
-      <div v-if="(lastImage = imageInfos[0])">
-        vous venez de télécharger l'image {{ lastImage.title.rendered }} avec
-        l'id =
-        {{ lastImage.id }}
-      </div>
     </div>
+    <p style="visibility: hidden">
+      Illustration by
+      <a href="https://icons8.com/illustrations/author/541847"
+        >Murat Kalkavan</a
+      >
+      from <a href="https://icons8.com/illustrations">Ouch!</a>
+    </p>
   </section>
 </template>
 
@@ -101,13 +104,10 @@ export default {
       location: null,
       currentImage: undefined,
       previewImage: undefined,
-      progress: 12,
-      message: "",
+      progress: 0,
       imageInfos: [],
-      lastImage: {},
       errors: [],
       alerts: null,
-      event: null,
     };
   },
   methods: {
@@ -115,7 +115,6 @@ export default {
       this.currentImage = this.$refs.file.files.item(0);
       this.previewImage = URL.createObjectURL(this.currentImage);
       this.progress = 0;
-      this.message = "";
     },
 
     // upload and send to wordpress
@@ -125,8 +124,7 @@ export default {
       EventService.upload(this.currentImage, this.title, postId, (event) => {
         this.progress = Math.round((100 * event.loaded) / event.total);
       })
-        .then((response) => {
-          this.message = response.data.message;
+        .then(() => {
           return EventService.getFiles();
         })
         .then((images) => {
@@ -134,13 +132,33 @@ export default {
           // pour executer la fct createpost avec l'id du média
           EventService.addMediaToEvent(postId, this.imageInfos[0].id).then(
             (response) => {
-              console.log(response);
+              if (response.status === 200) {
+                this.title = null;
+                this.content = null;
+                this.eventDate = null;
+                this.location = null;
+                this.currentImage = undefined;
+                this.previewImage = undefined;
+                this.progress = 0;
+                this.alerts = "Evénement créé";
+                //redirection vers la home
+                setTimeout(() => this.$router.push({ name: "home" }), 1500);
+              } else {
+                this.errors.push(
+                  "Erreur d'enregistrement, veuillez verifier la présence de l'image dans l'événement"
+                );
+              }
             }
           );
         })
         .catch((err) => {
           this.progress = 0;
-          this.message = "Could not upload the image! " + err;
+          this.errors.push("Erreur sur le chargement de l'image !");
+          this.errors.push("L'événement a été crée sans l'image");
+          this.errors.push(
+            "Veuillez modifier dans la page de modification d'événement svp."
+          );
+          console.log(err);
           this.currentImage = undefined;
         });
     },
@@ -153,17 +171,21 @@ export default {
 
       // Form Content Validation
       if (!this.title) {
-        this.errors.push("Veuillez remplir un titre");
+        this.errors.push("Veuillez remplir un titre svp");
       }
       if (!this.content) {
-        this.errors.push("Veuillez remplir une description");
+        this.errors.push("Veuillez remplir une description svp");
       }
       if (!this.eventDate) {
-        this.errors.push("Veuillez remplir une date");
+        this.errors.push("Veuillez remplir une date svp");
       }
       if (!this.location) {
-        this.errors.push("Veuillez remplir un lieu");
+        this.errors.push("Veuillez remplir un lieu svp");
       }
+      if (!this.currentImage) {
+        this.errors.push("Veuillez choisir une image svp");
+      }
+
       setTimeout(() => {
         this.errors = [];
       }, 5000);
@@ -175,20 +197,19 @@ export default {
           content: this.content,
           date: this.eventDate,
           lieu: this.location,
-          status: "publish",
+          post_status: "publish",
         };
 
         const response = await EventService.addEvent(params);
 
-        //post id
-        this.upload(response.data.id);
-        // this.alert.push("Evénement créé");
-        // setTimeout(() => {
-        //   this.alert = null;
-        // }, 5000);
-
-        // TODO : pour voir le résultat direct
-        // setTimeout(() => this.$router.push({ name: "home" }), 500);
+        if (response) {
+          //response.data.id is the post id
+          this.upload(response.data.id);
+        } else {
+          this.errors.push(
+            "Erreur d'enregistrement de l'événement ! Veuillez verifier la présence de l'événement"
+          );
+        }
       }
     },
   },
@@ -210,29 +231,17 @@ export default {
   place-items: center;
   border-radius: 1em;
 
-  .prevew {
-    width: 50%;
-  }
-  .thumbnail {
-    width: 150px;
-    float: left;
-  }
-
   .container {
     width: 80%;
     overflow: hidden;
     background-color: $white;
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     margin-bottom: 1rem;
     border-radius: 1em;
     display: -ms-grid;
     display: grid;
     place-items: center;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
-    .title {
-      font-size: 1.6rem;
-      font-weight: 700;
-    }
 
     .progress {
       width: 50%;
@@ -264,34 +273,79 @@ export default {
       }
     }
 
+    .preview {
+      width: 50%;
+      border-radius: 5px;
+      border: thick double gray;
+      box-shadow: 0px 17px 34px -20px $blue-bg-header;
+      margin-bottom: 1rem;
+    }
+
     .field {
       padding: 1rem;
       margin: 1rem;
       display: flex;
       flex-wrap: wrap;
       width: 100%;
-    }
 
-    .field__label {
-      width: 45%;
-      float: left;
-      margin: 0.5rem;
-    }
-    .field__input {
-      padding: 0.5em 0 0.5em 1.5em;
-      line-height: 3;
-      border: 1px solid $blue-light-bg;
-      border-radius: 0.5em;
-      margin: 1rem 0 1rem 0;
-      padding: 0;
-      text-align: left;
-      width: 45%;
-      float: right;
-      margin: 0.5rem;
-    }
+      .field__title {
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
 
-    ::placeholder {
-      color: $red;
+        .logo--img {
+          display: none;
+        }
+        .title {
+          font-size: 1.6rem;
+          font-weight: 700;
+          text-align: center;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+      }
+      .field__label {
+        width: 45%;
+        float: left;
+        margin: 0.5rem;
+      }
+      .field__input {
+        line-height: 3;
+        border: 1px solid $blue-light-bg;
+        border-radius: 0.5em;
+        margin: 1rem 0 1rem 0;
+        padding: 0.5em 0 0.5em 1.5em;
+        text-align: left;
+        width: 45%;
+        float: right;
+      }
+
+      ::placeholder {
+        color: $red;
+      }
+
+      .error {
+        background-color: lightcoral;
+        font-weight: bold;
+        width: 80%;
+        padding: 0.2rem;
+        margin: 0.5rem;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 5px;
+        color: white;
+      }
+      .alert {
+        background-color: lightblue;
+        font-weight: bold;
+        width: 90%;
+        padding: 0.2rem;
+        margin: 0.5rem;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 5px;
+        color: Black;
+      }
     }
 
     button {
@@ -312,103 +366,35 @@ export default {
       background-color: #ffc107;
       box-shadow: 0 2px 2px #0000001a;
     }
-
-    .error {
-      background-color: lightcoral;
-      font-weight: bold;
-      width: 80%;
-      margin: 0.5rem;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 5px;
-      color: white;
-    }
-    .alert {
-      background-color: lightblue;
-      font-weight: bold;
-      width: 90%;
-      margin: 0.5rem;
-      margin-left: auto;
-      margin-right: auto;
-      border-radius: 5px;
-      color: Black;
-    }
-    // .title {
-    //   font-size: 1.6rem;
-    //   font-weight: 700;
-    // }
-
-    // .img {
-    //   width: 100%;
-    //   height: auto;
-    //   border-radius: 1em 1em 0 0;
-    //   object-fit: cover;
-    //   transform: translateY(-26%);
-    // }
-
-    // .img--container {
-    //   height: 200px;
-    //   overflow: hidden;
-    //   margin-bottom: 1.5em;
-    // }
-
-    // .title {
-    //   margin-bottom: 0.9em;
-    // }
-
-    // .content {
-    //   display: -ms-grid;
-    //   display: grid;
-    //   place-items: center;
-    //   padding: 0 2em;
-    // }
-
-    // .inputbox {
-    //   padding: 0.5em 0 0.5em 1.5em;
-    //   line-height: 3;
-    //   width: 100%;
-    //   border: 1px solid $blue-light-bg;
-    //   border-radius: 0.5em;
-    //   margin: 1rem 0 1rem 0;
-    //   padding: 0;
-    //   text-align: center;
-    // }
-
-    // ::placeholder {
-    //   color: $red;
-    // }
-
-    // .subscribe {
-    //   color: $white;
-    //   font-size: 1.3rem;
-    //   font-weight: 700;
-    //   background-color: $red;
-    //   padding: 0.9em 0;
-    //   display: inline-block;
-    //   border: none;
-    //   border-radius: 0.5em;
-    //   width: 100%;
-    //   margin-bottom: 1.3em;
-    //   cursor: pointer;
-    // }
-
-    // .push--message {
-    //   color: $red;
-
-    //   p {
-    //     margin-bottom: 0.5rem;
-    //   }
-    // }
   }
 
-  @media (max-width: 425px) {
+  @media (max-width: 600px) {
     .container {
       background-color: transparent;
       box-shadow: none;
       border-radius: none;
 
-      .img--container {
-        border-radius: none;
+      .field {
+        padding: 1rem;
+        margin: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+
+        .field__title {
+          .logo--img {
+            display: inline;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+        .field__label {
+          width: 100%;
+        }
+        .field__input {
+          width: 100%;
+        }
       }
     }
   }
