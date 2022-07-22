@@ -197,7 +197,7 @@ export default {
           content: this.content,
           date: this.eventDate,
           lieu: this.location,
-          post_status: "publish",
+          status: "publish",
         };
 
         const response = await EventService.addEvent(params);

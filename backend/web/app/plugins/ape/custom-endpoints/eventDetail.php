@@ -21,11 +21,12 @@ function ape_rest_event_detail_register()
 // add request content to the custom post and add custom post meta
 function ape_rest_get_event_handler($request)
 {
-
     global $wpdb;
-    $id = $request->get_param('id');
 
-    // get the post
+    // get the parameter 'id' into request and sanitize it
+    $id = sanitize_text_field($request->get_param('id'));
+
+    // get the require post 
     $post[] = get_post($id);
 
     // get the meta data 'lieu'
