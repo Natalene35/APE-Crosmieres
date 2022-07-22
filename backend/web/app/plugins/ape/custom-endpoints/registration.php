@@ -61,7 +61,7 @@ function ape_rest_user_register_handler($request)
         ]);
         if (!is_wp_error($user_id)) {
             $user = get_user_by('id', $user_id);
-            // add_user_meta($user_id, 'phone', $phone);
+            add_user_meta($user_id, 'phone', $phone);
             // ape_child_handler($child_class, $child_firstname, $child_lastname, $user_id);
 
             $response['code'] = 200;
