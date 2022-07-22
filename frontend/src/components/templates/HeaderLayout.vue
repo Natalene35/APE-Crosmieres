@@ -10,9 +10,11 @@
                 </h1>
 
                 <div class="header--profil__picture">
-                    <div class="header--nav__Inscription" style="margin-right: 0.3rem;">Inscription /</div>
+                    <router-link v-bind:to="{ name: 'registration' }" class="header--nav__Inscription">Inscription /
+                    </router-link>
                     <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
-                        class="header--login">Connexion
+                        class="header--login">
+                        Connexion
                     </router-link>
                     <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
                         v-on:click="disconnect">Deconnection
@@ -44,7 +46,7 @@
 
             </nav>
         </header>
-            
+
         <!-- /*<--------------------MENU BURGER HIDDEN IN DESKTOP---------------------------->
         <div class="header--burger__menu">
             <ul>
@@ -55,10 +57,14 @@
                 <li class="header--nav__Vente">Vente</li>
                 <li class="header--nav__Evenement">Evenement</li>
                 <li class="header--nav__Presentation">Présentation APE</li>
-                <li class="header--nav__Inscription">Inscription</li>
+                <li class="header--nav__Inscription">
+                    <router-link v-bind:to="{ name: 'registration' }" class="header--nav__Inscription">Inscription
+                    </router-link>
+                </li>
                 <li class="header--nav__Connexion">
                     <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
-                        class="header--login">Connexion
+                        class="header--login">
+                        Connexion
                     </router-link>
                     <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
                         v-on:click="disconnect">Deconnection
@@ -114,9 +120,10 @@ export default {
 
 //see method showMenu
 //use for give priorioty for burger's menu (height 1000vh)
-.overflow--hidden {    
+.overflow--hidden {
     overflow: hidden;
 }
+
 header {
     width: 100%;
     display: flex;
@@ -183,6 +190,10 @@ header {
             color: $red;
         }
 
+        .header--nav__Inscription {
+            margin-right: 0.3rem;
+            color: $white;
+        }
     }
 
     //<-----------NAV----------->
@@ -329,10 +340,11 @@ header {
     .header--title__logo {
         height: 12vh;
     }
+
     header {
         nav {
             align-items: center;
-           
+
             div {
                 font-size: 0.8rem;
                 height: 2rem;
@@ -374,7 +386,7 @@ header {
                 display: unset;
                 height: 100%;
                 display: contents;
-               
+
             }
         }
 
@@ -382,7 +394,7 @@ header {
             height: 0;
             div {
                 display: none;
-            
+
             }
         }
 
@@ -390,7 +402,7 @@ header {
 
     .active {
         display: contents;
-         text-shadow: 1px 1px 1px black; 
+        text-shadow: 1px 1px 1px black;
 
         .header--profil__picture {
             width: 20px;
