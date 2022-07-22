@@ -10,7 +10,11 @@
                 </h1>
 
                 <div class="header--profil__picture">
-                    <router-link v-bind:to="{ name: 'registration' }" class="header--nav__Inscription">Inscription /
+                    <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'registration' }"
+                        class="header--nav__Inscription">Inscription /
+                    </router-link>
+                    <router-link v-if="this.$store.getters.getToken" v-bind:to="{ name: 'userprofil' }"
+                        class="header--nav__Inscription">Mon compte /
                     </router-link>
                     <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
                         class="header--login">
