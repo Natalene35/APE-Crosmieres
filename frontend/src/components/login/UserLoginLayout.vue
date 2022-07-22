@@ -42,7 +42,9 @@ export default {
             password: null,
 
             errors: [],
-            succesLogin: []
+            succesLogin: [],
+            meta: null,
+            userId: sessionStorage.getItem("userID")
         }
     },
 
@@ -84,7 +86,7 @@ export default {
                 }
             }
         }
-    }
+    },
 }
 </script>
 
