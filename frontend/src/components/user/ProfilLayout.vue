@@ -1,12 +1,21 @@
 <template>
-    <section class="wrapper">
-        <div class="container">
-            <h2 class="title">Bienvenue {{ user.first_name }}</h2>
+    <h1 class="profil--title">Bienvenue {{ user.first_name }}</h1>
+    <section class="wrapper--profil">
+        <div class="profil--info">
             <div class="field">
-                <h2>{{ user.last_name }}</h2>
-                <h2></h2>
-                <h2></h2>
-                <h2></h2>
+                <div class="field--type">Votre nom <span>{{ user.last_name }}</span></div>
+                <div class="field--type"> Votre idenifiant <span>{{ user.username }}</span></div>
+                <div class="field--type">Votre email <span>{{ user.email }}</span></div>
+                <div class="field--type">Votre téléphone <span>{{ metaUser[14] }}</span></div>
+            </div>
+        </div>
+        <div class="profil--info">
+            <div class="field">
+                <h2>Vos enfants</h2>
+                <div class="field--type">Pierre<span> Pierre</span></div>
+                <div class="field--type">Pierre<span> Paul</span></div>
+                <div class="field--type">Pierre<span> Jaques</span></div>
+                <div class="field--type"><span></span></div>
             </div>
         </div>
     </section>
@@ -26,107 +35,99 @@ export default {
 
     data() {
         return {
-            user: []
+            user: [],
+            metaUser: []
         }
     },
 
     async mounted() {
         let user_ID = this.$store.getters.getUserID;
-        console.log(this.$store.getters.getUserID)
         this.user = await UserLoginService.find(user_ID);
+        this.metaUser = await UserLoginService.getMeta(user_ID);
         console.log(this.user);
+        console.log(this.metaUser);
     },
 }
 
 </script>
 
  <style scoped lang="scss">
- .wrapper {
+ .profil--title {
+     color: black;
+     font-size: xx-large;
+ }
+ 
+ .wrapper--profil {
      color: #313846;
      font-family: "Muli", sans-serif;
      font-size: 1rem;
      display: flex;
      place-items: end;
-     border-radius: 1em;
-     justify-content: flex-end;
+     justify-content: space-around;
      flex-direction: row;
+     align-items: center;
+     width: 100%;
+     border-bottom: #313846 2px solid;
  
-     .container {
-         width: 100%;
-         overflow: hidden;
-         padding: 0;
-         margin-top: 1rem;
-         margin-bottom: 1rem;
-         border-radius: 1em;
-         place-items: center;
+     .profil--picture {
+         position: absolute;
+         width: 50%;
+ 
+         img {
+             width: 255px;
+         }
      }
  
-     .title {
-         font-size: 1.6rem;
-         font-weight: 700;
-         margin-bottom: 0.9em;
-     }
- 
-     .content {
-         place-items: center;
-         padding: 0 2em;
-     }
- 
-     .inputbox {
-         padding: 0.5em 0 0.5em 1.5em;
-         line-height: 3;
-         width: 100%;
-         border: 1px solid $blue-light-bg;
-         border-radius: 0.5em;
-         margin: 0.3rem 0 1rem 0;
-         padding: 0;
-         text-align: center;
-     }
- 
-     ::placeholder {
-         color: $red;
-     }
- 
-     .subscribe {
-         color: #fff;
-         font-size: 1.3rem;
-         font-weight: 700;
-         background-color: #f55951;
-         padding: 0.9em 0;
-         display: inline-block;
-         border: none;
-         border-radius: 0.5em;
-         width: 100%;
-         margin-bottom: 1.3em;
-         cursor: pointer;
-     }
- 
-     .child--class {
-         margin-top: 1rem;
-         margin-bottom: 1rem;
-     }
- 
-     .child__listing {
-         width: 100%;
+     .profil--info {
          display: flex;
-     }
- 
-     .child--info {
          width: 40%;
-         border: 1px solid $black
+         flex-direction: column;
+         align-items: center;
+ 
+         .field--type {
+             padding: 0.5rem;
+             text-align: start;
+ 
+             span {
+                 color: $red;
+                 text-transform: uppercase;
+             }
+         }
      }
  
+     .profil--child {
+         display: flex;
+         width: 40%;
+         flex-direction: column;
+         align-items: flex-start;
+ 
+         .field--type {
+             padding: 0.5rem;
+             text-align: start;
+         }
+     }
+ }
+ 
+ @media (max-width: 425px) {
+     .container {
+         background-color: transparent;
+         box-shadow: none;
+         border-radius: none;
+ 
+         .content {
+             display: flex;
+             flex-direction: column;
+         }
+     }
+ 
+     .wrapper--profil {
+         flex-direction: column;
+         align-items: start;
  
  
-     @media (max-width: 425px) {
-         .container {
-             background-color: transparent;
-             box-shadow: none;
-             border-radius: none;
- 
-             .img--container {
-                 border-radius: none;
-             }
+         .profil--info {
+             flex-direction: column;
+             align-items: start;
          }
      }
  }

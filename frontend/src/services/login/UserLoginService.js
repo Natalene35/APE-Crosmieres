@@ -27,7 +27,6 @@ export default {
             return role.data
         } catch (error) {
             return error.response.data
-<<<<<<< HEAD
         }
     },
 
@@ -40,12 +39,11 @@ export default {
             return error.response.data
         }
     },
-=======
-        } 
-    },
+        
+    
     async getMeta(id) {
+         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const meta = await apiClient.get('/wp/v2/users/meta/'+ id +'');
             return meta.data
         } catch(error) {
@@ -63,5 +61,4 @@ export default {
     //     }
     // }
     
->>>>>>> master
 }

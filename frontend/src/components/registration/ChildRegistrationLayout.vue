@@ -9,10 +9,8 @@
                 <label class="field__label">Nom</label>
                 <input v-model="child_lastname" type="text" class="inputbox" placeholder="Classe de votre enfant"
                     name="lastname">
-                <label class="field__label">Date de naissance</label>
-                <input v-model="child_birthday" type="date" id="birthday" name="birthday">
-
-
+                <!-- <label class="field__label">Date de naissance</label>
+                <input v-model="child_birthday" type="date" id="birthday" name="birthday">-->
 
                 <div class="child--class">
                     <input type="radio" id="CP" value="CP" v-model="picked" />
@@ -26,7 +24,7 @@
                     <input type="radio" id="CE2" value="CE2" v-model="picked" />
                     <label for="CE2">CE2</label>
                 </div>
-
+                <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
                 <button v-on:click="add_child" class="subscribe">Ajouter un enfant ?</button>
             </div>
         </div>
@@ -41,8 +39,9 @@ export default {
         return {
             child_firstname: null,
             child_lastname: null,
-            child_birthday: null,
-            picked: null
+            //child_birthday: null,
+            picked: null,
+            errors: []
         };
     },
 
@@ -56,9 +55,9 @@ export default {
             if (!this.child_lastname) {
                 this.errors.push("Il faut le nom de Famille d'usage");
             }
-            if (!this.child_birthday) {
+            /*if (!this.child_birthday) {
                 this.errors.push("Il faut la date de naissance");
-            }
+            }*/
             if (!this.picked) {
                 this.errors.push("If faut la classe de l'enfant");
             }
@@ -66,23 +65,23 @@ export default {
             // Verification d'absence d'erreurs et transmision des données 
             if (this.errors.length === 0) {
                 const response = await ChildRegistrationService.registerChild({
-                    "pseudo": this.child_firstname,
-                    "email": this.child_lastname,
-                    "password": this.child_birthday,
-                    "firstname": this.picked,
-
+                    "child_firstname": this.child_firstname,
+                    "child_lastname": this.child_lastname,
+                    "child_class": this.picked,
+                    "user_id": this.$store.getters.getUserID
                 });
+                console.log(response);
                 if (response.code === 200) {
                     console.log(response);
 
                     // Reset the input in the form
                     this.child_firstname = null,
                         this.child_lastname = null,
-                        this.child_birthday = null,
+                        //this.child_birthday = null,
                         this.picked = null
 
                 }
-                else if (response.code === 406) {
+                else if (response.code === 404) {
                     this.errors.push('Cette e-mail de compte existe déja');
                 } else {
                     this.errors.push("Oups une erreur, veuilliez recommencer");
@@ -94,7 +93,7 @@ export default {
 </script>
 
 
-<style scoped lang="scss">
+<style lang="scss">
 .wrapper {
     color: #313846;
     font-family: "Muli", sans-serif;
@@ -115,6 +114,10 @@ export default {
         place-items: center;
     }
 
+    .field__label {
+        margin: 0.5rem;
+    }
+
     .title {
         font-size: 1.6rem;
         font-weight: 700;
@@ -129,7 +132,7 @@ export default {
     .inputbox {
         padding: 0.5em 0 0.5em 1.5em;
         line-height: 3;
-        width: 100%;
+        width: 25%;
         border: 1px solid $blue-light-bg;
         border-radius: 0.5em;
         margin: 0.3rem 0 1rem 0;
@@ -142,41 +145,36 @@ export default {
     }
 
     .subscribe {
-        color: #fff;
+        color: $white;
         font-size: 1.3rem;
         font-weight: 700;
-        background-color: #f55951;
-        padding: 0.9em 0;
+        background-color: $red;
         display: inline-block;
         border: none;
         border-radius: 0.5em;
-        width: 100%;
-        margin-bottom: 1.3em;
+        width: 30%;
+        margin: 1rem;
         cursor: pointer;
     }
-
-    .child--class {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .child__listing {
-        width: 100%;
-        display: flex;
-    }
-
-    .child--info {
-        width: 40%;
-        border: 1px solid $black
-    }
-
-
 
     @media (max-width: 425px) {
         .container {
             background-color: transparent;
             box-shadow: none;
             border-radius: none;
+
+            .content {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .inputbox {
+                width: 70%;
+            }
+
+            .subscribe {
+                width: 70%;
+            }
 
             .img--container {
                 border-radius: none;

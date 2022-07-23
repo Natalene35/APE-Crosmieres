@@ -44,5 +44,7 @@ VALUES ('$child_firstname',
         '$child_lastname',
         '$child_class')");
 
+    $response['code'] = 200;
+
     return $rows;
 };

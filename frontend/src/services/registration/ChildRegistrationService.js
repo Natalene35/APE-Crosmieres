@@ -11,11 +11,22 @@ const apiClient = axios.create({
 
 export default {
     async registerChild(params) {
+         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            const response = await apiClient.post('/wp/v2/users/register', params);
+            const response = await apiClient.post('/wp/v2/child', params);
             return response.data
         } catch (errors) {
             return errors.response.data
+        }
+    },
+
+    async findChild(id) {
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+        try {
+            const response = await apiClient.get("/wp/v2/child?user_id=" + id + "?context=edit" );
+            return response.data;
+        } catch (error) {
+            return error.response.data
         }
     },
 }
