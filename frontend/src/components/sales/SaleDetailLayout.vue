@@ -12,10 +12,9 @@
 
         <div class="event--card__content" v-html="content"></div>
 
-        <a class="event--card__link" v-bind:href="link">Lien vers le site marchand</a>
-        <img class="snake" alt="Arrow" v-bind:src="bigSnake" />
-
-
+        <a class="event--card__link" v-bind:href="link">Lien vers le site marchand
+            <img class="snake" alt="Arrow" v-bind:src="bigSnake" />
+        </a>
     </section>
 </template>
 
@@ -61,14 +60,16 @@ export default {
 
 <style lang="scss" scoped>
 .event--card {
-    color: $black;
-    border: 1px solid $black;
-    width: 80%;
-    margin: auto;
+    width: 90%;
+    margin: 1rem auto;
     height: auto;
     padding: 1rem;
     border-radius: 1rem;
     font-size: 1rem;
+    color: $grey;
+    background-color: $white;
+    box-shadow: 0px 17px 34px -20px $blue-bg-header;
+
 
     .picture--container {
         display: flex;
@@ -115,13 +116,21 @@ export default {
 
     .event--card__link {
         color: $orange;
-        text-shadow: 1px 1px 1px black;
-        padding-right: 0.3rem;
+        text-shadow: 1px 1px 1px $black;
+        transition: 1s;
+        padding-bottom: 2rem;
+    }
+
+    .event--card__link:hover {
+        transform: scale(1.25);
+        font-size: 1.1em;
     }
 
     .snake {
         margin-bottom: -0.5rem;
     }
+
+    // Media query
 
     @media (min-width: 450px) {
         .picture--container {
@@ -134,44 +143,49 @@ export default {
     }
 
     @media (min-width: 700px) {
-        .picture--container {
-            max-width: 50%;
-        }
+        .event--card {
+            width: 80%;
 
-        h2 {
-            font-size: 1.6rem;
-        }
+            .picture--container {
+                max-width: 50%;
+            }
 
-        .media-image {
-            width: 90%;
-            min-height: 25rem;
-        }
+            h2 {
+                font-size: 1.6rem;
+            }
 
-        .event--card__content {
-            width: 90%;
+            .media-image {
+                width: 90%;
+                min-height: 25rem;
+            }
+
+            .event--card__content {
+                width: 90%;
+            }
         }
     }
 
     @media (min-width: 1000px) {
         .event--card {
             width: 70%;
-        }
 
-        .picture--container {
-            max-width: 30%;
-        }
 
-        h2 {
-            font-size: 1.8rem;
-        }
+            .picture--container {
+                max-width: 30%;
+            }
 
-        .media-image {
-            width: 80%;
-            min-height: 35rem;
-        }
+            h2 {
+                font-size: 1.8rem;
+            }
 
-        .event--card__content {
-            width: 80%;
+            .media-image {
+                width: 80%;
+                min-height: 35rem;
+            }
+
+            .event--card__content {
+                width: 80%;
+            }
         }
     }
 }
