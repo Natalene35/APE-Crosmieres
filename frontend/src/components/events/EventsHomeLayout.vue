@@ -51,7 +51,7 @@ export default {
     
     .event--section {
         width: 100%;
-       
+       justify-content: center;
         display: flex;
         flex-wrap: wrap;
         

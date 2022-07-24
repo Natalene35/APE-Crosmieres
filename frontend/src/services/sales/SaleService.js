@@ -27,7 +27,6 @@ export default {
         } catch (error) {
             return error.response.data
         }
-
     },
     // Get meta value by sale's id
     async getMeta(id) {

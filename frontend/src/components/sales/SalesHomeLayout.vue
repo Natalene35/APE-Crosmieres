@@ -52,6 +52,7 @@ export default {
     
     width: 30%;
     height: 100%;
+    
 
     ul::-webkit-scrollbar {
         display: none;
