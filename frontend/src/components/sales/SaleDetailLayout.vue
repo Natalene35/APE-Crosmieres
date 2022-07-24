@@ -6,7 +6,7 @@
         </div>
         <h2 class="event--card__title">{{ title }}</h2>
 
-        <div class="event--card__date">Date de la vente</div>
+        <div class="event--card__date">{{ date }}</div>
 
         <div class="media-image" v-bind:style="'background-image:url(' + image + ')'"></div>
 
@@ -38,20 +38,26 @@ export default {
         }
     },
     async mounted() {
+        //GET META EXPLICATION WE NEED TO PLACE IN YOUR COMPONENTS
+        let arrayMeta = await SaleService.getMeta("index")
+        for (let index = 0; index < arrayMeta.length; index++) {
+            const metaElmt = arrayMeta[index];
+            //For take meta_key enter key in the exemple its "phone"
+            if (metaElmt.meta_key == "date") {
+                this.date = metaElmt.meta_value;
+            }
+        }
         // Allow to retrieve the id dynamic parameter by using the $route object
         let id = this.$route.params.id;
         const response = await SaleService.find(id);
         if (response.code) {
-            // IL y a une erreur
+            // If error
             alert(response.message);
             // @TODO Ajouter une redirection vers l'accueil avec un message d'erreur
         } else {
             this.title = response.title.rendered;
-            /* this.date = response.date.rendered;
-            this.location = response.location.rendered; */
             this.content = response.content.rendered;
             this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
-            console.log(this.image)
             this.link = response.link;
         }
     }
@@ -80,7 +86,7 @@ export default {
 
         .picture {
             max-width: 70%;
-            margin-top: -2rem;
+            margin-top: -3rem;
         }
     }
 
@@ -88,6 +94,7 @@ export default {
         font-size: 1.4rem;
         font-weight: bold;
         padding-bottom: 1rem;
+        margin-top: -2rem;
     }
 
     .event--card__date {
@@ -152,6 +159,7 @@ export default {
 
             h2 {
                 font-size: 1.6rem;
+                background-color: red;
             }
 
             .media-image {
@@ -168,7 +176,6 @@ export default {
     @media (min-width: 1000px) {
         .event--card {
             width: 70%;
-
 
             .picture--container {
                 max-width: 30%;
