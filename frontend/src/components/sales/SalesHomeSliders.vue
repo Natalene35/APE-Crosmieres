@@ -1,18 +1,32 @@
 <template>
     <section class="sale--sliders__all" >
-            <div class="sale--sliders" >
+        <!-- <------------------BUBBLE----------------> 
+        <div class="background--bubble__container">
+            <div class="background--design__bubble"></div>
+            <div class="background--design__bubble"></div>
+            <div class="background--design__bubble"></div>
+            <div class="background--design__bubble"></div>
+        </div>
+        
+            <div class="sale--sliders__titre">
+                <h2>Ventes</h2>
+            </div>
+           
+           <div class="sale--sliders" >
                 <div v-for="sales in saleSlide" v-bind:key="sales" v-bind:class="'sale--sliders__texte hidden'"  >
-                    <h2>{{sales.title.rendered}}</h2>
+                    <h2 class="sale--sliders__h2">{{sales.title.rendered}}</h2>
                     <p v-html="sales.excerpt.rendered"></p>
                     
                 </div>
             </div>
+         
+            
             <section class="background--design__all">
+                <div class="background--design"> </div>
                 <div class="background--design"></div>
                 <div class="background--design"></div>
                 <div class="background--design"></div>
-                <div class="background--design"></div>
-                <div class="background--design"></div>
+                <div class="background--design background__5" v-bind:style="'height:'+this.scroll+'%'"></div>
             </section>
     </section>
 </template>
@@ -21,46 +35,55 @@
 //Service
 import SaleService from '@/services/sales/SaleService'
 export default {
+
   name: 'SalesHomeSliders',
   data(){
     return{
         allSales: null,
         //Define the slide show in first
         slide: 0,
-        //For up the number of img in sliders maxSlide ++
-        maxSlide: 3,   
+        //Define number of slide
+        maxSlide: null,   
         saleSlide: null,
+        scroll: null,
     }
   },
     methods: {
         SlideAuto(){
+            
             let allSlideText=document.getElementsByClassName("hidden")
             if(this.slide!=this.maxSlide){
                 this.slide++
                 allSlideText[this.slide-1].classList.remove("active")
-            }
+                allSlideText[this.slide-1].classList.remove("animsliders")
+              }
             else{
-                this.slide=1
+                this.slide=0
                 allSlideText[this.maxSlide].classList.remove("active")
+                allSlideText[this.maxSlide].classList.remove("animsliders")
             }
             
-            allSlideText[this.slide].classList.toggle("active")
-            
-                   
+            allSlideText[this.slide].classList.add("active")
+            allSlideText[this.slide].classList.add("animsliders")                   
+        },
+        handleScroll(){
+            //Modify her for scroll animation
+            this.scroll=(window.scrollY)/8
         }
+ 
     },
-   async mounted(){      
-     
+   async mounted(){  
     setInterval(this.SlideAuto, 10000);
     this.saleSlide=await SaleService.findAll();
+    this.maxSlide=this.saleSlide.length-1;
+     window.addEventListener('scroll', this.handleScroll);
     }
 }
 </script>
 
 <style lang="scss">
 
-
-.sale--sliders{
+.sale--sliders__all{
     display: none;
 }
 @media (max-width: 425px) {
@@ -77,6 +100,7 @@ export default {
         .sale--sliders__all{
                 
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
             border-radius: 1rem;
             color: black;
@@ -85,7 +109,20 @@ export default {
             height: 12rem;
             align-items: center;
             justify-content: center;
-            
+            .sale--sliders__titre{
+                background-color: $blue-light-bg;
+                position: absolute;
+                top: 0;
+                width: 50%;
+                display: flex;
+                justify-content: center;
+                font-weight: bold;
+                text-shadow: 1px 1px 1px black;
+                padding: 1%;
+                box-shadow: 0px 6px 1px black;
+            }
+            @import "../../assets/animations/bubbleAnim.scss";
+
             .background--design__all{
                 height: 500vh;
                 width: 1000vh;
@@ -95,6 +132,23 @@ export default {
                 display: flex;
                 flex-wrap: wrap;
                 display: initial;
+                .background--design:nth-child(4){
+                    background-color: $blue-light-bg;
+                    position: absolute;
+                    top: 48%;
+                    height: 1px;
+                    width: 26%;
+                    right: 47%;
+                }
+                .background--design:nth-child(5){
+                    background-color: $blue-light-bg;
+                    position: absolute;
+                    top: 40%;
+                    height: 1px;
+                    width: 26%;
+                    right: 47%;
+                }
+                
                 .background--design{
                     background-color:$blue-bg-header;
                     margin: auto;
@@ -107,6 +161,7 @@ export default {
                     position: relative;
                     border-radius: 66%;
                     box-shadow: -14px 0px 1px white;
+                   
                 }
             }
             div{
@@ -120,22 +175,50 @@ export default {
                     display: flex;
                     flex-direction: column;
                     overflow: hidden;
+                    opacity: 1;
+                    
                 h2{
                     text-shadow: 1px 1px 1px black;
                     font-style: italic;
+                    text-decoration: underline;
+                    padding: 1%;   
+                    width: 100%;
+                }
+                p{
+                    margin-right: 300px;
+                }
+                .animsliders+h2,p{
+                    transition: all ease-in;
+                    animation: animSliders ;
+                    animation-iteration-count: 1;
+                    animation-duration: 120s;
+                }
+                @keyframes animSliders {
+                    0.5%{
+                     margin-right: 0;                    
+                    }
+                    90%{
+                       margin-right: 0;                        
+                    }
                 }
                 .hidden{
                     display: none;
                 }
+                .hidden:nth-child(1){
+                    display: contents;
+                }
                 .active{
                     display: contents;
+                    transition: display ;
                 }
                 .sale--sliders__text{
                     height: 12rem;
                     width: inherit;
                     border: 1px solid $white;
                     border-radius: 1rem;
+                    transition: all;                    
                 }
+                
             }
         }
 }
