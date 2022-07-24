@@ -2,9 +2,9 @@
     <section class="event--card">
 
         <div class="picture--container">
-        <img class="picture" v-bind:src="picture" />
+            <img class="picture" v-bind:src="picture" />
         </div>
-        
+
         <h2 class="event--card__title">{{ title }}</h2>
 
         <div class="event--card__date">Date de l'événement</div>
@@ -60,14 +60,15 @@ export default {
 
 <style lang="scss" scoped>
 .event--card {
-    color: $black;
-    border: 1px solid $black;
-    width: 70%;
-    margin: auto;
+    width: 90%;
+    margin: 1rem auto;
     height: auto;
     padding: 1rem;
     border-radius: 1rem;
     font-size: 1rem;
+    color: $grey;
+    background-color: $white;
+    box-shadow: 0px 17px 34px -20px $blue-bg-header;
 
     .picture--container {
         display: flex;
@@ -101,22 +102,13 @@ export default {
     }
 
     .event--card__map {
-        width: 40%;
+        width: 70%;
         margin: auto;
     }
 
     .event--card__content {
         width: 100%;
         margin: auto;
-    }
-
-    .img {
-        width: 58%;
-        height: auto;
-        border-radius: 1em 1em 0 0;
-        -o-object-fit: cover;
-        object-fit: cover;
-        transform: translateY(-2%);
     }
 
     .media-image {
@@ -128,17 +120,27 @@ export default {
         margin: 1rem auto;
     }
 
-    @media (min-width: 450px) {
-        .picture--container {
-            max-width: 70%;
-        }
+// Media query
 
-        h2 {
-            font-size: 1.6rem;
+    @media (min-width: 450px) {
+        .event--card {
+            width: 80%;
+
+            .picture--container {
+                max-width: 70%;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
         }
     }
 
     @media (min-width: 700px) {
+        .event--card {
+            width: 70%;
+        }
+
         .picture--container {
             max-width: 50%;
         }
@@ -155,6 +157,11 @@ export default {
         .event--card__content {
             width: 90%;
         }
+
+        .event--card__map {
+        width: 40%;
+    }
+
     }
 
     @media (min-width: 1000px) {

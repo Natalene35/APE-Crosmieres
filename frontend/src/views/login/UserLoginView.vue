@@ -1,7 +1,6 @@
 <template>
     <HeaderLayout />
     <UserLoginLayout />
-    <EventDetailLayout />
     <FooterLayout />
 </template>
 
@@ -10,15 +9,13 @@
 import HeaderLayout from '@/components/templates/HeaderLayout.vue'
 import FooterLayout from '@/components/templates/FooterLayout.vue'
 import UserLoginLayout from '@/components/login/UserLoginLayout.vue'
-import EventDetailLayout from '@/components/events/EventDetailLayout.vue'
 
 export default {
     name: 'HomeView',
     components: {
     HeaderLayout,
     FooterLayout,
-    UserLoginLayout,
-    EventDetailLayout
+    UserLoginLayout
 }
 }
 </script>
