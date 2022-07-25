@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import illustrationPicture from '@/assets/images/tilleul.jpg'
+import illustrationPicture from '@/assets/images/surr-holidays.png'
 import UserLoginService from '@/services/login/UserLoginService'
+
 export default {
     // Nom de notre composant 
     name: 'UserLoginLayout',
@@ -42,7 +43,9 @@ export default {
             password: null,
 
             errors: [],
-            succesLogin: []
+            succesLogin: [],
+            meta: null,
+            userId: sessionStorage.getItem("userID")
         }
     },
 
@@ -64,7 +67,6 @@ export default {
                     password: this.password,
                 })
 
-                console.log(response.data.id);
                 this.$store.commit('setUserID', response.data.id);
 
                 if (response.success === true) {
@@ -85,7 +87,7 @@ export default {
                 }
             }
         }
-    }
+    },
 }
 </script>
 
@@ -120,11 +122,12 @@ export default {
         }
 
         .img {
-            width: 100%;
+            width: 58%;
             height: auto;
             border-radius: 1em 1em 0 0;
+            -o-object-fit: cover;
             object-fit: cover;
-            transform: translateY(-26%);
+            transform: translateY(-2%);
         }
 
         .img--container {

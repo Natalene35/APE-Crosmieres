@@ -1,6 +1,8 @@
 <?php
 
 add_action('rest_api_init', 'ape_rest_sale_register');
+add_action('rest_api_init', 'ape_rest_sale_meta');
+//<----------------------------------ROAD-------------------------->>
 function ape_rest_sale_register()
 {
     // custom route when sale added
@@ -13,7 +15,33 @@ function ape_rest_sale_register()
     ));
 }
 
-// add request content to the custom post and add custom post meta
+//FUNCTION GET CUSTOM META BY ID 
+function ape_rest_sale_meta()
+{
+   // WE DEFINE NEW ROAD FOR GET ALL META BY USER ID
+   register_rest_route( 
+      'wp/v2',
+      'sale/meta/(?P<id>\d+)', array(
+       'methods' => 'GET',
+       'callback' => 'ape_rest_event_meta_handler',
+       'permission_callback' => function () {
+           return true;
+       }
+   ));
+}
+//<-----------------------------------METHOD------------------------------>
+// custom post meta by post_id
+function ape_rest_sale_meta_handler($request)
+{   
+    $response = [];
+    $parameters = $request->get_json_params();
+    $post_id= intval($request['id']);
+    //POST SQL REQUEST 
+    global $wpdb;
+    $rows = $wpdb->get_results("SELECT * FROM `wp_postmeta` WHERE `post_id`=".$post_id);
+    return $rows;
+};
+
 function ape_rest_add_sale_handler($request)
 {
 
