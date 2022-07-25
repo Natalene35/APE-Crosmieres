@@ -1,5 +1,4 @@
 <template>
-<!-- //Liste Vente  -->
     <section class="sale--section">
         <div class="sale--list">
             <SaleHomeListLayout v-bind:id="sale.id" v-bind:title="sale.title.rendered" v-bind:excerpt="sale.excerpt.rendered" v-for="sale in salesList" v-bind:key="sale.id"/>
