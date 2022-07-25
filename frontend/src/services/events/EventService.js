@@ -4,14 +4,36 @@ const apiClient = axios.create({
     baseURL: `http://apecrosmieres.local/wp-json/wp/v2`,
     headers: {
         Accept: 'application/json',
-        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4NDMyODA5LCJuYmYiOjE2NTg0MzI4MDksImV4cCI6MTY1OTAzNzYwOSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiNTNiODQ4NDkzOTA5MDE1YmNjOGFhNDVmNzJhMmRiMDcifX19.N5ghA1L6DlwcQl1L7eDijKlb2p4gOyiZhtOeFf-cSq8'
+       // Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4NDMyODA5LCJuYmYiOjE2NTg0MzI4MDksImV4cCI6MTY1OTAzNzYwOSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiNTNiODQ4NDkzOTA5MDE1YmNjOGFhNDVmNzJhMmRiMDcifX19.N5ghA1L6DlwcQl1L7eDijKlb2p4gOyiZhtOeFf-cSq8'
 
     },
     timeout: 10000
+    
 })
 
 export default {
 
+    // Get the list of all the events with their metadata
+    async findAll() { 
+        try {
+            const response = await apiClient.get('/event?_embed');
+            return response.data;
+
+        } catch (error) {
+            return error.response.data;
+        }
+    },
+    // Get an event by his id
+    async find(id) {
+        try {
+            const response = await apiClient.get("/event/" + id + "?_embed");
+            return response.data;
+        } catch (error) {
+            return error.response.data;
+        }
+
+    },
+    
     // to upload a file
     upload(file, title, postId, onUploadProgress) {
 
