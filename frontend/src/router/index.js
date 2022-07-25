@@ -36,6 +36,12 @@ const routes = [{
     name: 'userprofil',
      component: () => import(/* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
   },
+   //Road for back-office
+   {
+    path: '/back-office',
+    name: 'back-office',
+     component: () => import(/* webpackChunkName: "login" */ '../views/back-office/BackOfficeView.vue')
+  },
 ]
 
 const router = createRouter({
