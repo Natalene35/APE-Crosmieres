@@ -28,5 +28,58 @@ export default {
             return error.response.data
         }
 
-    }
+    },
+
+
+    // to upload a file
+    upload(file, title, postId, onUploadProgress) {
+
+        apiClient.defaults.headers.common['Content-Type'] = "multipart/form-data";
+
+        let formData = new FormData();
+        formData.append("title", 'event-' + title);
+        formData.append("file", file);
+        formData.append("post", postId);
+
+        return apiClient.post("/media", formData,
+            onUploadProgress
+        );
+    },
+
+    // to verify if files to upload exist
+    getFiles() {
+
+        return apiClient.get("/media");
+    },
+
+
+    // create an event
+    async addEvent(param) {
+
+        apiClient.defaults.headers.common['Content-Type'] = "application/json";
+
+        try {
+            const response = await apiClient.post('/event', param);
+            return response
+        } catch (errors) {
+            return errors.response
+        }
+    },
+
+
+    // to link media feature to an event
+    async addMediaToEvent(postId, mediaId) {
+
+        apiClient.defaults.headers.common['Content-Type'] = "image/*";
+        apiClient.defaults.headers.common['Content-Disposition'] = "attachment";
+
+        try {
+            const response = await apiClient.post('/event/' + postId, {
+                featured_media: mediaId
+            });
+            return response
+        } catch (errors) {
+            return errors.response
+        }
+    },
 }

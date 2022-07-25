@@ -17,24 +17,32 @@ const routes = [{
     component: () => import( /* webpackChunkName: "login" */ '../views/login/UserLoginView.vue')
   },
 
+  // route for creating event
   {
     path: '/event/create',
     name: 'eventCreate',
-    component: () => import( /* webpackChunkName: "login" */ '../views/events/EventCreateView.vue')
+    component: () => import( /* webpackChunkName: "create-event" */ '../views/events/EventCreateView.vue')
+  },
+
+  // route for creating sale
+  {
+    path: '/sale/create',
+    name: 'saleCreate',
+    component: () => import( /* webpackChunkName: "create-sale" */ '../views/sales/SaleCreateView.vue')
   },
 
   //Road for registration
   {
     path: '/registration',
     name: 'registration',
-     component: () => import(/* webpackChunkName: "login" */ '../views/registration/UserRegisterView.vue')
+    component: () => import( /* webpackChunkName: "login" */ '../views/registration/UserRegisterView.vue')
   },
 
   //Road for user profil
   {
     path: '/userprofil',
     name: 'userprofil',
-     component: () => import(/* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
+    component: () => import( /* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
   },
 ]
 
