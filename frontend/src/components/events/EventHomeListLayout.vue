@@ -3,13 +3,16 @@
     <div class="event--card">
         <!--<router-link v-bind:to="{name: 'event', params: {id: id}}"></router-link>-->
             <img class="event--card__img" v-bind:src="eventPicture">
-            <h2 class="event--card__title">
-                <div v-html="title"></div>
-            </h2>
-            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'"></div>
-            <div class="event--card__excerpt">
-                <div v-html="excerpt"></div>
+            
+            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
+                <h2 class="event--card__title">
+                    <div v-html="title"></div>
+                </h2>
+                <div class="event--card__excerpt">
+                    <div v-html="excerpt"></div>
+                </div>
             </div>
+            
         <!--</router-link>-->    
     </div>
      
@@ -60,11 +63,11 @@ export default {
         }
 
         .event--card__title {
-            color: $grey;
+            color: $black;
             font-weight: bold;
             padding-right: 2rem;
             padding-left: 2rem;
-            
+     
         }
 
         .event--card__media--image {
@@ -72,6 +75,8 @@ export default {
             background-position: center;
             background-size: cover;
             border-radius: 50%;
+            opacity: 0.45;
+            
 
         }
 

@@ -43,7 +43,9 @@ export default {
             password: null,
 
             errors: [],
-            succesLogin: []
+            succesLogin: [],
+            meta: null,
+            userId: sessionStorage.getItem("userID")
         }
     },
 
@@ -65,7 +67,6 @@ export default {
                     password: this.password,
                 })
 
-                console.log(response.data.id);
                 this.$store.commit('setUserID', response.data.id);
 
                 if (response.success === true) {
@@ -86,7 +87,7 @@ export default {
                 }
             }
         }
-    }
+    },
 }
 </script>
 

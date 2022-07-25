@@ -10,23 +10,22 @@ const apiClient = axios.create({
 });
 
 export default {
-    // Get the list of all the sales with their metadata
-    async findAll() { 
+    // Get the list of all the events with their metadata
+    async findAll() {
         try {
-            const response = await apiClient.get('/sale?_embed');
+            const response = await apiClient.get('/sale');
             return response.data;
-
         } catch (error) {
-            return error.response.data;
+            return error.response.data
         }
     },
-    // Get a sale by his id
+    // Get an event by his id
     async find(id) {
         try {
             const response = await apiClient.get("/sale/" + id + "?_embed");
             return response.data;
         } catch (error) {
-            return error.response.data;
+            return error.response.data
         }
 
     }

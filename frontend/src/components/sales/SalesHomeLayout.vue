@@ -42,6 +42,7 @@ export default {
     
     width: 30%;
     height: 100%;
+    
 
 
     .sale--list {
