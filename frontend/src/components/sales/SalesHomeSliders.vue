@@ -30,7 +30,6 @@
                 <div class="background--design background__5" v-bind:style="'height:'+this.scroll+'%'"></div>
             </section>
 
-    </section>
   </section>
 </template>
 
