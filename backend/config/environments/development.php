@@ -18,6 +18,7 @@ Config::define('FS_METHOD', 'direct');
 Config::define('WP_USE_THEMES', false);
 Config::define('JWT_AUTH_SECRET_KEY', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4MzkxNTkxLCJuYmYiOjE2NTgzOTE1OTEsImV4cCI6MTY1ODk5NjM5MSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiMzBjYWU3ZTdhOTMzODllNmI3ZTIxODQwZDhiNzJkMDgifX19.h7TrQV7IaEJZT3uwabJZxM6C5cr7o85AAvETQcWd6Lc');
 
+
 ini_set('display_errors', '1');
 
 // Enable plugin and theme updates and installation from the admin
