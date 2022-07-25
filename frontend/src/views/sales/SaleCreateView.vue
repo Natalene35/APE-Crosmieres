@@ -1,6 +1,6 @@
 <template>
   <HeaderLayout />
-  <EventCreateLayout />
+  <sale-create-layout />
   <FooterLayout />
 </template>
 
@@ -8,17 +8,17 @@
 // @ is an alias to /src
 import HeaderLayout from "@/components/templates/HeaderLayout.vue";
 import FooterLayout from "@/components/templates/FooterLayout.vue";
-import EventCreateLayout from "@/components/events/EventCreateLayout.vue";
+import SaleCreateLayout from "../../components/sales/SaleCreateLayout.vue";
 
 export default {
   name: "EventFormView",
   components: {
     HeaderLayout,
     FooterLayout,
-    EventCreateLayout,
+    SaleCreateLayout,
   },
   mounted() {
-    document.title = "Ajout événement";
+    document.title = "Ajout vente";
   },
 };
 </script>

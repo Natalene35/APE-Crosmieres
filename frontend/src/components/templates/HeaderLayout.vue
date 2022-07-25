@@ -43,8 +43,8 @@
                     <router-link v-bind:to="{ name: 'home' }" class="header--accueil">Accueil
                     </router-link>
                 </div>
-                <div class="header--nav__Vente">Vente</div>
-                <div class="header--nav__Evenement">Evenement</div>
+                <div class="header--nav__Vente">Ventes</div>
+                <div class="header--nav__Evenement">Evènements</div>
 
                 <div class="header--nav__Presentation">Présentation APE</div>
 
@@ -141,13 +141,13 @@ header {
 
     //<--------------BANNER------------>
     .header--title {
-        background-color: #46BFC7;
+        background-color: $blue-bg-header;
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: space-around;
         border-radius: 10px;
-        text-shadow: 1px 1px 1px black;
+        text-shadow: 1px 1px 1px $black;
         padding: 1rem;
 
 
@@ -177,11 +177,11 @@ header {
         h1 {
             width: 100%;
             font-size: 2.6rem;
-            color: white;
+            color: $white;
             font-family: 'Merienda', cursive;
 
             span {
-                color: #FBAD18;
+                color: $orange;
             }
 
             .header--town {
@@ -212,27 +212,27 @@ header {
         height: 2rem;
         margin-top: 0.5rem;
         font-weight: bold;
-
+        align-items: center;
 
         .header--nav__Accueil {
-            background-color: #85B689;
+            background-color: $green;
             margin-right: 0.3rem;
         }
 
         .header--nav__Vente {
-            background-color: #FBAD18;
+            background-color: $orange;
             margin-right: 0.3rem;
 
         }
 
         .header--nav__Evenement {
-            background-color: #EF6852;
+            background-color: $red;
             margin-right: 0.3rem;
 
         }
 
         .header--nav__Presentation {
-            background-color: #F8AAA4;
+            background-color: $pink;
 
         }
 
@@ -242,7 +242,7 @@ header {
             position: relative;
             font-size: large;
             border-radius: 7px;
-            text-shadow: 1px 1px 1px black;
+            text-shadow: 1px 1px 1px $black;
             padding: 3px;
 
         }
@@ -265,7 +265,7 @@ header {
         color: $white;
 
         .header--nav__Accueil {
-            background-color: #85B689;
+            background-color: $green;
 
             .header--accueil {
                 color: $white;
@@ -273,27 +273,27 @@ header {
         }
 
         .header--nav__Vente {
-            background-color: #FBAD18;
+            background-color: $orange;
             color: $white;
         }
 
         .header--nav__Evenement {
-            background-color: #EF6852;
+            background-color: $red;
             color: $white;
         }
 
         .header--nav__Presentation {
-            background-color: #8FCED7;
+            background-color: $blue;
             color: $white;
         }
 
         .header--nav__Inscription {
-            background-color: #F8AAA4;
+            background-color: $pink;
             color: $white;
         }
 
         .header--nav__Connexion {
-            background-color: #946973;
+            background-color: $purple;
 
             .header--login {
                 color: $white;
@@ -310,7 +310,7 @@ header {
             padding: 6%;
             font-weight: bold;
             margin-top: 0.5rem;
-            color: white;
+            color: $white;
             border-radius: 22px;
             box-shadow: 1px 1px 1px;
         }
@@ -324,10 +324,10 @@ header {
         margin: 11%;
         height: 80px;
         width: 80px;
-        border: 1px solid black;
+        border: 1px solid $black;
         border-radius: 50%;
         padding: 4%;
-        box-shadow: -0.5em 0.5em black;
+        box-shadow: -0.5em 0.5em $black;
     }
 }
 

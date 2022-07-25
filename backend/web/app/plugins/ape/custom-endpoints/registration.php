@@ -24,7 +24,7 @@ function ape_rest_user_register()
     // WE DEFINE NEW ROAD FOR GET ALL META BY USER ID
     register_rest_route( 
        'wp/v2',
-       'users/meta/(?P<id>\d+)', array(
+       'users/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'ape_rest_user_meta_handler',
         'permission_callback' => function () {

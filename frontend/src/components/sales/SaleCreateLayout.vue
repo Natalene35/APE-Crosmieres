@@ -8,10 +8,10 @@
             src="../../assets/images/jelly-message-sent-by-character.png"
             alt=""
           />
-          <h1 class="title">Ajout d'un événement</h1>
+          <h1 class="title">Ajout d'une vente</h1>
         </div>
 
-        <label class="field__label">Titre de la publication </label>
+        <label class="field__label">Titre de la vente </label>
         <input
           class="field__input"
           type="text"
@@ -28,21 +28,24 @@
           v-model="content"
         ></textarea>
 
-        <label class="field__label">Date de l'événement </label>
+        <label class="field__label">Date de la vente </label>
         <input
           class="field__input"
           type="date"
           placeholder=""
-          v-model="eventDate"
+          v-model="saleDate"
         />
 
-        <label class="field__label">Lieu de l'événement </label>
+        <label class="field__label">Lieu de la vente </label>
         <input
           class="field__input"
           type="text"
           placeholder=""
           v-model="location"
         />
+
+        <label class="field__label">Lien du site marchand </label>
+        <input class="field__input" type="text" placeholder="" v-model="link" />
 
         <label class="field__label"> Image </label>
         <input
@@ -93,15 +96,16 @@
 </template>
 
 <script>
-import EventService from "@/services/events/EventService";
+import SaleService from "@/services/sales/SaleService";
 export default {
-  name: "EventCreateView",
+  name: "SaleCreateView",
   data() {
     return {
       title: null,
       content: null,
-      eventDate: null,
+      saleDate: null,
       location: null,
+      link: null,
       currentImage: undefined,
       previewImage: undefined,
       progress: 0,
@@ -121,31 +125,31 @@ export default {
     upload(postId) {
       this.progress = 0;
 
-      EventService.upload(this.currentImage, this.title, postId, (event) => {
-        this.progress = Math.round((100 * event.loaded) / event.total);
+      SaleService.upload(this.currentImage, this.title, postId, (sale) => {
+        this.progress = Math.round((100 * sale.loaded) / sale.total);
       })
         .then(() => {
-          return EventService.getFiles();
+          return SaleService.getFiles();
         })
         .then((images) => {
           this.imageInfos = images.data;
           // pour executer la fct createpost avec l'id du média
-          EventService.addMediaToEvent(postId, this.imageInfos[0].id).then(
+          SaleService.addMediaToSale(postId, this.imageInfos[0].id).then(
             (response) => {
               if (response.status === 200) {
                 this.title = null;
                 this.content = null;
-                this.eventDate = null;
+                this.saleDate = null;
                 this.location = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
                 this.progress = 0;
-                this.alerts = "Evénement créé";
+                this.alerts = "Vente créé";
                 //redirection vers la home
                 setTimeout(() => this.$router.push({ name: "home" }), 1500);
               } else {
                 this.errors.push(
-                  "Erreur d'enregistrement, veuillez verifier la présence de l'image dans l'événement"
+                  "Erreur d'enregistrement, veuillez verifier la présence de l'image dans la vente"
                 );
               }
             }
@@ -154,16 +158,16 @@ export default {
         .catch((err) => {
           this.progress = 0;
           this.errors.push("Erreur sur le chargement de l'image !");
-          this.errors.push("L'événement a été crée sans l'image");
+          this.errors.push("La vente a été créée sans l'image");
           this.errors.push(
-            "Veuillez modifier dans la page de modification d'événement svp."
+            "Veuillez modifier dans la page de modification des ventes svp."
           );
           console.log(err);
           this.currentImage = undefined;
         });
     },
 
-    // to submit fields and send datas to custom post 'event'
+    // to submit fields and send datas to custom post 'sale'
     async submitForm() {
       // Reset error table
       this.errors = [];
@@ -176,11 +180,14 @@ export default {
       if (!this.content) {
         this.errors.push("Veuillez remplir une description svp");
       }
-      if (!this.eventDate) {
+      if (!this.saleDate) {
         this.errors.push("Veuillez remplir une date svp");
       }
       if (!this.location) {
         this.errors.push("Veuillez remplir un lieu svp");
+      }
+      if (!this.link) {
+        this.errors.push("Veuillez remplir un lien svp");
       }
       if (!this.currentImage) {
         this.errors.push("Veuillez choisir une image svp");
@@ -197,24 +204,26 @@ export default {
           content: this.content,
           date: this.eventDate,
           lieu: this.location,
-          post_status: "publish",
+          lien: this.link,
+          status: "publish",
         };
 
-        const response = await EventService.addEvent(params);
+        const response = await SaleService.addSale(params);
 
-        if (response) {
+        if (response.status == 200) {
+          console.log(response);
           //response.data.id is the post id
           this.upload(response.data.id);
         } else {
           this.errors.push(
-            "Erreur d'enregistrement de l'événement ! Veuillez verifier la présence de l'événement"
+            "Erreur d'enregistrement de la vente ! Veuillez verifier la présence de la vente"
           );
         }
       }
     },
   },
   mounted() {
-    EventService.getFiles().then((response) => {
+    SaleService.getFiles().then((response) => {
       this.imageInfos = response.data;
     });
   },
