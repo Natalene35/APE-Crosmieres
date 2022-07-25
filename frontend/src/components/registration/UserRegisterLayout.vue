@@ -33,7 +33,7 @@
                         succesMsg
                 }}
                 </p>
-                <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                <p class="push--error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
 
                 <button v-on:click="sendForm" class="subscribe">Créez votre compte</button>
             </div>
@@ -47,7 +47,6 @@ import illustrationPicture from "@/assets/images/surr-holidays.png"
 
 export default {
     name: "UserRegistrationLayout",
-
 
     data() {
         return {
@@ -116,7 +115,7 @@ export default {
                     this.succesRegistration.push("Inscription réussi");
 
                     // redirect after showing success message
-                    setTimeout(() => this.$router.push({ name: 'home' }), 1000);
+                    setTimeout(() => this.$router.push({ name: 'login' }), 1000);
                 }
                 else if (response.code === 406) {
                     this.errors.push('Cette e-mail de compte existe déja');
@@ -225,13 +224,20 @@ export default {
         cursor: pointer;
     }
 
-    .push--message {
+    .push--error {
         color: $red;
-
-        p {
-            margin-bottom: 0.5rem;
-        }
+        text-transform: uppercase;
+        font-size: 1rem;
+        margin-bottom: 1rem;
     }
+
+    .succesregistration {
+        color: green;
+        text-transform: uppercase;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
 
     @media (max-width: 425px) {
         .container {

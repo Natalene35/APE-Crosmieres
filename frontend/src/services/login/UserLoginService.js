@@ -25,13 +25,25 @@ export default {
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const role = await apiClient.get('/wp/v2/users/' + id + '?context=edit');
             return role.data
-        } catch(error) {
+        } catch (error) {
             return error.response.data
-        } 
+        }
     },
-    async getMeta(id) {
+
+    async find(id) {
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.get("/wp/v2/users/" + id + "?context=edit" );
+            return response.data;
+        } catch (error) {
+            return error.response.data
+        }
+    },
+        
+    
+    async getMeta(id) {
+         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+        try {
             const meta = await apiClient.get('/wp/v2/users/meta/'+ id +'');
             return meta.data
         } catch(error) {

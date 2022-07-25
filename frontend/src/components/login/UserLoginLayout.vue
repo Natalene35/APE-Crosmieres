@@ -7,10 +7,10 @@
             <div v-on:keyup.enter="login" class="content">
                 <h1 class="title">Connexion</h1>
                 <div class="push--message">
-                    <p v-for="succesMsg in succesLogin" v-bind:key="succesMsg">{{
+                    <p class="succesregistration" v-for="succesMsg in succesLogin" v-bind:key="succesMsg">{{
                             succesMsg
                     }}</p>
-                    <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                    <p class="push--error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
                 </div>
                 <div class="field">
                     <label class="field__label">Nom utilisateur</label>
@@ -81,7 +81,7 @@ export default {
                     // A success message is displayed
                     this.succesLogin.push("Connexion réussi");
                     // redirect after showing success message
-                    setTimeout(() => this.$router.push({ name: 'home' }), 500);
+                    setTimeout(() => this.$router.push({ name: 'home' }), 1000);
                 } else {
                     this.errors.push("Mauvais nom ou mot de passe");
                 }
@@ -177,12 +177,18 @@ export default {
             cursor: pointer;
         }
 
-        .push--message {
+        .push--error {
             color: $red;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
 
-            p {
-                margin-bottom: 0.5rem;
-            }
+        .succesregistration {
+            color: green;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 1rem;
         }
     }
 
