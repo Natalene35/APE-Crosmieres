@@ -1,5 +1,4 @@
 <template>
-<!-- //Liste Vente  -->
     <section class="sale--section">
         <ul class="sale--list">
 
