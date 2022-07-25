@@ -163,7 +163,7 @@ export default {
         });
     },
 
-    // to submit fiels and send datas to custom post 'event'
+    // to submit fields and send datas to custom post 'event'
     async submitForm() {
       // Reset error table
       this.errors = [];

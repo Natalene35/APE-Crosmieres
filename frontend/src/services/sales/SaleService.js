@@ -30,14 +30,15 @@ export default {
 
     },
 
-
     // to upload a file
     upload(file, title, postId, onUploadProgress) {
 
         apiClient.defaults.headers.common['Content-Type'] = "multipart/form-data";
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+
 
         let formData = new FormData();
-        formData.append("title", 'event-' + title);
+        formData.append("title", 'sale-' + title);
         formData.append("file", file);
         formData.append("post", postId);
 
@@ -53,13 +54,13 @@ export default {
     },
 
 
-    // create an event
-    async addEvent(param) {
+    // create an sale
+    async addSale(param) {
 
         apiClient.defaults.headers.common['Content-Type'] = "application/json";
 
         try {
-            const response = await apiClient.post('/event', param);
+            const response = await apiClient.post('/sale', param);
             return response
         } catch (errors) {
             return errors.response
@@ -68,13 +69,13 @@ export default {
 
 
     // to link media feature to an event
-    async addMediaToEvent(postId, mediaId) {
+    async addMediaToSale(postId, mediaId) {
 
         apiClient.defaults.headers.common['Content-Type'] = "image/*";
         apiClient.defaults.headers.common['Content-Disposition'] = "attachment";
 
         try {
-            const response = await apiClient.post('/event/' + postId, {
+            const response = await apiClient.post('/sale/' + postId, {
                 featured_media: mediaId
             });
             return response

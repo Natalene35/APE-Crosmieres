@@ -103,7 +103,7 @@ export default {
     return {
       title: null,
       content: null,
-      eventDate: null,
+      saleDate: null,
       location: null,
       link: null,
       currentImage: undefined,
@@ -125,8 +125,8 @@ export default {
     upload(postId) {
       this.progress = 0;
 
-      SaleService.upload(this.currentImage, this.title, postId, (event) => {
-        this.progress = Math.round((100 * event.loaded) / event.total);
+      SaleService.upload(this.currentImage, this.title, postId, (sale) => {
+        this.progress = Math.round((100 * sale.loaded) / sale.total);
       })
         .then(() => {
           return SaleService.getFiles();
@@ -134,17 +134,17 @@ export default {
         .then((images) => {
           this.imageInfos = images.data;
           // pour executer la fct createpost avec l'id du média
-          SaleService.addMediaToEvent(postId, this.imageInfos[0].id).then(
+          SaleService.addMediaToSale(postId, this.imageInfos[0].id).then(
             (response) => {
               if (response.status === 200) {
                 this.title = null;
                 this.content = null;
-                this.eventDate = null;
+                this.saleDate = null;
                 this.location = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
                 this.progress = 0;
-                this.alerts = "Vante créé";
+                this.alerts = "Vente créé";
                 //redirection vers la home
                 setTimeout(() => this.$router.push({ name: "home" }), 1500);
               } else {
@@ -167,7 +167,7 @@ export default {
         });
     },
 
-    // to submit fiels and send datas to custom post 'event'
+    // to submit fields and send datas to custom post 'sale'
     async submitForm() {
       // Reset error table
       this.errors = [];
@@ -186,6 +186,9 @@ export default {
       if (!this.location) {
         this.errors.push("Veuillez remplir un lieu svp");
       }
+            if (!this.link) {
+        this.errors.push("Veuillez remplir un lien svp");
+      }
       if (!this.currentImage) {
         this.errors.push("Veuillez choisir une image svp");
       }
@@ -201,17 +204,18 @@ export default {
           content: this.content,
           date: this.eventDate,
           lieu: this.location,
-          post_status: "publish",
+          lien: this.link,
+          status: "publish",
         };
 
-        const response = await SaleService.addEvent(params);
+        const response = await SaleService.addSale(params);
 
         if (response) {
           //response.data.id is the post id
           this.upload(response.data.id);
         } else {
           this.errors.push(
-            "Erreur d'enregistrement de l'événement ! Veuillez verifier la présence de l'événement"
+            "Erreur d'enregistrement de la vente ! Veuillez verifier la présence de la vente"
           );
         }
       }
