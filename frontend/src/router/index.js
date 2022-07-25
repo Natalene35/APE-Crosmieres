@@ -22,6 +22,18 @@ const routes = [{
     name: 'eventCreate',
     component: () => import( /* webpackChunkName: "login" */ '../views/events/EventCreateView.vue')
   },
+  
+  {
+    path: '/event/:id',
+    name: 'event',
+    component: () => import(/* webpackChunkName: "event" */ '../views/events/EventView.vue')
+  },
+
+  {
+    path: '/sale/:id',
+    name: 'sale',
+    component: () => import(/* webpackChunkName: "sale" */ '../views/sales/SaleView.vue')
+  },
 
   //Road for registration
   {
@@ -29,12 +41,6 @@ const routes = [{
     name: 'registration',
      component: () => import(/* webpackChunkName: "login" */ '../views/registration/UserRegisterView.vue')
   },
-  
-  {
-    path: '/event/:id',
-    name: 'event',
-    component: () => import(/* webpackChunkName: "event" */ '../views/events/EventView.vue')
-  }
 ]
 
 const router = createRouter({

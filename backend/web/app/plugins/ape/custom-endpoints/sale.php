@@ -23,7 +23,7 @@ function ape_rest_sale_meta()
       'wp/v2',
       'sale/meta/(?P<id>\d+)', array(
        'methods' => 'GET',
-       'callback' => 'ape_rest_event_meta_handler',
+       'callback' => 'ape_rest_sale_meta_handler',
        'permission_callback' => function () {
            return true;
        }
@@ -50,7 +50,6 @@ function ape_rest_add_sale_handler($request)
     $title = sanitize_text_field($parameters['title']);
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
-    $lieu = sanitize_text_field($parameters['lieu']);
     $lien = sanitize_text_field($parameters['lien']);
 
     // add to the database
@@ -59,7 +58,6 @@ function ape_rest_add_sale_handler($request)
         'post_content' => $content,
         'post_type' => 'sale'
     ]);
-    add_post_meta($post_id, 'lieu', $lieu);
     add_post_meta($post_id, 'lien', $lien);
     add_post_meta($post_id, 'date', $date);
 
