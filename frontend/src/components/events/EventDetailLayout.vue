@@ -37,32 +37,34 @@ export default {
             map: null
         }
     },
-    async mounted() {
-        //GET META EXPLICATION WE NEED TO PLACE IN YOUR COMPONENTS
-      let arrayMeta = await EventService.getMeta("index")
-        for (let index = 0; index < arrayMeta.length; index++) {
-            const metaElmt = arrayMeta[index];
-            //For take meta_key enter key in the exemple its "date"
-            if (metaElmt.meta_key == "date") {
-                this.date = metaElmt.meta_value;
-            }
-            if (metaElmt.meta_key == "location") {
-                this.date = metaElmt.meta_value;
-            }
-        } 
-        // Allow to retrieve the id dynamic parameter by using the $route object
+     async mounted() {
         let id = this.$route.params.id;
-        const response = await EventService.find(id);
-        if (response.code) {
-            // IL y a une erreur
-            alert(response.message);
-            // @TODO Ajouter une redirection vers l'accueil avec un message d'erreur
-        } else {
-            this.title = response.title.rendered;
-            this.content = response.content.rendered;
-            this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
-            console.log(this.image)
-            // this.map = response.map.rendered;
+        if (id) {
+            //GET META EXPLICATION WE NEED TO PLACE IN YOUR COMPONENTS
+            let arrayMeta = await EventService.getMeta(id)
+            for (let index = 0; index < arrayMeta.length; index++) {
+                const metaElmt = arrayMeta[index];
+                //For take meta_key enter key in the exemple its "date"
+                if (metaElmt.meta_key == "date") {
+                    this.date = metaElmt.meta_value;
+                }
+                if (metaElmt.meta_key == "lieu") {
+                    this.location = metaElmt.meta_value;
+                }
+            }
+            // Allow to retrieve the id dynamic parameter by using the $route object
+            const response = await EventService.find(id);
+            if (response.code) {
+                // IL y a une erreur
+                alert(response.message);
+                // @TODO Ajouter une redirection vers l'accueil avec un message d'erreur
+            } else {
+                this.title = response.title.rendered;
+                this.content = response.content.rendered;
+                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
+                console.log(this.image)
+                // this.map = response.map.rendered;
+            }
         }
     }
 }

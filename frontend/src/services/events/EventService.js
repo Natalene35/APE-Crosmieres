@@ -21,8 +21,9 @@ export default {
     },
     // Get an event by his id
     async find(id) {
+         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            const response = await apiClient.get("/event/" + id + "?_embed");
+            const response = await apiClient.get("/event/" + id + "");
             return response.data;
         } catch (error) {
             return error.response.data
@@ -31,8 +32,9 @@ export default {
     },
     // Get meta value by sale's id
     async getMeta(id) {
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            const meta = await apiClient.get('/wp/v2/event/meta/'+ id +'');
+            const meta = await apiClient.get('/event/meta/'+ id +'');
             return meta.data
         } catch(error) {
             return error.response.data
