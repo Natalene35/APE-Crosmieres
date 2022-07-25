@@ -1,7 +1,7 @@
 <template>
     <!-- //Liste Evenements  -->
     <section class="event--section">
-        <EventHomeListLayout v-bind:src="eventPicture" v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:excerpt="event.excerpt.rendered" v-for="event in eventsList" v-bind:key="event.id"/>
+        <EventHomeListLayout v-bind:src="eventPicture"  v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'" v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:excerpt="event.excerpt.rendered" v-for="event in eventsList" v-bind:key="event.id"/>
 
     </section>
 
