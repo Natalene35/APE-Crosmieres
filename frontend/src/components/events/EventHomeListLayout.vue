@@ -2,17 +2,17 @@
 
     <div class="event--card">
         <!--<router-link v-bind:to="{name: 'event', params: {id: id}}"></router-link>-->
-            <img class="event--card__img" v-bind:src="eventPicture">
+            <!--<img class="event--card__img" v-bind:src="eventPicture">-->
             
             <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
-                <h2 class="event--card__title">
+                
+            </div>
+            <h2 class="event--card__title">
                     <div v-html="title"></div>
                 </h2>
                 <div class="event--card__excerpt">
                     <div v-html="excerpt"></div>
                 </div>
-            </div>
-            
         <!--</router-link>-->    
     </div>
      
@@ -47,7 +47,7 @@ export default {
 
 .event--card {
     border: 1px solid $white;
-    border-radius: 50%;
+    border-radius: 2rem 2rem;
     width:45%;
     background-color: $white;
     margin: 1%;
@@ -55,7 +55,8 @@ export default {
     flex-direction: column;
     margin-bottom: 3rem;
     box-sizing: border-box;
-    padding:1.5rem;
+    padding-bottom: 5rem;
+    
 
         .event--card__img {
             width: 6rem;
@@ -63,19 +64,22 @@ export default {
         }
 
         .event--card__title {
-            color: $black;
+            color: $grey;
             font-weight: bold;
             padding-right: 2rem;
             padding-left: 2rem;
+            font-size: 1.2rem;
+            padding-top: 1rem;
      
         }
 
         .event--card__media--image {
-            min-height: 20%;
+            Width: 100%;
+            min-height: 30%;
             background-position: center;
             background-size: cover;
-            border-radius: 50%;
-            opacity: 0.45;
+            border-radius: 2rem 2rem 0 0;
+            
             
 
         }
