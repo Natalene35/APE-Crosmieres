@@ -19,7 +19,4 @@ require_once plugin_dir_path(__FILE__) . "post-types/sale.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/event.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/sale.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/registration.php";
-<<<<<<< HEAD
-=======
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/child.php";
->>>>>>> master
