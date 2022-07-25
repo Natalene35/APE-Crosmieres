@@ -4,8 +4,7 @@ const apiClient = axios.create({
     baseURL: 'http://apecrosmieres.local/wp-json/wp/v2',
     headers: {
         Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4NDMyODA5LCJuYmYiOjE2NTg0MzI4MDksImV4cCI6MTY1OTAzNzYwOSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiNTNiODQ4NDkzOTA5MDE1YmNjOGFhNDVmNzJhMmRiMDcifX19.N5ghA1L6DlwcQl1L7eDijKlb2p4gOyiZhtOeFf-cSq8'
+        'Content-Type': 'application/json'
     },
     timeout: 10000
 });
