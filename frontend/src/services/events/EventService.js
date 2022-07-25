@@ -29,6 +29,15 @@ export default {
         }
 
     },
+    // Get meta value by sale's id
+    async getMeta(id) {
+        try {
+            const meta = await apiClient.get('/wp/v2/event/meta/'+ id +'');
+            return meta.data
+        } catch(error) {
+            return error.response.data
+        } 
+    },
 
     // to upload a file
     upload(file, title, postId, onUploadProgress) {

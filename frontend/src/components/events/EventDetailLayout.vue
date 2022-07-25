@@ -7,8 +7,8 @@
 
         <h2 class="event--card__title">{{ title }}</h2>
 
-        <div class="event--card__date">Date de l'événement</div>
-        <div class="event--card__location">Emplacement de l'événement</div>
+        <div class="event--card__date">{{ date }}</div>
+        <div class="event--card__location">{{ location }}</div>
 
         <div class="media-image" v-bind:style="'background-image:url(' + image + ')'"></div>
 
@@ -38,6 +38,18 @@ export default {
         }
     },
     async mounted() {
+        //GET META EXPLICATION WE NEED TO PLACE IN YOUR COMPONENTS
+      let arrayMeta = await EventService.getMeta("index")
+        for (let index = 0; index < arrayMeta.length; index++) {
+            const metaElmt = arrayMeta[index];
+            //For take meta_key enter key in the exemple its "date"
+            if (metaElmt.meta_key == "date") {
+                this.date = metaElmt.meta_value;
+            }
+            if (metaElmt.meta_key == "location") {
+                this.date = metaElmt.meta_value;
+            }
+        } 
         // Allow to retrieve the id dynamic parameter by using the $route object
         let id = this.$route.params.id;
         const response = await EventService.find(id);
@@ -47,8 +59,6 @@ export default {
             // @TODO Ajouter une redirection vers l'accueil avec un message d'erreur
         } else {
             this.title = response.title.rendered;
-            /* this.date = response.date.rendered;
-            this.location = response.location.rendered; */
             this.content = response.content.rendered;
             this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
             console.log(this.image)
@@ -132,6 +142,7 @@ export default {
 
             h2 {
                 font-size: 1.6rem;
+                background-color: red;
             }
         }
     }
