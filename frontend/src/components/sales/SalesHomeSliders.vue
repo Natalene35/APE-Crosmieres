@@ -1,4 +1,5 @@
 <template>
+
     <section class="sale--sliders__all" >
         <!-- <------------------BUBBLE----------------> 
         <div class="background--bubble__container">
@@ -28,6 +29,7 @@
                 <div class="background--design"></div>
                 <div class="background--design background__5" v-bind:style="'height:'+this.scroll+'%'"></div>
             </section>
+
     </section>
 </template>
 
@@ -35,6 +37,7 @@
 //Service
 import SaleService from '@/services/sales/SaleService'
 export default {
+
 
   name: 'SalesHomeSliders',
   data(){
@@ -69,6 +72,7 @@ export default {
         handleScroll(){
             //Modify her for scroll animation
             this.scroll=(window.scrollY)/8
+
         }
  
     },
@@ -77,29 +81,72 @@ export default {
     this.saleSlide=await SaleService.findAll();
     this.maxSlide=this.saleSlide.length-1;
      window.addEventListener('scroll', this.handleScroll);
+
     }
 }
 </script>
 
 <style lang="scss">
 
+
 .sale--sliders__all{
+
     display: none;
 }
+
 @media (max-width: 425px) {
 
-    main{
-    flex-direction: column;
-    position: relative;
-    z-index: 3;
-    overflow: hidden;
+    main {
+        flex-direction: column;
+        position: relative;
+        z-index: 3;
+        overflow: hidden;
     }
-    .sale--section{
+
+    .sale--section {
         display: none;
     }
-        .sale--sliders__all{
-                
+
+    .sale--sliders__all {
+
+        display: flex;
+        justify-content: space-between;
+        border-radius: 1rem;
+        color: black;
+        width: 80%;
+        margin: 0px auto 1rem auto;
+        height: 12rem;
+        align-items: center;
+        justify-content: center;
+
+        .background--design__all {
+            height: 500vh;
+            width: 1000vh;
+            background-color: transparent;
+            position: absolute;
+            z-index: -7;
             display: flex;
+            flex-wrap: wrap;
+            display: initial;
+
+            .background--design {
+                background-color: $blue-bg-header;
+                margin: auto;
+                border: 2px solid black;
+                box-shadow: 1px 1px 1px black;
+                border-radius: 50%;
+                width: 8%;
+                height: 26%;
+                z-index: 0;
+                position: relative;
+                border-radius: 66%;
+                box-shadow: -14px 0px 1px white;
+            }
+        }
+
+        div {
+            display: flex;
+
             flex-direction: column;
             justify-content: space-between;
             border-radius: 1rem;
@@ -154,10 +201,11 @@ export default {
                     border-radius: 66%;
                     box-shadow: -14px 0px 1px white;                   
                 }
+
             }
-            div{
-                display: flex;
-                align-items: center;                
+
+            .hidden {
+                display: none;
             }
             .sale--sliders{
                     border-radius: 1rem;
@@ -215,7 +263,20 @@ export default {
                     transition: all;                    
                 }
                 
+
+
+            .active {
+                display: contents;
+            }
+
+            .sale--sliders__text {
+                height: 12rem;
+                width: inherit;
+                border: 1px solid $white;
+                border-radius: 1rem;
+
             }
         }
+    }
 }
 </style>
