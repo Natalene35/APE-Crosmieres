@@ -152,7 +152,7 @@ export default {
         display: inline-block;
         border: none;
         border-radius: 0.5em;
-        width: 30%;
+        width: 50%;
         margin: 1rem;
         cursor: pointer;
     }

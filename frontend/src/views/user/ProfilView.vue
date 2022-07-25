@@ -1,6 +1,8 @@
 <template>
     <HeaderLayout />
-    <ProfilLayout />
+    <main>
+        <ProfilLayout />
+    </main>
     <FooterLayout />
 </template>
 
@@ -22,4 +24,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+main {
+    height: 100%;
+    display: flex;
+    list-style-type: none;
+    justify-content: space-around;
+}
 </style>

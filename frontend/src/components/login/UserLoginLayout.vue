@@ -81,7 +81,7 @@ export default {
                     // A success message is displayed
                     this.succesLogin.push("Connexion réussi");
                     // redirect after showing success message
-                    setTimeout(() => this.$router.push({ name: 'login' }), 500);
+                    setTimeout(() => this.$router.push({ name: 'home' }), 500);
                 } else {
                     this.errors.push("Mauvais nom ou mot de passe");
                 }

@@ -115,7 +115,7 @@ export default {
                     this.succesRegistration.push("Inscription réussi");
 
                     // redirect after showing success message
-                    setTimeout(() => this.$router.push({ name: 'home' }), 1000);
+                    setTimeout(() => this.$router.push({ name: 'login' }), 1000);
                 }
                 else if (response.code === 406) {
                     this.errors.push('Cette e-mail de compte existe déja');
