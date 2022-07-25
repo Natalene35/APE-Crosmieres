@@ -36,12 +36,18 @@ const routes = [{
     component: () => import(/* webpackChunkName: "event" */ '../views/events/EventView.vue')
   },
 
-
   //Road for registration
   {
     path: '/registration',
     name: 'registration',
      component: () => import(/* webpackChunkName: "login" */ '../views/registration/UserRegisterView.vue')
+  },
+
+  //Road for user profil
+  {
+    path: '/userprofil',
+    name: 'userprofil',
+     component: () => import(/* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
   },
 ];
 
@@ -51,4 +57,5 @@ const router = createRouter({
 });
 
 export default router;
+
 

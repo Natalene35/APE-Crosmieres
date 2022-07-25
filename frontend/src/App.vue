@@ -22,12 +22,10 @@
   background-color: $blue-light-bg;
   color: $white;
 
-  
-  
-  
 }
-.overflow--hidden{    
-    overflow: hidden;
+
+.overflow--hidden {
+  overflow: hidden;
 }
 </style>
 
