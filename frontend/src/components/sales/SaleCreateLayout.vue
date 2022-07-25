@@ -33,7 +33,7 @@
           class="field__input"
           type="date"
           placeholder=""
-          v-model="eventDate"
+          v-model="saleDate"
         />
 
         <label class="field__label">Lieu de la vente </label>
@@ -180,13 +180,13 @@ export default {
       if (!this.content) {
         this.errors.push("Veuillez remplir une description svp");
       }
-      if (!this.eventDate) {
+      if (!this.saleDate) {
         this.errors.push("Veuillez remplir une date svp");
       }
       if (!this.location) {
         this.errors.push("Veuillez remplir un lieu svp");
       }
-            if (!this.link) {
+      if (!this.link) {
         this.errors.push("Veuillez remplir un lien svp");
       }
       if (!this.currentImage) {
@@ -210,7 +210,8 @@ export default {
 
         const response = await SaleService.addSale(params);
 
-        if (response) {
+        if (response.status == 200) {
+          console.log(response);
           //response.data.id is the post id
           this.upload(response.data.id);
         } else {
