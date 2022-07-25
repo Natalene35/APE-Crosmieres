@@ -10,6 +10,7 @@ Version: 0.0.1
 
 require __DIR__ . '/vendor/autoload.php';
 
+
 require_once plugin_dir_path(__FILE__) . "post-types/event.php";
 require_once plugin_dir_path(__FILE__) . "post-types/sale.php";
 
@@ -17,6 +18,5 @@ require_once plugin_dir_path(__FILE__) . "post-types/sale.php";
 
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/event.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/sale.php";
-
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/registration.php";
-
+require_once plugin_dir_path(__FILE__) . "custom-endpoints/child.php";
