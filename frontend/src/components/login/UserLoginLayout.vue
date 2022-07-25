@@ -27,8 +27,9 @@
 </template>
 
 <script>
-import illustrationPicture from '@/assets/images/tilleul.jpg'
+import illustrationPicture from '@/assets/images/surr-holidays.png'
 import UserLoginService from '@/services/login/UserLoginService'
+
 export default {
     // Nom de notre composant 
     name: 'UserLoginLayout',
@@ -121,11 +122,12 @@ export default {
         }
 
         .img {
-            width: 100%;
+            width: 58%;
             height: auto;
             border-radius: 1em 1em 0 0;
+            -o-object-fit: cover;
             object-fit: cover;
-            transform: translateY(-26%);
+            transform: translateY(-2%);
         }
 
         .img--container {
