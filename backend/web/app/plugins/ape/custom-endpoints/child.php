@@ -44,8 +44,6 @@ VALUES ('$child_firstname',
         '$child_lastname',
         '$child_class')");
 
-    $response['code'] = 200;
-    $response['message'] = __($child_firstname . "' Registration was Successful", "ape_rest_child");
-
-    return $rows;
+    return
+        $response['code'] = 200;
 };

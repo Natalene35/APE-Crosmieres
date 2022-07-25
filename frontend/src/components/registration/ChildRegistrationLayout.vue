@@ -24,7 +24,7 @@
                     <input type="radio" id="CE2" value="CE2" v-model="picked" />
                     <label for="CE2">CE2</label>
                 </div>
-                <p v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
                 <button v-on:click="add_child" class="subscribe">Ajouter un enfant ?</button>
             </div>
         </div>
@@ -152,10 +152,12 @@ export default {
         display: inline-block;
         border: none;
         border-radius: 0.5em;
-        width: 50%;
+        width: 60%;
         margin: 1rem;
         cursor: pointer;
     }
+
+
 
     @media (max-width: 425px) {
         .container {

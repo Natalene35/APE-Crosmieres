@@ -33,7 +33,7 @@
                         succesMsg
                 }}
                 </p>
-                <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
+                <p class="push--error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
 
                 <button v-on:click="sendForm" class="subscribe">Créez votre compte</button>
             </div>
@@ -224,13 +224,20 @@ export default {
         cursor: pointer;
     }
 
-    .push--message {
+    .push--error {
         color: $red;
-
-        p {
-            margin-bottom: 0.5rem;
-        }
+        text-transform: uppercase;
+        font-size: 1rem;
+        margin-bottom: 1rem;
     }
+
+    .succesregistration {
+        color: green;
+        text-transform: uppercase;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+    }
+
 
     @media (max-width: 425px) {
         .container {
