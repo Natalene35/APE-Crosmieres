@@ -1,13 +1,12 @@
-.background--bubble__container{
+.background--bubble__container{   
     position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    flex-direction: column;
+    left: 40%;
+    top: -17px;
+    height: 31%;
     .background--design__bubble{
         background-color: $blue-light-bg;
-        height: 3VH;
-        width: 3VH;
+        height: 1.5VH;
+        width: 1.5VH;
         border-radius: 50%;
         box-shadow: inset 1px 1px 1px $black;
         border: 1px solid black;
@@ -15,20 +14,14 @@
         
     }
     .background--design__bubble:nth-child(1){
-        height: 1.5VH;
-        width: 1.5VH;
         animation: animBubble1 infinite;
     animation-duration: 10s;
     }
     .background--design__bubble:nth-child(2){
-        height: 2VH;
-        width: 2VH;
         animation: animBubble2 infinite;
         animation-duration: 10s;
     }
     .background--design__bubble:nth-child(3){
-        height: 2.5VH;
-        width: 2.5VH;
         animation: animBubble3 infinite;
         animation-duration: 10s;
     }

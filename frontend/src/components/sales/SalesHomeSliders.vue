@@ -13,7 +13,7 @@
             </div>
            
            <div class="sale--sliders" >
-                <div v-for="sales in saleSlide" v-bind:key="sales" v-bind:class="'sale--sliders__texte hidden'"  >
+                <div v-for="sales in saleSlide" v-bind:key="sales" v-bind:class="'sale--sliders__texte hidden first'"  >
                     <h2 class="sale--sliders__h2">{{sales.title.rendered}}</h2>
                     <p v-html="sales.excerpt.rendered"></p>
                     
@@ -52,17 +52,17 @@ export default {
         SlideAuto(){
             
             let allSlideText=document.getElementsByClassName("hidden")
+            allSlideText[0].classList.remove("first")
             if(this.slide!=this.maxSlide){
                 this.slide++
                 allSlideText[this.slide-1].classList.remove("active")
-                allSlideText[this.slide-1].classList.remove("animsliders")
+                allSlideText[this.slide-1].classList.remove("animsliders")               
               }
             else{
                 this.slide=0
                 allSlideText[this.maxSlide].classList.remove("active")
                 allSlideText[this.maxSlide].classList.remove("animsliders")
             }
-            
             allSlideText[this.slide].classList.add("active")
             allSlideText[this.slide].classList.add("animsliders")                   
         },
@@ -117,9 +117,9 @@ export default {
                 display: flex;
                 justify-content: center;
                 font-weight: bold;
-                text-shadow: 1px 1px 1px black;
                 padding: 1%;
                 box-shadow: 0px 6px 1px black;
+                color: $grey;
             }
             @import "../../assets/animations/bubbleAnim.scss";
 
@@ -132,14 +132,6 @@ export default {
                 display: flex;
                 flex-wrap: wrap;
                 display: initial;
-                .background--design:nth-child(4){
-                    background-color: $blue-light-bg;
-                    position: absolute;
-                    top: 48%;
-                    height: 1px;
-                    width: 26%;
-                    right: 47%;
-                }
                 .background--design:nth-child(5){
                     background-color: $blue-light-bg;
                     position: absolute;
@@ -160,8 +152,7 @@ export default {
                     z-index: 0;
                     position: relative;
                     border-radius: 66%;
-                    box-shadow: -14px 0px 1px white;
-                   
+                    box-shadow: -14px 0px 1px white;                   
                 }
             }
             div{
@@ -176,6 +167,8 @@ export default {
                     flex-direction: column;
                     overflow: hidden;
                     opacity: 1;
+                    width: 90%;
+                    color: $grey;
                     
                 h2{
                     text-shadow: 1px 1px 1px black;
@@ -183,9 +176,12 @@ export default {
                     text-decoration: underline;
                     padding: 1%;   
                     width: 100%;
+                    margin-bottom: 2%;
+                    color: $grey;
                 }
                 p{
                     margin-right: 300px;
+                    
                 }
                 .animsliders+h2,p{
                     transition: all ease-in;
@@ -204,12 +200,12 @@ export default {
                 .hidden{
                     display: none;
                 }
-                .hidden:nth-child(1){
+                .first:nth-child(1){
                     display: contents;
                 }
                 .active{
                     display: contents;
-                    transition: display ;
+                    transition: display 0.2S ease-in;
                 }
                 .sale--sliders__text{
                     height: 12rem;
