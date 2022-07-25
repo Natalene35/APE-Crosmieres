@@ -1,92 +1,49 @@
 <template>
-        <!-- //Liste Evenements  -->
-        <section class="event--section">
-            
-                <div class="event--card">
-                    <img class="event--card__img" v-bind:src="eventPicture">
-                    <h2 class="event--card__title">Concours de lancer de menhir</h2>
-                    <div class="event--card__content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime
-                        adipisci delectus amet quisquam quibusdam eius itaque, </div>
-                </div>
+    <!-- //Liste Evenements  -->
+    <section class="event--section">
+        <EventHomeListLayout v-bind:src="eventPicture"  v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'" v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:excerpt="event.excerpt.rendered" v-for="event in eventsList" v-bind:key="event.id"/>
 
-                <div class="event--card">
-                    <img class="event--card__img" v-bind:src="eventPicture">
-                    <h2 class="event--card__title">Classe découverte de la faune et la flore</h2>
-                    <div class="event--card__content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime
-                        adipisci delectus amet quisquam quibusdam eius itaque,</div>
-                </div>
-
-                <div class="event--card">
-                    <img class="event--card__img" v-bind:src="eventPicture">
-                    <h2 class="event--card__title">Concours du cri de la mouette</h2>
-                    <div class="event--card__content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime
-                        adipisci delectus amet quisquam quibusdam eius itaque,</div>
-                </div>
-
-                <div class="event--card">
-                    <img class="event--card__img" v-bind:src="eventPicture">
-                    <h2 class="event--card__title">Championnat interstellaire de corde à sauter</h2>
-                    <div class="event--card__content">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Maxime
-                        adipisci delectus amet quisquam quibusdam eius itaque, </div>
-                </div>
-
-        </section>
+    </section>
 
 </template>
 
+
 <script>
-import picture from '@/assets/images/surr-holidays.png'
+import EventHomeListLayout from '@/components/events/EventHomeListLayout.vue';
+import EventService from '@/services/events/EventService';
+
+
 export default {
     name: 'EventsHomelayout',
+
+    components: {
+        EventHomeListLayout
+    },
+
+    async mounted() {
+        //list of events from our API
+        this.eventsList = await EventService.findAll();
+        
+    },
+
     data() {
         return {
-            eventPicture: picture,
+            eventsList: [],
+            
         }
     },
 }
 </script>
 
+
 <style lang="scss" scoped>
 
+.event--section {
+    width: 100%;
     
-    .event--section {
-        width: 100%;
-       justify-content: center;
-        display: flex;
-        flex-wrap: wrap;
-        
-            .event--card {
-                border: 1px solid $white;
-                border-radius: 50%;
-                width:45%;
-                background-color: $white;
-                margin: 1%;
-                display: flex;
-                flex-direction: column;
-                margin-bottom: 3rem;
-                box-sizing: border-box;
-
-                .event--card__img {
-                    width: 6rem;
-                    
-                }
-
-                .event--card__title {
-                    color: $grey;
-                    font-weight: bold;
-                }
-
-                .event--card__content {
-                    color: $grey;
-                }
-            
-        }
-    //<---------------------MEDIA QUERIES ------------------------>
-            @media (max-width: 425px) {
-                .event--card{
-                    width:90%;
-        }
-
-    }
+    display: flex;
+    flex-wrap: wrap;
 }
+        
+
 </style>

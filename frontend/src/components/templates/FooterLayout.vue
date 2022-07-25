@@ -24,12 +24,7 @@ footer {
     font-weight: bold;
     font-size: small;
     border-radius: 10px 10px;
-    margin-top: 1.5rem;
-
-
     
-    
-
     .footer--list {
         display: flex;
         list-style-type: none;

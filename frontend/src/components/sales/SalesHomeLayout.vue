@@ -1,44 +1,34 @@
 <template>
     <section class="sale--section">
-        <ul class="sale--list">
-
-            <li class="sale--card">
-                <h2 class="sale--card__title">Titre</h2>
-                <img class="sale--card__img">
-                <div class="sale--card__content">Paragraphe</div>
-            </li>
-
-            <li class="sale--card">
-                <h2 class="sale--card__title">Titre</h2>
-                <img class="sale--card__img">
-                <div class="sale--card__content">Paragraphe</div>
-            </li>
-
-            <li class="sale--card">
-                <h2 class="sale--card__title">Titre</h2>
-                <img class="sale--card__img">
-                <div class="sale--card__content">Paragraphe</div>
-            </li>
-
-            <li class="sale--card">
-                <h2 class="sale--card__title">Titre</h2>
-                <img class="sale--card__img">
-                <div class="sale--card__content">Paragraphe</div>
-            </li>
-
-        </ul>
+        <div class="sale--list">
+            <SaleHomeListLayout v-bind:id="sale.id" v-bind:title="sale.title.rendered" v-bind:excerpt="sale.excerpt.rendered" v-for="sale in salesList" v-bind:key="sale.id"/>
+        </div>
     </section>
 
 </template>
 
 
 <script>
+import SaleHomeListLayout from '@/components/sales/SaleHomeListLayout.vue';
+import SaleService from '@/services/sales/SaleService';
 
 export default {
     name: 'SalesHomeLayout',
+
+    components: {
+        SaleHomeListLayout
+    },
+
+    async mounted() {
+        //list of s from our API
+        this.salesList = await SaleService.findAll();
+        
+    },
+
     data() {
         return {
-            
+            salesList: [],
+       
         }
     },
 }
@@ -53,36 +43,15 @@ export default {
     height: 100%;
     
 
-    ul::-webkit-scrollbar {
-        display: none;
+
+    .sale--list {
+    height: 100vh;
+    overflow-y: scroll;
     }
 
-    ul {
-        height: 100%;
-        list-style-type: none;
-        overflow: scroll;
-
-        li {
-            border-radius: 1rem;
-            border: 1px solid $white;
-            height: 30%;
-            margin-bottom: 0.5rem;
-            background-color: $white;
-            color: $grey;
-
-            .sale--card__title {
-                padding: 0.4rem;
-                border-radius: 1rem 1rem 0 0;
-                background-color: $orange;
-                color: $white;
-                font-weight: bold;
-                
-
-            }
-        }
-    }
 }
 
+    
 </style>
 
  

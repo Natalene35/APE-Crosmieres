@@ -29,6 +29,19 @@ const routes = [{
     name: 'registration',
      component: () => import(/* webpackChunkName: "login" */ '../views/registration/UserRegisterView.vue')
   },
+  //Road for an event
+  {
+    path: '/event/:id',
+    name: 'event',
+    component: () => import(/* webpackChunkName: "event" */ '../views/events/EventView.vue')
+  },
+
+  //Road for registration
+  {
+    path: '/registration',
+    name: 'registration',
+     component: () => import(/* webpackChunkName: "login" */ '../views/registration/UserRegisterView.vue')
+  },
 
   //Road for user profil
   {
@@ -36,11 +49,13 @@ const routes = [{
     name: 'userprofil',
      component: () => import(/* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
   },
-]
+];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
-export default router
+export default router;
+
+
