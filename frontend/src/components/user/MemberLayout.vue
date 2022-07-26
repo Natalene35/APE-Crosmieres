@@ -5,7 +5,7 @@
         <p class="name">Emilie</p>
         <img
           class="logo--img"
-          src="../../assets/images/jelly-message-sent-by-character.png"
+          src="../../assets/images/jelly-security-guard-wearing-sunglasses.png"
           alt=""
         />
         <h1 class="title">Scrum Master</h1>
@@ -19,13 +19,13 @@
         <p class="name">Natalène</p>
         <img
           class="logo--img"
-          src="../../assets/images/jelly-message-sent-by-character.png"
+          src="../../assets/images/jelly-character-removes-information-with-a-sponge-and-cleaning-products.png"
           alt=""
         />
         <h1 class="title">Git Master</h1>
         <p class="content">
-          comme son titre l'indique, elle est passé maitre dans le Git. Après
-          des années d'entrainement et de commit, elle a réussi intégrée la
+          Comme son titre l'indique, elle est passée maître dans le Git. Après
+          des années d'entrainements et de commits, elle a réussi àintégrer la
           matrice de Git.
         </p>
       </div>
@@ -34,14 +34,15 @@
         <p class="name">Damien</p>
         <img
           class="logo--img"
-          src="../../assets/images/jelly-message-sent-by-character.png"
+          src="../../assets/images/jelly-designer-working-on-graphic-tablet.png"
           alt=""
         />
         <h1 class="title">Lead Dev Front</h1>
         <p class="content">
           Les display flex, grid, inline n'ont plus de secret pour lui. Il créé
           des animations au p'tit dej, c'est no problemo. Guidé par son calme
-          olympien, il mets tout le monde d'accord.
+          olympien, il aligne tout le monde et nous mets tous la border au
+          carré.
         </p>
       </div>
 
@@ -49,14 +50,15 @@
         <p class="name">Julien</p>
         <img
           class="logo--img"
-          src="../../assets/images/jelly-message-sent-by-character.png"
+          src="../../assets/images/jelly-red-jock-character-with-huge-muscles.png"
           alt=""
         />
         <h1 class="title">Lead Dev Back</h1>
         <p class="content">
-          Une ruelle sombre, l'heure du crime, il n'est jamais très loin. Guidé
-          par les esprits de la nuit, il code la ou personne ne mets les pieds.
-          Parti dans les méhandres du back, personnes ne l'a jamais revu...
+          Une ruelle sombre, l'heure du crime, il n'est jamais très loin.
+          Invoqué par les esprits de la nuit, il code la ou personne ne mets les
+          pieds. Parti dans les méhandres du back, personnes ne l'a jamais
+          revu...
         </p>
       </div>
 
@@ -64,14 +66,14 @@
         <p class="name">Christophe</p>
         <img
           class="logo--img"
-          src="../../assets/images/jelly-message-sent-by-character.png"
+          src="../../assets/images/jelly-character-coding.png"
           alt=""
         />
         <h1 class="title">Product Owner</h1>
         <p class="content">
-          Celui que tout le monde redoute. "le bouton est trop gros", "la
-          couleurs doit être plus jaune", "ajoute un espace". "relou un jours,
-          relou toujours" tel est sa devise.
+          Celui que tout le monde évite. "le bouton est trop gros", "la couleurs
+          doit être plus jaune", "le padding doit être plus espacé". "relou un
+          jour, relou toujours" tel est sa devise.
         </p>
       </div>
     </div>
@@ -114,7 +116,7 @@ export default {
 
     .card {
       border-radius: 1em;
-      height: 80%;
+      height: 90%;
       margin: 0.5rem;
       padding: 0.5rem;
       display: flex;
@@ -126,62 +128,49 @@ export default {
         width: 100%;
         text-align: center;
         font-weight: bold;
+        margin: 0.5rem;
       }
-      .content {
-        height: 40%;
-      }
-      .preview {
-        width: 50%;
-        border-radius: 5px;
-        border: thick double gray;
-        box-shadow: 0px 17px 34px -20px $blue-bg-header;
-        margin-bottom: 1rem;
-      }
+
       .logo--img {
         margin: auto;
         width: 100%;
       }
+
       .title {
+        width: 100%;
         font-size: 1.6rem;
         font-weight: 700;
         text-align: center;
         padding: 1rem;
-        margin-bottom: 1rem;
       }
-      .field__title {
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
+      .content {
+        overflow: auto;
       }
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 720px) {
     .container {
       background-color: transparent;
       box-shadow: none;
       border-radius: none;
+      flex-direction: column;
 
-      .field {
+      .card {
         padding: 1rem;
         margin: 1rem;
-        display: flex;
-        flex-wrap: wrap;
-        width: 100%;
+        flex-wrap: nowrap;
+        flex-direction: column;
 
-        .field__title {
-          .logo--img {
-            display: inline;
-            width: 60%;
-            margin-left: auto;
-            margin-right: auto;
-          }
+        .logo--img {
+          display: inline;
+          width: 60%;
+          margin-left: auto;
+          margin-right: auto;
         }
-        .field__label {
-          width: 100%;
-        }
-        .field__input {
-          width: 100%;
+
+        .content {
+          padding: 1rem;
         }
       }
     }
