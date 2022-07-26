@@ -37,6 +37,21 @@ const routes = [{
     name: 'registration',
     component: () => import( /* webpackChunkName: "login" */ '../views/registration/UserRegisterView.vue')
   },
+
+  //Road for events list
+  {
+    path: '/events/list',
+    name: 'eventsList',
+    component: () => import( /* webpackChunkName: "events-list" */ '../views/events/EventsListView.vue')
+  },
+
+  //Road for sales list
+  {
+    path: '/sales/list',
+    name: 'salesList',
+    component: () => import( /* webpackChunkName: "sales-list" */ '../views/sales/SalesListView.vue')
+  },
+
   //Road for an event
   {
     path: '/event/:id',
