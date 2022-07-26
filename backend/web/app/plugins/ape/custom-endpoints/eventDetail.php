@@ -9,7 +9,7 @@ function ape_rest_event_detail_register()
     // '<id>' // the name of the parameter
     // '\\d+' // indicates the paramter should be an integer
 
-    register_rest_route('wp/v2', 'event/(?P<id>\d+)', array(
+    register_rest_route('wp/v2', 'event/meta/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'ape_rest_get_event_handler',
         'permission_callback' => function () {

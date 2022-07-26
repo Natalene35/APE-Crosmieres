@@ -24,7 +24,7 @@ function ape_rest_user_register()
     // WE DEFINE NEW ROAD FOR GET ALL META BY USER ID
     register_rest_route( 
        'wp/v2',
-       'users/(?P<id>\d+)', array(
+       'users/meta/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'ape_rest_user_meta_handler',
         'permission_callback' => function () {
@@ -113,38 +113,38 @@ function ape_rest_user_register_handler($request)
 
 // //When User Register updating the child table
 
-// function ape_child_handler($child_class, $child_firstname, $child_lastname, $user_id)
-// {
-//     $response = [];
-//     global $wpdb;
-//     $row = $wpdb->get_results("INSERT INTO wp_ape_user_child(
-//         child_firstname, child_lastname, child_class
-//         )
-//     VALUES ('$child_firstname',
-//         '$child_lastname',
-//         '$child_class')");
+function ape_child_handler($child_class, $child_firstname, $child_lastname, $user_id)
+{
+    $response = [];
+    global $wpdb;
+    $row = $wpdb->get_results("INSERT INTO wp_ape_user_child(
+        child_firstname, child_lastname, child_class
+        )
+    VALUES ('$child_firstname',
+        '$child_lastname',
+        '$child_class')");
 
-//     // USE THE FUNCTION LINK CHILD FOR CREATE NEW LINK WITH USER_id
+    // USE THE FUNCTION LINK CHILD FOR CREATE NEW LINK WITH USER_id
 
-//     ape_rest_link_child_handler($user_id);
-//     return $row;
-// };
-// function ape_rest_link_child_handler($user_id)
-// {
-//     global $wpdb;
-//     //REQUEST ID OF THE LAST ADD CHILD
+    ape_rest_link_child_handler($user_id);
+    return $row;
+};
+function ape_rest_link_child_handler($user_id)
+{
+    global $wpdb;
+    //REQUEST ID OF THE LAST ADD CHILD
 
-//     $last_child = $wpdb->get_results("SELECT * FROM wp_ape_user_child ORDER BY id DESC LIMIT 1");
-//     $select_child = $last_child[0];
-//     $child_id = $select_child->id;
+    $last_child = $wpdb->get_results("SELECT * FROM wp_ape_user_child ORDER BY id DESC LIMIT 1");
+    $select_child = $last_child[0];
+    $child_id = $select_child->id;
 
-//     $response = [];
-//     //REQUEST SQL CREATE NEW LINK
-//     $rowss = $wpdb->get_results("INSERT INTO wp_ape_link_child(
-//         user_id, child_id
-//          )
+    $response = [];
+    //REQUEST SQL CREATE NEW LINK
+    $rowss = $wpdb->get_results("INSERT INTO wp_ape_link_child(
+        user_id, child_id
+         )
 
-//         VALUES ('$user_id', '$child_id')");    
-//     return $rowss;
-// };
+        VALUES ('$user_id', '$child_id')");    
+    return $rowss;
+};
 

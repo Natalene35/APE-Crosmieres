@@ -9,7 +9,7 @@ function ape_rest_sale_detail_register()
     // '<id>' // the name of the parameter
     // '\\d+' // indicates the paramter should be an integer
 
-    register_rest_route('wp/v2', 'sale/(?P<id>\d+)', array(
+    register_rest_route('wp/v2', 'sale/meta/(?P<id>\d+)', array(
         'methods' => 'GET',
         'callback' => 'ape_rest_get_sale_handler',
         'permission_callback' => function () {
@@ -17,7 +17,6 @@ function ape_rest_sale_detail_register()
         }
     ));
 }
-
 // add request content to the custom post and add custom post meta
 function ape_rest_get_sale_handler($request)
 {
@@ -41,7 +40,7 @@ function ape_rest_get_sale_handler($request)
     WHERE meta_key = 'date' AND post_id = $id 
     ");
      // get the meta data 'lien'
-     $eventDate = $wpdb->get_results("
+     $eventLink = $wpdb->get_results("
      SELECT meta_value FROM wp_postmeta
      WHERE meta_key = 'lien' AND post_id = $id 
      ");
@@ -49,6 +48,6 @@ function ape_rest_get_sale_handler($request)
     // add the meta data to the post object
     $post[] = ['lieu' => $lieu[0]->meta_value];
     $post[] = ['date' => $eventDate[0]->meta_value];
-    $post[] = ['lien' => $eventDate[0]->meta_value];
+    $post[] = ['lien' => $eventLink[0]->meta_value];
     return $post;
 };

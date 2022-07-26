@@ -23,7 +23,7 @@ function ape_rest_sale_meta()
       'wp/v2',
       'sale/meta/(?P<id>\d+)', array(
        'methods' => 'GET',
-       'callback' => 'ape_rest_event_meta_handler',
+       'callback' => 'ape_rest_sale_meta_handler',
        'permission_callback' => function () {
            return true;
        }
@@ -49,7 +49,7 @@ function ape_rest_add_sale_handler($request)
     $parameters = $request->get_json_params();
     $title = sanitize_text_field($parameters['title']);
     $content = sanitize_text_field($parameters['content']);
-    $date = sanitize_text_field($parameters['date']);
+    $date = $parameters['date'];
     $lieu = sanitize_text_field($parameters['lieu']);
     $lien = sanitize_text_field($parameters['lien']);
 
