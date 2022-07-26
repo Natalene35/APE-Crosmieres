@@ -21,15 +21,23 @@
                 <label class="field__label">Votre identifiant de connexion</label>
                 <input v-model="user.nickname" type="text" class="inputbox" placeholder="Votre pseudo" name="username">
 
-                <!--<label class="field__label">Mot de passe</label>
-                <input v-model="password" class="inputbox" type="password" placeholder="Mot de passe">
-
-                <label class="field__label">Confirmer le mot de passe</label>
-                <input v-model="passwordconfirm" class="inputbox" type="password" placeholder="Mot de passe" required>-->
                 <div class="button--link">
                     <a v-on:click="showChildRegistrationLayout" class="addChild">Ajouter mes enfants</a>
-                    <a href="" class="update">Mettre à jour</a>
-                    <a href="" class="delete">Supprimer mon compte</a>
+                    <a v-on:click="updateUser" class="update">Enregistrer vos modifications</a>
+                    <a v-on:click="showUpdatePassword" class="updatePassword">Mettre à jour votre mot de
+                        passe</a>
+                    <a v-on:click="removeUser" class="delete">Supprimer mon compte</a>
+                </div>
+
+                <div class="updatePassword--display active">
+                    <label class="field__label">Mettre à jour son mot de passe ?</label>
+                    <input v-model="password" class="inputbox" type="password" placeholder="Mot de passe" required>
+
+                    <label class="field__label">Confirmer le mot de passe</label>
+                    <input v-model="passwordconfirm" class="inputbox" type="password" placeholder="Mot de passe"
+                        required>
+                    <a class="confim--update__password">Confirmer la mise à jour de votre mot de
+                        passe ?</a>
                 </div>
             </figcaption>
         </figure>
@@ -41,7 +49,7 @@
 <script>
 import ChildRegistrationLayout from '@/components/registration/ChildRegistrationLayout.vue'
 import UserLoginService from '@/services/login/UserLoginService';
-import UserRegistrationService from '@/services/registration/UserRegistrationService'
+import UserService from '@/services/user/UserService'
 
 export default {
     name: 'UserProfil',
@@ -53,7 +61,10 @@ export default {
     data() {
         return {
             user: [],
+            errors: [],
             phone: null,
+            password: null,
+            passwordconfirm: null
         }
     },
 
@@ -83,23 +94,38 @@ export default {
             ChildRegistrationLayout.classList.toggle("active");
         },
 
-        async remove() {
-            let user_ID = this.$store.getters.getUserID;
-            const response = await UserRegistrationService.delete(user_ID)
+        showUpdatePassword() {
+            let updatePassword = document.querySelector(".updatePassword--display");
+            updatePassword.classList.toggle("active");
+        },
 
+        async removeUser() {
+            const response = await UserService.delete()
             console.log(response);
             if (response.id) {
                 this.$router.push({ name: 'home' });
             } else {
                 alert(response.message);
             }
+        },
+
+        async updateUser() {
+
+            if (this.$store.getters.getUserID) {
+                const response = await UserService.update(this.$store.getters.getUserID, {
+                    "pseudo": this.user.nickname,
+                    "email": this.user.email,
+                    "password": this.user.password,
+                    "first_name": this.user.first_name,
+                    "last_name": this.user.last_name,
+                    "phone": this.user.phone
+                });
+                console.log(response);
+            }
         }
     }
 }
-
 </script>
-
-
 
  <style scoped lang="scss">
  .user-profile {
@@ -197,20 +223,33 @@ export default {
  .button--link {
      display: flex;
  
+ 
      .addChild {
          border: 1px solid $green;
          background-color: $green ;
+         border-radius: 10px;
          cursor: pointer
      }
  
      .update {
          border: 1px solid $purple;
-         background-color: $purple ;
+         background-color: $purple;
+         border-radius: 10px;
+         cursor: pointer
      }
  
      .delete {
          border: 1px solid $red;
-         background-color: $red ;
+         background-color: $red;
+         border-radius: 10px;
+         cursor: pointer
+     }
+ 
+     .updatePassword {
+         border: 1px solid $pink;
+         background-color: $pink;
+         border-radius: 10px;
+         cursor: pointer
      }
  }
  
@@ -228,5 +267,14 @@ export default {
  
  .active {
      display: none;
+ }
+ 
+ .confim--update__password {
+     align-items: center;
+     padding: 0.5rem;
+     border: 1px solid $pink;
+     background-color: $pink;
+     border-radius: 10px;
+     cursor: pointer;
  }
  </style>

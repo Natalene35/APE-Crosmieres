@@ -37,8 +37,6 @@ function ape_rest_user_meta()
 //<-----------------------------------METHOD------------------------------>
 function ape_rest_user_meta_handler($request)
 {
-    $response = [];
-    $parameters = $request->get_json_params();
     $user_id = intval($request['id']);
     //POST SQL REQUEST 
     global $wpdb;
@@ -94,8 +92,6 @@ function ape_rest_user_register_handler($request)
             'last_name' => $lastname
         ]);
         if (!is_wp_error($user_id)) {
-            $user = get_user_by('id', $user_id);
-
 
             add_user_meta($user_id, 'phone', $phone, ['show_in_rest' => true]);
             register_meta($user_id, 'phone', ['show_in_rest' => true]);
