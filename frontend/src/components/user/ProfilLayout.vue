@@ -5,6 +5,7 @@
                 <img src="@/assets/images/icons8-profile-60.png" alt="exemple photo-profile-avatar" class="profile" />
                 <h2>Bienvenue {{ user.name }}</h2>
 
+                <label class="field__label">Prénom</label>
                 <input v-model="user.first_name" type="text" class="inputbox" placeholder="Votre prénom"
                     name="firstname">
 
@@ -126,6 +127,7 @@ export default {
  .user-profile figcaption h2 {
      font-size: 2rem;
      margin: 1rem;
+     text-align: center;
  }
  
  .profuser-profile figcaption:before {
@@ -214,11 +216,12 @@ export default {
  
  .inputbox {
      padding: 0.5em 0 0.5em 1.5em;
+     font-size: 1rem;
      line-height: 3;
      width: 100%;
      border: 1px solid $blue-bg-header;
      border-radius: 0.5em;
-     margin: 1rem 0 1rem 0;
+     margin: 0 0 1rem 0;
      padding: 0;
      text-align: center;
  }

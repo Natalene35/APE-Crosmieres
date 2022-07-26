@@ -70,19 +70,19 @@ export default {
             this.errors = [];
             // Validation of the form data
             if (!this.firstname) {
-                this.errors.push("Il faut votre prénom");
+                this.errors.push("Il manque votre prénom");
             }
             if (!this.lastname) {
-                this.errors.push("Il faut votre nom de famille");
+                this.errors.push("Il manque votre nom de famille");
             }
             if (!this.email) {
-                this.errors.push("Il faut votre e-mail");
+                this.errors.push("Il manque votre e-mail");
             }
             if (!this.username) {
-                this.errors.push("If faut votre identifiant de connexion");
+                this.errors.push("If manque votre identifiant de connexion");
             }
             if (!this.password) {
-                this.errors.push("Il faut un mot de passe");
+                this.errors.push("Il manque votre mot de passe");
             } else {
                 if (this.password !== this.passwordconfirm) {
                     this.errors.push("Confirmer votre mot de passe !");
@@ -118,9 +118,9 @@ export default {
                     setTimeout(() => this.$router.push({ name: 'login' }), 1000);
                 }
                 else if (response.code === 406) {
-                    this.errors.push('Cette e-mail de compte existe déja');
+                    this.errors.push('Cet e-mail est déjà inscrit');
                 } else {
-                    this.errors.push("Oups une erreur, veuilliez recommencer");
+                    this.errors.push("Oups une erreur, veuillez recommencer");
                 }
             }
         }

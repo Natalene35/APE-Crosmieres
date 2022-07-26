@@ -13,8 +13,18 @@
                 <input v-model="child_birthday" type="date" id="birthday" name="birthday">-->
 
                 <div class="child--class">
+                    <input type="radio" id="PS" value="petite-section" v-model="picked" />
+                    <label for="PS">Petite section</label>
+
+                    <input type="radio" id="MS" value="moyenne-section" v-model="picked" />
+                    <label for="PS">Moyenne section</label>
+
+                    <input type="radio" id="GS" value="grande-section" v-model="picked" />
+                    <label for="GS">Grande section</label>
+
                     <input type="radio" id="CP" value="CP" v-model="picked" />
                     <label for="CP">CP</label>
+
                     <input type="radio" id="CM1" value="CM1" v-model="picked" />
                     <label for="CM1">CM1</label>
                     <input type="radio" id="CM2" value="CM2" v-model="picked" />
@@ -50,16 +60,16 @@ export default {
             this.errors = [];
             // Validation of the form data
             if (!this.child_firstname) {
-                this.errors.push("Il faut votre prénom");
+                this.errors.push("Il manque le prénom");
             }
             if (!this.child_lastname) {
-                this.errors.push("Il faut le nom de Famille d'usage");
+                this.errors.push("Il manque le nom de Famille");
             }
             /*if (!this.child_birthday) {
                 this.errors.push("Il faut la date de naissance");
             }*/
             if (!this.picked) {
-                this.errors.push("If faut la classe de l'enfant");
+                this.errors.push("If manque la classe");
             }
 
             // Verification d'absence d'erreurs et transmision des données 
@@ -81,15 +91,14 @@ export default {
                         this.picked = null
 
                 }
-                else if (response.code === 404) {
-                    this.errors.push('Cette e-mail de compte existe déja');
-                } else {
-                    this.errors.push("Oups une erreur, veuilliez recommencer");
-                }
+
+            } else {
+                this.errors.push("Oups une erreur, veuillez recommencer");
             }
         }
     }
 }
+
 </script>
 
 
@@ -148,11 +157,12 @@ export default {
         color: $white;
         font-size: 1.3rem;
         font-weight: 700;
-        background-color: $red;
+        background-color: $green;
         display: inline-block;
         border: none;
-        border-radius: 0.5em;
+        border-radius: 10px;
         width: 60%;
+        padding: 0.5rem;
         margin: 1rem;
         cursor: pointer;
     }

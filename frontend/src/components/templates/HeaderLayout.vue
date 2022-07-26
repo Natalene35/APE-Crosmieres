@@ -202,6 +202,10 @@ header {
             margin-right: 0.3rem;
             color: $white;
         }
+
+        a {
+            color: $white;
+        }
     }
 
     //<-----------NAV----------->
@@ -217,6 +221,10 @@ header {
         .header--nav__Accueil {
             background-color: $green;
             margin-right: 0.3rem;
+
+            .header--accueil {
+                color: $white;
+            }
         }
 
         .header--nav__Vente {
