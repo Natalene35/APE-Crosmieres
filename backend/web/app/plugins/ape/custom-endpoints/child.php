@@ -15,10 +15,6 @@ add_action('rest_api_init', function () {
         'permission_callback' => function () {
             return true;
         }
-<<<<<<< HEAD
-=======
-
->>>>>>> master
     ));
 });
 //ROUTE POST NEW CHILD

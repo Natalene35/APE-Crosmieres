@@ -3,7 +3,8 @@ import axios from 'axios';
 const apiClient = axios.create({
     baseURL: 'http://apecrosmieres.local/wp-json/wp/v2',
     headers: {
-        Accept: 'application/json'
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
     },
     timeout: 10000
     
@@ -21,14 +22,25 @@ export default {
     },
     // Get an event by his id
     async find(id) {
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            const response = await apiClient.get("/event/" + id + "");
+            const response = await apiClient.get("/event/" + id + "?_embed");
             console.log(response);
             return response.data;
         } catch (error) {
             return error.response.data
         }
+    },
 
+    // Get meta value by event's id
+    async getMeta(id) {
+
+        try {
+            const meta = await apiClient.get('/event/meta/'+ id +'');
+            return meta.data
+        } catch(error) {
+            return error.response.data
+        } 
     },
     
     // to upload a file
