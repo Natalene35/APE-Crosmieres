@@ -79,7 +79,7 @@ export default {
                 this.errors.push("Il manque votre e-mail");
             }
             if (!this.username) {
-                this.errors.push("If manque votre identifiant de connexion");
+                this.errors.push("Il manque votre identifiant de connexion");
             }
             if (!this.password) {
                 this.errors.push("Il manque votre mot de passe");
