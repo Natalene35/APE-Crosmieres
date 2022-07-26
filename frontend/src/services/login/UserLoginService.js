@@ -44,7 +44,7 @@ export default {
     async getMeta(id) {
          apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            const meta = await apiClient.get('/wp/v2/users/'+ id +'');
+            const meta = await apiClient.get('/wp/v2/users/meta/'+ id +'');
             return meta.data
         } catch(error) {
             return error.response.data
