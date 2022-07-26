@@ -39,11 +39,17 @@ export default {
     },
     async mounted() {
         //GET META EXPLICATION WE NEED TO PLACE IN YOUR COMPONENTS
-        let arrayMeta = await SaleService.getMeta("index")
+        let arrayMeta = await SaleService.getMeta(id)
         for (let index = 0; index < arrayMeta.length; index++) {
             const metaElmt = arrayMeta[index];
             //For take meta_key enter key in the exemple its "phone"
             if (metaElmt.meta_key == "date") {
+                this.date = metaElmt.meta_value;
+            }
+            if (metaElmt.meta_key == "lieu") {
+                this.date = metaElmt.meta_value;
+            }
+            if (metaElmt.meta_key == "lien") {
                 this.date = metaElmt.meta_value;
             }
         }
@@ -58,7 +64,6 @@ export default {
             this.title = response.title.rendered;
             this.content = response.content.rendered;
             this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
-            this.link = response.link;
         }
     }
 }
