@@ -78,6 +78,7 @@ export default {
                     // Recovering the role after having the token with another request
                     const roles = await UserLoginService.getRoles(response.data.id);
                     this.$store.commit('setRole', roles.roles[0]);
+                    console.log(roles);
                     // A success message is displayed
                     this.succesLogin.push("Connexion réussi");
                     // redirect after showing success message
