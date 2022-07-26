@@ -120,6 +120,8 @@ export default {
         .title {
             font-size: 1.6rem;
             font-weight: 700;
+            margin-bottom: 1rem;
+            color: $grey
         }
 
         .img {
