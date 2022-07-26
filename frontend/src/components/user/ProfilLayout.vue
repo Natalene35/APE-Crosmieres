@@ -2,6 +2,7 @@
     <div class="container">
         <div>
             <h1 class="profil--title">Bienvenue {{ user.first_name }}</h1>
+            <button v-on:click="remove" class="delete_button ">Supprimer votre compte ?</button>
         </div>
         <section class="wrapper--profil">
             <div class="profil--info">
@@ -29,6 +30,7 @@
 <script>
 import ChildRegistrationLayout from '@/components/registration/ChildRegistrationLayout.vue'
 import UserLoginService from '@/services/login/UserLoginService';
+import UserRegistrationService from '@/services/registration/UserRegistrationService'
 
 export default {
     name: 'UserProfil',
@@ -41,27 +43,44 @@ export default {
         return {
             user: [],
             metaUser: [],
-            phone: null
+            phone: null,
         }
     },
 
     async mounted() {
         let user_ID = this.$store.getters.getUserID;
-        this.user = await UserLoginService.find(user_ID);
-        console.log(this.user);
+        if (user_ID) {
+            //retrieve logged in user data
+            this.user = await UserLoginService.find(user_ID);
+            console.log(this.user);
+            //retrieve logged in user meta data
+            let arrayMeta = await UserLoginService.getMeta(user_ID)
+            for (let index = 0; index < arrayMeta.length; index++) {
+                const metaElmt = arrayMeta[index];
+                //For take meta_key enter key in the exemple its "phone"
+                if (metaElmt.meta_key == "phone") {
+                    console.log(metaElmt.meta_value)
+                    return this.phone = metaElmt.meta_value
+                }
+            }
+        }
+    },
 
-        let arrayMeta = await UserLoginService.getMeta(user_ID)
-        for (let index = 0; index < arrayMeta.length; index++) {
-            const metaElmt = arrayMeta[index];
-            //For take meta_key enter key in the exemple its "phone"
-            if (metaElmt.meta_key == "phone") {
-                console.log(metaElmt.meta_value)
-                return this.phone = metaElmt.meta_value
+    methods: {
+
+        async remove() {
+            let user_ID = this.$store.getters.getUserID;
+            const response = await UserRegistrationService.delete(user_ID)
+
+            console.log(response);
+            if (response.id) {
+                this.$router.push({ name: 'home' });
+            } else {
+                alert(response.message);
             }
         }
     }
 }
-
 
 </script>
 
@@ -73,6 +92,7 @@ export default {
  .profil--title {
      color: black;
      font-size: xx-large;
+     margin-bottom: 1rem;
  }
  
  .wrapper--profil {
@@ -86,15 +106,6 @@ export default {
      align-items: center;
      width: 100%;
      border-bottom: #313846 2px solid;
- 
-     .profil--picture {
-         position: absolute;
-         width: 50%;
- 
-         img {
-             width: 255px;
-         }
-     }
  
      .profil--info {
          display: flex;
@@ -126,15 +137,22 @@ export default {
      }
  }
  
+ .delete_button {
+     color: #fff;
+     font-size: 1.3rem;
+     font-weight: 700;
+     border: none;
+     border-radius: 0.5em;
+     width: 60%;
+     background-color: #EF6852;
+     cursor: pointer;
+ }
+ 
  @media (max-width: 425px) {
      .container {
          background-color: transparent;
          box-shadow: none;
          border-radius: none;
- 
-         .profil--title {
-             padding-bottom: 0.5rem;
-         }
  
          .content {
              display: flex;

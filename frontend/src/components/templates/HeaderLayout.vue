@@ -3,7 +3,7 @@
         <header>
             <div class="header--title">
 
-                <img class="header--title__logo" v-bind:src="logoApe" alt="">
+                <img class="header--title__logo" v-bind:src="logoApe" alt="logo APE">
 
                 <h1><span>A</span>ssociation des <span>P</span>arents d'<span>E</span>lèves <div class="header--town">de
                         Crosmières</div>
@@ -21,7 +21,7 @@
                         Connexion
                     </router-link>
                     <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
-                        v-on:click="disconnect">Deconnection
+                        v-on:click="disconnect">déconnexion
                     </a>
                 </div>
                 <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
@@ -400,6 +400,7 @@ header {
 
         nav {
             height: 0;
+
             div {
                 display: none;
 
