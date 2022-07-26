@@ -56,8 +56,10 @@
             >Accueil
           </router-link>
         </div>
-        <div class="header--nav__Vente">Ventes</div>
-        <div class="header--nav__Evenement">Evènements</div>
+        <div class="header--nav__Vente">
+          Ventes</div>
+        <div class="header--nav__Evenement">
+          Evènements</div>
 
         <div class="header--nav__Presentation">
           <router-link
@@ -274,7 +276,7 @@ header {
 
     a.router-link-exact-active {
       font-size: 1.1rem;
-      color: orange;
+      color:  $white;
       border-bottom: 3px solid rgba(51, 51, 51, 0.384);
       text-shadow: 4px 4px 6px black;
     }
