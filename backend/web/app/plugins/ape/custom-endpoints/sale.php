@@ -40,28 +40,21 @@ function ape_rest_sale_meta_handler($request)
     $id = sanitize_text_field($request->get_param('id'));
 
 
-    // get the meta data 'lieu'
-    $lieu = $wpdb->get_results("
-    SELECT meta_value FROM wp_postmeta
-    WHERE meta_key = 'lieu' AND post_id = $id 
-    ");
-
     // get the meta data 'date'
-    $eventDate = $wpdb->get_results("
+    $saleDate = $wpdb->get_results("
     SELECT meta_value FROM wp_postmeta
     WHERE meta_key = 'date' AND post_id = $id 
     ");
     // get the meta data 'lien'
-    $eventDate = $wpdb->get_results("
+    $saleLien = $wpdb->get_results("
      SELECT meta_value FROM wp_postmeta
      WHERE meta_key = 'lien' AND post_id = $id 
      ");
 
     // add the meta data to the post object
     return [
-        'lieu' => $lieu[0]->meta_value,
-        'date' => $eventDate[0]->meta_value,
-        'lien' => $eventDate[0]->meta_value
+        'date' => $saleDate[0]->meta_value,
+        'lien' => $saleLien[0]->meta_value
     ];
 };
 
@@ -73,8 +66,7 @@ function ape_rest_add_sale_handler($request)
     $title = sanitize_text_field($parameters['title']);
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
-    $lieu = sanitize_text_field($parameters['lieu']);
-    $lien = sanitize_text_field($parameters['lien']);
+    $lien = sanitize_url($parameters['lien']);
 
     // add to the database
     $post_id = wp_insert_post([
@@ -82,7 +74,6 @@ function ape_rest_add_sale_handler($request)
         'post_content' => $content,
         'post_type' => 'sale'
     ]);
-    add_post_meta($post_id, 'lieu', $lieu);
     add_post_meta($post_id, 'lien', $lien);
     add_post_meta($post_id, 'date', $date);
 

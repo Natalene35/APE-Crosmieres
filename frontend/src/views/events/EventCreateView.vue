@@ -11,7 +11,7 @@ import FooterLayout from "@/components/templates/FooterLayout.vue";
 import EventCreateLayout from "@/components/events/EventCreateLayout.vue";
 
 export default {
-  name: "EventFormView",
+  name: "EventCreateView",
   components: {
     HeaderLayout,
     FooterLayout,
@@ -21,7 +21,10 @@ export default {
     document.title = "Ajout événement";
   },
 };
+
+
 </script>
+
 
 <style lang="scss">
 </style>

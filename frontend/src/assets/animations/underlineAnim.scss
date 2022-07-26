@@ -19,18 +19,18 @@ div:hover:after {
     transform: scaleX(1);
     transform-origin: bottom left;
     } 
-    .header--nav__Accueil:after{
+    .header--nav__home:after{
             background-color: #85B689; 
         }
-        .header--nav__Vente:after{
+        .header--nav__sale:after{
                 background-color: #FBAD18 ;
             
         }
-        .header--nav__Evenement:after{
+        .header--nav__event:after{
                 background-color: #EF6852;
             }
         
-        .header--nav__Presentation:after{
+        .header--nav__presentation:after{
                 background-color: #F8AAA4;
             }
         

@@ -11,17 +11,17 @@
 
                 <div class="header--profil__picture">
                     <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'registration' }"
-                        class="header--nav__Inscription">Inscription /
+                        class="header--nav__inscription">Inscription /
                     </router-link>
                     <router-link v-if="this.$store.getters.getToken" v-bind:to="{ name: 'userprofil' }"
-                        class="header--nav__Inscription">Mon compte /
+                        class="header--nav__inscription">Mon compte /
                     </router-link>
                     <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
                         class="header--login">
                         Connexion
                     </router-link>
                     <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
-                        v-on:click="disconnect">déconnexion
+                        v-on:click="disconnect">Déconnexion
                     </a>
                 </div>
                 <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
@@ -39,14 +39,23 @@
 
             <nav>
 
-                <div class="header--nav__Accueil">
-                    <router-link v-bind:to="{ name: 'home' }" class="header--accueil">Accueil
+                <div class="header--nav__home">
+                    <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
+                        Accueil
                     </router-link>
                 </div>
-                <div class="header--nav__Vente">Ventes</div>
-                <div class="header--nav__Evenement">Evènements</div>
+                <div class="header--nav__sale">
+                    <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
+                        Ventes
+                    </router-link>
+                </div>
+                <div class="header--nav__event">
+                    <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
+                        Evènements
+                    </router-link>
+                </div>
 
-                <div class="header--nav__Presentation">Présentation APE</div>
+                <div class="header--nav__presentation">Présentation APE</div>
 
             </nav>
         </header>
@@ -54,28 +63,37 @@
         <!-- /*<--------------------MENU BURGER HIDDEN IN DESKTOP---------------------------->
         <div class="header--burger__menu">
             <ul>
-                <li class="header--nav__Accueil">
-                    <router-link v-bind:to="{ name: 'home' }" class="header--accueil">Accueil
+                <li class="header--nav__home">
+                    <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
+                        Accueil
                     </router-link>
                 </li>
-                <li class="header--nav__Vente">Vente</li>
-                <li class="header--nav__Evenement">Evenement</li>
-                <li class="header--nav__Presentation">Présentation APE</li>
-                <li class="header--nav__Inscription">
+                <li class="header--nav__sale">
+                    <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
+                        Ventes
+                    </router-link>
+                </li>
+                <li class="header--nav__event">
+                    <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
+                        Evènements
+                    </router-link>
+                </li>
+                <li class="header--nav__presentation">Présentation APE</li>
+                <li class="header--nav__inscription">
                     <router-link v-if="!this.$store.getters.getUserID" v-bind:to="{ name: 'registration' }"
-                        class="header--nav__Inscription">Inscription
+                        class="header--nav__inscription">Inscription
                     </router-link>
                     <router-link v-if="this.$store.getters.getUserID" v-bind:to="{ name: 'userprofil' }"
-                        class="header--nav__Inscription">Mon profil
+                        class="header--nav__inscription">Mon profil
                     </router-link>
                 </li>
-                <li class="header--nav__Connexion">
+                <li class="header--nav__connexion">
                     <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
                         class="header--login">
                         Connexion
                     </router-link>
                     <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
-                        v-on:click="disconnect">Deconnection
+                        v-on:click="disconnect">Déconnexion
                     </a>
                 </li>
             </ul>
@@ -198,7 +216,7 @@ header {
             color: $red;
         }
 
-        .header--nav__Inscription {
+        .header--nav__inscription {
             margin-right: 0.3rem;
             color: $white;
         }
@@ -218,30 +236,41 @@ header {
         font-weight: bold;
         align-items: center;
 
-        .header--nav__Accueil {
+
+        .header--nav__home {
             background-color: $green;
             margin-right: 0.3rem;
 
-            .header--accueil {
+
+            a {
                 color: $white;
             }
         }
 
-        .header--nav__Vente {
+        .header--nav__sale {
             background-color: $orange;
             margin-right: 0.3rem;
 
+            a {
+                color: $white;
+            }
         }
 
-        .header--nav__Evenement {
+        .header--nav__event {
             background-color: $red;
             margin-right: 0.3rem;
 
+            a {
+                color: $white;
+            }
         }
 
-        .header--nav__Presentation {
+        .header--nav__presentation {
             background-color: $pink;
 
+            a {
+                color: $white;
+            }
         }
 
         div {
@@ -272,35 +301,33 @@ header {
         list-style-type: none;
         color: $white;
 
-        .header--nav__Accueil {
+        .header--nav__home {
             background-color: $green;
+            color: $white;
 
-            .header--accueil {
-                color: $white;
-            }
         }
 
-        .header--nav__Vente {
+        .header--nav__sale {
             background-color: $orange;
             color: $white;
         }
 
-        .header--nav__Evenement {
+        .header--nav__event {
             background-color: $red;
             color: $white;
         }
 
-        .header--nav__Presentation {
+        .header--nav__presentation {
             background-color: $blue;
             color: $white;
         }
 
-        .header--nav__Inscription {
+        .header--nav__inscription {
             background-color: $pink;
             color: $white;
         }
 
-        .header--nav__Connexion {
+        .header--nav__connexion {
             background-color: $purple;
 
             .header--login {

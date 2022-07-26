@@ -1,8 +1,9 @@
 <template>
   <HeaderLayout />
-  <sale-create-layout />
+  <SaleCreateLayout />
   <FooterLayout />
 </template>
+
 
 <script>
 // @ is an alias to /src
@@ -11,7 +12,7 @@ import FooterLayout from "@/components/templates/FooterLayout.vue";
 import SaleCreateLayout from "../../components/sales/SaleCreateLayout.vue";
 
 export default {
-  name: "EventFormView",
+  name: "SaleCreateView",
   components: {
     HeaderLayout,
     FooterLayout,
