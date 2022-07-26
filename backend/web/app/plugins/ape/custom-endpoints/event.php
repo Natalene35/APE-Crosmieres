@@ -1,9 +1,12 @@
 <?php
 
+// connexion the callback function to init hook for custom routes
 add_action('rest_api_init', 'ape_rest_event_register');
 add_action('rest_api_init', 'ape_rest_event_meta');
 
 //<----------------------------------ROAD-------------------------->>
+
+// to get the endpoint and add custom function
 function ape_rest_event_register()
 {
     // custom route when event added
@@ -15,6 +18,7 @@ function ape_rest_event_register()
         }
     ));
 }
+
 //FUNCTION GET CUSTOM META BY ID 
 function ape_rest_event_meta()
 {
@@ -59,6 +63,7 @@ function ape_rest_add_event_handler($request)
         'post_content' => $content,
         'post_type' => 'event'
     ]);
+    //add the meta key and value with the post id
     add_post_meta($post_id, 'lieu', $lieu);
     add_post_meta($post_id, 'date', $date);
 
