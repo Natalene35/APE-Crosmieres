@@ -2,7 +2,6 @@
 
     <div class="event--card">
         <!--<router-link v-bind:to="{name: 'event', params: {id: id}}">-->
-            <!--<img class="event--card__img" v-bind:src="eventPicture">-->
             
             <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
                 
@@ -19,9 +18,7 @@
 </template>
 
 
-
 <script>
-import picture from '@/assets/images/surr-holidays.png';
 
 export default {
     name: "EventHomeListLayout",
@@ -35,7 +32,7 @@ export default {
 
     data() {
         return {
-            eventPicture: picture,
+            
         }
     },
 }
@@ -57,11 +54,6 @@ export default {
     box-sizing: border-box;
     padding-bottom: 5rem;
     
-
-        .event--card__img {
-            width: 6rem;
-            
-        }
 
         .event--card__title {
             color: $grey;

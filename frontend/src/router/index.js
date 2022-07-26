@@ -45,6 +45,13 @@ const routes = [{
     component: () => import(/* webpackChunkName: "events-list" */ '../views/events/EventsListView.vue')
   },
 
+  //Road for sales list
+  {
+    path: '/sales/list',
+    name: 'salesList',
+    component: () => import(/* webpackChunkName: "sales-list" */ '../views/sales/SalesListView.vue')
+  },
+
   //Road for an event
   {
     path: '/event/:id',

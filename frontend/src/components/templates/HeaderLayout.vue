@@ -3,7 +3,7 @@
         <header>
             <div class="header--title">
 
-                <img class="header--title__logo" v-bind:src="logoApe" alt="logo de l'APE">
+                <img class="header--title__logo" v-bind:src="logoApe" alt="logo APE">
 
                 <h1><span>A</span>ssociation des <span>P</span>arents d'<span>E</span>lèves <div class="header--town">de
                         Crosmières</div>
@@ -44,8 +44,10 @@
                     Accueil
                     </router-link>
                 </div>
-                <div class="header--nav__sale">Ventes
-                    
+                <div class="header--nav__sale">
+                    <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
+                    Ventes
+                    </router-link>
                 </div>
                 <div class="header--nav__event">
                     <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
@@ -66,7 +68,11 @@
                     Accueil
                     </router-link>
                 </li>
-                <li class="header--nav__sale">Ventes</li>
+                <li class="header--nav__sale">
+                    <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
+                    Ventes
+                    </router-link>
+                </li>
                 <li class="header--nav__event">
                     <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
                     Evènements
@@ -212,6 +218,10 @@ header {
 
         .header--nav__inscription {
             margin-right: 0.3rem;
+            color: $white;
+        }
+
+        a {
             color: $white;
         }
     }
@@ -412,6 +422,7 @@ header {
 
         nav {
             height: 0;
+
             div {
                 display: none;
 

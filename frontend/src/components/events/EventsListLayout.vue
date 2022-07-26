@@ -41,10 +41,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.event--section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-.event--card__img {
-        width: 6rem;
-        
+    .event--card__img {
+            width: 6rem;
+            
+    }
 }
 
 
