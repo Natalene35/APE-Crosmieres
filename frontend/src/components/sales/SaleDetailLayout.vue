@@ -41,8 +41,10 @@ export default {
         let id = this.$route.params.id;
         if (id) {
             let arrayMeta = await SaleService.getMeta(id)
+            console.log(arrayMeta);
             for (let index = 0; index < arrayMeta.length; index++) {
                 const metaElmt = arrayMeta[index];
+                console.log(arrayMeta[0]);
                 if (metaElmt.meta_key == "date") {
                     this.date = metaElmt.meta_value;
                 }
@@ -140,64 +142,64 @@ export default {
     .snake {
         margin-bottom: -0.5rem;
     }
+}
 
-    // Media query
+// Media query
 
-    @media (min-width: 450px) {
+@media (min-width: 450px) {
+    .picture--container {
+        max-width: 70%;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (min-width: 700px) {
+    .event--card {
+        width: 80%;
+
         .picture--container {
-            max-width: 70%;
+            max-width: 50%;
         }
 
         h2 {
             font-size: 1.6rem;
         }
-    }
 
-    @media (min-width: 700px) {
-        .event--card {
+        .media-image {
+            width: 90%;
+            min-height: 25rem;
+        }
+
+        .event--card__content {
+            width: 90%;
+        }
+    }
+}
+
+@media (min-width: 1000px) {
+    .event--card {
+        width: 70%;
+
+        .picture--container {
+            max-width: 30%;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+        }
+
+        .media-image {
             width: 80%;
+            min-height: 35rem;
+        }
 
-            .picture--container {
-                max-width: 50%;
-            }
-
-            h2 {
-                font-size: 1.6rem;
-                background-color: red;
-            }
-
-            .media-image {
-                width: 90%;
-                min-height: 25rem;
-            }
-
-            .event--card__content {
-                width: 90%;
-            }
+        .event--card__content {
+            width: 80%;
         }
     }
 
-    @media (min-width: 1000px) {
-        .event--card {
-            width: 70%;
-
-            .picture--container {
-                max-width: 30%;
-            }
-
-            h2 {
-                font-size: 1.8rem;
-            }
-
-            .media-image {
-                width: 80%;
-                min-height: 35rem;
-            }
-
-            .event--card__content {
-                width: 80%;
-            }
-        }
-    }
 }
 </style>
