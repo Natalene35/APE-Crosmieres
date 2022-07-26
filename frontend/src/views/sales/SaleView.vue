@@ -1,6 +1,6 @@
 <template>
     <HeaderLayout />
-    <EventDetailLayout />
+    <SaleDetailLayout />
     <FooterLayout />
 </template>
 
@@ -8,15 +8,15 @@
 // @ is an alias to /src
 import HeaderLayout from '@/components/templates/HeaderLayout.vue'
 import FooterLayout from '@/components/templates/FooterLayout.vue'
-import EventDetailLayout from '@/components/events/EventDetailLayout.vue'
+import SaleDetailLayout from '@/components/sales/SaleDetailLayout.vue'
 
 export default {
-    name: "EventDetailView",
+    name: 'HomeView',
     components: {
     HeaderLayout,
     FooterLayout,
-    EventDetailLayout
-    }
+    SaleDetailLayout
+}
 }
 </script>
 
