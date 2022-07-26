@@ -41,17 +41,17 @@
 
                 <div class="header--nav__home">
                     <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
-                    Accueil
+                        Accueil
                     </router-link>
                 </div>
                 <div class="header--nav__sale">
                     <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
-                    Ventes
+                        Ventes
                     </router-link>
                 </div>
                 <div class="header--nav__event">
                     <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
-                    Evènements
+                        Evènements
                     </router-link>
                 </div>
 
@@ -65,17 +65,17 @@
             <ul>
                 <li class="header--nav__home">
                     <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
-                    Accueil
+                        Accueil
                     </router-link>
                 </li>
                 <li class="header--nav__sale">
                     <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
-                    Ventes
+                        Ventes
                     </router-link>
                 </li>
                 <li class="header--nav__event">
                     <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
-                    Evènements
+                        Evènements
                     </router-link>
                 </li>
                 <li class="header--nav__presentation">Présentation APE</li>
@@ -235,29 +235,42 @@ header {
         margin-top: 0.5rem;
         font-weight: bold;
         align-items: center;
-        
+
 
         .header--nav__home {
             background-color: $green;
             margin-right: 0.3rem;
-            
+
+
+            a {
+                color: $white;
+            }
         }
 
         .header--nav__sale {
             background-color: $orange;
             margin-right: 0.3rem;
 
+            a {
+                color: $white;
+            }
         }
 
         .header--nav__event {
             background-color: $red;
             margin-right: 0.3rem;
 
+            a {
+                color: $white;
+            }
         }
 
         .header--nav__presentation {
             background-color: $pink;
 
+            a {
+                color: $white;
+            }
         }
 
         div {
@@ -291,7 +304,7 @@ header {
         .header--nav__home {
             background-color: $green;
             color: $white;
-           
+
         }
 
         .header--nav__sale {
