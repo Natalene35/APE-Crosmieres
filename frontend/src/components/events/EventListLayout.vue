@@ -1,17 +1,15 @@
 <template>
 
     <div class="event--card">
-        <!--<router-link v-bind:to="{name: 'event', params: {id: id}}">-->
-            <!--<img class="event--card__img" v-bind:src="eventPicture">-->
-            
+        <!--<router-link v-bind:to="{name: 'event', params: {id: id}}">-->  
             <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
                 
             </div>
             <h2 class="event--card__title">
                     <div v-html="title"></div>
                 </h2>
-                <div class="event--card__excerpt">
-                    <div v-html="excerpt"></div>
+                <div class="event--card__content">
+                    <div v-html="content"></div>
                 </div>
         <!--</router-link>-->    
     </div>
@@ -19,49 +17,35 @@
 </template>
 
 
-
 <script>
-import picture from '@/assets/images/surr-holidays.png';
 
 export default {
-    name: "EventHomeListLayout",
+    name: "EventListLayout",
 
     props: {
         image: String,
         title: String,
-        excerpt: String,
+        content: String,
         id: Number
     },
 
-    data() {
-        return {
-            eventPicture: picture,
-        }
-    },
 }
 
 </script>
 
 
 <style scoped lang="scss">
-
 .event--card {
     border: 1px solid $white;
     border-radius: 2rem 2rem;
-    width:45%;
     background-color: $white;
     margin: 1%;
     display: flex;
     flex-direction: column;
     margin-bottom: 3rem;
     box-sizing: border-box;
-    padding-bottom: 5rem;
+    padding-bottom: 1rem;
     
-
-        .event--card__img {
-            width: 6rem;
-            
-        }
 
         .event--card__title {
             color: $grey;
@@ -84,7 +68,7 @@ export default {
 
         }
 
-        .event--card__excerpt {
+        .event--card__content {
             color: $grey;
             margin: 1rem 3rem 1rem 3rem;
 
@@ -100,7 +84,3 @@ export default {
 }
 
 </style>
-
-
-
-

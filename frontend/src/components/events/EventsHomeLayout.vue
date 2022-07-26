@@ -14,7 +14,7 @@ import EventService from '@/services/events/EventService';
 
 
 export default {
-    name: 'EventsHomelayout',
+    name: "EventsHomeLayout",
 
     components: {
         EventHomeListLayout
