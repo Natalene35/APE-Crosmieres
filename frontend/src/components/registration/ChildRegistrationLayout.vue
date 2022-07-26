@@ -69,7 +69,7 @@ export default {
                 this.errors.push("Il faut la date de naissance");
             }*/
             if (!this.picked) {
-                this.errors.push("If manque la classe");
+                this.errors.push("Il manque la classe");
             }
 
             // Verification d'absence d'erreurs et transmision des données 
