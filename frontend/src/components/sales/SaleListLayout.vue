@@ -5,8 +5,8 @@
                 <div v-html="title"></div>
             </h2>
             <img class="sale--card__img">
-            <div class="sale--card__excerpt">
-                <div v-html="excerpt"></div>
+            <div class="sale--card__content">
+                <div v-html="content"></div>
             </div>
         </div>
             
@@ -15,11 +15,11 @@
 
 <script>
 export default {
-    name: 'SaleHomeListLayout',
+    name: 'SaleListLayout',
 
     props: {
         title: String,
-        excerpt: String,
+        content: String,
         id: Number
     },
 
@@ -37,10 +37,11 @@ export default {
 .sale--card {
     border-radius: 1rem;
     border: 1px solid $white;
-    margin-bottom: 0.7rem;
+    margin-bottom: 4rem;
     background-color: $white;
     color: $grey;
     padding-bottom: 2rem;
+    margin: 1rem 1rem 1rem 1rem;
     
 
     .sale--card__title {
@@ -49,17 +50,15 @@ export default {
         background-color: $orange;
         color: $white;
         font-weight: bold;
+    
         
     }
 
-    .sale--card__excerpt {
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
+    .sale--card__content {
+        padding-right: 1rem;
+        padding-left: 1rem;
     }
 }
 
-
-
-
-
 </style>
+

@@ -85,6 +85,7 @@ export default {
 }
 </script>
 
+
 <style lang="scss">
 .sale--sliders__all {
 
