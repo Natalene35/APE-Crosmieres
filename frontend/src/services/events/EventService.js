@@ -3,9 +3,7 @@ import axios from 'axios';
 const apiClient = axios.create({
     baseURL: 'http://apecrosmieres.local/wp-json/wp/v2',
     headers: {
-        Accept: 'application/json',
-       // Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4NDMyODA5LCJuYmYiOjE2NTg0MzI4MDksImV4cCI6MTY1OTAzNzYwOSwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiNTNiODQ4NDkzOTA5MDE1YmNjOGFhNDVmNzJhMmRiMDcifX19.N5ghA1L6DlwcQl1L7eDijKlb2p4gOyiZhtOeFf-cSq8'
-
+        Accept: 'application/json'
     },
     timeout: 10000
     
@@ -15,7 +13,7 @@ export default {
     // Get the list of all the events with their metadata
     async findAll() {
         try {
-            const response = await apiClient.get('/event');
+            const response = await apiClient.get('/event?_embed');
             return response.data;
         } catch (error) {
             return error.response.data
@@ -23,24 +21,14 @@ export default {
     },
     // Get an event by his id
     async find(id) {
-         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
             const response = await apiClient.get("/event/" + id + "");
+            console.log(response);
             return response.data;
         } catch (error) {
             return error.response.data
         }
 
-    },
-    // Get meta value by sale's id
-    async getMeta(id) {
-        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
-        try {
-            const meta = await apiClient.get('/event/meta/'+ id +'');
-            return meta.data
-        } catch(error) {
-            return error.response.data
-        } 
     },
     
     // to upload a file
