@@ -12,7 +12,7 @@
 
         <div class="event--card__content" v-html="content"></div>
 
-        <a class="event--card__link" v-bind:href="link">Lien vers le site marchand
+        <a class="event--card__link" target="_blank" v-bind:href="link">Lien vers le site marchand
             <img class="snake" alt="Arrow" v-bind:src="bigSnake" />
         </a>
     </section>
@@ -38,22 +38,14 @@ export default {
         }
     },
     async mounted() {
-        let id = this.$route.params.id;
+         let id = this.$route.params.id;
         if (id) {
             let arrayMeta = await SaleService.getMeta(id)
-            console.log(arrayMeta);
-            for (let index = 0; index < arrayMeta.length; index++) {
-                const metaElmt = arrayMeta[index];
-                console.log(arrayMeta[0]);
-                if (metaElmt.meta_key == "date") {
-                    this.date = metaElmt.meta_value;
-                }
-                if (metaElmt.meta_key == "lien") {
-                    this.link = metaElmt.meta_value;
-                }
-            }
-            // Allow to retrieve the id dynamic parameter by using the $route object
+            // console.log(arrayMeta.lien);
+            this.date = arrayMeta.date;
+            this.link = arrayMeta.lien;
 
+            // Allow to retrieve the id dynamic parameter by using the $route object
             const response = await SaleService.find(id);
             if (response.code) {
                 // If error
