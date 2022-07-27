@@ -45,6 +45,9 @@
                         <label for="CM2">CM2</label>
                     </div>
                 </div>
+                <p class="succes" v-for="succesMsg in succes" v-bind:key="succesMsg">{{
+                        succesMsg
+                }}</p>
                 <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
                 <button v-on:click="add_child" class="subscribe">Ajouter un enfant ?</button>
             </div>
@@ -63,6 +66,7 @@ export default {
             //child_birthday: null,
             picked: null,
             errors: [],
+            succes: [],
             user_id: this.$store.getters.getUserID
         };
     },
@@ -93,8 +97,8 @@ export default {
                     "user_id": this.user_id
                 });
                 console.log(response);
-                if (response.code === 200) {
-
+                if (response === 200) {
+                    this.succes.push('Mise à jour réussi');
 
                     // Reset the input in the form
                     this.child_firstname = null,
@@ -147,6 +151,22 @@ export default {
         padding: 0 2em;
         display: flex;
         flex-direction: column;
+
+        .succes {
+            color: $green;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .errors {
+            color: $red;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
 
         .child--class {
             display: flex;

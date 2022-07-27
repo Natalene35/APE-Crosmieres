@@ -145,10 +145,8 @@ export default {
                     "phone": this.user.phone
                 });
                 if (response.id) {
-                    console.log('reussi')
                     this.succesUpdate.push('Mise à jour réussi');
                 } else {
-                    console.log(response)
                     this.errors.push("Echec suppression");
                 }
             }
