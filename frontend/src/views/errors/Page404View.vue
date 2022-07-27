@@ -1,0 +1,22 @@
+<template>
+    <headerLayout />
+    <Page404Layout />
+    <FooterLayout />
+</template>
+
+<script>
+import HeaderLayout from '../../components/templates/HeaderLayout.vue'
+import FooterLayout from '../../components/templates/FooterLayout.vue'
+import Page404Layout from '../../components/errors/Page404Layout.vue'
+
+export default {
+    components: {
+    HeaderLayout,
+    FooterLayout,
+    Page404Layout
+},
+}
+</script>
+
+<style>
+</style>

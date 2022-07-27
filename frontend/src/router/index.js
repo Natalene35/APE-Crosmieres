@@ -79,6 +79,13 @@ const routes = [{
     name: 'userprofil',
     component: () => import( /* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
   },
+
+  //Road for 404 page
+  {
+    path: '/404',
+    name: '404',
+    component: () => import( /* webpackChunkName: "404" */ '../views/errors/Page404View.vue')
+  },
 ];
 
 const router = createRouter({
