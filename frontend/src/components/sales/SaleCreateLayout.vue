@@ -15,7 +15,6 @@
         <input
           class="field__input"
           type="text"
-          placeholder=""
           v-model="title"
         />
 
@@ -23,16 +22,19 @@
         <textarea
           class="textarea field__input"
           type="text"
-          placeholder=""
           rows="3"
           v-model="content"
         ></textarea>
 
-        <label class="field__label">Date de la vente </label>
+        <label class="field__label"
+          >Date de la vente
+          <p class="field__label--legend">
+            à préciser (début, fin, durée, ...)
+          </p></label
+        >
         <input
           class="field__input"
-          type="date"
-          placeholder=""
+          type="text"
           v-model="saleDate"
         />
 
@@ -40,12 +42,14 @@
         <input
           class="field__input"
           type="text"
-          placeholder=""
           v-model="location"
         />
 
         <label class="field__label">Lien du site marchand </label>
-        <input class="field__input" type="text" placeholder="" v-model="link" />
+        <input 
+        class="field__input" 
+        type="text" 
+        v-model="link" />
 
         <label class="field__label"> Image </label>
         <input
@@ -140,6 +144,7 @@ export default {
                 this.content = null;
                 this.saleDate = null;
                 this.location = null;
+                this.link = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
                 this.alerts = "Vente créé";
@@ -216,6 +221,7 @@ export default {
           this.content = null;
           this.saleDate = null;
           this.location = null;
+          this.link = null;
           this.currentImage = undefined;
           this.previewImage = undefined;
           this.alerts = "Vente créée sans image";
@@ -320,6 +326,10 @@ export default {
         width: 45%;
         float: left;
         margin: 0.5rem;
+
+        .field__label--legend {
+          font-size: 0.8rem;
+        }
       }
       .field__input {
         line-height: 3;
