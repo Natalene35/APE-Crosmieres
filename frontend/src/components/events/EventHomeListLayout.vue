@@ -1,7 +1,7 @@
 <template>
 
     <div class="event--card">
-        <!--<router-link v-bind:to="{name: 'event', params: {id: id}}">-->
+        <router-link v-bind:to="{name: 'event', params: {id: id}}">
             
             <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
                 
@@ -12,7 +12,7 @@
                 <div class="event--card__excerpt">
                     <div v-html="excerpt"></div>
                 </div>
-        <!--</router-link>-->    
+        </router-link>   
     </div>
      
 </template>
