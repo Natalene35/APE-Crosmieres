@@ -1,6 +1,7 @@
 <template>
     
-        <div class="sale--card">
+    <div class="sale--card">
+        <router-link v-bind:to="{name: 'sale', params: {id: id}}">
             <h2 class="sale--card__title">
                 <div v-html="title"></div>
             </h2>
@@ -8,7 +9,8 @@
             <div class="sale--card__excerpt">
                 <div v-html="excerpt"></div>
             </div>
-        </div>
+        </router-link>
+    </div>
             
 </template>
 
@@ -41,7 +43,10 @@ export default {
     background-color: $white;
     color: $grey;
     padding-bottom: 2rem;
-    
+
+    a { color: $grey;
+        
+        }
 
     .sale--card__title {
         padding: 0.7rem;

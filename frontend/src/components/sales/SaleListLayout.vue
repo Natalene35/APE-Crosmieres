@@ -1,6 +1,7 @@
 <template>
     
-        <div class="sale--card">
+    <div class="sale--card">
+        <router-link v-bind:to="{name: 'sale', params: {id: id}}">
             <h2 class="sale--card__title">
                 <div v-html="title"></div>
             </h2>
@@ -8,7 +9,8 @@
             <div class="sale--card__content">
                 <div v-html="content"></div>
             </div>
-        </div>
+        </router-link>
+    </div>
             
 </template>
 
@@ -20,7 +22,7 @@ export default {
     props: {
         title: String,
         content: String,
-        id: Number
+        id: Number   
     },
 
     data() {
@@ -43,6 +45,9 @@ export default {
     padding-bottom: 2rem;
     margin: 1rem 1rem 1rem 1rem;
     
+    a { color: $grey;
+        
+    }
 
     .sale--card__title {
         padding: 0.7rem;
@@ -50,8 +55,7 @@ export default {
         background-color: $orange;
         color: $white;
         font-weight: bold;
-    
-        
+       
     }
 
     .sale--card__content {
