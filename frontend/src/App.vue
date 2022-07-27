@@ -21,6 +21,7 @@
   padding-left: 0.5rem;
   background-color: $blue-light-bg;
   color: $white;
+  min-width: fit-content;
 
 }
 

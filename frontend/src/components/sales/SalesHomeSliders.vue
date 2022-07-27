@@ -26,7 +26,7 @@
             <div class="background--design"></div>
             <div class="background--design"></div>
             <div class="background--design"></div>
-            <div class="background--design background__5" v-bind:style="'height:' + this.scroll + '%'"></div>
+            <div class="background--design background__5"></div>
         </section>
 
     </section>
@@ -43,7 +43,7 @@ export default {
         return {
             allSales: null,
             //Define the slide show in first
-            slide: 0,
+            slide: 1,
             //Define number of slide
             maxSlide: null,
             saleSlide: null,
@@ -52,8 +52,8 @@ export default {
     },
     methods: {
         SlideAuto() {
-
-            let allSlideText = document.getElementsByClassName("hidden")
+            if(screen.width<=425){
+                let allSlideText = document.getElementsByClassName("hidden")
             allSlideText[0].classList.remove("first")
             if (this.slide != this.maxSlide) {
                 this.slide++
@@ -67,26 +67,20 @@ export default {
             }
             allSlideText[this.slide].classList.add("active")
             allSlideText[this.slide].classList.add("animsliders")
+            }
+            
         },
-        handleScroll() {
-            //Modify her for scroll animation
-            this.scroll = (window.scrollY) / 8
-
-        }
-
     },
-    async mounted() {
+    async mounted() {        
         setInterval(this.SlideAuto, 10000);
         this.saleSlide = await SaleService.findAll();
         this.maxSlide = this.saleSlide.length - 1;
-        window.addEventListener('scroll', this.handleScroll);
-
     }
 }
 </script>
 
 
-<style lang="scss">
+<style  lang="scss">
 .sale--sliders__all {
 
     display: none;
@@ -94,12 +88,6 @@ export default {
 
 @media (max-width: 425px) {
 
-    main {
-        flex-direction: column;
-        position: relative;
-        z-index: 3;
-        overflow: hidden;
-    }
 
     .sale--section {
         display: none;
@@ -108,34 +96,34 @@ export default {
     .sale--sliders__all {
 
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse;
         justify-content: space-between;
         border-radius: 1rem;
         color: black;
-        width: 80%;
+        width: 100%;
         margin: 0px auto 1rem auto;
-        height: 12rem;
+        height: 18rem;
         align-items: center;
         justify-content: center;
 
         .sale--sliders__titre {
             background-color: $blue-light-bg;
             position: absolute;
-            top: 0;
+            top: -0.3rem;
             width: 50%;
             display: flex;
             justify-content: center;
             font-weight: bold;
             padding: 1%;
-            box-shadow: 0px 6px 1px black;
-            color: $grey;
+            box-shadow: 0px 6px 1px white;
+            color: $orange;
         }
 
         @import "../../assets/animations/bubbleAnim.scss";
 
         .background--design__all {
-            height: 500vh;
-            width: 1000vh;
+            height: 700vh;
+            width: 1320VH;
             background-color: transparent;
             position: absolute;
             z-index: -7;
@@ -170,27 +158,31 @@ export default {
         div {
             display: flex;
             align-items: center;
+            text-align: center;
         }
 
         .sale--sliders {
             border-radius: 1rem;
             padding: margin;
-            height: 8REM;
+            height: 18REM;
             display: flex;
             flex-direction: column;
             overflow: hidden;
             opacity: 1;
-            width: 90%;
             color: $grey;
+            width: 100%;
+            height: 70%;
+            padding: 7% 7% 0% 7%;
 
             h2 {
                 text-shadow: 1px 1px 1px black;
                 font-style: italic;
-                text-decoration: underline;
-                padding: 1%;
+                // text-decoration: underline;
+                padding: 3%;
                 width: 100%;
                 margin-bottom: 2%;
-                color: $grey;
+                color: $white;
+                font-size: large;
             }
 
             p {

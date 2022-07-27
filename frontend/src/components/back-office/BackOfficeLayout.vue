@@ -80,13 +80,14 @@
 <script>
 import SaleService from "@/services/sales/SaleService";
 import EventService from '@/services/events/EventService.js'
-import EventCreateLayout from './EventCreateLayout.vue'
+import EventCreateLayout from '../events/EventCreateLayout.vue'
 import SaleCreateLayout from './SaleCreateLayout.vue'
 export default {
     
     name: "BackOfficeLayout",
     data() {
         return {
+            
             allSales: null,
             allEvent: null,
             active: null,
@@ -201,6 +202,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+header{
+    nav{
+        display: none;
+    }
+}
 .wrapper{
     height: 100%;
     width: 100%;
@@ -221,6 +227,8 @@ export default {
             align-items: center;
             height: 100%;
             width: 100%;
+            position: relative;
+            z-index: 8;
             .field_label{
                 margin: 0;
                 width: 20%;              
@@ -255,28 +263,26 @@ export default {
         align-items: center;
         
         .back-office--menu__nav{
-            width: 50%;
+            width: 100%;
             display: flex;
             flex-wrap: wrap;
-            height: 9%;
+            height: 5%;
             margin-bottom: 1%;
+            margin-top: -4%;
+            justify-content: center;
+            
             h2:hover{
                filter: brightness(1.4);
-                border-top-left-radius: 25%;
-                border-bottom-right-radius: 25%; 
-                border-top-right-radius: 0%;
-                border-bottom-left-radius: 0%;
             }
             h2{
-            width: 45%;
+            width: 22%;
             margin: 1%;
+            padding: 0.2%;
             border: 1px solid white;
-            box-shadow: -3px -5px 1px white;
-            border-top-right-radius: 25%;
-            border-bottom-left-radius: 25%;
             cursor: pointer;
-            background-color: $blue-bg-header;
+            background-color: #46BFC7;
             text-shadow: 1px 1px 1px black;
+            border-radius: 10px;
             }
         }
         .sale{
@@ -309,10 +315,8 @@ export default {
             height: 84%;
             max-height: 84%;
             width: 100%;
-            background-color: #313846;
-            box-shadow: inset 1px -6px 1px #46bfc7;
-            border: 2px solid white;
-            border-radius: 2%;
+            margin-top: 1%;
+            align-items: center;
         .active{
             filter: brightness(1.2);
             background-color: $blue-light-bg;
@@ -320,15 +324,15 @@ export default {
         }
             //SCSS FOR LIST SALE
             .back-office--container__salesTask{
-                width: 50%;               
+                width: 40%;               
                 height: 90%;
                 border-radius: 2%;
                 .back-office--sale{
                     width: 100%;                    
                     .back-office--sale__title{ 
-                        background-color: $blue-bg-header;
+                        background-color: #46BFC7;
                         border: 1px solid black;
-                        width: 95%;
+                        width: 94%;
                         margin: 3%;
                         display: flex;
                         justify-content: space-between;
@@ -419,10 +423,9 @@ export default {
             }
         //SCSS FOR THE CONTENTS OF SALE 
         .back-office--sale--contents__all{
-            width: 50%;
+            width: 60%;
             display: flex;
             flex-direction: column;
-            // background-color: green;
             position: relative;
             height: 90%;
             .back-office--sale--container__contents{            
@@ -451,4 +454,18 @@ export default {
     }
 }
 
+@media (max-width: 600px) {
+    .back-office--container__all{
+
+        .back-office--sales__all{
+            
+            .back-office--menu__nav{
+
+                h2{
+                    
+                }
+            }
+        }
+    }
+}
 </style>
