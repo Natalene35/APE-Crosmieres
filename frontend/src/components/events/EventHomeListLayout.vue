@@ -2,16 +2,14 @@
 
     <div class="event--card">
         <router-link v-bind:to="{name: 'event', params: {id: id}}">
-            
-            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
-                
+            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">    
             </div>
             <h2 class="event--card__title">
-                    <div v-html="title"></div>
-                </h2>
-                <div class="event--card__excerpt">
-                    <div v-html="excerpt"></div>
-                </div>
+                <div v-html="title"></div>
+            </h2>
+            <div class="event--card__excerpt">
+                <div v-html="excerpt"></div>
+            </div>
         </router-link>   
     </div>
      

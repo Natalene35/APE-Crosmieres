@@ -1,7 +1,7 @@
 <template>
     
-        <div class="sale--card">
-            <router-link v-bind:to="{name: 'sale', params: {id: id}}">
+    <div class="sale--card">
+        <router-link v-bind:to="{name: 'sale', params: {id: id}}">
             <h2 class="sale--card__title">
                 <div v-html="title"></div>
             </h2>
@@ -9,8 +9,8 @@
             <div class="sale--card__excerpt">
                 <div v-html="excerpt"></div>
             </div>
-            </router-link>
-        </div>
+        </router-link>
+    </div>
             
 </template>
 
