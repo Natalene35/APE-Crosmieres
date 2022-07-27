@@ -29,20 +29,20 @@
                         <label for="CP">CP</label>
                     </div>
                     <div class="child--class__checkbox">
-                        <input type="radio" id="CM1" value="CM1" v-model="picked" />
-                        <label for="CM1">CM1</label>
-                    </div>
-                    <div class="child--class__checkbox">
-                        <input type="radio" id="CM2" value="CM2" v-model="picked" />
-                        <label for="CM2">CM2</label>
-                    </div>
-                    <div class="child--class__checkbox">
                         <input type="radio" id="CE1" value="CE1" v-model="picked" />
                         <label for="CE1">CE1</label>
                     </div>
                     <div class="child--class__checkbox">
                         <input type="radio" id="CE2" value="CE2" v-model="picked" />
                         <label for="CE2">CE2</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CM1" value="CM1" v-model="picked" />
+                        <label for="CM1">CM1</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CM2" value="CM2" v-model="picked" />
+                        <label for="CM2">CM2</label>
                     </div>
                 </div>
                 <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
@@ -62,7 +62,8 @@ export default {
             child_lastname: null,
             //child_birthday: null,
             picked: null,
-            errors: []
+            errors: [],
+            user_id: this.$store.getters.getUserID
         };
     },
 
@@ -89,7 +90,7 @@ export default {
                     "child_firstname": this.child_firstname,
                     "child_lastname": this.child_lastname,
                     "child_class": this.picked,
-                    "user_id": this.$store.getters.getUserID
+                    "user_id": this.user_id
                 });
                 console.log(response);
                 if (response.code === 200) {

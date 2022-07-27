@@ -40,7 +40,7 @@ function ape_rest_user_child_handler($request)
     $child_firstname = sanitize_text_field($parameters['child_firstname']);
     $child_lastname = sanitize_text_field($parameters['child_lastname']);
     $child_class = sanitize_text_field($parameters['child_class']);
-    $user_id = ($parameters['child_class']);
+    $user_id = sanitize_text_field($parameters['user_id']);
 
     //POST SQL REQUEST 
     global $wpdb;
@@ -72,5 +72,6 @@ function ape_rest_link_child_handler($user_id)
           )
 
          VALUES ('$user_id', '$child_id')");
-    return $rowss;
+    return
+        $response['code'] = 200;
 };
