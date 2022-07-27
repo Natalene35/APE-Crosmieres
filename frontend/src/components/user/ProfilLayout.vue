@@ -1,38 +1,43 @@
 <template>
-    <section class="section">
-        <figure class="user-profile">
-            <figcaption>
-                <img src="@/assets/images/icons8-profile-60.png" alt="exemple photo-profile-avatar" class="profile" />
-                <h2>Bienvenue {{ user.name }}</h2>
+    <section class="wrapper">
+        <div class="container">
+            <img src="@/assets/images/icons8-profile-60.png" alt="exemple photo-profile-avatar" class="profile" />
+            <h2>{{ user.name }}</h2>
 
-                <label class="field__label">Prénom</label>
-                <input v-model="user.first_name" type="text" class="inputbox" placeholder="Votre prénom"
-                    name="firstname">
+            <label class="field__label">Prénom</label>
+            <input v-model="user.first_name" type="text" class="inputbox" placeholder="Votre prénom" name="firstname">
 
-                <label class="field__label">Nom</label>
-                <input v-model="user.last_name" type="text" class="inputbox" placeholder="Votre Nom" name="lastname">
+            <label class="field__label">Nom</label>
+            <input v-model="user.last_name" type="text" class="inputbox" placeholder="Votre Nom" name="lastname">
 
-                <label class="field__label">E-mail</label>
-                <input v-model="user.email" type="email" class="inputbox" placeholder="Votre e-mail" name="mail">
+            <label class="field__label">E-mail</label>
+            <input v-model="user.email" type="email" class="inputbox" placeholder="Votre e-mail" name="mail">
 
-                <label class="field__label">Numéro de téléphone</label>
-                <input v-model="phone" type="text" class="inputbox" placeholder="Votre numéro de contact" name="phone">
+            <label class="field__label">Numéro de téléphone</label>
+            <input v-model="phone" type="text" class="inputbox" placeholder="Votre numéro de contact" name="phone">
 
-                <label class="field__label">Votre identifiant de connexion</label>
-                <input v-model="user.nickname" type="text" class="inputbox" placeholder="Votre pseudo" name="username">
+            <label class="field__label">Votre identifiant de connexion</label>
+            <input v-model="user.nickname" type="text" class="inputbox" placeholder="Votre pseudo" name="username">
 
-                <div class="button--link">
-                    <a v-on:click="showChildRegistrationLayout" class="addChild">Ajouter mes enfants</a>
-                    <a v-on:click="updateUser" class="update">Enregistrer vos modifications</a>
-                    <a v-on:click="showUpdatePassword" class="updatePassword">Mettre à jour votre mot de
-                        passe</a>
-                    <a v-on:click="removeUser" class="delete">Supprimer mon compte</a>
-                </div>
-            </figcaption>
-        </figure>
-        <ChildRegistrationLayout class="ChildRegistrationLayout--display active" />
+            <div class="button--link">
+                <p class="push--error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
+
+                <a v-on:click="showChildRegistrationLayout" class="addChild">Ajouter mes enfants</a>
+
+                <ChildRegistrationLayout class="ChildRegistrationLayout--display active" />
+
+                <a v-on:click="updateUser" class="update">Enregistrer vos modifications</a>
+                <p class="succesUpdate" v-for="succesMsg in succesUpdate" v-bind:key="succesMsg">{{
+                        succesMsg
+                }}</p>
+
+                <a v-on:click="showUpdatePassword" class="updatePassword">Mettre à jour votre mot de
+                    passe</a>
+
+                <a v-on:click="removeUser" class="delete">Supprimer mon compte</a>
+            </div>
+        </div>
     </section>
-
 </template>
 
 <script>
@@ -51,6 +56,7 @@ export default {
         return {
             user: [],
             errors: [],
+            succesUpdate: [],
             phone: null,
         }
     },
@@ -95,7 +101,7 @@ export default {
                 if (response.id) {
                     this.$router.push({ name: 'home' });
                 } else {
-                    alert(response.message);
+                    this.errors.push("Echec suppression");
                 }
             }
         },
@@ -109,7 +115,11 @@ export default {
                     "last_name": this.user.last_name,
                     "phone": this.user.phone
                 });
-                console.log(response);
+                if (response.id) {
+                    this.succesUpdate.push('Mise à jour réussi');
+                } else {
+                    this.errors.push("Echec suppression");
+                }
             }
         }
     }
@@ -117,12 +127,16 @@ export default {
 </script>
 
  <style scoped lang="scss">
- .user-profile {
-     overflow: hidden;
-     text-align: left;
-     line-height: 1.4em;
-     background-color: $blue-light-bg;
-     color: $grey;
+ .wrapper {
+     color: #313846;
+     font-family: "Muli", sans-serif;
+     font-size: 1rem;
+     display: grid;
+     place-items: center;
+     border-radius: 1em;
+     width: 100%;
+     justify-items: center;
+     justify-content: center;
  
      * {
          -webkit-box-sizing: border-box;
@@ -131,11 +145,16 @@ export default {
          transition: all 0.25s ease;
      }
  
-     figcaption {
-         width: 100%;
-         background-color: $blue-light-bg;
-         padding: 25px;
-         position: relative;
+     .container {
+         max-width: 400px;
+         overflow: hidden;
+         padding: 0;
+         margin-top: 1rem;
+         margin-bottom: 1rem;
+         border-radius: 1em;
+         display: -ms-grid;
+         display: grid;
+         place-items: center;
  
          h2 {
              font-size: 2rem;
@@ -162,7 +181,7 @@ export default {
              text-transform: uppercase;
              margin: 0.5rem;
              opacity: 0.65;
-             width: 47%;
+             width: 100%;
              text-align: center;
              text-decoration: none;
              font-weight: 600;
@@ -210,6 +229,8 @@ export default {
  
      .button--link {
          display: flex;
+         flex-direction: column;
+         align-items: center;
  
  
          .addChild {
@@ -238,6 +259,13 @@ export default {
              background-color: $pink;
              border-radius: 10px;
              cursor: pointer
+         }
+ 
+         .succesUpdate {
+             color: green;
+             text-transform: uppercase;
+             font-size: 1rem;
+             margin-bottom: 1rem;
          }
      }
  

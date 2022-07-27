@@ -2,7 +2,6 @@
     <section class="wrapper">
         <div class="container">
             <div class="content">
-                <h1 class="title">Ajouter vos enfants</h1>
                 <label class="field__label">Prénom</label>
                 <input v-model="child_firstname" type="text" class="inputbox" placeholder="Prénom de votre enfant"
                     name="firstname">
@@ -13,26 +12,38 @@
                 <input v-model="child_birthday" type="date" id="birthday" name="birthday">-->
 
                 <div class="child--class">
-                    <input type="radio" id="PS" value="petite-section" v-model="picked" />
-                    <label for="PS">Petite section</label>
-
-                    <input type="radio" id="MS" value="moyenne-section" v-model="picked" />
-                    <label for="PS">Moyenne section</label>
-
-                    <input type="radio" id="GS" value="grande-section" v-model="picked" />
-                    <label for="GS">Grande section</label>
-
-                    <input type="radio" id="CP" value="CP" v-model="picked" />
-                    <label for="CP">CP</label>
-
-                    <input type="radio" id="CM1" value="CM1" v-model="picked" />
-                    <label for="CM1">CM1</label>
-                    <input type="radio" id="CM2" value="CM2" v-model="picked" />
-                    <label for="CM2">CM2</label>
-                    <input type="radio" id="CE1" value="CE1" v-model="picked" />
-                    <label for="CE1">CE1</label>
-                    <input type="radio" id="CE2" value="CE2" v-model="picked" />
-                    <label for="CE2">CE2</label>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="PS" value="petite-section" v-model="picked" />
+                        <label for="PS">Petite section</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="MS" value="moyenne-section" v-model="picked" />
+                        <label for="PS">Moyenne section</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="GS" value="grande-section" v-model="picked" />
+                        <label for="GS">Grande section</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CP" value="CP" v-model="picked" />
+                        <label for="CP">CP</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CM1" value="CM1" v-model="picked" />
+                        <label for="CM1">CM1</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CM2" value="CM2" v-model="picked" />
+                        <label for="CM2">CM2</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CE1" value="CE1" v-model="picked" />
+                        <label for="CE1">CE1</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CE2" value="CE2" v-model="picked" />
+                        <label for="CE2">CE2</label>
+                    </div>
                 </div>
                 <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
                 <button v-on:click="add_child" class="subscribe">Ajouter un enfant ?</button>
@@ -82,7 +93,7 @@ export default {
                 });
                 console.log(response);
                 if (response.code === 200) {
-                    console.log(response);
+
 
                     // Reset the input in the form
                     this.child_firstname = null,
@@ -133,12 +144,28 @@ export default {
     .content {
         place-items: center;
         padding: 0 2em;
+        display: flex;
+        flex-direction: column;
+
+        .child--class {
+            display: flex;
+            flex-direction: column;
+
+            .child--class__checkbox {
+                display: flex;
+                scroll-margin-right: 0.5rem;
+
+                input {
+                    margin-right: 1rem;
+                }
+            }
+        }
     }
 
     .inputbox {
         padding: 0.5em 0 0.5em 1.5em;
         line-height: 3;
-        width: 25%;
+        width: 100%;
         border: 1px solid $blue-light-bg;
         border-radius: 0.5em;
         margin: 0.3rem 0 1rem 0;
@@ -158,7 +185,7 @@ export default {
         display: inline-block;
         border: none;
         border-radius: 10px;
-        width: 60%;
+        width: 100%;
         padding: 0.5rem;
         margin: 1rem;
         cursor: pointer;
@@ -178,10 +205,6 @@ export default {
             }
 
             .inputbox {
-                width: 70%;
-            }
-
-            .subscribe {
                 width: 70%;
             }
 
