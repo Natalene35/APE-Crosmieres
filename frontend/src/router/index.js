@@ -79,7 +79,21 @@ const routes = [{
     name: 'userprofil',
     component: () => import( /* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
   },
-];
+
+  //Road for 404 page
+  {
+    path: '/404',
+    name: '404',
+    component: () => import( /* webpackChunkName: "404" */ '../views/errors/Page404View.vue')
+  },
+   //Road for back-office
+   {
+    path: '/back-office',
+    name: 'back-office',
+     component: () => import(/* webpackChunkName: "login" */ '../views/back-office/BackOfficeView.vue')
+  },
+]
+
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),

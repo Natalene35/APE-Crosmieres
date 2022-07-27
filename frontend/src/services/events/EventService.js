@@ -3,7 +3,10 @@ import axios from 'axios';
 const apiClient = axios.create({
     baseURL: 'http://apecrosmieres.local/wp-json/wp/v2',
     headers: {
-        Accept: 'application/json'
+        Accept: 'application/json',
+        // Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4NzYyNTkzLCJuYmYiOjE2NTg3NjI1OTMsImV4cCI6MTY1OTM2NzM5MywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiYmZhNmRhYTVlNTRjNGY3MzU4ZDNhMGI3YTQ4Y2RkNmYifX19.0KrEEAZCD16AjhdMkjs6m_z1-2X5uEE8QD05W6rTNZc'
+        
+
     },
     timeout: 10000
 
@@ -24,7 +27,7 @@ export default {
         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
             const response = await apiClient.get("/event/" + id + "?_embed");
-            // console.log(response);
+
             return response.data;
         } catch (error) {
             return error.response.data
@@ -65,7 +68,7 @@ export default {
 
     // create an event
     async addEvent(param) {
-
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         apiClient.defaults.headers.common['Content-Type'] = "application/json";
 
         try {
@@ -103,5 +106,48 @@ export default {
         } catch (errors) {
             return errors.response
         }
+    },
+    async findMeta(id) {
+        apiClient.defaults.headers.common['Content-Type'] = "application/json";
+        try {
+            const response = await apiClient.get("/event/meta/" + id + "");
+            
+            return response.data;
+        } catch (error) {
+            return error.response.data
+        }
+
+    },
+    async create(params) {
+        try {
+            apiClient.defaults.headers.common['Content-Type'] = "application/json";
+         
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.post("/event", params);
+          
+            return response.data;
+        } catch(error) {
+            return error.response.data
+        }        
+    },
+    async update(params) {
+        try {
+            apiClient.defaults.headers.common['Content-Type'] = "application/json";
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.post("/event/"+ params.id+ "", params);
+            return response.data;
+        } catch(error) {
+            return error.response.data
+        }        
+    },
+    async delete(params) {
+        try {
+            apiClient.defaults.headers.common['Content-Type'] = "application/json";
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.delete("/event/"+ params.id+ "");
+            return response.data;
+        } catch(error) {
+            return error.response.data
+        }        
     },
 }

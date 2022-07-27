@@ -123,7 +123,6 @@ export default {
       this.currentImage = this.$refs.file.files.item(0);
       this.previewImage = URL.createObjectURL(this.currentImage);
     },
-
     // upload and send to wordpress
     upload(postId) {
       EventService.upload(this.currentImage, this.title, postId)
@@ -162,14 +161,12 @@ export default {
           this.currentImage = undefined;
         });
     },
-
     // to submit fields and send datas to custom post 'event'
     async submitForm() {
       this.showModal = false;
       // Reset error table
       this.errors = [];
       this.alerts = null;
-
       // Form Content Validation
       if (!this.title) {
         this.errors.push("Veuillez remplir un titre svp");
@@ -183,11 +180,9 @@ export default {
       if (!this.location) {
         this.errors.push("Veuillez remplir un lieu svp");
       }
-
       setTimeout(() => {
         this.errors = [];
       }, 5000);
-
       // Send form request if no error
       if (this.errors.length === 0) {
         let params = {
@@ -196,7 +191,6 @@ export default {
           date: this.eventDate,
           lieu: this.location,
         };
-
         const response = await EventService.addEvent(params);
 
         // if event create status is ok and if there was an image to uplaod
@@ -212,7 +206,7 @@ export default {
           this.currentImage = undefined;
           this.previewImage = undefined;
           this.alerts = "Evénement créé sans image";
-          //redirection vers la home
+          // home redirect
           setTimeout(() => this.$router.push({ name: "home" }), 1500);
         } else {
           this.errors.push(
@@ -234,7 +228,6 @@ export default {
   display: grid;
   place-items: center;
   border-radius: 1em;
-
   .container {
     width: 80%;
     overflow: hidden;
@@ -246,7 +239,6 @@ export default {
     display: grid;
     place-items: center;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
-
     .progress {
       width: 50%;
       border-radius: 1rem;
@@ -276,7 +268,6 @@ export default {
         background-position: 100% 0;
       }
     }
-
     .preview {
       width: 50%;
       border-radius: 5px;
@@ -284,7 +275,6 @@ export default {
       box-shadow: 0px 17px 34px -20px $blue-bg-header;
       margin-bottom: 1rem;
     }
-
     .field {
       padding: 1rem;
       margin: 1rem;
@@ -292,12 +282,10 @@ export default {
       flex-wrap: wrap;
       align-items: baseline;
       width: 100%;
-
       .field__title {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
-
         .logo--img {
           display: none;
         }
@@ -324,11 +312,9 @@ export default {
         width: 45%;
         float: right;
       }
-
       ::placeholder {
         color: $red;
       }
-
       .error {
         background-color: lightcoral;
         font-weight: bold;
@@ -352,7 +338,6 @@ export default {
         color: Black;
       }
     }
-
     button {
       display: inline-block;
       width: 50%;
@@ -365,7 +350,6 @@ export default {
       border: 1px solid #ffc107;
       box-shadow: 0 5px 5px #0000001a;
     }
-
     button:hover {
       color: white;
       background-color: #ffc107;
@@ -416,20 +400,17 @@ export default {
       }
     }
   }
-
   @media (max-width: 600px) {
     .container {
       background-color: transparent;
       box-shadow: none;
       border-radius: none;
-
       .field {
         padding: 1rem;
         margin: 1rem;
         display: flex;
         flex-wrap: wrap;
         width: 100%;
-
         .field__title {
           .logo--img {
             display: inline;
