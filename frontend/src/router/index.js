@@ -56,8 +56,7 @@ const routes = [{
   {
     path: '/event/:id',
     name: 'event',
-    component: () => import( /* webpackChunkName: "event" */ '../views/events/EventDetailView.vue')
-
+    component: () => import(/* webpackChunkName: "event" */ '../views/events/EventDetailView.vue')
   },
  
   //Road for a sale
