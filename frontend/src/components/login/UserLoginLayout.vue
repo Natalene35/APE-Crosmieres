@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import illustrationPicture from '@/assets/images/surr-holidays.png'
+import illustrationPicture from '@/assets/images/jelly-character-got-a-new-idea.png'
 import UserLoginService from '@/services/login/UserLoginService'
 
 export default {
@@ -120,6 +120,8 @@ export default {
         .title {
             font-size: 1.6rem;
             font-weight: 700;
+            margin-bottom: 1rem;
+            color: $grey
         }
 
         .img {

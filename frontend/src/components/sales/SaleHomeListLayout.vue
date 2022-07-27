@@ -1,6 +1,5 @@
 <template>
     
-
         <div class="sale--card">
             <h2 class="sale--card__title">
                 <div v-html="title"></div>
@@ -11,7 +10,6 @@
             </div>
         </div>
             
-    
 </template>
 
 

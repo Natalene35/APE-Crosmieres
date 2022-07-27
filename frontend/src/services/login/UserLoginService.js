@@ -44,12 +44,21 @@ export default {
     async getMeta(id) {
          apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            const meta = await apiClient.get('/wp/v2/users/'+ id +'');
+            const meta = await apiClient.get('/wp/v2/users/meta/'+ id +'');
             return meta.data
         } catch(error) {
             return error.response.data
         } 
-    }
+    },
+    async findAll() {
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+        try {
+            const response = await apiClient.get("/wp/v2/users");
+            return response.data;
+        } catch (error) {
+            return error.response.data
+        }
+    },
     //GET META EXPLICATION WE NEED TO PLACE IN YOUR COMPONENTS
 
     // let arrayMeta= await UserLoginService.getMeta(index)

@@ -1,24 +1,32 @@
 <template>
 
-        <HeaderLayout />
-        
-        <FooterLayout />
-    
+        <HeaderLayout/>
+        <SalesListLayout/>
+        <FooterLayout/>
+  
 </template>
+
 
 <script>
 import HeaderLayout from '@/components/templates/HeaderLayout.vue';
+import SalesListLayout from '@/components/sales/SalesListLayout.vue';
 import FooterLayout from '@/components/templates/FooterLayout.vue';
 
 export default {
+    name: "SalesListView",
     components: {
         HeaderLayout,
+        SalesListLayout,
         FooterLayout,
         
     }
 }
+
 </script>
 
-<style>
+
+<style scoped lang="scss">
+
 
 </style>
+
