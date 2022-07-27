@@ -27,7 +27,7 @@
         </div>                           
         
         <div class="back-office--crud__button">
-            <button v-on:click="createSale" class="button sale">Créer vente</button>
+            <button v-on:click="createSale" @keyup.enter="$emit('enlargeText')" class="button sale">Créer vente</button>
         </div>                            
     </div>
 
@@ -38,6 +38,7 @@ import SaleService from "@/services/sales/SaleService";
 export default {
     
     name: "SaleCreateLayout",
+    emits: ["enlargeText"],
     props: {
         active: String,
     },
@@ -58,14 +59,14 @@ export default {
         //<---------------SALES------------------->
         //CREATE SALE
         async createSale() {
-            console.log("entree vente composant")
             const response = await SaleService.create({
                 "title": this.title,
                 "content": this.content,
-                "lieu": this.place,
+                "lieu": this.location,
                 "date": this.date,
                 "lien": this.link
             });
+             this.$emit("enlargeText");
             //UPDATE POST FOR TAKE IT PUBLISH
             const majPost = await SaleService.update({
                 "status": "publish",
@@ -74,12 +75,10 @@ export default {
             //RELOAD ALL SALES FOR SEE NEW SALE
             this.allSales = await SaleService.findAll();
             this.menuActive = "listSale";
-            this.$emit('reloadSaleEmit');
             console.log(response + majPost);
         },
         //UPDATE SALE
         async updateSale() {
-            console.log("le probleme est "+this.date)
             const response = await SaleService.update({
                 "title": this.title,
                 "content": this.content,
@@ -97,13 +96,12 @@ export default {
         },
     },
      async mounted() {
+       
     if(this.active!=null){
-        this.selectEvent=await SaleService.find(parseInt(this.active))
-        
+        this.selectEvent=await SaleService.find(parseInt(this.active))        
         this.title = this.selectEvent.title.rendered;
         this.content = this.selectEvent.content.rendered;
         this.selectPostMeta= await SaleService.findMeta(this.active);
-        console.log("levent select est "+this.selectPostMeta)
         for(const meta of this.selectPostMeta){
             if(meta.meta_key=="date"){
                 this.date =  meta.meta_value
@@ -145,7 +143,7 @@ export default {
                 border-radius: 10%;
                 padding: 1%;
                 font-size: large;
-                box-shadow: -7px -6px 1px black;
+                box-shadow: -7px -6px 1px $blue-bg-header;
                 margin-top: 2%;
             }
             h3{
@@ -162,8 +160,9 @@ export default {
             width: 88%;
             border: 1px solid #DFF2F0;
             font-size: large;
-            box-shadow: -7px -6px 1px black;
+            box-shadow: -7px -6px 1px $blue-bg-header;
             margin-top: 2%;
+            border-radius: 10%;
         }
     }
     .back-office--crud__link{
@@ -178,6 +177,11 @@ export default {
     .back-office--crud__button{
         width: 40%;
         height: 0;
+        button{
+            border-radius: 10%;
+            border: 1px solid white;
+            box-shadow: -3px -3px 1px $blue-bg-header;
+        }
     }                  
 
 

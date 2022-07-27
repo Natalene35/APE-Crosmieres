@@ -44,14 +44,14 @@
                     </div>  
                     <!-- CRUD SALES OFFICE -->
                     <div v-if="this.menuActive=='crudSale'" class="back-office--container__crud">
-                        <SaleCreateLayout />
+                        <SaleCreateLayout @enlargeText="onEnlargeText" />
                     </div>
                     <!-- CRUD EVENTS OFFICE -->
                     
                         <!-- //COMPOSANT CREATE EVENT -->
                     <div v-if="this.menuActive=='crudEvent'" class="back-office--container__crud">
                          
-                         <EventCreateLayout />
+                         <EventCreateLayout @reloadEv="reloadEvent" />
                     </div>
                 </div>
                  
@@ -61,13 +61,13 @@
 
                     <div v-bind:class="sale.id + ' back-office--sale--container__contents'" v-for="sale in allSales" v-on:click="toggleContent, toggleSelectTask"  v-bind:key="sale" >
                         <div v-if="this.active==sale.id" class="back-office--content">
-                            <SaleCreateLayout v-on:reloadSaleEmit="reloadSale" v-bind:active="this.active"/>
+                            <SaleCreateLayout @enlargeText="onEnlargeText" v-bind:active="this.active"/>
                         </div>
                     </div>
                     <div v-bind:class="event.id + ' back-office--sale--container__contents'" v-for="event in allEvent" v-on:click="toggleContent, toggleSelectTask"  v-bind:key="event" >
                         <div v-if="this.active==event.id" class="back-office--content">
                             <!-- //COMPOSANT CREATE EVENT -->
-                            <EventCreateLayout v-bind:active="this.active" />
+                            <EventCreateLayout @reloadEv="reloadEvent" v-bind:active="this.active" />
                         </div>
                     </div>
                 </div>               
@@ -80,7 +80,7 @@
 <script>
 import SaleService from "@/services/sales/SaleService";
 import EventService from '@/services/events/EventService.js'
-import EventCreateLayout from '../events/EventCreateLayout.vue'
+import EventCreateLayout from './EventCreateLayout.vue'
 import SaleCreateLayout from './SaleCreateLayout.vue'
 export default {
     
@@ -105,16 +105,31 @@ export default {
     },
     async mounted() {
         const allButton=document.querySelectorAll(".button")
-        console.log(allButton)
+        for (const button of allButton) {
+            button.addEventListener("click", this.onEnlargeText)
+        }
+        console.log("coucou tout les button "+allButton)
         this.allSales = await SaleService.findAll();
         this.allEvent = await EventService.findAll();
     },
     methods: {
         //METHOD FOR TOGGLE CLASSE & Animation
         //ACTIVE V-IF 
-        async reloadSale(){
+       async onEnlargeText() {
+      console.log("enlarging text");
+      this.allSales = await SaleService.findAll();
+      this.menuActive = "listSale";
+
+    },
+       async reloadEvent() {
+      console.log("enlarging text");
+      this.allEvent = await EventService.findAll();
+      this.menuActive = "listSale";
+
+    },
+       reloadSale(){
             console.log("entree reloadSale")
-            this.allSales = await SaleService.findAll();
+            // this.allSales = await SaleService.findAll();
         },
         toggleMenu(e) {
             if (e == "sale") {
@@ -123,8 +138,7 @@ export default {
                 }
                 else{
                     this.menuActive=null;
-                }
-                
+                }                
             }
             if (e == "saleCrud") {
                 this.menuActive = "crudSale";
@@ -141,8 +155,6 @@ export default {
         //FOR SEE THE SELECT SALE TO THE RIGHT 
         async toggleContent(e) {
             const menuContentContainer=document.querySelector(".back-office--menu_content")
-            console.log("le menu content est "+menuContentContainer.classList)
-            console.log(e.currentTarget.classList[0]);
             this.active = e.currentTarget.classList[0];
             if (this.menuActive == "listSale") {
                 this.selectPost = await SaleService.find(this.active);
@@ -184,25 +196,25 @@ export default {
         },
         //<------------------------------------SQL METHOD------------------------------------>
         //<---------------SALES------------------->
-        //CREATE SALE
-        async createSale() {
-            const response = await SaleService.create({
-                "title": this.title,
-                "content": this.content,
-                "lieu": this.place,
-                "date": this.date,
-                "lien": this.link
-            });
-            //UPDATE POST FOR TAKE IT PUBLISH
-            const majPost = await SaleService.update({
-                "status": "publish",
-                "id": response
-            });
-            //RELOAD ALL SALES FOR SEE NEW SALE
-            this.allSales = await SaleService.findAll();
-            this.menuActive = "listSale";
-            console.log(response + majPost);
-        },
+        // //CREATE SALE
+        // async createSale() {
+        //     const response = await SaleService.create({
+        //         "title": this.title,
+        //         "content": this.content,
+        //         "lieu": this.place,
+        //         "date": this.date,
+        //         "lien": this.link
+        //     });
+        //     //UPDATE POST FOR TAKE IT PUBLISH
+        //     const majPost = await SaleService.update({
+        //         "status": "publish",
+        //         "id": response
+        //     });
+        //     //RELOAD ALL SALES FOR SEE NEW SALE
+        //     this.allSales = await SaleService.findAll();
+        //     this.menuActive = "listSale";
+        //     console.log(response + majPost);
+        // },
         //DELETE SALE
         async deleteSale(e) {
             const response = await SaleService.delete({
@@ -233,7 +245,7 @@ export default {
             console.log(response+metaResponse);
         },
         //<---------------EVENTS------------------->
-        //CREATE SALE
+        //CREATE EVENT
         async createEvent() {
             console.log("createEvent backoffice")
             const response = await EventService.create({
@@ -260,6 +272,7 @@ export default {
             });
             console.log(response);
             //RELOAD ALL SALES FOR INSTANT MODIFICATION
+            this.menuContent = null;
             this.allEvent = await EventService.findAll();
         },
     },
@@ -303,6 +316,10 @@ export default {
 }
 .navActive{
     filter: brightness(1.4);
+    border-top-left-radius: 25%;
+    border-bottom-right-radius: 25%;
+    border-top-right-radius: 0%;
+    border-bottom-left-radius: 0%;
 }
 .back-office--container__all{
     display: flex;
@@ -327,13 +344,23 @@ export default {
             flex-wrap: wrap;
             height: 9%;
             margin-bottom: 1%;
+            h2:hover{
+               filter: brightness(1.4);
+                border-top-left-radius: 25%;
+                border-bottom-right-radius: 25%; 
+                border-top-right-radius: 0%;
+                border-bottom-left-radius: 0%;
+            }
             h2{
             width: 45%;
             margin: 1%;
             border: 1px solid white;
             box-shadow: -3px -5px 1px white;
+            border-top-right-radius: 25%;
+            border-bottom-left-radius: 25%;
             cursor: pointer;
             background-color: $blue-bg-header;
+            text-shadow: 1px 1px 1px black;
             }
         }
         .sale{
@@ -439,7 +466,7 @@ export default {
                                     border-radius: 10%;
                                     padding: 1%;
                                     font-size: large;
-                                    box-shadow: -7px -6px 1px black;
+                                    box-shadow: -7px -6px 1px $blue-bg-header;
                                     margin-top: 2%;
                                 }
                                 h3{

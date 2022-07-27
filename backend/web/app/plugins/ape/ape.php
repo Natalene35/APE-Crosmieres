@@ -25,4 +25,3 @@ require_once plugin_dir_path(__FILE__) . "custom-endpoints/saleDetail.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/registration.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/child.php";
 
-// require_once plugin_dir_path(__FILE__) . "custom-endpoints/meta.php";
