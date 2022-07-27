@@ -49,8 +49,7 @@ export default {
             const response = await SaleService.find(id);
             if (response.code) {
                 // If error
-                alert(response.message);
-                // @TODO Ajouter une redirection vers l'accueil avec un message d'erreur
+                this.$router.push({ name: '404' });
             } else {
                 this.title = response.title.rendered;
                 this.content = response.content.rendered;
@@ -159,39 +158,52 @@ export default {
         h2 {
             font-size: 1.6rem;
         }
-
-        .media-image {
-            width: 90%;
-            min-height: 25rem;
-        }
-
-        .event--card__content {
-            width: 90%;
-        }
     }
-}
 
-@media (min-width: 1000px) {
-    .event--card {
-        width: 70%;
-
-        .picture--container {
-            max-width: 30%;
-        }
-
-        h2 {
-            font-size: 1.8rem;
-        }
-
-        .media-image {
+    @media (min-width: 700px) {
+        .event--card {
             width: 80%;
-            min-height: 35rem;
-        }
 
-        .event--card__content {
-            width: 80%;
+            .picture--container {
+                max-width: 50%;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+            }
+
+            .media-image {
+                width: 90%;
+                min-height: 25rem;
+            }
+
+            .event--card__content {
+                width: 90%;
+            }
         }
     }
 
+    @media (min-width: 1000px) {
+        .event--card {
+            width: 70%;
+
+            .picture--container {
+                max-width: 30%;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            .media-image {
+                width: 80%;
+                min-height: 35rem;
+            }
+
+            .event--card__content {
+                width: 80%;
+            }
+        }
+    }
 }
 </style>
