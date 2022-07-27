@@ -428,7 +428,6 @@ header {
                 display: none;
             }
         }
-
     }
 }
 
