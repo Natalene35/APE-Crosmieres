@@ -37,21 +37,25 @@ export default {
             map: null
         }
     },
+
     async mounted() {
         let id = this.$route.params.id;
-        // Allow to retrieve the id dynamic parameter by using the $route object
-        const response = await EventService.find(id);
-        if (response.code) {
-            console.log(response);
-            // IL y a une erreur
-            alert(response.message);
-            // @TODO Ajouter une redirection vers l'accueil avec un message d'erreur
-        } else {
-            this.title = response[0].post_title;
-            this.content = response[0].post_content;
-            this.date = response[2].date;
-            this.location = response[1].lieu;
-            // this.map = response.map.rendered;
+        if (id) {
+            let arrayMeta = await EventService.getMeta(id)
+            console.log(arrayMeta.lieu);
+            this.date = arrayMeta.date;
+            this.location = arrayMeta.lieu;
+
+            // Allow to retrieve the id dynamic parameter by using the $route object
+            const response = await EventService.find(id);
+            if (response.code) {
+                // If error
+                this.$router.push({ name: '404' });
+            } else {
+                this.title = response.title.rendered;
+                this.content = response.content.rendered;
+                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
+            }
         }
     }
 }
@@ -132,7 +136,6 @@ export default {
 
             h2 {
                 font-size: 1.6rem;
-                background-color: red;
             }
         }
     }
@@ -189,4 +192,3 @@ export default {
     }
 }
 </style>
-
