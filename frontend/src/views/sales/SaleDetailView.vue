@@ -14,7 +14,6 @@ import FooterLayout from '@/components/templates/FooterLayout.vue'
 
 export default {
     name: 'SaleDetailView',
-
     components: {
         HeaderLayout,
         SaleDetailLayout,

@@ -48,13 +48,20 @@ export default {
             console.log(arrayMeta.lieu);
             this.date = arrayMeta.date;
             this.location = arrayMeta.lieu;
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
             // Allow to retrieve the id dynamic parameter by using the $route object
             const response = await EventService.find(id);
             if (response.code) {
                 // If error
                 this.$router.push({ name: '404' });
             } else {
+<<<<<<< HEAD
                 this.id = response.id;
+=======
+>>>>>>> master
                 this.title = response.title.rendered;
                 this.content = response.content.rendered;
                 this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
@@ -140,7 +147,6 @@ export default {
 
             h2 {
                 font-size: 1.6rem;
-                background-color: red;
             }
         }
     }
@@ -192,4 +198,3 @@ export default {
     }
 }
 </style>
-
