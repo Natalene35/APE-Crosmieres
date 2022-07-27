@@ -49,7 +49,8 @@ export default {
             const response = await SaleService.find(id);
             if (response.code) {
                 // If error
-                this.$router.push({ name: '404' });
+                console.log('error');
+                //this.$router.push({ name: '404' });
             } else {
                 this.title = response.title.rendered;
                 this.content = response.content.rendered;
