@@ -58,22 +58,12 @@
         <p class="alert" v-if="alerts">
           {{ alerts }}
         </p>
-        <button class="btn btn-success btn-sm float-right" @click="submitForm">
+        <button
+          class="btn btn-success btn-sm float-right"
+          @click="imageValidate"
+        >
           Soumettre
         </button>
-      </div>
-
-      <div v-if="currentImage" class="progress">
-        <div
-          class="progress-bar"
-          role="progressbar"
-          :aria-valuenow="progress"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          :style="{ width: progress + '%' }"
-        >
-          {{ progress }}%
-        </div>
       </div>
 
       <div v-if="previewImage">
@@ -81,7 +71,18 @@
           <img class="preview" :src="previewImage" alt="" />
         </div>
       </div>
+
+      <div class="image--modal__mask" v-if="showModal">
+        <div class="image--modal__wrapper">
+          <div class="image--modal__container">
+            <p>Il n'y a pas d'image selectionnée</p>
+            <button class="confirm" @click="submitForm">Continuer</button>
+            <button class="abort" @click="showModal = false">Annuler</button>
+          </div>
+        </div>
+      </div>
     </div>
+
     <p style="visibility: hidden">
       Illustration by
       <a href="https://icons8.com/illustrations/author/541847"
@@ -104,31 +105,32 @@ export default {
       location: null,
       currentImage: undefined,
       previewImage: undefined,
-      progress: 0,
       imageInfos: [],
       errors: [],
       alerts: null,
+      showModal: false,
     };
   },
   methods: {
+    imageValidate() {
+      if (this.currentImage) {
+        this.submitForm();
+      } else {
+        this.showModal = true;
+      }
+    },
     selectImage() {
       this.currentImage = this.$refs.file.files.item(0);
       this.previewImage = URL.createObjectURL(this.currentImage);
-      this.progress = 0;
     },
     // upload and send to wordpress
     upload(postId) {
-      this.progress = 0;
-      EventService.upload(this.currentImage, this.title, postId, (event) => {
-        this.progress = Math.round((100 * event.loaded) / event.total);
-      })
-        .then(() => {
-          return EventService.getFiles();
-        })
+      EventService.upload(this.currentImage, this.title, postId)
         .then((images) => {
+          console.log(images);
           this.imageInfos = images.data;
           // pour executer la fct createpost avec l'id du média
-          EventService.addMediaToEvent(postId, this.imageInfos[0].id).then(
+          EventService.addMediaToEvent(postId, this.imageInfos.id).then(
             (response) => {
               if (response.status === 200) {
                 this.title = null;
@@ -137,7 +139,6 @@ export default {
                 this.location = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
-                this.progress = 0;
                 this.alerts = "Evénement créé";
                 //redirection vers la home
                 setTimeout(() => this.$router.push({ name: "home" }), 1500);
@@ -162,6 +163,7 @@ export default {
     },
     // to submit fields and send datas to custom post 'event'
     async submitForm() {
+      this.showModal = false;
       // Reset error table
       this.errors = [];
       this.alerts = null;
@@ -178,9 +180,6 @@ export default {
       if (!this.location) {
         this.errors.push("Veuillez remplir un lieu svp");
       }
-      if (!this.currentImage) {
-        this.errors.push("Veuillez choisir une image svp");
-      }
       setTimeout(() => {
         this.errors = [];
       }, 5000);
@@ -191,12 +190,24 @@ export default {
           content: this.content,
           date: this.eventDate,
           lieu: this.location,
-          post_status: "publish",
         };
         const response = await EventService.addEvent(params);
-        if (response) {
+
+        // if event create status is ok and if there was an image to uplaod
+        if (response && this.currentImage) {
           //response.data.id is the post id
           this.upload(response.data.id);
+        } else if (response) {
+          // if there was not image to upload but event was create
+          this.title = null;
+          this.content = null;
+          this.eventDate = null;
+          this.location = null;
+          this.currentImage = undefined;
+          this.previewImage = undefined;
+          this.alerts = "Evénement créé sans image";
+          // home redirect
+          setTimeout(() => this.$router.push({ name: "home" }), 1500);
         } else {
           this.errors.push(
             "Erreur d'enregistrement de l'événement ! Veuillez verifier la présence de l'événement"
@@ -204,11 +215,6 @@ export default {
         }
       }
     },
-  },
-  mounted() {
-    EventService.getFiles().then((response) => {
-      this.imageInfos = response.data;
-    });
   },
 };
 </script>
@@ -348,6 +354,50 @@ export default {
       color: white;
       background-color: #ffc107;
       box-shadow: 0 2px 2px #0000001a;
+    }
+    .image--modal__mask {
+      position: fixed;
+      background-color: white;
+      box-shadow: 0 0 5px #0000001a;
+      border-radius: 5px;
+      font-size: 1.5rem;
+      padding: 1rem;
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: table;
+      transition: opacity 0.3s ease;
+
+      .image--modal__wrapper {
+        display: table-cell;
+        vertical-align: middle;
+        .image--modal__container {
+          width: 300px;
+          margin: 0px auto;
+          padding: 20px 30px;
+          background-color: #fff;
+          border-radius: 2px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+          transition: all 0.3s ease;
+          .confirm {
+            margin: 1rem;
+            border: 3px solid $green;
+          }
+          .confirm:hover {
+            background-color: $green;
+          }
+          .abort {
+            border: 3px solid $red;
+          }
+          .abort:hover {
+            background-color: $red;
+          }
+        }
+      }
     }
   }
   @media (max-width: 600px) {
