@@ -10,11 +10,12 @@ import FooterLayout from '../../components/templates/FooterLayout.vue'
 import Page404Layout from '../../components/errors/Page404Layout.vue'
 
 export default {
+    name: "Page404View",
     components: {
-    HeaderLayout,
-    FooterLayout,
-    Page404Layout
-},
+        HeaderLayout,
+        FooterLayout,
+        Page404Layout
+    },
 }
 </script>
 
