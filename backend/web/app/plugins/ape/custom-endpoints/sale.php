@@ -45,15 +45,20 @@ function ape_rest_sale_meta_handler($request)
     SELECT meta_value FROM wp_postmeta
     WHERE meta_key = 'date' AND post_id = $id 
     ");
+    // get the meta data 'lieu'
+    $saleLieu = $wpdb->get_results("
+     SELECT meta_value FROM wp_postmeta
+     WHERE meta_key = 'lieu' AND post_id = $id 
+     ");
     // get the meta data 'lien'
     $saleLien = $wpdb->get_results("
      SELECT meta_value FROM wp_postmeta
      WHERE meta_key = 'lien' AND post_id = $id 
      ");
-
     // add the meta data to the post object
     return [
         'date' => $saleDate[0]->meta_value,
+        'lieu' => $saleLieu[0]->meta_value,
         'lien' => $saleLien[0]->meta_value
     ];
 };

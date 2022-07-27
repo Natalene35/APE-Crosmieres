@@ -6,7 +6,7 @@ const apiClient = axios.create({
         Accept: 'application/json'
     },
     timeout: 10000
-    
+
 })
 
 export default {
@@ -35,26 +35,26 @@ export default {
     async getMeta(id) {
 
         try {
-            const meta = await apiClient.get('/event/meta/'+ id +'');
+            const meta = await apiClient.get('/event/meta/' + id + '');
             return meta.data
-        } catch(error) {
+        } catch (error) {
             return error.response.data
-        } 
+        }
     },
-    
+
     // to upload a file
-    upload(file, title, postId, onUploadProgress) {
+    upload(file, title, postId) {
 
         apiClient.defaults.headers.common['Content-Type'] = "multipart/form-data";
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
 
         let formData = new FormData();
         formData.append("title", 'event-' + title);
         formData.append("file", file);
         formData.append("post", postId);
-
-        return apiClient.post("/media", formData,
-            onUploadProgress
-        );
+        
+        // send file to wordpress media and return image info
+        return apiClient.post("/media", formData);
     },
 
     // to verify if files to upload exist

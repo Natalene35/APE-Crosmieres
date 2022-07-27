@@ -63,25 +63,19 @@
         </button>
       </div>
 
-      <div v-if="currentImage" class="progress">
-        <div
-          class="progress-bar"
-          role="progressbar"
-          :aria-valuenow="progress"
-          aria-valuemin="0"
-          aria-valuemax="100"
-          :style="{ width: progress + '%' }"
-        >
-          {{ progress }}%
-        </div>
-      </div>
-
       <div v-if="previewImage">
         <div>
           <img class="preview" :src="previewImage" alt="" />
         </div>
       </div>
+
+      <div class="image--modal">
+        <p>Il n'y a pas d'image selectionnée</p>
+        <button class="confirm">Confirmer</button>
+        <button class="abort">Annuler</button>
+      </div>
     </div>
+
     <p style="visibility: hidden">
       Illustration by
       <a href="https://icons8.com/illustrations/author/541847"
@@ -104,7 +98,6 @@ export default {
       location: null,
       currentImage: undefined,
       previewImage: undefined,
-      progress: 0,
       imageInfos: [],
       errors: [],
       alerts: null,
@@ -114,23 +107,16 @@ export default {
     selectImage() {
       this.currentImage = this.$refs.file.files.item(0);
       this.previewImage = URL.createObjectURL(this.currentImage);
-      this.progress = 0;
     },
 
     // upload and send to wordpress
     upload(postId) {
-      this.progress = 0;
-
-      EventService.upload(this.currentImage, this.title, postId, (event) => {
-        this.progress = Math.round((100 * event.loaded) / event.total);
-      })
-        .then(() => {
-          return EventService.getFiles();
-        })
+      EventService.upload(this.currentImage, this.title, postId)
         .then((images) => {
+          console.log(images);
           this.imageInfos = images.data;
           // pour executer la fct createpost avec l'id du média
-          EventService.addMediaToEvent(postId, this.imageInfos[0].id).then(
+          EventService.addMediaToEvent(postId, this.imageInfos.id).then(
             (response) => {
               if (response.status === 200) {
                 this.title = null;
@@ -139,7 +125,6 @@ export default {
                 this.location = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
-                this.progress = 0;
                 this.alerts = "Evénement créé";
                 //redirection vers la home
                 setTimeout(() => this.$router.push({ name: "home" }), 1500);
@@ -183,7 +168,7 @@ export default {
         this.errors.push("Veuillez remplir un lieu svp");
       }
       if (!this.currentImage) {
-        this.errors.push("Veuillez choisir une image svp");
+        this.alerts = "Veuillez choisir une image svp";
       }
 
       setTimeout(() => {
@@ -197,7 +182,6 @@ export default {
           content: this.content,
           date: this.eventDate,
           lieu: this.location,
-          post_status: "publish",
         };
 
         const response = await EventService.addEvent(params);
@@ -212,11 +196,6 @@ export default {
         }
       }
     },
-  },
-  mounted() {
-    EventService.getFiles().then((response) => {
-      this.imageInfos = response.data;
-    });
   },
 };
 </script>
@@ -366,6 +345,28 @@ export default {
       color: white;
       background-color: #ffc107;
       box-shadow: 0 2px 2px #0000001a;
+    }
+    .image--modal {
+      position: fixed;
+      background-color: white;
+      box-shadow: 0 0 5px #0000001a;
+      border-radius: 5px;
+      font-size: 1.5rem;
+      padding: 1rem;
+
+      .confirm {
+        margin: 1rem;
+        border: 3px solid $green;
+      }
+      .confirm:hover {
+        background-color: $green;
+      }
+      .abort {
+        border: 3px solid $red;
+      }
+      .abort:hover {
+        background-color: $red;
+      }
     }
   }
 
