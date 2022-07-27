@@ -3,8 +3,7 @@ import axios from 'axios';
 const apiClient = axios.create({
     baseURL: 'http://apecrosmieres.local/wp-json/wp/v2',
     headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
+        Accept: 'application/json'
     },
     timeout: 10000
     
@@ -25,7 +24,7 @@ export default {
         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
             const response = await apiClient.get("/event/" + id + "?_embed");
-            console.log(response);
+            // console.log(response);
             return response.data;
         } catch (error) {
             return error.response.data

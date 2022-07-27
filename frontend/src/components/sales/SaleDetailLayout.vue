@@ -12,7 +12,7 @@
 
         <div class="event--card__content" v-html="content"></div>
 
-        <a class="event--card__link" v-bind:href="link">Lien vers le site marchand
+        <a class="event--card__link" target="_blank" v-bind:href="link">Lien vers le site marchand
             <img class="snake" alt="Arrow" v-bind:src="bigSnake" />
         </a>
     </section>
@@ -38,30 +38,28 @@ export default {
         }
     },
     async mounted() {
-        //GET META EXPLICATION WE NEED TO PLACE IN YOUR COMPONENTS
-        let arrayMeta = await SaleService.getMeta("index")
-        for (let index = 0; index < arrayMeta.length; index++) {
-            const metaElmt = arrayMeta[index];
-            //For take meta_key enter key in the exemple its "phone"
-            if (metaElmt.meta_key == "date") {
-                this.date = metaElmt.meta_value;
+         let id = this.$route.params.id;
+        if (id) {
+            let arrayMeta = await SaleService.getMeta(id)
+            // console.log(arrayMeta.lien);
+            this.date = arrayMeta.date;
+            this.link = arrayMeta.lien;
+
+            // Allow to retrieve the id dynamic parameter by using the $route object
+            const response = await SaleService.find(id);
+            if (response.code) {
+                // If error
+                alert(response.message);
+                // @TODO Ajouter une redirection vers l'accueil avec un message d'erreur
+            } else {
+                this.title = response.title.rendered;
+                this.content = response.content.rendered;
+                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
             }
-        }
-        // Allow to retrieve the id dynamic parameter by using the $route object
-        let id = this.$route.params.id;
-        const response = await SaleService.find(id);
-        if (response.code) {
-            // If error
-            alert(response.message);
-            // @TODO Ajouter une redirection vers l'accueil avec un message d'erreur
-        } else {
-            this.title = response.title.rendered;
-            this.content = response.content.rendered;
-            this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
-            this.link = response.link;
         }
     }
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -136,12 +134,26 @@ export default {
     .snake {
         margin-bottom: -0.5rem;
     }
+}
 
-    // Media query
+// Media query
 
-    @media (min-width: 450px) {
+@media (min-width: 450px) {
+    .picture--container {
+        max-width: 70%;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (min-width: 700px) {
+    .event--card {
+        width: 80%;
+
         .picture--container {
-            max-width: 70%;
+            max-width: 50%;
         }
 
         h2 {
@@ -159,7 +171,6 @@ export default {
 
             h2 {
                 font-size: 1.6rem;
-                background-color: red;
             }
 
             .media-image {

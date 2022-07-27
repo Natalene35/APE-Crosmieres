@@ -20,6 +20,7 @@ export default {
     },
     // Get an sale by his id
     async find(id) {
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
             const response = await apiClient.get("/sale/" + id + "?_embed");
             return response.data;
@@ -27,6 +28,17 @@ export default {
             return error.response.data
         }
 
+    },
+
+    // Get meta value by sale's id
+    async getMeta(id) {
+
+        try {
+            const meta = await apiClient.get('/sale/meta/'+ id +'');
+            return meta.data
+        } catch(error) {
+            return error.response.data
+        } 
     },
 
     // to upload a file

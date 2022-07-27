@@ -61,7 +61,6 @@ export default {
     }
 }
 
-
 </script>
 
 <style lang="scss" scoped>
@@ -138,7 +137,6 @@ export default {
 
             h2 {
                 font-size: 1.6rem;
-                background-color: red;
             }
         }
     }
