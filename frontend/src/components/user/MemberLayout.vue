@@ -55,7 +55,7 @@
       </div>
 
       <div class="card">
-        <p class="card--name">Damien</p>
+        <p class="card--name">Loïc</p>
         <img
           class="card--logo--img"
           src="../../assets/images/jelly-designer-working-on-graphic-tablet.png"
