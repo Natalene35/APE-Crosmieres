@@ -19,28 +19,30 @@ function ape_rest_user_register()
 }
 
 //FUNCTION GET CUSTOM META BY ID 
- function ape_rest_user_meta()
- {
+function ape_rest_user_meta()
+{
     // WE DEFINE NEW ROAD FOR GET ALL META BY USER ID
-    register_rest_route( 
-       'wp/v2',
-       'users/meta/(?P<id>\d+)', array(
-        'methods' => 'GET',
-        'callback' => 'ape_rest_user_meta_handler',
-        'permission_callback' => function () {
-            return true;
-        }
-    ));
+    register_rest_route(
+        'wp/v2',
+        'users/meta/(?P<id>\d+)',
+        array(
+            'methods' => 'GET',
+            'callback' => 'ape_rest_user_meta_handler',
+            'permission_callback' => function () {
+                return true;
+            }
+        )
+    );
 }
 //<-----------------------------------METHOD------------------------------>
 function ape_rest_user_meta_handler($request)
-{   
+{
     $response = [];
     $parameters = $request->get_json_params();
-    $user_id= intval($request['id']);
+    $user_id = intval($request['id']);
     //POST SQL REQUEST 
     global $wpdb;
-    $rows = $wpdb->get_results("SELECT * FROM `wp_usermeta` WHERE `user_id`=".$user_id);
+    $rows = $wpdb->get_results("SELECT * FROM `wp_usermeta` WHERE `user_id`=" . $user_id);
     return $rows;
 };
 
@@ -94,9 +96,9 @@ function ape_rest_user_register_handler($request)
         if (!is_wp_error($user_id)) {
             $user = get_user_by('id', $user_id);
 
-            
-            add_user_meta( $user_id, 'phone', $phone , [ 'show_in_rest' => true ] ); 
-            register_meta( $user_id, 'phone', [ 'show_in_rest' => true ] );
+
+            add_user_meta($user_id, 'phone', $phone, ['show_in_rest' => true]);
+            register_meta($user_id, 'phone', ['show_in_rest' => true]);
             // ape_child_handler($child_class, $child_firstname, $child_lastname, $user_id);
 
             $response['code'] = 200;
@@ -144,7 +146,6 @@ function ape_rest_link_child_handler($user_id)
         user_id, child_id
          )
 
-        VALUES ('$user_id', '$child_id')");    
+         VALUES ('$user_id', '$child_id')");    
     return $rowss;
 };
-

@@ -11,8 +11,10 @@ function ape_rest_child_all()
 add_action('rest_api_init', function () {
     register_rest_route('wp/v2', 'child', array(
         'methods' => 'GET',
-        'callback' => 'ape_rest_child_all'
-
+        'callback' => 'ape_rest_child_all',
+        'permission_callback' => function () {
+            return true;
+        }
     ));
 });
 //ROUTE POST NEW CHILD

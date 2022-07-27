@@ -1,7 +1,7 @@
 <template>
     <section class="back-office--container__all">
         <section class="back-office--sales__all">
-
+            <!-- //MENU NAV -->
             <div class="back-office--menu__nav">
 
                 <h2 v-if="this.menuActive=='listSale'" class="navActive" v-on:click="toggleMenu('sale')" >Liste des ventes</h2>
@@ -16,7 +16,7 @@
                 <h2 v-if="this.menuActive=='crudEvent'" class="navActive" v-on:click="toggleMenu('eventCrud')" >Créer un evenement</h2>
                 <h2 v-if="this.menuActive!='crudEvent'" v-on:click="toggleMenu('eventCrud')" >Créer un evenement</h2>
             </div>
-
+            <!-- //TITLE CONTENT HIDDEN IN FIRST "this.menuContent==type and title of the select Post" -->
             <div class="back-office--menu_content">
                 <h2>{{this.menuContent}}</h2>
             </div>
@@ -44,7 +44,7 @@
                     </div>  
                     <!-- CRUD SALES OFFICE -->
                     <div v-if="this.menuActive=='crudSale'" class="back-office--container__crud">
-                        <SaleCreateLayout @enlargeText="onEnlargeText" />
+                        <SaleCreateLayout @reloadSal="reloadSale" />
                     </div>
                     <!-- CRUD EVENTS OFFICE -->
                     
@@ -61,7 +61,7 @@
 
                     <div v-bind:class="sale.id + ' back-office--sale--container__contents'" v-for="sale in allSales" v-on:click="toggleContent, toggleSelectTask"  v-bind:key="sale" >
                         <div v-if="this.active==sale.id" class="back-office--content">
-                            <SaleCreateLayout @enlargeText="onEnlargeText" v-bind:active="this.active"/>
+                            <SaleCreateLayout @reloadSal="reloadSale" v-bind:active="this.active"/>
                         </div>
                     </div>
                     <div v-bind:class="event.id + ' back-office--sale--container__contents'" v-for="event in allEvent" v-on:click="toggleContent, toggleSelectTask"  v-bind:key="event" >
@@ -104,117 +104,75 @@ export default {
         };
     },
     async mounted() {
-        const allButton=document.querySelectorAll(".button")
-        for (const button of allButton) {
-            button.addEventListener("click", this.onEnlargeText)
-        }
-        console.log("coucou tout les button "+allButton)
+
         this.allSales = await SaleService.findAll();
         this.allEvent = await EventService.findAll();
     },
     methods: {
-        //METHOD FOR TOGGLE CLASSE & Animation
-        //ACTIVE V-IF 
-       async onEnlargeText() {
-      console.log("enlarging text");
+       // TWO METHOD FOR ACTIVATE $emit whith child composant
+       async reloadSale() {
       this.allSales = await SaleService.findAll();
       this.menuActive = "listSale";
 
     },
        async reloadEvent() {
-      console.log("enlarging text");
+      console.log("reloadEvent");
       this.allEvent = await EventService.findAll();
-      this.menuActive = "listSale";
+      this.menuActive = "listEvent";
 
     },
-       reloadSale(){
-            console.log("entree reloadSale")
-            // this.allSales = await SaleService.findAll();
-        },
-        toggleMenu(e) {
-            if (e == "sale") {
-                if(this.menuActive!="listSale"){
-                    this.menuActive = "listSale";
-                }
-                else{
-                    this.menuActive=null;
-                }                
+     //METHOD FOR TOGGLE CLASSE & Animation
+        //ACTIVE V-IF 
+    toggleMenu(e) {
+        if (e == "sale") {
+            if(this.menuActive!="listSale"){
+                this.menuActive = "listSale";
             }
-            if (e == "saleCrud") {
-                this.menuActive = "crudSale";
-            }
-            if (e == "event") {
-                this.menuActive = "listEvent";
-            }
-            if (e == "eventCrud") {
-                this.menuActive = "crudEvent";
-            }            
-                this.menuContent = null;
-                this.active=null;
-        },
-        //FOR SEE THE SELECT SALE TO THE RIGHT 
-        async toggleContent(e) {
-            const menuContentContainer=document.querySelector(".back-office--menu_content")
-            this.active = e.currentTarget.classList[0];
-            if (this.menuActive == "listSale") {
-                this.selectPost = await SaleService.find(this.active);
-                this.selectPostMeta= await SaleService.findMeta(this.active);
-                for(const meta of this.selectPostMeta){
-                    if(meta.meta_key=="date"){
-                       this.date =  meta.meta_value
-                    }
-                    if(meta.meta_key=="lieu"){
-                       this.place =  meta.meta_value
-                    }
-                    if(meta.meta_key=="lien"){
-                       this.link =  meta.meta_value
-                    }
-                }
-                this.menuContent = "Vente " + this.selectPost.title.rendered;
-                menuContentContainer.classList.add("sale")
-                menuContentContainer.classList.remove("event")
-            }
-            if (this.menuActive == "listEvent") {
-                this.selectPost = await EventService.find(this.active);
-                this.menuContent = "Evenement " + this.selectPost.title.rendered;
-                
-                this.selectPostMeta= await EventService.findMeta(this.active);
-                menuContentContainer.classList.add("event")
-                menuContentContainer.classList.remove("sale")
-            }
-            this.title = this.selectPost.title.rendered;
-            this.content = this.selectPost.content.rendered;
-        },
-        //ACTIVE HOVER FOR THE SELECT SALE IN THE LIST
-        toggleSelectTask(e) {
-            console.log("ici le bug " + e);
-            let active = document.querySelector(".active");
-            if (active != null) {
-                active.classList.remove("active");
-            }
-            e.currentTarget.classList.toggle("active");
-        },
+            else{
+                this.menuActive=null;
+            }                
+        }
+        if (e == "saleCrud") {
+            this.menuActive = "crudSale";
+        }
+        if (e == "event") {
+            this.menuActive = "listEvent";
+        }
+        if (e == "eventCrud") {
+            this.menuActive = "crudEvent";
+        }            
+            this.menuContent = null;
+            this.active=null;
+    },
+    //FOR SEE THE SELECT SALE TO THE RIGHT 
+    async toggleContent(e) {
+        const menuContentContainer=document.querySelector(".back-office--menu_content")
+        this.active = e.currentTarget.classList[0];
+        if (this.menuActive == "listSale") {
+            this.selectPost = await SaleService.find(this.active);            
+            this.menuContent = "Vente " + this.selectPost.title.rendered;
+            menuContentContainer.classList.add("sale")
+            menuContentContainer.classList.remove("event")
+        }
+        if (this.menuActive == "listEvent") {
+            this.selectPost = await EventService.find(this.active);
+            this.menuContent = "Evenement " + this.selectPost.title.rendered;
+            menuContentContainer.classList.add("event")
+            menuContentContainer.classList.remove("sale")
+        }
+        this.title = this.selectPost.title.rendered;
+        this.content = this.selectPost.content.rendered;
+    },
+    //ACTIVE HOVER FOR THE SELECT SALE IN THE LIST
+    toggleSelectTask(e) {
+        let active = document.querySelector(".active");
+        if (active != null) {
+            active.classList.remove("active");
+        }
+        e.currentTarget.classList.toggle("active");
+    },
         //<------------------------------------SQL METHOD------------------------------------>
         //<---------------SALES------------------->
-        // //CREATE SALE
-        // async createSale() {
-        //     const response = await SaleService.create({
-        //         "title": this.title,
-        //         "content": this.content,
-        //         "lieu": this.place,
-        //         "date": this.date,
-        //         "lien": this.link
-        //     });
-        //     //UPDATE POST FOR TAKE IT PUBLISH
-        //     const majPost = await SaleService.update({
-        //         "status": "publish",
-        //         "id": response
-        //     });
-        //     //RELOAD ALL SALES FOR SEE NEW SALE
-        //     this.allSales = await SaleService.findAll();
-        //     this.menuActive = "listSale";
-        //     console.log(response + majPost);
-        // },
         //DELETE SALE
         async deleteSale(e) {
             const response = await SaleService.delete({
@@ -226,45 +184,7 @@ export default {
             this.allSales = await SaleService.findAll();
             
         },
-        //UPDATE SALE
-        async updateSale() {
-            console.log("le probleme est "+this.date)
-            const response = await SaleService.update({
-                "title": this.title,
-                "content": this.content,
-                "id": this.active
-            });
-            const metaResponse = await SaleService.update({
-                "lieu": this.place,
-                "date": this.date,
-                "lien": this.link,
-                "id": this.active
-            });
-            //RELOAD ALL SALES FOR SEE NEW SALE
-            this.allSales = await SaleService.findAll();
-            console.log(response+metaResponse);
-        },
         //<---------------EVENTS------------------->
-        //CREATE EVENT
-        async createEvent() {
-            console.log("createEvent backoffice")
-            const response = await EventService.create({
-                "title": this.title,
-                "content": this.content,
-                "lieu": this.place,
-                "date": this.date
-            });
-            console.log(response.id);
-            //UPDATE POST FOR TAKE IT PUBLISH
-            const majPost = await EventService.update({
-                "status": "publish",
-                "id": response.id
-            });
-            //RELOAD ALL SALES FOR SEE NEW SALE
-            this.allEvent = await EventService.findAll();
-            this.menuActive = "listEvent";
-            console.log(response + majPost);
-        },
         //DELETE EVENT
         async deleteEvent(e) {
             const response = await EventService.delete({
@@ -303,14 +223,12 @@ export default {
             width: 100%;
             .field_label{
                 margin: 0;
-                width: 20%;
-              
+                width: 20%;              
             }
             .field_input{
                 padding: 0;
                 margin: 1%;
-            }
-            
+            }            
         }
     }
 }
@@ -327,9 +245,7 @@ export default {
     width: 100%;
     flex-wrap: wrap;
     position: relative;
-    border-radius: 2%;
-    
-    
+    border-radius: 2%;  
     .back-office--sales__all{
         display: flex;
         width: 99%;
@@ -386,9 +302,7 @@ export default {
                 box-shadow: -4px -4px 1px $blue-bg-header;
                 text-shadow: 1px 1px 1px black;
             }
-        }
-        
-        
+        }  
        .back-office--container__sales{
             display: flex;
             flex-direction: row;
@@ -455,25 +369,25 @@ export default {
                         position: relative;
                         z-index: 10;
                         div{
-                                display: flex;
-                                width: 100%;
-                                flex-direction: column;
-                                align-items: center;
-                                justify-content: space-between;
-                                input{
-                                    width: 88%;
-                                    border: 1px solid #DFF2F0;
-                                    border-radius: 10%;
-                                    padding: 1%;
-                                    font-size: large;
-                                    box-shadow: -7px -6px 1px $blue-bg-header;
-                                    margin-top: 2%;
-                                }
-                                h3{
-                                    width: 10%;
-                                    font-style: italic;
-                                    margin: 0.5%;
-                                }
+                            display: flex;
+                            width: 100%;
+                            flex-direction: column;
+                            align-items: center;
+                            justify-content: space-between;
+                            input{
+                                width: 88%;
+                                border: 1px solid #DFF2F0;
+                                border-radius: 10%;
+                                padding: 1%;
+                                font-size: large;
+                                box-shadow: -7px -6px 1px $blue-bg-header;
+                                margin-top: 2%;
+                            }
+                            h3{
+                                width: 10%;
+                                font-style: italic;
+                                margin: 0.5%;
+                            }
                         }
                         .back-office--crud__title{
                             margin: 0% 3% 3% 3%;
@@ -500,9 +414,7 @@ export default {
                             width: 40%;
                             height: 0;
                         }
-                    }
-                   
-                    
+                    }     
                 }
             }
         //SCSS FOR THE CONTENTS OF SALE 

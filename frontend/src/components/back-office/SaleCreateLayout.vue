@@ -26,9 +26,12 @@
             <input type="link" v-model="this.link">
         </div>                           
         
-        <div class="back-office--crud__button">
-            <button v-on:click="createSale" @keyup.enter="$emit('enlargeText')" class="button sale">Créer vente</button>
-        </div>                            
+        <div class="back-office--crud__button" v-if="this.selectPost==null">
+            <button v-on:click="createSale" @keyup.enter="$emit('reloadSal')" class="button sale">Créer vente</button>
+        </div>
+        <div class="back-office--crud__button" v-if="this.selectPost!=null">
+            <button v-on:click="updateSale" @keyup.enter="$emit('reloadSal')" class="button sale">Modifier vente</button>
+        </div>                             
     </div>
 
 </template>
@@ -38,7 +41,7 @@ import SaleService from "@/services/sales/SaleService";
 export default {
     
     name: "SaleCreateLayout",
-    emits: ["enlargeText"],
+    emits: ["reloadSal"],
     props: {
         active: String,
     },
@@ -66,11 +69,11 @@ export default {
                 "date": this.date,
                 "lien": this.link
             });
-             this.$emit("enlargeText");
+                this.$emit("reloadSal");
             //UPDATE POST FOR TAKE IT PUBLISH
             const majPost = await SaleService.update({
                 "status": "publish",
-                "id": response
+                "id": response.id
             });
             //RELOAD ALL SALES FOR SEE NEW SALE
             this.allSales = await SaleService.findAll();
@@ -79,42 +82,24 @@ export default {
         },
         //UPDATE SALE
         async updateSale() {
-            const response = await SaleService.update({
-                "title": this.title,
-                "content": this.content,
-                "id": this.active
-            });
-            const metaResponse = await SaleService.update({
-                "lieu": this.place,
-                "date": this.date,
-                "lien": this.link,
-                "id": this.active
-            });
-            //RELOAD ALL SALES FOR SEE NEW SALE
-            this.allSales = await SaleService.findAll();
-            console.log(response+metaResponse);
+            const response = await SaleService.delete({
+                "id": parseInt(this.active)
+            }); 
+            console.log(response)  
+            this.createSale()
         },
     },
-     async mounted() {
-       
-    if(this.active!=null){
-        this.selectEvent=await SaleService.find(parseInt(this.active))        
-        this.title = this.selectEvent.title.rendered;
-        this.content = this.selectEvent.content.rendered;
-        this.selectPostMeta= await SaleService.findMeta(this.active);
-        for(const meta of this.selectPostMeta){
-            if(meta.meta_key=="date"){
-                this.date =  meta.meta_value
-            }
-            if(meta.meta_key=="lieu"){
-                this.location =  meta.meta_value
-            }
-            if(meta.meta_key=="lien"){
-                this.link =  meta.meta_value
-            }
-        }
-    }    
-  },
+    async mounted() {       
+        if(this.active!=null){
+            this.selectPost=await SaleService.find(parseInt(this.active))        
+            this.title = this.selectPost.title.rendered;
+            this.content = this.selectPost.content.rendered;
+            this.selectPostMeta= await SaleService.findMeta(this.active);
+            this.date =  this.selectPostMeta.date
+            this.location =  this.selectPostMeta.lieu
+            this.link =  this.selectPostMeta.lien
+        }    
+    },
 }
 </script>
 
@@ -182,9 +167,13 @@ export default {
             border: 1px solid white;
             box-shadow: -3px -3px 1px $blue-bg-header;
         }
-    }                  
+        button:hover{
+            filter: brightness(1.2);
+            transform: scale(1.2);
+            cursor: pointer;
 
-
+        }
+    } 
 }
 
 

@@ -1,18 +1,39 @@
-import axios from "axios";
+import axios from 'axios';
 
 const apiClient = axios.create({
-    baseURL: `http://apecrosmieres.local/wp-json/wp/v2`,
+    baseURL: 'http://apecrosmieres.local/wp-json/wp/v2',
     headers: {
         Accept: 'application/json',
-        Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4NzYyNTkzLCJuYmYiOjE2NTg3NjI1OTMsImV4cCI6MTY1OTM2NzM5MywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiYmZhNmRhYTVlNTRjNGY3MzU4ZDNhMGI3YTQ4Y2RkNmYifX19.0KrEEAZCD16AjhdMkjs6m_z1-2X5uEE8QD05W6rTNZc'
+        // Authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGVjcm9zbWllcmVzLmxvY2FsIiwiaWF0IjoxNjU4NzYyNTkzLCJuYmYiOjE2NTg3NjI1OTMsImV4cCI6MTY1OTM2NzM5MywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoxLCJkZXZpY2UiOiIiLCJwYXNzIjoiYmZhNmRhYTVlNTRjNGY3MzU4ZDNhMGI3YTQ4Y2RkNmYifX19.0KrEEAZCD16AjhdMkjs6m_z1-2X5uEE8QD05W6rTNZc'
         
 
     },
     timeout: 10000
+    
 })
 
 export default {
+    // Get the list of all the events with their metadata
+    async findAll() {
+        try {
+            const response = await apiClient.get('/event?_embed');
+            return response.data;
+        } catch (error) {
+            return error.response.data
+        }
+    },
+    // Get an event by his id
+    async find(id) {
+        try {
+            const response = await apiClient.get("/event/" + id + "?_embed");
+         
+            return response.data;
+        } catch (error) {
+            return error.response.data
+        }
 
+    },
+    
     // to upload a file
     upload(file, title, postId, onUploadProgress) {
 
@@ -30,7 +51,6 @@ export default {
 
     // to verify if files to upload exist
     getFiles() {
-
         return apiClient.get("/media");
     },
 
@@ -76,18 +96,6 @@ export default {
             return errors.response
         }
     },
-    // Get an event by his id
-    async find(id) {
-        apiClient.defaults.headers.common['Content-Type'] = "application/json";
-        try {
-            const response = await apiClient.get("/event/" + id + "?_embed");
-            
-            return response.data;
-        } catch (error) {
-            return error.response.data
-        }
-
-    },
     async findMeta(id) {
         apiClient.defaults.headers.common['Content-Type'] = "application/json";
         try {
@@ -99,24 +107,13 @@ export default {
         }
 
     },
-    async findAll(){
-
-        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
-        try {
-            const response = await apiClient.get('/event');
-            return response.data;
-        } catch (error) {
-            return error.response.data
-        }
-    },
-    //DOUBLON A SUPPRIMER 
     async create(params) {
         try {
             apiClient.defaults.headers.common['Content-Type'] = "application/json";
-            console.log(params)
+         
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const response = await apiClient.post("/event", params);
-            console.log("la response est "+response)
+          
             return response.data;
         } catch(error) {
             return error.response.data

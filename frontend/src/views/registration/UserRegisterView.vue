@@ -11,7 +11,7 @@ import FooterLayout from '@/components/templates/FooterLayout.vue'
 import UserRegisterLayout from '@/components/registration/UserRegisterLayout.vue'
 
 export default {
-    name: 'HomeView',
+    name: 'UserRegisterView',
     components: {
         HeaderLayout,
         FooterLayout,

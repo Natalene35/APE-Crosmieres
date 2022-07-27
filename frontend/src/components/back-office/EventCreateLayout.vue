@@ -86,7 +86,10 @@
         </div>
           
       <!-- //BUTTON -->
-        <button class="btn btn-success btn-sm float-right" @click="submitForm">
+        <button v-if="this.selectEvent==null" class="btn btn-success btn-sm float-right" @click="submitForm">
+          Soumettre
+        </button>
+        <button v-if="this.selectEvent!=null" class="btn btn-success btn-sm float-right" @click="updateEvent">
           Soumettre
         </button>
       </div>
@@ -126,8 +129,6 @@ export default {
       //FIELD FORM CRUD //
       title: null,
       content: null,
-      place: null,
-      date: null,
       link: null,
       eventDate: null,
       location: null,
@@ -218,9 +219,12 @@ export default {
       if (!this.location) {
         this.errors.push("Veuillez remplir un lieu svp");
       }
-      if (!this.currentImage) {
+      if(this.image==null){
+        if (!this.currentImage) {
         this.errors.push("Veuillez choisir une image svp");
       }
+      }
+      
 
       setTimeout(() => {
         this.errors = [];
@@ -246,7 +250,8 @@ export default {
             console.log(response.data.id+majPost)
         if (response) {
           //response.data.id is the post id
-          this.upload(response.data.id);
+            this.upload(response.data.id);
+                   
         } else {
           this.errors.push(
             "Erreur d'enregistrement de l'événement ! Veuillez verifier la présence de l'événement"
@@ -254,6 +259,13 @@ export default {
         }
       }
     },
+   async updateEvent(){
+      const response = await EventService.delete({
+                "id": parseInt(this.active)
+            }); 
+            console.log(response)  
+            this.submitForm()
+    }
   },
   async mounted() {
     EventService.getFiles().then((response) => {
@@ -262,21 +274,19 @@ export default {
 
     //this.active contains ID of the SELECT Event
     if(this.active!=null){
+
         this.selectEvent=await EventService.find(parseInt(this.active))
-        console.log("event selectionné est "+this.selectEvent._embedded['wp:featuredmedia'][0].source_url)
-        this.image=this.selectEvent._embedded['wp:featuredmedia'][0].source_url 
+
+        console.log("event selectionné est "+this.selectEvent )
+       
         this.title = this.selectEvent.title.rendered;
         this.content = this.selectEvent.content.rendered;
+
         this.selectPostMeta= await EventService.findMeta(this.active);
-        for(const meta of this.selectPostMeta){
-            if(meta.meta_key=="date"){
-                this.eventDate =  meta.meta_value
-            }
-            if(meta.meta_key=="lieu"){
-                this.location =  meta.meta_value
-            }
-        }
-        
+        this.eventDate =  this.selectPostMeta.date
+        this.location =  this.selectPostMeta.lieu
+        this.link =  this.selectPostMeta.lien
+        this.image=this.selectEvent._embedded['wp:featuredmedia'][0].source_url 
     }    
   },
 };
@@ -288,7 +298,7 @@ export default {
   font-family: "Muli", sans-serif;
   font-size: 1rem;
   display: -ms-grid;
-  display: grid;
+  display: flex;
   place-items: center;
   border-radius: 1em;
   height: 90%;
