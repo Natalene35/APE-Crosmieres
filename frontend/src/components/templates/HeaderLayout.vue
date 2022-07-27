@@ -2,48 +2,35 @@
   <div>
     <header>
       <div class="header--title">
-        <img class="header--title__logo" v-bind:src="logoApe" alt="logo APE" />
-
-        <h1>
-          <span>A</span>ssociation des <span>P</span>arents
-          d'<span>E</span>lèves
-          <div class="header--town">de Crosmières</div>
+        <div class="header--title__logo">
+          <img v-bind:src="logoApe" alt="logo APE">
+        </div>
+        <h1><span>A</span>ssociation des <span>P</span>arents d'<span>E</span>lèves <div class="header--town">de
+            Crosmières</div>
+        </h1>
+        <h1 class="header--title__mobile">APE<div class="header--town">Crosmières</div>
         </h1>
 
         <div class="header--profil__picture">
-          <router-link
-            v-if="!this.$store.getters.getToken"
-            v-bind:to="{ name: 'registration' }"
-            class="header--nav__inscription"
-            >Inscription /
+          <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'registration' }"
+            class="header--nav__inscription">Inscription /
           </router-link>
-          <router-link
-            v-if="this.$store.getters.getToken"
-            v-bind:to="{ name: 'userprofil' }"
-            class="header--nav__inscription"
-            >Mon compte /
+          <router-link v-if="this.$store.getters.getToken" v-bind:to="{ name: 'userprofil' }"
+            class="header--nav__inscription">Mon compte /
           </router-link>
-          <router-link
-            v-if="!this.$store.getters.getToken"
-            v-bind:to="{ name: 'login' }"
-            class="header--login"
-          >
+          <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }" class="header--login">
             Connexion
           </router-link>
-          <a
-            class="header--disconnect"
-            href=""
-            v-if="this.$store.getters.getToken"
-            v-on:click="disconnect"
-            >Déconnexion
+          <a class="header--disconnect" href="" v-if="this.$store.getters.getToken" v-on:click="disconnect">Déconnexion
           </a>
         </div>
         <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
         <div class="header--burger__container">
           <div id="menu_button">
-            <input type="checkbox" id="menu_checkbox" v-on:click="showMenu" />
+            <input type="checkbox" id="menu_checkbox" v-on:click="showMenu">
             <label for="menu_checkbox" id="menu_label">
               <div id="menu_text_bar"></div>
+
             </label>
           </div>
         </div>
@@ -51,36 +38,29 @@
       </div>
 
       <nav>
+
         <div class="header--nav__home">
           <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
             Accueil
           </router-link>
         </div>
         <div class="header--nav__sale">
-          <router-link
-            v-bind:to="{ name: 'salesList' }"
-            class="header--nav__sale"
-          >
+          <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
             Ventes
           </router-link>
         </div>
         <div class="header--nav__event">
-          <router-link
-            v-bind:to="{ name: 'eventsList' }"
-            class="header--nav__event"
-          >
+          <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
             Evènements
           </router-link>
         </div>
 
         <div class="header--nav__presentation">
-          <router-link
-            v-bind:to="{ name: 'memberList' }"
-            class="header--nav__presentation"
-          >
+          <router-link v-bind:to="{ name: 'memberList' }" class="header--nav__presentation">
             Présentation APE
           </router-link>
         </div>
+
       </nav>
     </header>
 
@@ -93,77 +73,50 @@
           </router-link>
         </li>
         <li class="header--nav__sale">
-          <router-link
-            v-bind:to="{ name: 'salesList' }"
-            class="header--nav__sale"
-          >
+          <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
             Ventes
           </router-link>
         </li>
         <li class="header--nav__event">
-          <router-link
-            v-bind:to="{ name: 'eventsList' }"
-            class="header--nav__event"
-          >
+          <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
             Evènements
           </router-link>
         </li>
-        <li class="header--nav__presentation">
-          <router-link
-            v-bind:to="{ name: 'memberList' }"
-            class="header--nav__presentation"
-          >
-            Présentation APE
-          </router-link>
-        </li>
+        <li class="header--nav__presentation">Présentation APE</li>
         <li class="header--nav__inscription">
-          <router-link
-            v-if="!this.$store.getters.getUserID"
-            v-bind:to="{ name: 'registration' }"
-            class="header--nav__inscription"
-            >Inscription
+          <router-link v-if="!this.$store.getters.getUserID" v-bind:to="{ name: 'registration' }"
+            class="header--nav__inscription">Inscription
           </router-link>
-          <router-link
-            v-if="this.$store.getters.getUserID"
-            v-bind:to="{ name: 'userprofil' }"
-            class="header--nav__inscription"
-            >Mon profil
+          <router-link v-if="this.$store.getters.getUserID" v-bind:to="{ name: 'userprofil' }"
+            class="header--nav__inscription">Mon profil
           </router-link>
         </li>
         <li class="header--nav__connexion">
-          <router-link
-            v-if="!this.$store.getters.getToken"
-            v-bind:to="{ name: 'login' }"
-            class="header--login"
-          >
+          <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }" class="header--login">
             Connexion
           </router-link>
-          <a
-            class="header--disconnect"
-            href=""
-            v-if="this.$store.getters.getToken"
-            v-on:click="disconnect"
-            >Déconnexion
+          <a class="header--disconnect" href="" v-if="this.$store.getters.getToken" v-on:click="disconnect">Déconnexion
           </a>
         </li>
       </ul>
       <div v-bind:class="'burger--menu__picture'">
-        <img v-bind:src="profilPic" />
+        <img v-bind:src="profilPic">
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
-import profil from "@/assets/images/profil.svg";
-import logoAPE from "@/assets/images/logo-tampon-APE-140.png";
+import profil from '@/assets/images/profil.svg'
+import logoAPE from '@/assets/images/logo-tampon-APE-140.png'
 export default {
-  name: "HeaderLayout",
+  name: 'HeaderLayout',
   data() {
     return {
       profilPic: profil,
-      logoApe: logoAPE,
-    };
+      logoApe: logoAPE
+    }
   },
 
   methods: {
@@ -175,20 +128,21 @@ export default {
     },
 
     disconnect() {
-      // On supprime dans le store les infos liéés à l'utilisateur
-      this.$store.commit("deleteToken");
-      this.$store.commit("deleteUsername");
-      this.$store.commit("deleteUserID");
-      this.$store.commit("deleteRole");
+      // On supprime dans le store les infos liéés à l'utilisateur 
+      this.$store.commit('deleteToken');
+      this.$store.commit('deleteUsername');
+      this.$store.commit('deleteUserID');
+      this.$store.commit('deleteRole');
       // On redirige l'utilisateur
-      this.$router.push({ name: "login" });
-    },
+      this.$router.push({ name: 'login' });
+    }
   },
-};
+
+}
 </script>
 
 <style lang="scss" scoped>
-@import url("https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap');
 @import "../../assets/animations/burgerAnim.scss";
 
 //see method showMenu
@@ -213,18 +167,25 @@ header {
     justify-content: space-around;
     border-radius: 10px;
     text-shadow: 1px 1px 1px $black;
-    padding: 1rem;
+
+    .header--title__mobile {
+      display: none;
+      width: 100%;
+      font-size: 2.6rem;
+      color: $white;
+      font-family: 'Merienda', cursive;
+    }
 
     .header--title__logo {
-      border-radius: 50%;
-      position: absolute;
-      left: 13px;
-      top: 2px;
-      z-index: 1;
-      width: 10%;
+      width: 20%;
+
+      img {
+        width: 100px;
+      }
     }
 
     .header--profil__picture {
+
       display: flex;
       padding: 1%;
       align-items: flex-end;
@@ -240,7 +201,7 @@ header {
       width: 100%;
       font-size: 2.6rem;
       color: $white;
-      font-family: "Merienda", cursive;
+      font-family: 'Merienda', cursive;
 
       span {
         color: $orange;
@@ -280,6 +241,7 @@ header {
     font-weight: bold;
     align-items: center;
 
+
     .header--nav__home {
       background-color: $green;
       margin-right: 0.3rem;
@@ -314,10 +276,6 @@ header {
         color: $white;
       }
     }
-    .router-link-exact-active {
-      border-bottom: 3px solid rgba(51, 51, 51, 0.219);
-      text-shadow: 4px 4px 7px black;
-    }
 
     div {
       width: 25%;
@@ -327,9 +285,10 @@ header {
       border-radius: 7px;
       text-shadow: 1px 1px 1px $black;
       padding: 3px;
+
     }
 
-    //WE USE THE underlineAnim.scss for animate nav
+    //WE USE THE underlineAnim.scss for animate nav  
     @import "../../assets/animations/underlineAnim.scss";
   }
 }
@@ -410,50 +369,44 @@ header {
   }
 }
 
+
 //<----------Media queries-------->
-@media (max-width: 1311px) {
-  header .header--title .header--title__logo {
-    position: unset;
-    float: left;
-    border-radius: 50%;
-    left: 0;
-    z-index: 1;
-  }
-}
 
-@media (max-width: 800px) {
-  .header--title__logo {
-    height: 12vh;
-  }
-
+@media (max-width: 425px) {
   header {
-    nav {
-      align-items: center;
+    .header--title__mobile {
+      font-size: 0.7rem;
 
-      div {
-        font-size: 0.8rem;
-        height: 2rem;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
+      .header--town {
+        font-size: 0.5rem;
       }
     }
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 800px) {
+
   header {
+
     .header--title {
-      padding: 4%;
+      justify-content: space-between;
+      padding: 0.5rem;
 
       h1 {
-        font-size: 1.4rem;
-        text-align: start;
-        width: 60%;
+        display: none;
+      }
+
+      .header--title__mobile {
+        color: $orange;
+        letter-spacing: 5px;
+        display: inline;
+        width: 100%;
+        font-size: 2.6rem;
+        font-family: 'Merienda', cursive;
 
         .header--town {
+          color: $white;
           font-size: 1rem;
-          padding-top: 0.3rem;
         }
       }
 
@@ -475,16 +428,17 @@ header {
         display: none;
       }
     }
+
   }
+}
 
-  .active {
-    display: contents;
-    text-shadow: 1px 1px 1px black;
+.active {
+  display: contents;
+  text-shadow: 1px 1px 1px black;
 
-    .header--profil__picture {
-      width: 20px;
-      height: 20px;
-    }
+  .header--profil__picture {
+    width: 20px;
+    height: 20px;
   }
 }
 </style>
