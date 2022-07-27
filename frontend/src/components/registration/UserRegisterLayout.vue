@@ -43,7 +43,7 @@
 
 <script>
 import UserRegistrationService from "@/services/registration/UserRegistrationService";
-import illustrationPicture from "@/assets/images/surr-holidays.png"
+import illustrationPicture from '@/assets/images/jelly-character-got-a-new-idea.png'
 
 export default {
     name: "UserRegistrationLayout",
