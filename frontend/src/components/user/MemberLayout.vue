@@ -24,8 +24,8 @@
         />
         <h1 class="title">Git Master</h1>
         <p class="content">
-          Comme son titre l'indique, elle est passée maître dans le Git. Après
-          des années d'entrainements et de commits, elle a réussi àintégrer la
+          Comme son titre l'indique, elle est passée maître dans l'art du Git. Après
+          des années d'entrainements et de commits, elle a réussi à intégrer la
           matrice de Git.
         </p>
       </div>
