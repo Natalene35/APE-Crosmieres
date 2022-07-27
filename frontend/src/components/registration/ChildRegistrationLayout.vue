@@ -89,16 +89,13 @@ export default {
                         this.child_lastname = null,
                         //this.child_birthday = null,
                         this.picked = null
-
                 }
-
             } else {
                 this.errors.push("Oups une erreur, veuillez recommencer");
             }
         }
     }
 }
-
 </script>
 
 
