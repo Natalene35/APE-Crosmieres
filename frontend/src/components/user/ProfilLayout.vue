@@ -28,17 +28,6 @@
                         passe</a>
                     <a v-on:click="removeUser" class="delete">Supprimer mon compte</a>
                 </div>
-
-                <div class="updatePassword--display active">
-                    <label class="field__label">Mettre à jour son mot de passe ?</label>
-                    <input v-model="password" class="inputbox" type="password" placeholder="Mot de passe" required>
-
-                    <label class="field__label">Confirmer le mot de passe</label>
-                    <input v-model="passwordconfirm" class="inputbox" type="password" placeholder="Mot de passe"
-                        required>
-                    <a class="confim--update__password">Confirmer la mise à jour de votre mot de
-                        passe ?</a>
-                </div>
             </figcaption>
         </figure>
         <ChildRegistrationLayout class="ChildRegistrationLayout--display active" />
@@ -63,8 +52,6 @@ export default {
             user: [],
             errors: [],
             phone: null,
-            password: null,
-            passwordconfirm: null
         }
     },
 
@@ -89,33 +76,35 @@ export default {
 
     methods: {
 
+        //When user click on button add children display the component
         showChildRegistrationLayout() {
             let ChildRegistrationLayout = document.querySelector(".ChildRegistrationLayout--display");
             ChildRegistrationLayout.classList.toggle("active");
         },
 
+        //When user click on button add children display the component
         showUpdatePassword() {
             let updatePassword = document.querySelector(".updatePassword--display");
             updatePassword.classList.toggle("active");
         },
 
         async removeUser() {
-            const response = await UserService.delete()
-            console.log(response);
-            if (response.id) {
-                this.$router.push({ name: 'home' });
-            } else {
-                alert(response.message);
+            if (this.$store.getters.getUserID) {
+                const response = await UserService.delete(this.$store.getters.getUserID)
+                console.log(response);
+                if (response.id) {
+                    this.$router.push({ name: 'home' });
+                } else {
+                    alert(response.message);
+                }
             }
         },
 
         async updateUser() {
-
             if (this.$store.getters.getUserID) {
                 const response = await UserService.update(this.$store.getters.getUserID, {
                     "pseudo": this.user.nickname,
                     "email": this.user.email,
-                    "password": this.user.password,
                     "first_name": this.user.first_name,
                     "last_name": this.user.last_name,
                     "phone": this.user.phone
@@ -134,147 +123,138 @@ export default {
      line-height: 1.4em;
      background-color: $blue-light-bg;
      color: $grey;
- }
  
- .user-profile * {
-     -webkit-box-sizing: border-box;
-     box-sizing: border-box;
-     -webkit-transition: all 0.25s ease;
-     transition: all 0.25s ease;
- }
- 
- .user-profile figcaption {
-     width: 100%;
-     background-color: $blue-light-bg;
-     padding: 25px;
-     position: relative;
- }
- 
- .user-profile figcaption h2 {
-     font-size: 2rem;
-     margin: 1rem;
-     text-align: center;
- }
- 
- .profuser-profile figcaption:before {
-     position: absolute;
-     content: '';
-     bottom: 100%;
-     left: 0;
-     width: 0;
-     height: 0;
-     border-style: solid;
-     border-width: 55px 0 0 400px;
-     border-color: transparent transparent transparent $blue-light-bg;
- }
- 
- .user-profile figcaption a {
-     padding: 5px;
-     color: $black;
-     font-size: 0.7em;
-     text-transform: uppercase;
-     margin: 0.5rem;
-     opacity: 0.65;
-     width: 47%;
-     text-align: center;
-     text-decoration: none;
-     font-weight: 600;
-     letter-spacing: 1px;
- }
- 
- .user-profile figcaption a:hover {
-     opacity: 1;
- }
- 
- .user-profile .profile {
-     border-radius: 50%;
-     bottom: 100%;
-     max-width: 90px;
-     opacity: 1;
-     box-shadow: 0 0 15px $black;
-     margin: 1rem;
-     width: 12%;
- }
- 
- .user-profile .follow {
-     margin-right: 4%;
-     border-color: $green;
-     color: $grey;
- }
- 
- .user-profile h2 {
-     margin: 0 0 5px;
-     font-weight: 300;
- }
- 
- .user-profile h2 span {
-     display: block;
-     font-size: 0.5em;
-     color: $grey;
- }
- 
- .profuser-profile p {
-     margin: 0 0 10px;
-     font-size: 0.8em;
-     letter-spacing: 1px;
-     opacity: 0.8;
- }
- 
- .button--link {
-     display: flex;
- 
- 
-     .addChild {
-         border: 1px solid $green;
-         background-color: $green ;
-         border-radius: 10px;
-         cursor: pointer
+     * {
+         -webkit-box-sizing: border-box;
+         box-sizing: border-box;
+         -webkit-transition: all 0.25s ease;
+         transition: all 0.25s ease;
      }
  
-     .update {
-         border: 1px solid $purple;
-         background-color: $purple;
-         border-radius: 10px;
-         cursor: pointer
+     figcaption {
+         width: 100%;
+         background-color: $blue-light-bg;
+         padding: 25px;
+         position: relative;
+ 
+         h2 {
+             font-size: 2rem;
+             margin: 1rem;
+             text-align: center;
+         }
+ 
+         :before {
+             position: absolute;
+             content: '';
+             bottom: 100%;
+             left: 0;
+             width: 0;
+             height: 0;
+             border-style: solid;
+             border-width: 55px 0 0 400px;
+             border-color: transparent transparent transparent $blue-light-bg;
+         }
+ 
+         a {
+             padding: 5px;
+             color: $black;
+             font-size: 0.7em;
+             text-transform: uppercase;
+             margin: 0.5rem;
+             opacity: 0.65;
+             width: 47%;
+             text-align: center;
+             text-decoration: none;
+             font-weight: 600;
+             letter-spacing: 1px;
+         }
+ 
+         a:hover {
+             opacity: 1;
+         }
      }
  
-     .delete {
-         border: 1px solid $red;
-         background-color: $red;
-         border-radius: 10px;
-         cursor: pointer
+     .profile {
+         border-radius: 50%;
+         bottom: 100%;
+         max-width: 90px;
+         opacity: 1;
+         box-shadow: 0 0 15px $black;
+         margin: 1rem;
+         width: 12%;
      }
  
-     .updatePassword {
-         border: 1px solid $pink;
-         background-color: $pink;
-         border-radius: 10px;
-         cursor: pointer
+     .follow {
+         margin-right: 4%;
+         border-color: $green;
+         color: $grey;
      }
- }
  
- .inputbox {
-     padding: 0.5em 0 0.5em 1.5em;
-     font-size: 1rem;
-     line-height: 3;
-     width: 100%;
-     border: 1px solid $blue-bg-header;
-     border-radius: 0.5em;
-     margin: 0 0 1rem 0;
-     padding: 0;
-     text-align: center;
+     h2 {
+         margin: 0 0 5px;
+         font-weight: 300;
+ 
+         span {
+             display: block;
+             font-size: 0.5em;
+             color: $grey;
+         }
+     }
+ 
+     p {
+         margin: 0 0 10px;
+         font-size: 0.8em;
+         letter-spacing: 1px;
+         opacity: 0.8;
+     }
+ 
+     .button--link {
+         display: flex;
+ 
+ 
+         .addChild {
+             border: 1px solid $green;
+             background-color: $green ;
+             border-radius: 10px;
+             cursor: pointer
+         }
+ 
+         .update {
+             border: 1px solid $purple;
+             background-color: $purple;
+             border-radius: 10px;
+             cursor: pointer
+         }
+ 
+         .delete {
+             border: 1px solid $red;
+             background-color: $red;
+             border-radius: 10px;
+             cursor: pointer
+         }
+ 
+         .updatePassword {
+             border: 1px solid $pink;
+             background-color: $pink;
+             border-radius: 10px;
+             cursor: pointer
+         }
+     }
+ 
+     .inputbox {
+         padding: 0.5em 0 0.5em 1.5em;
+         font-size: 1rem;
+         line-height: 3;
+         width: 100%;
+         border: 1px solid $blue-bg-header;
+         border-radius: 0.5em;
+         margin: 0 0 1rem 0;
+         padding: 0;
+         text-align: center;
+     }
  }
  
  .active {
      display: none;
- }
- 
- .confim--update__password {
-     align-items: center;
-     padding: 0.5rem;
-     border: 1px solid $pink;
-     background-color: $pink;
-     border-radius: 10px;
-     cursor: pointer;
  }
  </style>
