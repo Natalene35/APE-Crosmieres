@@ -2,9 +2,9 @@
     <div>
         <header>
             <div class="header--title">
-
-                <img class="header--title__logo" v-bind:src="logoApe" alt="logo APE">
-
+                <div class="header--title__logo">
+                    <img v-bind:src="logoApe" alt="logo APE">
+                </div>
                 <h1><span>A</span>ssociation des <span>P</span>arents d'<span>E</span>lèves <div class="header--town">de
                         Crosmières</div>
                 </h1>
@@ -166,16 +166,9 @@ header {
         justify-content: space-around;
         border-radius: 10px;
         text-shadow: 1px 1px 1px $black;
-        padding: 1rem;
-
 
         .header--title__logo {
-            border-radius: 50%;
-            position: absolute;
-            left: 13px;
-            top: 2px;
-            z-index: 1;
-            width: 10%;
+            width: 20%;
         }
 
         .header--profil__picture {
@@ -185,7 +178,6 @@ header {
             align-items: flex-end;
             width: 20%;
             flex-wrap: wrap;
-
         }
 
         .header--profil__picture div:hover {
@@ -240,7 +232,6 @@ header {
         .header--nav__home {
             background-color: $green;
             margin-right: 0.3rem;
-
 
             a {
                 color: $white;
@@ -304,7 +295,6 @@ header {
         .header--nav__home {
             background-color: $green;
             color: $white;
-
         }
 
         .header--nav__sale {
@@ -368,57 +358,18 @@ header {
 
 
 //<----------Media queries-------->
-@media (max-width: 1311px) {
-    header .header--title .header--title__logo {
-        position: unset;
-        float: left;
-        border-radius: 50%;
-        left: 0;
-        z-index: 1;
-
-    }
-}
 
 @media (max-width: 800px) {
-    .header--title__logo {
-        height: 12vh;
-    }
 
-    header {
-        nav {
-            align-items: center;
-
-            div {
-                font-size: 0.8rem;
-                height: 2rem;
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-            }
-        }
-
-    }
-
-}
-
-@media (max-width: 425px) {
     header {
 
         .header--title {
-            padding: 4%;
+
+            justify-content: space-between;
+            padding: 0.5rem;
 
             h1 {
-                font-size: 1.4rem;
-                text-align: start;
-                width: 60%;
-
-                .header--town {
-
-                    font-size: 1rem;
-                    padding-top: 0.3rem;
-                }
-
-
+                display: none;
             }
 
             .header--profil__picture {
@@ -429,7 +380,6 @@ header {
                 display: unset;
                 height: 100%;
                 display: contents;
-
             }
         }
 
@@ -438,7 +388,6 @@ header {
 
             div {
                 display: none;
-
             }
         }
 
@@ -453,6 +402,5 @@ header {
             height: 20px;
         }
     }
-
 }
 </style>
