@@ -22,7 +22,7 @@ export default {
     props: {
         title: String,
         content: String,
-        id: Number
+        id: Number   
     },
 
     data() {
@@ -45,6 +45,9 @@ export default {
     padding-bottom: 2rem;
     margin: 1rem 1rem 1rem 1rem;
     
+    a { color: $grey;
+        
+    }
 
     .sale--card__title {
         padding: 0.7rem;
@@ -52,8 +55,7 @@ export default {
         background-color: $orange;
         color: $white;
         font-weight: bold;
-    
-        
+       
     }
 
     .sale--card__content {

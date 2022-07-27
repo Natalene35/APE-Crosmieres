@@ -43,7 +43,10 @@ export default {
     background-color: $white;
     color: $grey;
     padding-bottom: 2rem;
-    
+
+    a { color: $grey;
+        
+        }
 
     .sale--card__title {
         padding: 0.7rem;
