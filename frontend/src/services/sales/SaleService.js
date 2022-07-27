@@ -3,8 +3,7 @@ import axios from 'axios';
 const apiClient = axios.create({
     baseURL: 'http://apecrosmieres.local/wp-json/wp/v2',
     headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
+        Accept: 'application/json'
     },
     timeout: 10000
 });

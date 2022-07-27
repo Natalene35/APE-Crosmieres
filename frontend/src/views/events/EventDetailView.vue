@@ -11,12 +11,12 @@ import FooterLayout from '@/components/templates/FooterLayout.vue'
 import EventDetailLayout from '@/components/events/EventDetailLayout.vue'
 
 export default {
-    name: "EventDetailView",
+    name: 'EventDetailView',
     components: {
     HeaderLayout,
     FooterLayout,
     EventDetailLayout
-    }
+}
 }
 </script>
 

@@ -24,14 +24,25 @@ export default {
     },
     // Get an event by his id
     async find(id) {
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
             const response = await apiClient.get("/event/" + id + "?_embed");
-         
+
             return response.data;
         } catch (error) {
             return error.response.data
         }
+    },
 
+    // Get meta value by event's id
+    async getMeta(id) {
+
+        try {
+            const meta = await apiClient.get('/event/meta/'+ id +'');
+            return meta.data
+        } catch(error) {
+            return error.response.data
+        } 
     },
     
     // to upload a file
