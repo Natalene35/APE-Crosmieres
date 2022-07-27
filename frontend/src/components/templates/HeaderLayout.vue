@@ -1,458 +1,490 @@
 <template>
-    <div>
-        <header>
-            <div class="header--title">
+  <div>
+    <header>
+      <div class="header--title">
+        <img class="header--title__logo" v-bind:src="logoApe" alt="logo APE" />
 
-                <img class="header--title__logo" v-bind:src="logoApe" alt="logo APE">
+        <h1>
+          <span>A</span>ssociation des <span>P</span>arents
+          d'<span>E</span>lèves
+          <div class="header--town">de Crosmières</div>
+        </h1>
 
-                <h1><span>A</span>ssociation des <span>P</span>arents d'<span>E</span>lèves <div class="header--town">de
-                        Crosmières</div>
-                </h1>
-
-                <div class="header--profil__picture">
-                    <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'registration' }"
-                        class="header--nav__inscription">Inscription /
-                    </router-link>
-                    <router-link v-if="this.$store.getters.getToken" v-bind:to="{ name: 'userprofil' }"
-                        class="header--nav__inscription">Mon compte /
-                    </router-link>
-                    <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
-                        class="header--login">
-                        Connexion
-                    </router-link>
-                    <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
-                        v-on:click="disconnect">Déconnexion
-                    </a>
-                </div>
-                <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
-                <div class="header--burger__container">
-                    <div id="menu_button">
-                        <input type="checkbox" id="menu_checkbox" v-on:click="showMenu">
-                        <label for="menu_checkbox" id="menu_label">
-                            <div id="menu_text_bar"></div>
-
-                        </label>
-                    </div>
-                </div>
-                <!--       END BURGER         -->
-            </div>
-
-            <nav>
-
-                <div class="header--nav__home">
-                    <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
-                        Accueil
-                    </router-link>
-                </div>
-                <div class="header--nav__sale">
-                    <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
-                        Ventes
-                    </router-link>
-                </div>
-                <div class="header--nav__event">
-                    <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
-                        Evènements
-                    </router-link>
-                </div>
-
-                <div class="header--nav__presentation">Présentation APE</div>
-
-            </nav>
-        </header>
-
-        <!-- /*<--------------------MENU BURGER HIDDEN IN DESKTOP---------------------------->
-        <div class="header--burger__menu">
-            <ul>
-                <li class="header--nav__home">
-                    <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
-                        Accueil
-                    </router-link>
-                </li>
-                <li class="header--nav__sale">
-                    <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
-                        Ventes
-                    </router-link>
-                </li>
-                <li class="header--nav__event">
-                    <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
-                        Evènements
-                    </router-link>
-                </li>
-                <li class="header--nav__presentation">Présentation APE</li>
-                <li class="header--nav__inscription">
-                    <router-link v-if="!this.$store.getters.getUserID" v-bind:to="{ name: 'registration' }"
-                        class="header--nav__inscription">Inscription
-                    </router-link>
-                    <router-link v-if="this.$store.getters.getUserID" v-bind:to="{ name: 'userprofil' }"
-                        class="header--nav__inscription">Mon profil
-                    </router-link>
-                </li>
-                <li class="header--nav__connexion">
-                    <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
-                        class="header--login">
-                        Connexion
-                    </router-link>
-                    <a class="header--disconnect" href="" v-if="this.$store.getters.getToken"
-                        v-on:click="disconnect">Déconnexion
-                    </a>
-                </li>
-            </ul>
-            <div v-bind:class="'burger--menu__picture'">
-                <img v-bind:src="profilPic">
-            </div>
+        <div class="header--profil__picture">
+          <router-link
+            v-if="!this.$store.getters.getToken"
+            v-bind:to="{ name: 'registration' }"
+            class="header--nav__inscription"
+            >Inscription /
+          </router-link>
+          <router-link
+            v-if="this.$store.getters.getToken"
+            v-bind:to="{ name: 'userprofil' }"
+            class="header--nav__inscription"
+            >Mon compte /
+          </router-link>
+          <router-link
+            v-if="!this.$store.getters.getToken"
+            v-bind:to="{ name: 'login' }"
+            class="header--login"
+          >
+            Connexion
+          </router-link>
+          <a
+            class="header--disconnect"
+            href=""
+            v-if="this.$store.getters.getToken"
+            v-on:click="disconnect"
+            >Déconnexion
+          </a>
         </div>
-    </div>
+        <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
+        <div class="header--burger__container">
+          <div id="menu_button">
+            <input type="checkbox" id="menu_checkbox" v-on:click="showMenu" />
+            <label for="menu_checkbox" id="menu_label">
+              <div id="menu_text_bar"></div>
+            </label>
+          </div>
+        </div>
+        <!--       END BURGER         -->
+      </div>
 
+      <nav>
+        <div class="header--nav__home">
+          <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
+            Accueil
+          </router-link>
+        </div>
+        <div class="header--nav__sale">
+          <router-link
+            v-bind:to="{ name: 'salesList' }"
+            class="header--nav__sale"
+          >
+            Ventes
+          </router-link>
+        </div>
+        <div class="header--nav__event">
+          <router-link
+            v-bind:to="{ name: 'eventsList' }"
+            class="header--nav__event"
+          >
+            Evènements
+          </router-link>
+        </div>
+
+        <div class="header--nav__presentation">
+          <router-link
+            v-bind:to="{ name: 'memberList' }"
+            class="header--nav__presentation"
+          >
+            Présentation APE
+          </router-link>
+        </div>
+      </nav>
+    </header>
+
+    <!-- /*<--------------------MENU BURGER HIDDEN IN DESKTOP---------------------------->
+    <div class="header--burger__menu">
+      <ul>
+        <li class="header--nav__home">
+          <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
+            Accueil
+          </router-link>
+        </li>
+        <li class="header--nav__sale">
+          <router-link
+            v-bind:to="{ name: 'salesList' }"
+            class="header--nav__sale"
+          >
+            Ventes
+          </router-link>
+        </li>
+        <li class="header--nav__event">
+          <router-link
+            v-bind:to="{ name: 'eventsList' }"
+            class="header--nav__event"
+          >
+            Evènements
+          </router-link>
+        </li>
+        <li class="header--nav__presentation">
+          <router-link
+            v-bind:to="{ name: 'memberList' }"
+            class="header--nav__presentation"
+          >
+            Présentation APE
+          </router-link>
+        </li>
+        <li class="header--nav__inscription">
+          <router-link
+            v-if="!this.$store.getters.getUserID"
+            v-bind:to="{ name: 'registration' }"
+            class="header--nav__inscription"
+            >Inscription
+          </router-link>
+          <router-link
+            v-if="this.$store.getters.getUserID"
+            v-bind:to="{ name: 'userprofil' }"
+            class="header--nav__inscription"
+            >Mon profil
+          </router-link>
+        </li>
+        <li class="header--nav__connexion">
+          <router-link
+            v-if="!this.$store.getters.getToken"
+            v-bind:to="{ name: 'login' }"
+            class="header--login"
+          >
+            Connexion
+          </router-link>
+          <a
+            class="header--disconnect"
+            href=""
+            v-if="this.$store.getters.getToken"
+            v-on:click="disconnect"
+            >Déconnexion
+          </a>
+        </li>
+      </ul>
+      <div v-bind:class="'burger--menu__picture'">
+        <img v-bind:src="profilPic" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import profil from '@/assets/images/profil.svg'
-import logoAPE from '@/assets/images/logo-tampon-APE-140.png'
+import profil from "@/assets/images/profil.svg";
+import logoAPE from "@/assets/images/logo-tampon-APE-140.png";
 export default {
-    name: 'HeaderLayout',
-    data() {
-        return {
-            profilPic: profil,
-            logoApe: logoAPE
-        }
+  name: "HeaderLayout",
+  data() {
+    return {
+      profilPic: profil,
+      logoApe: logoAPE,
+    };
+  },
+
+  methods: {
+    showMenu() {
+      let headerMenu = document.querySelector(".header--burger__menu");
+      let body = document.querySelector("body");
+      body.classList.toggle("overflow--hidden");
+      headerMenu.classList.toggle("active");
     },
 
-
-    methods: {
-        showMenu() {
-            let headerMenu = document.querySelector(".header--burger__menu");
-            let body = document.querySelector("body");
-            body.classList.toggle("overflow--hidden");
-            headerMenu.classList.toggle("active");
-        },
-
-        disconnect() {
-            // On supprime dans le store les infos liéés à l'utilisateur 
-            this.$store.commit('deleteToken');
-            this.$store.commit('deleteUsername');
-            this.$store.commit('deleteUserID');
-            this.$store.commit('deleteRole');
-            // On redirige l'utilisateur
-            this.$router.push({ name: 'login' });
-        }
+    disconnect() {
+      // On supprime dans le store les infos liéés à l'utilisateur
+      this.$store.commit("deleteToken");
+      this.$store.commit("deleteUsername");
+      this.$store.commit("deleteUserID");
+      this.$store.commit("deleteRole");
+      // On redirige l'utilisateur
+      this.$router.push({ name: "login" });
     },
-
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Merienda:wght@400;700&display=swap");
 @import "../../assets/animations/burgerAnim.scss";
 
 //see method showMenu
 //use for give priorioty for burger's menu (height 1000vh)
 .overflow--hidden {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 header {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 3%;
+  font-weight: bold;
+
+  //<--------------BANNER------------>
+  .header--title {
+    background-color: $blue-bg-header;
     width: 100%;
     display: flex;
-    flex-wrap: wrap;
-    padding-bottom: 3%;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+    text-shadow: 1px 1px 1px $black;
+    padding: 1rem;
+
+    .header--title__logo {
+      border-radius: 50%;
+      position: absolute;
+      left: 13px;
+      top: 2px;
+      z-index: 1;
+      width: 10%;
+    }
+
+    .header--profil__picture {
+      display: flex;
+      padding: 1%;
+      align-items: flex-end;
+      width: 20%;
+      flex-wrap: wrap;
+    }
+
+    .header--profil__picture div:hover {
+      color: #0087ca;
+    }
+
+    h1 {
+      width: 100%;
+      font-size: 2.6rem;
+      color: $white;
+      font-family: "Merienda", cursive;
+
+      span {
+        color: $orange;
+      }
+
+      .header--town {
+        font-size: 1.8rem;
+        padding-top: 0.2rem;
+      }
+    }
+
+    .header--login {
+      color: $white;
+    }
+
+    .header--disconnect {
+      color: $red;
+    }
+
+    .header--nav__inscription {
+      margin-right: 0.3rem;
+      color: $white;
+    }
+
+    a {
+      color: $white;
+    }
+  }
+
+  //<-----------NAV----------->
+  nav {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 2rem;
+    margin-top: 0.5rem;
     font-weight: bold;
+    align-items: center;
 
-    //<--------------BANNER------------>
-    .header--title {
-        background-color: $blue-bg-header;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        border-radius: 10px;
-        text-shadow: 1px 1px 1px $black;
-        padding: 1rem;
+    .header--nav__home {
+      background-color: $green;
+      margin-right: 0.3rem;
 
-
-        .header--title__logo {
-            border-radius: 50%;
-            position: absolute;
-            left: 13px;
-            top: 2px;
-            z-index: 1;
-            width: 10%;
-        }
-
-        .header--profil__picture {
-
-            display: flex;
-            padding: 1%;
-            align-items: flex-end;
-            width: 20%;
-            flex-wrap: wrap;
-
-        }
-
-        .header--profil__picture div:hover {
-            color: #0087ca;
-        }
-
-        h1 {
-            width: 100%;
-            font-size: 2.6rem;
-            color: $white;
-            font-family: 'Merienda', cursive;
-
-            span {
-                color: $orange;
-            }
-
-            .header--town {
-                font-size: 1.8rem;
-                padding-top: 0.2rem;
-            }
-        }
-
-        .header--login {
-            color: $white;
-        }
-
-        .header--disconnect {
-            color: $red;
-        }
-
-        .header--nav__inscription {
-            margin-right: 0.3rem;
-            color: $white;
-        }
-
-        a {
-            color: $white;
-        }
+      a {
+        color: $white;
+      }
     }
 
-    //<-----------NAV----------->
-    nav {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 2rem;
-        margin-top: 0.5rem;
-        font-weight: bold;
-        align-items: center;
+    .header--nav__sale {
+      background-color: $orange;
+      margin-right: 0.3rem;
 
-
-        .header--nav__home {
-            background-color: $green;
-            margin-right: 0.3rem;
-
-
-            a {
-                color: $white;
-            }
-        }
-
-        .header--nav__sale {
-            background-color: $orange;
-            margin-right: 0.3rem;
-
-            a {
-                color: $white;
-            }
-        }
-
-        .header--nav__event {
-            background-color: $red;
-            margin-right: 0.3rem;
-
-            a {
-                color: $white;
-            }
-        }
-
-        .header--nav__presentation {
-            background-color: $pink;
-
-            a {
-                color: $white;
-            }
-        }
-
-        div {
-            width: 25%;
-            display: inline-block;
-            position: relative;
-            font-size: large;
-            border-radius: 7px;
-            text-shadow: 1px 1px 1px $black;
-            padding: 3px;
-
-        }
-
-        //WE USE THE underlineAnim.scss for animate nav  
-        @import "../../assets/animations/underlineAnim.scss";
+      a {
+        color: $white;
+      }
     }
+
+    .header--nav__event {
+      background-color: $red;
+      margin-right: 0.3rem;
+
+      a {
+        color: $white;
+      }
+    }
+
+    .header--nav__presentation {
+      background-color: $pink;
+
+      a {
+        color: $white;
+      }
+    }
+    .router-link-exact-active {
+      border-bottom: 3px solid rgba(51, 51, 51, 0.219);
+      text-shadow: 4px 4px 7px black;
+    }
+
+    div {
+      width: 25%;
+      display: inline-block;
+      position: relative;
+      font-size: large;
+      border-radius: 7px;
+      text-shadow: 1px 1px 1px $black;
+      padding: 3px;
+    }
+
+    //WE USE THE underlineAnim.scss for animate nav
+    @import "../../assets/animations/underlineAnim.scss";
+  }
 }
 
 //<----------------------MENU BURGER ---------------->
 .header--burger__menu {
-    display: none;
-    height: 1000vh;
+  display: none;
+  height: 1000vh;
 
-    ul {
-        padding-top: 2%;
-        display: flex;
-        flex-direction: column;
-        list-style-type: none;
+  ul {
+    padding-top: 2%;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    color: $white;
+
+    .header--nav__home {
+      background-color: $green;
+      color: $white;
+    }
+
+    .header--nav__sale {
+      background-color: $orange;
+      color: $white;
+    }
+
+    .header--nav__event {
+      background-color: $red;
+      color: $white;
+    }
+
+    .header--nav__presentation {
+      background-color: $blue;
+      color: $white;
+    }
+
+    .header--nav__inscription {
+      background-color: $pink;
+      color: $white;
+    }
+
+    .header--nav__connexion {
+      background-color: $purple;
+
+      .header--login {
         color: $white;
+      }
 
-        .header--nav__home {
-            background-color: $green;
-            color: $white;
-
-        }
-
-        .header--nav__sale {
-            background-color: $orange;
-            color: $white;
-        }
-
-        .header--nav__event {
-            background-color: $red;
-            color: $white;
-        }
-
-        .header--nav__presentation {
-            background-color: $blue;
-            color: $white;
-        }
-
-        .header--nav__inscription {
-            background-color: $pink;
-            color: $white;
-        }
-
-        .header--nav__connexion {
-            background-color: $purple;
-
-            .header--login {
-                color: $white;
-            }
-
-            .header--disconnect {
-                color: $white;
-            }
-        }
-
-        li {
-            font-size: x-large;
-            height: 100%;
-            padding: 6%;
-            font-weight: bold;
-            margin-top: 0.5rem;
-            color: $white;
-            border-radius: 22px;
-            box-shadow: 1px 1px 1px;
-        }
+      .header--disconnect {
+        color: $white;
+      }
     }
 
-    .burger--menu__picture {
-        height: 100vh;
+    li {
+      font-size: x-large;
+      height: 100%;
+      padding: 6%;
+      font-weight: bold;
+      margin-top: 0.5rem;
+      color: $white;
+      border-radius: 22px;
+      box-shadow: 1px 1px 1px;
     }
+  }
 
-    img {
-        margin: 11%;
-        height: 80px;
-        width: 80px;
-        border: 1px solid $black;
-        border-radius: 50%;
-        padding: 4%;
-        box-shadow: -0.5em 0.5em $black;
-    }
+  .burger--menu__picture {
+    height: 100vh;
+  }
+
+  img {
+    margin: 11%;
+    height: 80px;
+    width: 80px;
+    border: 1px solid $black;
+    border-radius: 50%;
+    padding: 4%;
+    box-shadow: -0.5em 0.5em $black;
+  }
 }
-
 
 //<----------Media queries-------->
 @media (max-width: 1311px) {
-    header .header--title .header--title__logo {
-        position: unset;
-        float: left;
-        border-radius: 50%;
-        left: 0;
-        z-index: 1;
-
-    }
+  header .header--title .header--title__logo {
+    position: unset;
+    float: left;
+    border-radius: 50%;
+    left: 0;
+    z-index: 1;
+  }
 }
 
 @media (max-width: 800px) {
-    .header--title__logo {
-        height: 12vh;
+  .header--title__logo {
+    height: 12vh;
+  }
+
+  header {
+    nav {
+      align-items: center;
+
+      div {
+        font-size: 0.8rem;
+        height: 2rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
     }
-
-    header {
-        nav {
-            align-items: center;
-
-            div {
-                font-size: 0.8rem;
-                height: 2rem;
-                display: flex;
-                justify-content: space-around;
-                align-items: center;
-            }
-        }
-
-    }
-
+  }
 }
 
 @media (max-width: 425px) {
-    header {
+  header {
+    .header--title {
+      padding: 4%;
 
-        .header--title {
-            padding: 4%;
+      h1 {
+        font-size: 1.4rem;
+        text-align: start;
+        width: 60%;
 
-            h1 {
-                font-size: 1.4rem;
-                text-align: start;
-                width: 60%;
-
-                .header--town {
-
-                    font-size: 1rem;
-                    padding-top: 0.3rem;
-                }
-
-
-            }
-
-            .header--profil__picture {
-                display: none;
-            }
-
-            .header--burger__container {
-                display: unset;
-                height: 100%;
-                display: contents;
-
-            }
+        .header--town {
+          font-size: 1rem;
+          padding-top: 0.3rem;
         }
+      }
 
-        nav {
-            height: 0;
+      .header--profil__picture {
+        display: none;
+      }
 
-            div {
-                display: none;
-
-            }
-        }
-
-    }
-
-    .active {
+      .header--burger__container {
+        display: unset;
+        height: 100%;
         display: contents;
-        text-shadow: 1px 1px 1px black;
-
-        .header--profil__picture {
-            width: 20px;
-            height: 20px;
-        }
+      }
     }
 
+    nav {
+      height: 0;
+
+      div {
+        display: none;
+      }
+    }
+  }
+
+  .active {
+    display: contents;
+    text-shadow: 1px 1px 1px black;
+
+    .header--profil__picture {
+      width: 20px;
+      height: 20px;
+    }
+  }
 }
 </style>
