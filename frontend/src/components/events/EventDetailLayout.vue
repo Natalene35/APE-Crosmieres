@@ -1,22 +1,23 @@
 <template>
     <section class="event--card">
 
-        <div class="picture--container">
+        <div class="event--card__picture--container">
             <img class="picture" v-bind:src="picture" />
         </div>
 
-        <h2 class="event--card__title">{{ title }}</h2>
+        <h2 class="event--card__title" v-html="title"></h2>
 
         <div class="event--card__date">{{ date }}</div>
         <div class="event--card__location">{{ location }}</div>
 
-        <div class="media-image" v-bind:style="'background-image:url(' + image + ')'"></div>
+        <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'"></div>
 
         <div class="event--card__content" v-html="content"></div>
 
         <img class="event--card__map" v-bind:src="mapPic">
     </section>
 </template>
+
 
 <script>
 import EventService from "@/services/events/EventService";
@@ -25,6 +26,7 @@ import jelly from '@/assets/images/sand-tower.png';
 
 export default {
     name: "EventDetailLayout",
+
     data() {
         return {
             mapPic: mapPic,
@@ -34,7 +36,8 @@ export default {
             location: null,
             content: null,
             image: null,
-            map: null
+            map: null,
+            
         }
     },
 
@@ -45,12 +48,12 @@ export default {
             console.log(arrayMeta.lieu);
             this.date = arrayMeta.date;
             this.location = arrayMeta.lieu;
-
-            // Allow to retrieve the id dynamic parameter by using the $route object
+            //Allow to retrieve the id dynamic parameter by using the $route object
             const response = await EventService.find(id);
             if (response.code) {
                 // If error
-                this.$router.push({ name: '404' });
+                console.log('error');
+                //this.$router.push({ name: '404' });
             } else {
                 this.title = response.title.rendered;
                 this.content = response.content.rendered;
@@ -61,6 +64,7 @@ export default {
 }
 
 </script>
+
 
 <style lang="scss" scoped>
 .event--card {
@@ -74,7 +78,7 @@ export default {
     background-color: $white;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
 
-    .picture--container {
+    .event--card__picture--container {
         display: flex;
         justify-content: center;
         max-width: 100%;
@@ -115,9 +119,9 @@ export default {
         margin: auto;
     }
 
-    .media-image {
-        width: 100%;
-        min-height: 18rem;
+    .event--card__media--image {
+        width: 100vh;
+        height: 30vh;
         background-position: center;
         background-size: cover;
         border-radius: 1rem;
@@ -130,7 +134,7 @@ export default {
         .event--card {
             width: 80%;
 
-            .picture--container {
+            .event--card__picture--container {
                 max-width: 70%;
             }
 
@@ -145,7 +149,7 @@ export default {
             width: 70%;
         }
 
-        .picture--container {
+        .event--card__picture--container {
             max-width: 50%;
         }
 
@@ -153,9 +157,9 @@ export default {
             font-size: 1.6rem;
         }
 
-        .media-image {
-            width: 90%;
-            min-height: 25rem;
+        .event--card__media--image {
+            width: 100vh;
+            height: 30vh;
         }
 
         .event--card__content {
@@ -173,17 +177,12 @@ export default {
             width: 70%;
         }
 
-        .picture--container {
+        .event--card__picture--container {
             max-width: 30%;
         }
 
         h2 {
             font-size: 1.8rem;
-        }
-
-        .media-image {
-            width: 80%;
-            min-height: 35rem;
         }
 
         .event--card__content {
