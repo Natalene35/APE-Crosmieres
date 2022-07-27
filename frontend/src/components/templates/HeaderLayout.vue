@@ -8,6 +8,8 @@
                 <h1><span>A</span>ssociation des <span>P</span>arents d'<span>E</span>lèves <div class="header--town">de
                         Crosmières</div>
                 </h1>
+                <h1 class="header--title__mobile">APE<div class="header--town">Crosmières</div>
+                </h1>
 
                 <div class="header--profil__picture">
                     <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'registration' }"
@@ -117,7 +119,6 @@ export default {
         }
     },
 
-
     methods: {
         showMenu() {
             let headerMenu = document.querySelector(".header--burger__menu");
@@ -167,8 +168,20 @@ header {
         border-radius: 10px;
         text-shadow: 1px 1px 1px $black;
 
+        .header--title__mobile {
+            display: none;
+            width: 100%;
+            font-size: 2.6rem;
+            color: $white;
+            font-family: 'Merienda', cursive;
+        }
+
         .header--title__logo {
             width: 20%;
+
+            img {
+                width: 100px;
+            }
         }
 
         .header--profil__picture {
@@ -359,17 +372,42 @@ header {
 
 //<----------Media queries-------->
 
+@media (max-width: 425px) {
+    header {
+        .header--title__mobile {
+            font-size: 0.7rem;
+
+            .header--town {
+                font-size: 0.5rem;
+            }
+        }
+    }
+}
+
 @media (max-width: 800px) {
 
     header {
 
         .header--title {
-
             justify-content: space-between;
             padding: 0.5rem;
 
             h1 {
                 display: none;
+            }
+
+            .header--title__mobile {
+                color: $orange;
+                letter-spacing: 5px;
+                display: inline;
+                width: 100%;
+                font-size: 2.6rem;
+                font-family: 'Merienda', cursive;
+
+                .header--town {
+                    color: $white;
+                    font-size: 1rem;
+                }
             }
 
             .header--profil__picture {
@@ -392,15 +430,15 @@ header {
         }
 
     }
+}
 
-    .active {
-        display: contents;
-        text-shadow: 1px 1px 1px black;
+.active {
+    display: contents;
+    text-shadow: 1px 1px 1px black;
 
-        .header--profil__picture {
-            width: 20px;
-            height: 20px;
-        }
+    .header--profil__picture {
+        width: 20px;
+        height: 20px;
     }
 }
 </style>
