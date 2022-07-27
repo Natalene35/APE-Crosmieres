@@ -37,7 +37,7 @@ export default {
             content: null,
             image: null,
             map: null,
-            id: null
+            
         }
     },
 
@@ -48,20 +48,13 @@ export default {
             console.log(arrayMeta.lieu);
             this.date = arrayMeta.date;
             this.location = arrayMeta.lieu;
-<<<<<<< HEAD
-=======
-
->>>>>>> master
-            // Allow to retrieve the id dynamic parameter by using the $route object
+            //Allow to retrieve the id dynamic parameter by using the $route object
             const response = await EventService.find(id);
             if (response.code) {
                 // If error
-                this.$router.push({ name: '404' });
+                console.log('error');
+                //this.$router.push({ name: '404' });
             } else {
-<<<<<<< HEAD
-                this.id = response.id;
-=======
->>>>>>> master
                 this.title = response.title.rendered;
                 this.content = response.content.rendered;
                 this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';

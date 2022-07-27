@@ -57,7 +57,6 @@ const routes = [{
   {
     path: '/event/:id',
     name: 'event',
-<<<<<<< HEAD
     component: () => import(/* webpackChunkName: "event" */ '../views/events/EventDetailView.vue')
   },
  
@@ -66,15 +65,6 @@ const routes = [{
     path: '/sale/:id',
     name: 'sale',
     component: () => import(/* webpackChunkName: "sale" */ '../views/sales/SaleDetailView.vue')
-=======
-    component: () => import( /* webpackChunkName: "event" */ '../views/events/EventDetailView.vue')
-  },
-
-  {
-    path: '/sale/:id',
-    name: 'sale',
-    component: () => import( /* webpackChunkName: "sale" */ '../views/sales/SaleDetailView.vue')
->>>>>>> master
   },
 
   //Road for registration
