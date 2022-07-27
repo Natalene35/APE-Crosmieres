@@ -5,18 +5,14 @@
         <div class="field__title">
           <img
             class="logo--img"
-            src="../../assets/images/jelly-message-sent-by-character.png"
+            src="../../assets/images/jelly-character-shopping-for-pot-plants.png"
             alt=""
           />
           <h1 class="title">Ajout d'une vente</h1>
         </div>
 
         <label class="field__label">Titre de la vente </label>
-        <input
-          class="field__input"
-          type="text"
-          v-model="title"
-        />
+        <input class="field__input" type="text" v-model="title" />
 
         <label class="field__label">Decription </label>
         <textarea
@@ -32,24 +28,13 @@
             à préciser (début, fin, durée, ...)
           </p></label
         >
-        <input
-          class="field__input"
-          type="text"
-          v-model="saleDate"
-        />
+        <input class="field__input" type="text" v-model="saleDate" />
 
         <label class="field__label">Lieu de la vente </label>
-        <input
-          class="field__input"
-          type="text"
-          v-model="location"
-        />
+        <input class="field__input" type="text" v-model="location" />
 
         <label class="field__label">Lien du site marchand </label>
-        <input 
-        class="field__input" 
-        type="text" 
-        v-model="link" />
+        <input class="field__input" type="text" v-model="link" />
 
         <label class="field__label"> Image </label>
         <input
