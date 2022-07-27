@@ -58,7 +58,10 @@
         <p class="alert" v-if="alerts">
           {{ alerts }}
         </p>
-        <button class="btn btn-success btn-sm float-right" @click="submitForm">
+        <button
+          class="btn btn-success btn-sm float-right"
+          @click="imageValidate"
+        >
           Soumettre
         </button>
       </div>
@@ -69,10 +72,14 @@
         </div>
       </div>
 
-      <div class="image--modal">
-        <p>Il n'y a pas d'image selectionnée</p>
-        <button class="confirm">Confirmer</button>
-        <button class="abort">Annuler</button>
+      <div class="image--modal__mask" v-if="showModal">
+        <div class="image--modal__wrapper">
+          <div class="image--modal__container">
+            <p>Il n'y a pas d'image selectionnée</p>
+            <button class="confirm" @click="submitForm">Continuer</button>
+            <button class="abort" @click="showModal = false">Annuler</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -101,9 +108,17 @@ export default {
       imageInfos: [],
       errors: [],
       alerts: null,
+      showModal: false,
     };
   },
   methods: {
+    imageValidate() {
+      if (this.currentImage) {
+        this.submitForm();
+      } else {
+        this.showModal = true;
+      }
+    },
     selectImage() {
       this.currentImage = this.$refs.file.files.item(0);
       this.previewImage = URL.createObjectURL(this.currentImage);
@@ -150,6 +165,7 @@ export default {
 
     // to submit fields and send datas to custom post 'event'
     async submitForm() {
+      this.showModal = false;
       // Reset error table
       this.errors = [];
       this.alerts = null;
@@ -167,9 +183,6 @@ export default {
       if (!this.location) {
         this.errors.push("Veuillez remplir un lieu svp");
       }
-      if (!this.currentImage) {
-        this.alerts = "Veuillez choisir une image svp";
-      }
 
       setTimeout(() => {
         this.errors = [];
@@ -186,9 +199,21 @@ export default {
 
         const response = await EventService.addEvent(params);
 
-        if (response) {
+        // if event create status is ok and if there was an image to uplaod
+        if (response && this.currentImage) {
           //response.data.id is the post id
           this.upload(response.data.id);
+        } else if (response) {
+          // if there was not image to upload but event was create
+          this.title = null;
+          this.content = null;
+          this.eventDate = null;
+          this.location = null;
+          this.currentImage = undefined;
+          this.previewImage = undefined;
+          this.alerts = "Evénement créé sans image";
+          //redirection vers la home
+          setTimeout(() => this.$router.push({ name: "home" }), 1500);
         } else {
           this.errors.push(
             "Erreur d'enregistrement de l'événement ! Veuillez verifier la présence de l'événement"
@@ -346,26 +371,48 @@ export default {
       background-color: #ffc107;
       box-shadow: 0 2px 2px #0000001a;
     }
-    .image--modal {
+    .image--modal__mask {
       position: fixed;
       background-color: white;
       box-shadow: 0 0 5px #0000001a;
       border-radius: 5px;
       font-size: 1.5rem;
       padding: 1rem;
+      position: fixed;
+      z-index: 9998;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: table;
+      transition: opacity 0.3s ease;
 
-      .confirm {
-        margin: 1rem;
-        border: 3px solid $green;
-      }
-      .confirm:hover {
-        background-color: $green;
-      }
-      .abort {
-        border: 3px solid $red;
-      }
-      .abort:hover {
-        background-color: $red;
+      .image--modal__wrapper {
+        display: table-cell;
+        vertical-align: middle;
+        .image--modal__container {
+          width: 300px;
+          margin: 0px auto;
+          padding: 20px 30px;
+          background-color: #fff;
+          border-radius: 2px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+          transition: all 0.3s ease;
+          .confirm {
+            margin: 1rem;
+            border: 3px solid $green;
+          }
+          .confirm:hover {
+            background-color: $green;
+          }
+          .abort {
+            border: 3px solid $red;
+          }
+          .abort:hover {
+            background-color: $red;
+          }
+        }
       }
     }
   }
