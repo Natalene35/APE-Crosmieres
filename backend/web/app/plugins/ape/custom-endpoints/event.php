@@ -63,9 +63,10 @@ function ape_rest_event_meta_handler($request)
 
 function ape_rest_add_event_handler($request)
 {
-
+    
     // translate request with JSON
     $parameters = $request->get_json_params();
+    
     $title = sanitize_text_field($parameters['title']);
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
