@@ -1,40 +1,65 @@
 <template>
     <section class="wrapper">
         <div class="container">
-            <img src="@/assets/images/icons8-profile-60.png" alt="exemple photo-profile-avatar" class="profile" />
-            <h2>{{ user.name }}</h2>
+            <div class="card">
+                <div class="avatar">
+                    <img src="@/assets/images/icons8-profile-60.png" alt="avatar de l'utilisateur" />
+                </div>
+                <hr />
+                <div class="stats">
+                    <h2>{{ user.name }}</h2>
+                    <div>
+                        <p>{{ user.first_name }}</p>
+                        <p>{{ user.last_name }}</p>
+                        <p>{{ user.email }}</p>
+                        <p>{{ phone }}</p>
+                    </div>
 
-            <label class="field__label">Prénom</label>
-            <input v-model="user.first_name" type="text" class="inputbox" placeholder="Votre prénom" name="firstname">
+                    <h2>Mes enfants</H2>
+                    <div>
+                        <p>Polo Klein</p>
+                    </div>
+                </div>
+            </div>
 
-            <label class="field__label">Nom</label>
-            <input v-model="user.last_name" type="text" class="inputbox" placeholder="Votre Nom" name="lastname">
-
-            <label class="field__label">E-mail</label>
-            <input v-model="user.email" type="email" class="inputbox" placeholder="Votre e-mail" name="mail">
-
-            <label class="field__label">Numéro de téléphone</label>
-            <input v-model="phone" type="text" class="inputbox" placeholder="Votre numéro de contact" name="phone">
-
-            <label class="field__label">Votre identifiant de connexion</label>
-            <input v-model="user.nickname" type="text" class="inputbox" placeholder="Votre pseudo" name="username">
 
             <div class="button--link">
                 <p class="push--error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
 
                 <a v-on:click="showChildRegistrationLayout" class="addChild">Ajouter mes enfants</a>
-
                 <ChildRegistrationLayout class="ChildRegistrationLayout--display active" />
 
-                <a v-on:click="updateUser" class="update">Enregistrer vos modifications</a>
-                <p class="succesUpdate" v-for="succesMsg in succesUpdate" v-bind:key="succesMsg">{{
-                        succesMsg
-                }}</p>
+                <a v-on:click="showUserUpdateInformationLayout" class="update">Mise à jour de vos données</a>
+                <div class="UserUpdateInformationLayout--display active">
 
-                <a v-on:click="showUpdatePassword" class="updatePassword">Mettre à jour votre mot de
+                    <div class="user--update">
+                        <label class="field__label">Prénom</label>
+                        <input v-model="user.first_name" type="text" class="inputbox" placeholder="Votre prénom"
+                            name="firstname">
+
+                        <label class="field__label">Nom</label>
+                        <input v-model="user.last_name" type="text" class="inputbox" placeholder="Votre nom"
+                            name="lastname">
+
+                        <label class="field__label">E-mail</label>
+                        <input v-model="user.email" type="email" class="inputbox" placeholder="Votre e-mail"
+                            name="mail">
+
+                        <label class="field__label">Numéro de téléphone</label>
+                        <input v-model="phone" type="text" class="inputbox" placeholder="Votre numéro de contact"
+                            name="phone">
+
+                        <p class="succesUpdate" v-for="succesMsg in succesUpdate" v-bind:key="succesMsg">{{
+                                succesMsg
+                        }}</p>
+
+                        <a v-on:click="updateUser" class="updateConfirm">Enregistrer vos modifications</a>
+                    </div>
+                </div>
+                <!--<a v-on:click="showUpdatePassword" class="updatePassword">Mettre à jour votre mot de
                     passe</a>
 
-                <a v-on:click="removeUser" class="delete">Supprimer mon compte</a>
+                <a v-on:click="removeUser" class="delete">Supprimer mon compte</a>-->
             </div>
         </div>
     </section>
@@ -89,9 +114,14 @@ export default {
         },
 
         //When user click on button add children display the component
-        showUpdatePassword() {
-            let updatePassword = document.querySelector(".updatePassword--display");
-            updatePassword.classList.toggle("active");
+        /* showUpdatePassword() {
+             let updatePassword = document.querySelector(".updatePassword--display");
+             updatePassword.classList.toggle("active");
+         },*/
+
+        showUserUpdateInformationLayout() {
+            let UserUpdateInformationLayout = document.querySelector(".UserUpdateInformationLayout--display");
+            UserUpdateInformationLayout.classList.toggle("active");
         },
 
         async removeUser() {
@@ -109,15 +139,16 @@ export default {
         async updateUser() {
             if (this.$store.getters.getUserID) {
                 const response = await UserService.update(this.$store.getters.getUserID, {
-                    "pseudo": this.user.nickname,
                     "email": this.user.email,
                     "first_name": this.user.first_name,
                     "last_name": this.user.last_name,
                     "phone": this.user.phone
                 });
                 if (response.id) {
+                    console.log('reussi')
                     this.succesUpdate.push('Mise à jour réussi');
                 } else {
+                    console.log(response)
                     this.errors.push("Echec suppression");
                 }
             }
@@ -128,33 +159,26 @@ export default {
 
  <style scoped lang="scss">
  .wrapper {
-     color: #313846;
-     font-family: "Muli", sans-serif;
+     color: $grey;
+     font-family: 'Muli', sans-serif;
      font-size: 1rem;
-     display: grid;
      place-items: center;
      border-radius: 1em;
-     width: 100%;
-     justify-items: center;
-     justify-content: center;
  
-     * {
-         -webkit-box-sizing: border-box;
-         box-sizing: border-box;
-         -webkit-transition: all 0.25s ease;
-         transition: all 0.25s ease;
-     }
  
      .container {
          max-width: 400px;
          overflow: hidden;
          padding: 0;
+         background-color: $white;
          margin-top: 1rem;
          margin-bottom: 1rem;
          border-radius: 1em;
          display: -ms-grid;
          display: grid;
          place-items: center;
+         justify-content: center;
+         box-shadow: 0px 17px 34px -20px $blue-bg-header;
  
          h2 {
              font-size: 2rem;
@@ -175,12 +199,11 @@ export default {
          }
  
          a {
-             padding: 5px;
+             padding: 1rem;
              color: $black;
              font-size: 0.7em;
              text-transform: uppercase;
              margin: 0.5rem;
-             opacity: 0.65;
              width: 100%;
              text-align: center;
              text-decoration: none;
@@ -231,38 +254,32 @@ export default {
          display: flex;
          flex-direction: column;
          align-items: center;
+         padding-bottom: 2rem;
  
  
          .addChild {
-             border: 1px solid $green;
-             background-color: $green ;
-             border-radius: 10px;
-             cursor: pointer
-         }
- 
-         .update {
-             border: 1px solid $purple;
-             background-color: $purple;
-             border-radius: 10px;
-             cursor: pointer
-         }
- 
-         .delete {
-             border: 1px solid $red;
-             background-color: $red;
-             border-radius: 10px;
-             cursor: pointer
-         }
- 
-         .updatePassword {
              border: 1px solid $pink;
              background-color: $pink;
              border-radius: 10px;
              cursor: pointer
          }
  
+         .update {
+             border: 1px solid $orange;
+             background-color: $orange;
+             border-radius: 10px;
+             cursor: pointer
+         }
+ 
+         .updateConfirm {
+             border: 1px solid $green;
+             background-color: $green;
+             border-radius: 10px;
+             cursor: pointer
+         }
+ 
          .succesUpdate {
-             color: green;
+             color: $green;
              text-transform: uppercase;
              font-size: 1rem;
              margin-bottom: 1rem;
@@ -273,7 +290,7 @@ export default {
          padding: 0.5em 0 0.5em 1.5em;
          font-size: 1rem;
          line-height: 3;
-         width: 100%;
+         width: 80%;
          border: 1px solid $blue-bg-header;
          border-radius: 0.5em;
          margin: 0 0 1rem 0;
@@ -284,5 +301,17 @@ export default {
  
  .active {
      display: none;
+ }
+ 
+ .user--update {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+ }
+ 
+ @media (min-width: 800px) {
+     .wrapper {
+         width: 55vh;
+     }
  }
  </style>

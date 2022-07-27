@@ -1,7 +1,7 @@
 <template>
-    <section class="wrapper">
-        <div class="container">
-            <div class="content">
+    <section class="wrapper--child">
+        <div class="container--chils">
+            <div class="content--child">
                 <label class="field__label">Prénom</label>
                 <input v-model="child_firstname" type="text" class="inputbox" placeholder="Prénom de votre enfant"
                     name="firstname">
@@ -112,7 +112,7 @@ export default {
 
 
 <style lang="scss">
-.wrapper {
+.wrapper--child {
     color: #313846;
     font-family: "Muli", sans-serif;
     font-size: 1rem;
@@ -122,7 +122,7 @@ export default {
     justify-content: flex-end;
     flex-direction: row;
 
-    .container {
+    .container--child {
         width: 100%;
         overflow: hidden;
         padding: 0;
@@ -142,7 +142,7 @@ export default {
         margin-bottom: 0.9em;
     }
 
-    .content {
+    .content--child {
         place-items: center;
         padding: 0 2em;
         display: flex;
