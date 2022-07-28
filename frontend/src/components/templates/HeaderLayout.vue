@@ -57,14 +57,12 @@
 
         <div class="header--nav__presentation">
           <router-link v-bind:to="{ name: 'memberList' }" class="header--nav__presentation">
-            Présentation APE
+            Présentation
           </router-link>
         </div>
 
         <div v-if="this.$store.getters.getRole === 'administrator'" class=" header--nav__backoffice">
-          <router-link v-bind:to="{ name: 'back-office' }" class="header--nav__backoffice">
-            Back-office
-          </router-link>
+          <router-link v-bind:to="{ name: 'back-office' }" class="header--nav__backoffice">Administration</router-link>
         </div>
 
       </nav>
@@ -93,18 +91,13 @@
             Présentation
           </router-link>
         </li>
+
         <li class="header--nav__inscription">
           <router-link v-if="!this.$store.getters.getUserID" v-bind:to="{ name: 'registration' }"
             class="header--nav__inscription burger--ul">Inscription
           </router-link>
           <router-link v-if="this.$store.getters.getUserID" v-bind:to="{ name: 'userprofil' }"
             class="header--nav__inscription burger--ul">Mon profil
-          </router-link>
-        </li>
-
-        <li class="header--nav__backoffice">
-          <router-link v-if="this.$store.getters.getRole === 'admin'" v-bind:to="{ name: 'back-office' }"
-            class="header--nav__backoffice burger--ul">Back-office
           </router-link>
         </li>
 
@@ -116,6 +109,12 @@
           <a class="header--disconnect burger--ul" href="" v-if="this.$store.getters.getToken"
             v-on:click="disconnect">Déconnexion
           </a>
+        </li>
+
+        <li class="header--nav__backoffice">
+          <router-link v-if="this.$store.getters.getRole === 'administrator'" v-bind:to="{ name: 'back-office' }"
+            class="header--nav__backoffice burger--ul">Administration
+          </router-link>
         </li>
       </ul>
       <div v-bind:class="'burger--menu__picture'">
@@ -247,6 +246,7 @@ header {
 
     .header--disconnect {
       color: $orange;
+      margin-top: 0.5rem;
     }
 
     .header--nav__inscription {
@@ -377,7 +377,7 @@ header {
     }
 
     .header--nav__backoffice {
-      background-color: $purple;
+      background-color: $grey;
       color: $white;
     }
 
