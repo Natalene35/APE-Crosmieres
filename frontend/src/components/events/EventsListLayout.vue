@@ -38,21 +38,23 @@ export default {
         //Return an array that contains the rows where the callback returned true
             return this.eventsList.filter((event) => {
                 // We take the title of the current event and we check if the searched term is contained in this title.
-                // If yes, return true
-                if(event.title.rendered.toLowerCase().includes(this.searchString.toLowerCase())) {
+                // If yes, return true   
+                if(event.title.rendered.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(this.searchString.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase())) {
                     return true;
                 } else {
                     return false;
                 }
             });
         }
+
     },
 
     data() {
         return {
             eventsList: [],
             eventPicture: picture,
-            searchString:""
+            searchString:"",
+            
         }
     }
 }
