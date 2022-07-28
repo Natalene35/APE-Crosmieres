@@ -26,8 +26,17 @@ export default {
 
     async mounted() {
         //list of events from our API
-        this.eventsList = await EventService.findAll();
-
+        //GET AN ARRAY OF ALL EVENTS
+        let list = await EventService.findAll();
+        // ORDER BY DATE ARRAY OF EVENTS
+        list.sort(function(b, a) {
+            var c = new Date(a.date);
+            var d = new Date(b.date);
+            return c-d;
+        }),
+        //SLICE (0.4) CUT THE ARRAY AND GET 4 FIRST EVENT ORDER BY DATE
+        this.eventsList = list.slice(0, 4)
+    
     },
 
     data() {

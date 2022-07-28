@@ -37,7 +37,7 @@
         <!--       END BURGER         -->
       </div>
 
-      <nav>
+      <nav v-bind:class="{ backoffice: backOff}">
 
         <div class="header--nav__home">
           <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
@@ -67,35 +67,35 @@
     <!-- /*<--------------------MENU BURGER HIDDEN IN DESKTOP---------------------------->
     <div class="header--burger__menu">
       <ul>
-        <li class="header--nav__home">
-          <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
+        <li class="header--nav__home burger--ul">
+          <router-link v-bind:to="{ name: 'home' }" class="header--nav__home ">
             Accueil
           </router-link>
         </li>
         <li class="header--nav__sale">
-          <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale">
+          <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale burger--ul">
             Ventes
           </router-link>
         </li>
         <li class="header--nav__event">
-          <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event">
+          <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event burger--ul">
             Evènements
           </router-link>
         </li>
         <li class="header--nav__presentation">Présentation APE</li>
         <li class="header--nav__inscription">
           <router-link v-if="!this.$store.getters.getUserID" v-bind:to="{ name: 'registration' }"
-            class="header--nav__inscription">Inscription
+            class="header--nav__inscription burger--ul">Inscription
           </router-link>
           <router-link v-if="this.$store.getters.getUserID" v-bind:to="{ name: 'userprofil' }"
-            class="header--nav__inscription">Mon profil
+            class="header--nav__inscription burger--ul">Mon profil
           </router-link>
         </li>
         <li class="header--nav__connexion">
-          <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }" class="header--login">
+          <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }" class="header--login burger--ul">
             Connexion
           </router-link>
-          <a class="header--disconnect" href="" v-if="this.$store.getters.getToken" v-on:click="disconnect">Déconnexion
+          <a class="header--disconnect burger--ul" href="" v-if="this.$store.getters.getToken" v-on:click="disconnect">Déconnexion
           </a>
         </li>
       </ul>
@@ -112,10 +112,16 @@ import profil from '@/assets/images/profil.svg'
 import logoAPE from '@/assets/images/logo-tampon-APE-140.png'
 export default {
   name: 'HeaderLayout',
+     //IF TRUE WE ARE IN BACK OFFICE -> Hidden NAV
+  props: {
+        backOff: Boolean,
+    },
   data() {
     return {
       profilPic: profil,
-      logoApe: logoAPE
+      logoApe: logoAPE,
+   
+      
     }
   },
 
@@ -123,6 +129,12 @@ export default {
     showMenu() {
       let headerMenu = document.querySelector(".header--burger__menu");
       let body = document.querySelector("body");
+      let ulLink=document.getElementsByClassName("burger--ul")
+
+      for (const ul of ulLink) {
+          //WHEN WE CLICK IN A BURGER MENU LINK RETURN IN SHOWMENU () AND REMOVE BODY CLASSLIST
+          ul.addEventListener("click",this.showMenu)
+      }
       body.classList.toggle("overflow--hidden");
       headerMenu.classList.toggle("active");
     },
@@ -232,6 +244,10 @@ header {
   }
 
   //<-----------NAV----------->
+  //IF PROPS backOff=true 
+  .backoffice{
+    display: none;
+  }
   nav {
     display: flex;
     flex-direction: row;
@@ -248,6 +264,7 @@ header {
 
       a {
         color: $white;
+        display: block;
       }
     }
 
@@ -257,6 +274,7 @@ header {
 
       a {
         color: $white;
+        display: block;
       }
     }
 
@@ -266,6 +284,7 @@ header {
 
       a {
         color: $white;
+        display: block;
       }
     }
 
@@ -274,6 +293,7 @@ header {
 
       a {
         color: $white;
+        display: block;
       }
     }
 

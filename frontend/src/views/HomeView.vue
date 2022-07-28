@@ -4,7 +4,7 @@
   <main>
     <SalesHomeSliders />
     <EventsHomeLayout />
-    <SalesHomeLayout />
+    <SalesHomeLayout v-bind:hiddenSale="this.hiddenSale" />
   </main>
   <FooterLayout />
 
@@ -21,13 +21,24 @@ import SalesHomeSliders from '@/components/sales/SalesHomeSliders.vue'
 
 export default {
   name: 'HomeView',
+  data(){
+    return{
+      hiddenSale: false,
+    }
+  },
   components: {
     HeaderLayout,
     EventsHomeLayout,
     SalesHomeLayout,
     FooterLayout,
     SalesHomeSliders
-}
+},
+  mounted(){
+    //HER FIX FOR SLIDERS 
+      if(screen.width<=425){
+        this.hiddenSale=true;
+      }
+  }
 }
 </script>
 
@@ -40,6 +51,13 @@ main {
     list-style-type: none;
     justify-content: space-between;
 }
-
+@media (max-width: 425px) {
+    main{
+    flex-direction: column;
+    position: relative;
+    z-index: 3;
+    overflow: hidden;
+  }
+}
 </style>
 
