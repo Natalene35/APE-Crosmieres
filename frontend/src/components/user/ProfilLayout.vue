@@ -130,7 +130,7 @@ export default {
         //Delete ours personnal account 
         async removeUser() {
             if (this.$store.getters.getUserID) {
-                const response = await UserService.delete(this.$store.getters.getUserID)
+                const response = await UserService.delete()
                 console.log(response);
                 if (response.id) {
                     this.$router.push({ name: 'home' });

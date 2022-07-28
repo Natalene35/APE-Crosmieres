@@ -12,9 +12,9 @@ const apiClient = axios.create({
 
 export default {
 
-    async delete(id) {
+    async delete() {
         try {
-            const response = await apiClient.delete('/wp/v2/users/' + id, {
+            const response = await apiClient.delete('/wp/v2/users/', {
 	"force":true,
 	"reassign":1
 });
