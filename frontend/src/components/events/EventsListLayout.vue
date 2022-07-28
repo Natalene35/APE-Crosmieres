@@ -1,12 +1,11 @@
 <template>
     <section class="event--section">
         <div class="event--section__search">
-        <img class="event--card__img" v-bind:src="eventPicture">
-        <!-- Load icon library from font awesome -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-        <button class="search-icon"> <i class="fa fa-search"></i></button> 
-        <input type="text" placeholder="Rechercher..." v-model="searchString">
-        
+            <img class="event--card__img" v-bind:src="eventPicture">
+            <!-- Load icon library from font awesome -->
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+            <button class="search-icon"> <i class="fa fa-search"></i></button> 
+            <input type="text" placeholder="Rechercher..." v-model="searchString">
         </div>
         <EventListLayout v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'" v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered" v-for="event in eventsNewList" v-bind:key="event.id"/>
     </section>
@@ -17,7 +16,6 @@
 <script>
 import EventListLayout from '@/components/events/EventListLayout.vue';
 import EventService from '@/services/events/EventService';
-
 import picture from '@/assets/images/surr-holidays.png';
 
 
@@ -47,7 +45,6 @@ export default {
                 }
             });
         }
-
     },
 
     data() {
@@ -87,7 +84,7 @@ export default {
     }
 
     .search-icon {
-        border-style:none;
+        border-style: none;
         background-color: $red;
         color:$white;
         height: 40px;
