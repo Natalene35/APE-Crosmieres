@@ -1,33 +1,35 @@
 <template>
-    <HeaderLayout />
-    <main>
-        <ProfilLayout />
-    </main>
-    <FooterLayout />
+  <HeaderLayout />
+  <main>
+    <ProfilLayout />
+  </main>
+  <user-delete-confirm-layout />
+  <FooterLayout />
 </template>
 
 <script>
 // @ is an alias to /src
-import HeaderLayout from '@/components/templates/HeaderLayout.vue'
-import FooterLayout from '@/components/templates/FooterLayout.vue'
-import ProfilLayout from '@/components/user/ProfilLayout.vue'
-
+import HeaderLayout from "@/components/templates/HeaderLayout.vue";
+import FooterLayout from "@/components/templates/FooterLayout.vue";
+import ProfilLayout from "@/components/user/ProfilLayout.vue";
+import UserDeleteConfirmLayout from "../../components/user/UserDeleteConfirmLayout.vue";
 
 export default {
-    name: 'ProfilView',
-    components: {
-        HeaderLayout,
-        FooterLayout,
-        ProfilLayout
-    }
-}
+  name: "ProfilView",
+  components: {
+    HeaderLayout,
+    FooterLayout,
+    ProfilLayout,
+    UserDeleteConfirmLayout,
+  },
+};
 </script>
 
 <style scoped lang="scss">
 main {
-    height: 100%;
-    display: flex;
-    list-style-type: none;
-    justify-content: space-around;
+  height: 100%;
+  display: flex;
+  list-style-type: none;
+  justify-content: space-around;
 }
 </style>
