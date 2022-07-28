@@ -23,12 +23,24 @@ const routes = [{
     name: 'eventCreate',
     component: () => import( /* webpackChunkName: "create-event" */ '../views/events/EventCreateView.vue')
   },
+   // route for update sale
+   {
+    path: '/event/update/:id',
+    name: 'eventUpdate',
+    component: () => import( /* webpackChunkName: "create-sale" */ '../views/events/EventUpdateView.vue')
+  },
 
   // route for creating sale
   {
     path: '/sale/create',
     name: 'saleCreate',
     component: () => import( /* webpackChunkName: "create-sale" */ '../views/sales/SaleCreateView.vue')
+  },
+   // route for update sale
+   {
+    path: '/sale/update/:id',
+    name: 'saleUpdate',
+    component: () => import( /* webpackChunkName: "create-sale" */ '../views/sales/SaleUpdateView.vue')
   },
 
   //Road for registration
