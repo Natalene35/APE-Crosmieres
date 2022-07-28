@@ -1,6 +1,6 @@
 <template>
 
-  <HeaderLayout />
+  <HeaderLayout v-bind:backOff="this.backOff" />
   <main>
     <BackOfficeLayout />
   </main>
@@ -17,6 +17,11 @@ import BackOfficeLayout from '../../components/back-office/BackOfficeLayout.vue'
 
 export default {
   name: 'HomeView',
+  data(){
+    return{
+      backOff: true,
+    }
+  },
   components: {
     HeaderLayout,
     FooterLayout,
@@ -33,6 +38,5 @@ main {
     list-style-type: none;
     justify-content: space-between;
 }
-
 </style>
 

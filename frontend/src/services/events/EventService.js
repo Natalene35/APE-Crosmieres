@@ -14,9 +14,9 @@ const apiClient = axios.create({
 
 export default {
     // Get the list of all the events with their metadata
-    async findAll() {
+    async findAll(params) {
         try {
-            const response = await apiClient.get('/event?_embed');
+            const response = await apiClient.get('/event?_embed', params);
             return response.data;
         } catch (error) {
             return error.response.data
