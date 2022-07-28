@@ -80,6 +80,13 @@ const routes = [{
     component: () => import( /* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
   },
 
+  //Road for user list
+  {
+    path: '/users',
+    name: 'users',
+    component: () => import( /* webpackChunkName: "users" */ '../views/user/UsersListView.vue')
+  },
+
   // route for creating event
   {
     path: '/member',
