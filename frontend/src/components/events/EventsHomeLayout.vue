@@ -33,7 +33,7 @@ export default {
         //GET AN ARRAY OF ALL EVENTS
         let list = await EventService.findAll(params);
         // ORDER BY DATE ARRAY OF EVENTS
-        list.sort(function(a, b) {
+        list.sort(function(b, a) {
             var c = new Date(a.date);
             var d = new Date(b.date);
             return c-d;

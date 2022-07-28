@@ -67,8 +67,8 @@
     <!-- /*<--------------------MENU BURGER HIDDEN IN DESKTOP---------------------------->
     <div class="header--burger__menu">
       <ul>
-        <li class="header--nav__home">
-          <router-link v-bind:to="{ name: 'home' }" class="header--nav__home burger--ul">
+        <li class="header--nav__home burger--ul">
+          <router-link v-bind:to="{ name: 'home' }" class="header--nav__home ">
             Accueil
           </router-link>
         </li>

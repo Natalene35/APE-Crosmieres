@@ -177,12 +177,12 @@ export default {
             h2 {
                 text-shadow: 1px 1px 1px black;
                 font-style: italic;
-                // text-decoration: underline;
                 padding: 3%;
                 width: 100%;
                 margin-bottom: 2%;
                 color: $white;
                 font-size: large;
+                font-weight: bold;
             }
 
             p {
