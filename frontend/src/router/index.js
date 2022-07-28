@@ -65,18 +65,17 @@ const routes = [{
   },
 
   //Road for an event
-
   {
     path: '/event/:id',
     name: 'event',
-    component: () => import( /* webpackChunkName: "event" */ '../views/events/EventDetailView.vue')
-
+    component: () => import(/* webpackChunkName: "event" */ '../views/events/EventDetailView.vue')
   },
-
+ 
+  //Road for a sale
   {
     path: '/sale/:id',
     name: 'sale',
-    component: () => import( /* webpackChunkName: "sale" */ '../views/sales/SaleDetailView.vue')
+    component: () => import(/* webpackChunkName: "sale" */ '../views/sales/SaleDetailView.vue')
   },
 
   //Road for registration
@@ -112,6 +111,13 @@ const routes = [{
     path: '/back-office',
     name: 'back-office',
      component: () => import(/* webpackChunkName: "login" */ '../views/back-office/BackOfficeView.vue')
+  },
+
+  //Road for legals mentions
+  {
+    path: '/legals-mentions',
+    name: 'legals-mentions',
+     component: () => import(/* webpackChunkName: "legals-mentions" */ '../views/legals-mentions/LegalsMentionsView.vue')
   },
 ]
 

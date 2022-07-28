@@ -35,9 +35,8 @@ export default {
 }
 </script>
 
+
 <style scopped lang="scss">
-
-
 
 .sale--section__list {
     
@@ -47,8 +46,6 @@ export default {
 
 }
 
-
-    
 </style>
 
  

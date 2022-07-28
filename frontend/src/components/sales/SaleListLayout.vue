@@ -1,7 +1,9 @@
 <template>
     
-        <div class="sale--card">
-            
+
+    <div class="sale--card">
+        <router-link v-bind:to="{name: 'sale', params: {id: id}}">
+
             <h2 class="sale--card__title">
                 <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
                 <router-link class="sale--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'saleUpdate', params: {id: id}}">
@@ -13,7 +15,8 @@
             <div class="sale--card__content">
                 <div v-html="content"></div>
             </div>
-        </div>
+        </router-link>
+    </div>
             
 </template>
 
@@ -28,8 +31,10 @@ export default {
     props: {
         title: String,
         content: String,
+
         id: Number,
         backOffice: Boolean
+
     },
 
     data() {
@@ -62,6 +67,9 @@ export default {
     padding-bottom: 2rem;
     margin: 1rem 1rem 1rem 1rem;
     
+    a { color: $grey;
+        
+    }
 
     .sale--card__title {
         padding: 0.7rem;
@@ -69,6 +77,7 @@ export default {
         background-color: $orange;
         color: $white;
         font-weight: bold;
+
         img,a{
                 height: 4rem;
                 position: absolute;
@@ -82,8 +91,7 @@ export default {
            }
            .sale--card__editPic{
             right: 15%;
-           }    
-        
+           }
     }
 
     .sale--card__content {

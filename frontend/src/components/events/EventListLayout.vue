@@ -1,22 +1,20 @@
 <template>
 
     <div class="event--card">
-        <!--<router-link v-bind:to="{name: 'event', params: {id: id}}">-->
-             
+        <router-link v-bind:to="{name: 'event', params: {id: id}}">    
             <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
             <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
             <router-link class="event--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'eventUpdate', params: {id: id}}">
             <img  v-bind:src="editPic">
             </router-link>
             </div>
-
             <h2 class="event--card__title">
                 <div v-html="title"></div>
             </h2>
-                <div class="event--card__content">
-                    <div v-html="content"></div>
-                </div>
-        <!--</router-link>-->    
+            <div class="event--card__content">
+                <div v-html="content"></div>
+            </div>
+        </router-link>    
     </div>
      
 </template>
