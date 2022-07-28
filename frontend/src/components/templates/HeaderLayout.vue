@@ -37,7 +37,7 @@
         <!--       END BURGER         -->
       </div>
 
-      <nav v-bind:class="{ backoffice: backOff}">
+      <nav v-bind:class="{ backoffice: backOff }">
 
         <div class="header--nav__home">
           <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
@@ -58,6 +58,12 @@
         <div class="header--nav__presentation">
           <router-link v-bind:to="{ name: 'memberList' }" class="header--nav__presentation">
             Présentation APE
+          </router-link>
+        </div>
+
+        <div v-if="this.$store.getters.getRole === 'administrator'" class=" header--nav__backoffice">
+          <router-link v-bind:to="{ name: 'back-office' }" class="header--nav__backoffice">
+            Back-office
           </router-link>
         </div>
 
@@ -82,7 +88,11 @@
             Evènements
           </router-link>
         </li>
-        <li class="header--nav__presentation">Présentation APE</li>
+        <li class="header--nav__presentation">
+          <router-link v-bind:to="{ name: 'memberList' }" class="header--nav__presentation burger--ul">
+            Présentation
+          </router-link>
+        </li>
         <li class="header--nav__inscription">
           <router-link v-if="!this.$store.getters.getUserID" v-bind:to="{ name: 'registration' }"
             class="header--nav__inscription burger--ul">Inscription
@@ -91,11 +101,20 @@
             class="header--nav__inscription burger--ul">Mon profil
           </router-link>
         </li>
+
+        <li class="header--nav__backoffice">
+          <router-link v-if="this.$store.getters.getRole === 'admin'" v-bind:to="{ name: 'back-office' }"
+            class="header--nav__backoffice burger--ul">Back-office
+          </router-link>
+        </li>
+
         <li class="header--nav__connexion">
-          <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }" class="header--login burger--ul">
+          <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
+            class="header--login burger--ul">
             Connexion
           </router-link>
-          <a class="header--disconnect burger--ul" href="" v-if="this.$store.getters.getToken" v-on:click="disconnect">Déconnexion
+          <a class="header--disconnect burger--ul" href="" v-if="this.$store.getters.getToken"
+            v-on:click="disconnect">Déconnexion
           </a>
         </li>
       </ul>
@@ -112,16 +131,14 @@ import profil from '@/assets/images/profil.svg'
 import logoAPE from '@/assets/images/logo-tampon-APE-140.png'
 export default {
   name: 'HeaderLayout',
-     //IF TRUE WE ARE IN BACK OFFICE -> Hidden NAV
+  //IF TRUE WE ARE IN BACK OFFICE -> Hidden NAV
   props: {
-        backOff: Boolean,
-    },
+    backOff: Boolean,
+  },
   data() {
     return {
       profilPic: profil,
       logoApe: logoAPE,
-   
-      
     }
   },
 
@@ -129,11 +146,11 @@ export default {
     showMenu() {
       let headerMenu = document.querySelector(".header--burger__menu");
       let body = document.querySelector("body");
-      let ulLink=document.getElementsByClassName("burger--ul")
+      let ulLink = document.getElementsByClassName("burger--ul")
 
       for (const ul of ulLink) {
-          //WHEN WE CLICK IN A BURGER MENU LINK RETURN IN SHOWMENU () AND REMOVE BODY CLASSLIST
-          ul.addEventListener("click",this.showMenu)
+        //WHEN WE CLICK IN A BURGER MENU LINK RETURN IN SHOWMENU () AND REMOVE BODY CLASSLIST
+        ul.addEventListener("click", this.showMenu)
       }
       body.classList.toggle("overflow--hidden");
       headerMenu.classList.toggle("active");
@@ -149,7 +166,6 @@ export default {
       this.$router.push({ name: 'login' });
     }
   },
-
 }
 </script>
 
@@ -230,7 +246,7 @@ header {
     }
 
     .header--disconnect {
-      color: $red;
+      color: $orange;
     }
 
     .header--nav__inscription {
@@ -245,9 +261,10 @@ header {
 
   //<-----------NAV----------->
   //IF PROPS backOff=true 
-  .backoffice{
+  .backoffice {
     display: none;
   }
+
   nav {
     display: flex;
     flex-direction: row;
@@ -256,7 +273,6 @@ header {
     margin-top: 0.5rem;
     font-weight: bold;
     align-items: center;
-
 
     .header--nav__home {
       background-color: $green;
@@ -290,6 +306,16 @@ header {
 
     .header--nav__presentation {
       background-color: $pink;
+      margin-right: 0.3rem;
+
+      a {
+        color: $white;
+        display: block;
+      }
+    }
+
+    .header--nav__backoffice {
+      background-color: $purple;
 
       a {
         color: $white;
@@ -347,6 +373,11 @@ header {
 
     .header--nav__inscription {
       background-color: $pink;
+      color: $white;
+    }
+
+    .header--nav__backoffice {
+      background-color: $purple;
       color: $white;
     }
 
