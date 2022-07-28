@@ -20,7 +20,6 @@ function ape_rest_user_delete_personnal_account()
 function ape_rest_user_delete_personnal_account_handler($request)
 {
     $parameters = $request->get_json_params();
-    $confirm = sanitize_text_field($parameters['confirm']);
     $user = wp_get_current_user();
     $user_id = $user->ID;
     $name = $user->user_nicename;
@@ -29,16 +28,14 @@ function ape_rest_user_delete_personnal_account_handler($request)
 
     if (is_user_logged_in()) {
         wp_logout();
-        $response = wp_delete_user($user_id);
+        $response = wp_delete_user($user_id, 1);
         return [
             'name' => $name,
             'remove_user' => $response
         ];
     } else if (is_user_logged_in() === false) {
         return ["error" => "Vous devez être connecté"];
-    } else if (!$parameters['confirm']) {
-        return ["error" => "Vous n'avez pas les droits necéssaire pour supprimer ce compte"];
-    } {
+    } else {
         return ["error" => "Une erreur s'est produite, veuillez réessayer svp..."];
     }
 };

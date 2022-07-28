@@ -3,7 +3,6 @@
   <main>
     <ProfilLayout />
   </main>
-  <user-delete-confirm-layout />
   <FooterLayout />
 </template>
 
@@ -12,7 +11,6 @@
 import HeaderLayout from "@/components/templates/HeaderLayout.vue";
 import FooterLayout from "@/components/templates/FooterLayout.vue";
 import ProfilLayout from "@/components/user/ProfilLayout.vue";
-import UserDeleteConfirmLayout from "../../components/user/UserDeleteConfirmLayout.vue";
 
 export default {
   name: "ProfilView",
@@ -20,7 +18,6 @@ export default {
     HeaderLayout,
     FooterLayout,
     ProfilLayout,
-    UserDeleteConfirmLayout,
   },
 };
 </script>

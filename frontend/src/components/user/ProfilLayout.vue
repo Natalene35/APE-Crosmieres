@@ -182,7 +182,8 @@ export default {
       if (this.$store.getters.getUserID) {
         const response = await UserService.delete();
         console.log(response);
-        if (response.id) {
+        if (response.remove_user) {
+          console.log(response.name);
           this.$router.push({ name: "home" });
         } else {
           this.errors.push("Echec suppression");
