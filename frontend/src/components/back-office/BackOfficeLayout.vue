@@ -11,42 +11,82 @@
                 <div class="createSale" v-on:click="showMenu">Créer un evenement</div>
                 
             </div>
-            <page-404-layout v-if="this.menu==1||this.menu==3"/>
-            <SaleCreateLayout v-if="this.menu==2"/>
-            <EventCreateLayout v-if="this.menu==4" />
+            <div v-if="this.menu==3" class="back-office--container__components" >
+                 <EventListLayout v-bind:backOffice="this.backOffice" v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'" v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered" v-for="event in eventsList" v-bind:key="event.id"  />
+            </div>
+            <div v-if="this.menu==1" class="back-office--container__components" >
+                <SaleListLayout v-bind:backOffice="this.backOffice" v-bind:id="sale.id" v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesList" v-bind:key="sale.id" />
+            </div>
+                       
+            <SaleCreateLayout v-if="this.menu==2" class="back-office--container__components" />
+            <EventCreateLayout v-if="this.menu==4" class="back-office--container__components" />
         </section>
     </section>
 </template>
 
 <script>
-import Page404Layout from '../errors/Page404Layout.vue';
+//LAYOUT
 import EventCreateLayout from '../events/EventCreateLayout.vue'
 import SaleCreateLayout from '../sales/SaleCreateLayout.vue';
+import EventListLayout from '../events/EventListLayout.vue';
+import SaleListLayout from '../sales/SaleListLayout.vue';
+//SERVICES
+import EventService from '@/services/events/EventService';
+import SaleService from '@/services/sales/SaleService';
 export default {
     name: "BackOfficeLayout",
     data() {
         return {
             userName: sessionStorage.getItem("username"),
             menu: null,
+            eventsList: null,
+            salesList:null,
+            backOffice: true
         };
     },
     methods:{
         showMenu(e){
             if(e.currentTarget.classList=="updateSale"){
-                this.menu=1
+                if(this.menu!=1){
+                    this.menu=1
+                }
+                else{
+                    this.menu=null
+                }
+                
             }
             if(e.currentTarget.classList=="createSale"){
-                this.menu=2
+                if(this.menu!=2){
+                    this.menu=2
+                }
+                else{
+                    this.menu=null
+                }
             }
             if(e.currentTarget.classList=="updateEvent"){
-                this.menu=3
+                if(this.menu!=3){
+                    this.menu=3
+                }
+                else{
+                    this.menu=null
+                }
             }
             if(e.currentTarget.classList=="createEvent"){
-                this.menu=4
+                if(this.menu!=4){
+                    this.menu=4
+                }
+                else{
+                    this.menu=null
+                }
             }
-        }
+        },
     },
-    components: { EventCreateLayout, SaleCreateLayout, Page404Layout }
+    components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
+    ,
+    async mounted(){
+         this.eventsList = await EventService.findAll();
+         this.salesList = await SaleService.findAll();
+    }
 }
 </script>
 
@@ -54,11 +94,24 @@ export default {
 .back-office--container__all{
      width: 100%;
     .back-office--sales__all{
-        width: 100%;
+        width: 94%;
         height: 100%;
         display: flex;
         flex-direction: column;
+        padding: 2%;
         align-items: flex-start;
+        padding: 0% 3% 0% 3%;
+        .back-office--container__components{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin: auto;
+        .sale--card{
+            width: 45%;
+            position: relative;
+       
+        }
+        }
         h2{
             margin-bottom: 3%;
             margin-left: 3%;

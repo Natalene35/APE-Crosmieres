@@ -1,41 +1,53 @@
 <template>
-    <section class="wrapper">
-        <div class="container">
-            <div class="content">
-                <h1 class="title">Ajouter vos enfants</h1>
+    <section class="wrapper--child">
+        <div class="container--child">
+            <div class="content--child">
                 <label class="field__label">Prénom</label>
                 <input v-model="child_firstname" type="text" class="inputbox" placeholder="Prénom de votre enfant"
                     name="firstname">
                 <label class="field__label">Nom</label>
                 <input v-model="child_lastname" type="text" class="inputbox" placeholder="Classe de votre enfant"
                     name="lastname">
-                <!-- <label class="field__label">Date de naissance</label>
-                <input v-model="child_birthday" type="date" id="birthday" name="birthday">-->
-
                 <div class="child--class">
-                    <input type="radio" id="PS" value="petite-section" v-model="picked" />
-                    <label for="PS">Petite section</label>
-
-                    <input type="radio" id="MS" value="moyenne-section" v-model="picked" />
-                    <label for="PS">Moyenne section</label>
-
-                    <input type="radio" id="GS" value="grande-section" v-model="picked" />
-                    <label for="GS">Grande section</label>
-
-                    <input type="radio" id="CP" value="CP" v-model="picked" />
-                    <label for="CP">CP</label>
-
-                    <input type="radio" id="CM1" value="CM1" v-model="picked" />
-                    <label for="CM1">CM1</label>
-                    <input type="radio" id="CM2" value="CM2" v-model="picked" />
-                    <label for="CM2">CM2</label>
-                    <input type="radio" id="CE1" value="CE1" v-model="picked" />
-                    <label for="CE1">CE1</label>
-                    <input type="radio" id="CE2" value="CE2" v-model="picked" />
-                    <label for="CE2">CE2</label>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="PS" value="petite-section" v-model="picked" />
+                        <label for="PS">Petite section</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="MS" value="moyenne-section" v-model="picked" />
+                        <label for="PS">Moyenne section</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="GS" value="grande-section" v-model="picked" />
+                        <label for="GS">Grande section</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CP" value="CP" v-model="picked" />
+                        <label for="CP">CP</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CE1" value="CE1" v-model="picked" />
+                        <label for="CE1">CE1</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CE2" value="CE2" v-model="picked" />
+                        <label for="CE2">CE2</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CM1" value="CM1" v-model="picked" />
+                        <label for="CM1">CM1</label>
+                    </div>
+                    <div class="child--class__checkbox">
+                        <input type="radio" id="CM2" value="CM2" v-model="picked" />
+                        <label for="CM2">CM2</label>
+                    </div>
                 </div>
+                <p class="succes" v-for="succesMsg in succes" v-bind:key="succesMsg">{{
+                        succesMsg
+                }}</p>
                 <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
-                <button v-on:click="add_child" class="subscribe">Ajouter un enfant ?</button>
+                <button v-on:click="add_child" @keyup.enter="$emit('reloadChilds')" class="subscribe">Ajouter un enfant
+                    ?</button>
             </div>
         </div>
     </section>
@@ -44,14 +56,20 @@
 <script>
 import ChildRegistrationService from '@/services/registration/ChildRegistrationService.js'
 
+
 export default {
+
+    name: "ChildRegistrationService",
+    emits: ["reloadChilds"],
+
     data() {
         return {
             child_firstname: null,
             child_lastname: null,
-            //child_birthday: null,
             picked: null,
-            errors: []
+            errors: [],
+            succes: [],
+            user_id: this.$store.getters.getUserID
         };
     },
 
@@ -65,9 +83,7 @@ export default {
             if (!this.child_lastname) {
                 this.errors.push("Il manque le nom de Famille");
             }
-            /*if (!this.child_birthday) {
-                this.errors.push("Il faut la date de naissance");
-            }*/
+
             if (!this.picked) {
                 this.errors.push("Il manque la classe");
             }
@@ -78,24 +94,25 @@ export default {
                     "child_firstname": this.child_firstname,
                     "child_lastname": this.child_lastname,
                     "child_class": this.picked,
-                    "user_id": this.$store.getters.getUserID
+                    "user_id": this.user_id
                 });
                 console.log(response);
-                if (response.code === 200) {
-                    console.log(response);
+                if (response === 200) {
+                    this.succes.push('Ajout réussi');
+                    this.$emit("reloadChilds");
+                    setTimeout(() => { this.succes = []; }, 500);
+
 
                     // Reset the input in the form
                     this.child_firstname = null,
                         this.child_lastname = null,
-                        //this.child_birthday = null,
                         this.picked = null
-
                 }
-
             } else {
                 this.errors.push("Oups une erreur, veuillez recommencer");
+                setTimeout(() => { this.errors = []; }, 2000);
             }
-        }
+        },
     }
 }
 
@@ -103,7 +120,7 @@ export default {
 
 
 <style lang="scss">
-.wrapper {
+.wrapper--child {
     color: #313846;
     font-family: "Muli", sans-serif;
     font-size: 1rem;
@@ -113,7 +130,7 @@ export default {
     justify-content: flex-end;
     flex-direction: row;
 
-    .container {
+    .container--child {
         width: 100%;
         overflow: hidden;
         padding: 0;
@@ -133,15 +150,47 @@ export default {
         margin-bottom: 0.9em;
     }
 
-    .content {
+    .content--child {
         place-items: center;
         padding: 0 2em;
+        display: flex;
+        flex-direction: column;
+
+        .succes {
+            color: $green;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .errors {
+            color: $red;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .child--class {
+            display: flex;
+            flex-direction: column;
+
+            .child--class__checkbox {
+                display: flex;
+                scroll-margin-right: 0.5rem;
+
+                input {
+                    margin-right: 1rem;
+                }
+            }
+        }
     }
 
     .inputbox {
         padding: 0.5em 0 0.5em 1.5em;
         line-height: 3;
-        width: 25%;
+        width: 100%;
         border: 1px solid $blue-light-bg;
         border-radius: 0.5em;
         margin: 0.3rem 0 1rem 0;
@@ -161,13 +210,11 @@ export default {
         display: inline-block;
         border: none;
         border-radius: 10px;
-        width: 60%;
+        width: 100%;
         padding: 0.5rem;
         margin: 1rem;
         cursor: pointer;
     }
-
-
 
     @media (max-width: 425px) {
         .container {
@@ -181,10 +228,6 @@ export default {
             }
 
             .inputbox {
-                width: 70%;
-            }
-
-            .subscribe {
                 width: 70%;
             }
 
