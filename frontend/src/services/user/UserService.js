@@ -14,17 +14,17 @@ export default {
 
     async delete() {
         try {
-            const response = await apiClient.delete('/wp/v2/users/', {
-	"force":true,
-	"reassign":1
-});
+            const response = await apiClient.delete('/wp/v2/user', {
+                "force": true,
+                "reassign": 1
+            });
             return response.data;
         } catch (error) {
             return error.response.data
-        } 
+        }
     },
 
-   async update(id, params) {
+    async update(id, params) {
         try {
             const response = await apiClient.post('/wp/v2/users/' + id, params);
             return response.data

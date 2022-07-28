@@ -182,8 +182,15 @@ export default {
       if (this.$store.getters.getUserID) {
         const response = await UserService.delete();
         console.log(response);
-        if (response.id) {
-          this.$router.push({ name: "home" });
+        if (response.remove_user) {
+          this.$store.commit("deleteToken");
+          this.$store.commit("deleteUsername");
+          this.$store.commit("deleteUserID");
+          this.$store.commit("deleteRole");
+          this.succesUpdate.push("L'utilisateur " + response.name);
+          setTimeout(() => {
+            this.$router.push({ name: "home" });
+          }, 3000);
         } else {
           this.errors.push("Echec suppression");
         }
