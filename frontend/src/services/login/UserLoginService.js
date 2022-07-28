@@ -40,7 +40,6 @@ export default {
         }
     },
         
-    
     async getMeta(id) {
          apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
