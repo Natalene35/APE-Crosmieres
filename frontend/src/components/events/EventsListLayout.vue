@@ -91,8 +91,7 @@ export default {
         width: 40px;
         border-radius:25%;
         margin-right: 5px;
-        margin-left: 2rem;
-
+        margin-left: 2%;
     }
 
     .event--card__img {
@@ -102,6 +101,6 @@ export default {
 }
 
 
-</style>
 
+</style>
 
