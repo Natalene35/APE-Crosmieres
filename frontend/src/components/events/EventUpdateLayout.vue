@@ -8,7 +8,7 @@
             src="../../assets/images/jelly-message-sent-by-character.png"
             alt=""
           />
-          <button v-on:click="rtn()">Retour</button>
+          <button class="btn--return" v-on:click="rtn()">Retour</button>
           <h1 class="title">Modification d'un événement</h1>
         </div>
 
@@ -297,6 +297,12 @@ export default {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
+        .btn--return{
+          width: 12%;
+          position: absolute;
+          left: 9%;
+          min-width: 8vh;
+        }
         .logo--img {
           display: none;
         }

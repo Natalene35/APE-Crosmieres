@@ -8,7 +8,7 @@
             src="../../assets/images/jelly-message-sent-by-character.png"
             alt=""
           />
-          <button v-on:click="rtn()">Retour</button>
+          <button class="btn--return" v-on:click="rtn()">Retour</button>
           <h1 class="title">Modifier une vente</h1> 
         </div>
 
@@ -62,7 +62,7 @@
         <p class="alert" v-if="alerts">
           {{ alerts }}
         </p>
-        <button class="btn btn-success btn-sm float-right" @click="submitForm">
+        <button class="btn btn-success btn-sm float-right" @click="updateSale">
           Soumettre
         </button>
       </div>
@@ -113,6 +113,8 @@ export default {
       imageInfos: [],
       errors: [],
       alerts: null,
+      id: null,
+      thumbnail_id:null,
     };
   },
   methods: {
@@ -148,9 +150,9 @@ export default {
                 this.currentImage = undefined;
                 this.previewImage = undefined;
                 this.progress = 0;
-                this.alerts = "Vente créé";
+                this.alerts = "Vente modifié";
                 //redirection vers la home
-                setTimeout(() => this.$router.push({ name: "home" }), 1500);
+                setTimeout(() => this.$router.push({ name: "sale", params: {id: this.id} }), 1500);
               } else {
                 this.errors.push(
                   "Erreur d'enregistrement, veuillez verifier la présence de l'image dans la vente"
@@ -170,63 +172,39 @@ export default {
           this.currentImage = undefined;
         });
     },
-
-    // to submit fields and send datas to custom post 'sale'
-    async submitForm() {
-      // Reset error table
-      this.errors = [];
-      this.alerts = null;
-
-      // Form Content Validation
-      if (!this.title) {
-        this.errors.push("Veuillez remplir un titre svp");
-      }
-      if (!this.content) {
-        this.errors.push("Veuillez remplir une description svp");
-      }
-      if (!this.saleDate) {
-        this.errors.push("Veuillez remplir une date svp");
-      }
-      if (!this.location) {
-        this.errors.push("Veuillez remplir un lieu svp");
-      }
-      if (!this.link) {
-        this.errors.push("Veuillez remplir un lien svp");
-      }
-      if (!this.currentImage) {
-        this.errors.push("Veuillez choisir une image svp");
-      }
-
-      setTimeout(() => {
-        this.errors = [];
-      }, 5000);
-
-      // Send form request if no error
-      if (this.errors.length === 0) {
+    async updateSale(){
         let params = {
           title: this.title,
           content: this.content,
-          date: this.eventDate,
+          date: this.saleDate,
           lieu: this.location,
           lien: this.link,
-          status: "publish",
+          id: this.id
         };
-
-        const response = await SaleService.addSale(params);
-
-        if (response.status == 200) {
-          console.log(response);
-          //response.data.id is the post id
-          this.upload(response.data.id);
-        } else {
-          this.errors.push(
-            "Erreur d'enregistrement de la vente ! Veuillez verifier la présence de la vente"
-          );
+        const response = await SaleService.updateCustom(params);
+        console.log(response.code)
+        if(this.currentImage!=undefined&&this.previewImage!=undefined){
+         this.upload(this.id);   
         }
-      }
-    },
+        else if (response!=undefined){
+            setTimeout(() => this.$router.push({ name: "sale", params: {id: this.id} }), 1500);
+        }
+        
+    }
   },
-  mounted() {
+  async mounted() {
+    this.id = this.$route.params.id;
+    const selectSale=await SaleService.find(this.id);
+    console.log(selectSale.featured_media)    
+    const selectSaleMeta=await SaleService.findMeta(this.id);
+    this.thumbnail_id=selectSale.featured_media
+    this.title=selectSale.title.rendered
+    this.content=selectSale.content.rendered
+    this.saleDate=selectSaleMeta.date
+    this.location=selectSaleMeta.lieu
+    this.link=selectSaleMeta.lien
+    this.thumbnail_id=selectSaleMeta._thumbnail_id
+
     SaleService.getFiles().then((response) => {
       this.imageInfos = response.data;
     });
@@ -306,7 +284,12 @@ export default {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
-
+        .btn--return{
+            width: 12%;
+            position: absolute;
+            left: 9%;
+            min-width: 8vh;
+        }
         .logo--img {
           display: none;
         }

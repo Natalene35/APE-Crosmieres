@@ -31,7 +31,7 @@ export default {
     async find(id) {
         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            const response = await apiClient.get("/sale/" + id + "");
+            const response = await apiClient.get("/sale/" + id + "?_embed");
             return response.data;
         } catch (error) {
             return error.response.data
@@ -51,6 +51,16 @@ export default {
         try {
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const response = await apiClient.post("/sale/"+ params.id+ "", params);
+            return response.data;
+        } catch(error) {
+            return error.response.data
+        }        
+    },
+    //CUSTOM UPDATE WITH META TO 
+    async updateCustom(params) {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.post("/sale/update/"+ params.id+ "", params);
             return response.data;
         } catch(error) {
             return error.response.data

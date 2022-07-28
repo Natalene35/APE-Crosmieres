@@ -80,9 +80,6 @@ export default {
                 }
             }
         },
-        del(){
-            console.log("kikoo")
-        }
     },
     components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
     ,
