@@ -31,7 +31,7 @@ export default {
     async find(id) {
         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            const response = await apiClient.get("/sale/" + id + "");
+            const response = await apiClient.get("/sale/" + id + "?_embed");
             return response.data;
         } catch (error) {
             return error.response.data
@@ -51,6 +51,16 @@ export default {
         try {
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const response = await apiClient.post("/sale/"+ params.id+ "", params);
+            return response.data;
+        } catch(error) {
+            return error.response.data
+        }        
+    },
+    //CUSTOM UPDATE WITH META TO 
+    async updateCustom(params) {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.post("/sale/update/"+ params.id+ "", params);
             return response.data;
         } catch(error) {
             return error.response.data
@@ -87,33 +97,28 @@ export default {
     },
 
     // to upload a file
-    upload(file, title, postId, onUploadProgress) {
+    upload(file, title, postId) {
 
         apiClient.defaults.headers.common['Content-Type'] = "multipart/form-data";
         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
-
-
 
         let formData = new FormData();
         formData.append("title", 'sale-' + title);
         formData.append("file", file);
         formData.append("post", postId);
 
-        return apiClient.post("/media", formData,
-            onUploadProgress
-        );
+        return apiClient.post("/media", formData);
     },
 
     // to verify if files to upload exist
     getFiles() {
-
         return apiClient.get("/media");
     },
 
 
     // create an sale
     async addSale(param) {
-
+        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         apiClient.defaults.headers.common['Content-Type'] = "application/json";
 
         try {

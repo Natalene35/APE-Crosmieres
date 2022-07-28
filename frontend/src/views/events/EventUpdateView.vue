@@ -2,7 +2,7 @@
 
   <HeaderLayout v-bind:backOff="this.backOff" />
   <main>
-    <BackOfficeLayout />
+    <EventUpdateLayout />
   </main>
   <FooterLayout />
 
@@ -12,11 +12,11 @@
 // @ is an alias to /src
 import HeaderLayout from '@/components/templates/HeaderLayout.vue'
 import FooterLayout from '@/components/templates/FooterLayout.vue'
-import BackOfficeLayout from '../../components/back-office/BackOfficeLayout.vue'
+import EventUpdateLayout from '@/components/events/EventUpdateLayout.vue'
 
 
 export default {
-  name: 'HomeView',
+  name: 'EventUpdateView',
   data(){
     return{
       backOff: true,
@@ -25,7 +25,7 @@ export default {
   components: {
     HeaderLayout,
     FooterLayout,
-    BackOfficeLayout
+    EventUpdateLayout
 }
 }
 </script>

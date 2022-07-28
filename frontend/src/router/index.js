@@ -23,12 +23,24 @@ const routes = [{
     name: 'eventCreate',
     component: () => import( /* webpackChunkName: "create-event" */ '../views/events/EventCreateView.vue')
   },
+   // route for update sale
+   {
+    path: '/event/update/:id',
+    name: 'eventUpdate',
+    component: () => import( /* webpackChunkName: "create-sale" */ '../views/events/EventUpdateView.vue')
+  },
 
   // route for creating sale
   {
     path: '/sale/create',
     name: 'saleCreate',
     component: () => import( /* webpackChunkName: "create-sale" */ '../views/sales/SaleCreateView.vue')
+  },
+   // route for update sale
+   {
+    path: '/sale/update/:id',
+    name: 'saleUpdate',
+    component: () => import( /* webpackChunkName: "create-sale" */ '../views/sales/SaleUpdateView.vue')
   },
 
   //Road for registration
@@ -99,6 +111,13 @@ const routes = [{
     path: '/back-office',
     name: 'back-office',
      component: () => import(/* webpackChunkName: "login" */ '../views/back-office/BackOfficeView.vue')
+  },
+
+  //Road for legals mentions
+  {
+    path: '/legals-mentions',
+    name: 'legals-mentions',
+     component: () => import(/* webpackChunkName: "legals-mentions" */ '../views/legals-mentions/LegalsMentionsView.vue')
   },
 ]
 

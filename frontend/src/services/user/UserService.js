@@ -11,21 +11,25 @@ const apiClient = axios.create({
 });
 
 export default {
-    async registerChild(params) {
-        try {
-            const response = await apiClient.post('/wp/v2/child', params);
-            return response.data
-        } catch (errors) {
-            return errors.response.data
-        }
-    },
 
-    async findChild(id) {
+    async delete() {
         try {
-            const response = await apiClient.get("/wp/v2/child/" + id);
+            const response = await apiClient.delete('/wp/v2/users/', {
+	"force":true,
+	"reassign":1
+});
             return response.data;
         } catch (error) {
             return error.response.data
+        } 
+    },
+
+   async update(id, params) {
+        try {
+            const response = await apiClient.post('/wp/v2/users/' + id, params);
+            return response.data
+        } catch (errors) {
+            return errors.response.data
         }
     },
 }

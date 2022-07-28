@@ -195,6 +195,13 @@ export default {
 
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
+          
+          //for take the post publish
+          const majPost = await EventService.update({
+                "status": "publish",
+                "id": response.data.id
+            });
+            console.log(majPost)
           //response.data.id is the post id
           this.upload(response.data.id);
         } else if (response) {

@@ -18,15 +18,4 @@ export default {
             return errors.response.data
         }
     },
-
-     async delete(id) {
-          apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
-        try {
-            const response = await apiClient.delete('/wp/v2/users/' + id + '?reassign=1&force=true');
-            return response.data;
-        } catch(error) {
-            return error.response.data
-        }
-        
-    },
 }

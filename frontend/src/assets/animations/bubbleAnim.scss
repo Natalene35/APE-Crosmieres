@@ -1,8 +1,8 @@
 .background--bubble__container{   
-   position: absolute;
-    left: 43%;
-    top: -97px;
-    height: 31%;
+//    position: absolute;
+//     left: 43%;
+//     top: -97px;
+//     height: 31%;
     .background--design__bubble{
         background-color: $blue-light-bg;
         height: 1.5VH;
@@ -14,7 +14,7 @@
         
     }
     .background--design__bubble:nth-child(1){
-        animation: animBubble1 infinite;
+    animation: animBubble1 infinite;
     animation-duration: 10s;
     }
     .background--design__bubble:nth-child(2){
