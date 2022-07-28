@@ -4,11 +4,12 @@
     <FooterLayout />
 </template>
 
+
 <script>
 // @ is an alias to /src
-import HeaderLayout from '@/components/templates/HeaderLayout.vue'
-import FooterLayout from '@/components/templates/FooterLayout.vue'
-import EventDetailLayout from '@/components/events/EventDetailLayout.vue'
+import HeaderLayout from '@/components/templates/HeaderLayout.vue';
+import EventDetailLayout from '@/components/events/EventDetailLayout.vue';
+import FooterLayout from '@/components/templates/FooterLayout.vue';
 
 export default {
     name: 'EventDetailView',
@@ -19,6 +20,7 @@ export default {
 }
 }
 </script>
+
 
 <style lang="scss">
 </style>
