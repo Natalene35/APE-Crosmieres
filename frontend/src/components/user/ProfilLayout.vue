@@ -33,10 +33,6 @@
 
                 <a v-on:click="showUserUpdateInformationLayout" class="update">Mise à jour de vos données</a>
                 <div class="UserUpdateInformationLayout--display active">
-
-                    <a class="delete">Supprimer votre compte</a>
-
-
                     <div class="user--update">
                         <label class="field__label">Prénom</label>
                         <input v-model="user.first_name" type="text" class="inputbox" placeholder="Votre prénom"
@@ -61,6 +57,8 @@
                         <a v-on:click="updateUser" class="updateConfirm">Enregistrer vos modifications</a>
                     </div>
                 </div>
+                <a v-on:click="deleteConfirm" class="delete">Supprimer votre compte ?</a>
+                <a v-on:click="removeUser" class="deleteConfirm active">Suppression du compte</a>
             </div>
         </div>
     </section>
@@ -122,6 +120,11 @@ export default {
         showUserUpdateInformationLayout() {
             let UserUpdateInformationLayout = document.querySelector(".UserUpdateInformationLayout--display");
             UserUpdateInformationLayout.classList.toggle("active");
+        },
+
+        deleteConfirm() {
+            let deleteConfirm = document.querySelector(".deleteConfirm");
+            deleteConfirm.classList.toggle("active");
         },
 
         //Delete ours personnal account 
@@ -234,6 +237,21 @@ export default {
              cursor: pointer
          }
  
+         .delete {
+             border: 1px solid $red;
+             background-color: $red;
+             border-radius: 10px;
+             cursor: pointer
+         }
+ 
+         .deleteConfirm {
+             border: 1px solid $red;
+             background-color: $red;
+             border-radius: 10px;
+             cursor: pointer
+         }
+ 
+ 
          .updateConfirm {
              color: $white;
              font-size: 1.3rem;
@@ -250,6 +268,13 @@ export default {
  
          .succesUpdate {
              color: $green;
+             text-transform: uppercase;
+             font-size: 1rem;
+             margin-bottom: 1rem;
+         }
+ 
+         .push--error {
+             color: $red;
              text-transform: uppercase;
              font-size: 1rem;
              margin-bottom: 1rem;
