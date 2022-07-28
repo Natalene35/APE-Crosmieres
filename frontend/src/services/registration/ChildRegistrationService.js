@@ -5,13 +5,13 @@ const apiClient = axios.create({
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
+         Authorization: 'Bearer' + sessionStorage.getItem('token') + ''
     },
     timeout: 10000
 });
 
 export default {
     async registerChild(params) {
-         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
             const response = await apiClient.post('/wp/v2/child', params);
             return response.data
@@ -21,9 +21,8 @@ export default {
     },
 
     async findChild(id) {
-        apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
         try {
-            const response = await apiClient.get("/wp/v2/child?user_id=" + id + "?context=edit" );
+            const response = await apiClient.get("/wp/v2/child/" + id);
             return response.data;
         } catch (error) {
             return error.response.data
