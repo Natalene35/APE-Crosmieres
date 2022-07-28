@@ -20,6 +20,35 @@ function ape_rest_child_all()
     return $rows;
 };
 
+//ROUTE GET ALL CHILD
+add_action('rest_api_init', function () {
+    register_rest_route(
+        'wp/v2',
+        'child/(?P<id>\d+)',
+        array(
+            'methods' => 'GET',
+            'callback' => 'ape_rest_child_by_user',
+            'permission_callback' => function () {
+                return true;
+            }
+        )
+    );
+});
+
+function ape_rest_child_by_user($request)
+{
+    global $wpdb;
+    $id = sanitize_text_field($request->get_param('id'));
+    $rows = $wpdb->get_results(
+        "SELECT *
+        FROM `wp_ape_user_child` 
+        INNER JOIN `wp_ape_link_child` ON child_id = wp_ape_user_child.id
+        WHERE  user_id = $id"
+    );
+    return $rows;
+};
+
+
 //ROUTE POST NEW CHILD
 function ape_rest_child_register()
 {

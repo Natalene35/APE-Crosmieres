@@ -1,6 +1,6 @@
 <template>
     <section class="wrapper--child">
-        <div class="container--chils">
+        <div class="container--child">
             <div class="content--child">
                 <label class="field__label">Prénom</label>
                 <input v-model="child_firstname" type="text" class="inputbox" placeholder="Prénom de votre enfant"
@@ -8,9 +8,6 @@
                 <label class="field__label">Nom</label>
                 <input v-model="child_lastname" type="text" class="inputbox" placeholder="Classe de votre enfant"
                     name="lastname">
-                <!-- <label class="field__label">Date de naissance</label>
-                <input v-model="child_birthday" type="date" id="birthday" name="birthday">-->
-
                 <div class="child--class">
                     <div class="child--class__checkbox">
                         <input type="radio" id="PS" value="petite-section" v-model="picked" />
@@ -49,7 +46,8 @@
                         succesMsg
                 }}</p>
                 <p class="error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
-                <button v-on:click="add_child" class="subscribe">Ajouter un enfant ?</button>
+                <button v-on:click="add_child" @keyup.enter="$emit('reloadChilds')" class="subscribe">Ajouter un enfant
+                    ?</button>
             </div>
         </div>
     </section>
@@ -58,12 +56,16 @@
 <script>
 import ChildRegistrationService from '@/services/registration/ChildRegistrationService.js'
 
+
 export default {
+
+    name: "ChildRegistrationService",
+    emits: ["reloadChilds"],
+
     data() {
         return {
             child_firstname: null,
             child_lastname: null,
-            //child_birthday: null,
             picked: null,
             errors: [],
             succes: [],
@@ -81,9 +83,7 @@ export default {
             if (!this.child_lastname) {
                 this.errors.push("Il manque le nom de Famille");
             }
-            /*if (!this.child_birthday) {
-                this.errors.push("Il faut la date de naissance");
-            }*/
+
             if (!this.picked) {
                 this.errors.push("Il manque la classe");
             }
@@ -98,20 +98,24 @@ export default {
                 });
                 console.log(response);
                 if (response === 200) {
-                    this.succes.push('Mise à jour réussi');
+                    this.succes.push('Ajout réussi');
+                    this.$emit("reloadChilds");
+                    setTimeout(() => { this.succes = []; }, 500);
+
 
                     // Reset the input in the form
                     this.child_firstname = null,
                         this.child_lastname = null,
-                        //this.child_birthday = null,
                         this.picked = null
                 }
             } else {
                 this.errors.push("Oups une erreur, veuillez recommencer");
+                setTimeout(() => { this.errors = []; }, 2000);
             }
-        }
+        },
     }
 }
+
 </script>
 
 
@@ -211,8 +215,6 @@ export default {
         margin: 1rem;
         cursor: pointer;
     }
-
-
 
     @media (max-width: 425px) {
         .container {

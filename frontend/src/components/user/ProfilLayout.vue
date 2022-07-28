@@ -7,30 +7,35 @@
                 </div>
                 <hr />
                 <div class="stats">
-                    <h2>{{ user.name }}</h2>
+                    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
                     <div>
                         <p>{{ user.first_name }}</p>
                         <p>{{ user.last_name }}</p>
                         <p>{{ user.email }}</p>
                         <p>{{ phone }}</p>
                     </div>
-
-                    <h2>Mes enfants</H2>
+                    <hr />
+                    <h2>Mes enfants</h2>
                     <div>
-                        <p>Polo Klein</p>
+                        <p v-for="child in childs" v-bind:key="child.id">{{ child.child_firstname + ' ' +
+                                child.child_lastname + ' / ' + child.child_class
+                        }}</p>
                     </div>
+                    <hr />
                 </div>
             </div>
-
 
             <div class="button--link">
                 <p class="push--error" v-for="error in errors" v-bind:key="error">{{ error }}</p>
 
                 <a v-on:click="showChildRegistrationLayout" class="addChild">Ajouter mes enfants</a>
-                <ChildRegistrationLayout class="ChildRegistrationLayout--display active" />
+                <ChildRegistrationLayout @reloadChilds="reloadChilds" class="ChildRegistrationLayout--display active" />
 
                 <a v-on:click="showUserUpdateInformationLayout" class="update">Mise à jour de vos données</a>
                 <div class="UserUpdateInformationLayout--display active">
+
+                    <a class="delete">Supprimer votre compte</a>
+
 
                     <div class="user--update">
                         <label class="field__label">Prénom</label>
@@ -49,17 +54,13 @@
                         <input v-model="phone" type="text" class="inputbox" placeholder="Votre numéro de contact"
                             name="phone">
 
-                        <p class="succesUpdate" v-for="succesMsg in succesUpdate" v-bind:key="succesMsg">{{
-                                succesMsg
-                        }}</p>
+                        <p class="succesUpdate" v-for="succesMsg in succesUpdate" v-bind:key="succesMsg">
+                            {{ succesMsg }}
+                        </p>
 
                         <a v-on:click="updateUser" class="updateConfirm">Enregistrer vos modifications</a>
                     </div>
                 </div>
-                <!--<a v-on:click="showUpdatePassword" class="updatePassword">Mettre à jour votre mot de
-                    passe</a>
-
-                <a v-on:click="removeUser" class="delete">Supprimer mon compte</a>-->
             </div>
         </div>
     </section>
@@ -69,10 +70,11 @@
 import ChildRegistrationLayout from '@/components/registration/ChildRegistrationLayout.vue'
 import UserLoginService from '@/services/login/UserLoginService';
 import UserService from '@/services/user/UserService'
+import ChildRegistrationService from '@/services/registration/ChildRegistrationService';
 
 export default {
     name: 'UserProfil',
-
+    emits: ["reloadChilds"],
     components: {
         ChildRegistrationLayout,
     },
@@ -82,23 +84,26 @@ export default {
             user: [],
             errors: [],
             succesUpdate: [],
+            childs: [],
             phone: null,
         }
     },
 
     async mounted() {
+        // The user ID for the axios request 
         let user_ID = this.$store.getters.getUserID;
+
         if (user_ID) {
-            //retrieve logged in user data
+            //retrieve logged-in user data information
             this.user = await UserLoginService.find(user_ID);
-            console.log(this.user);
+            //retrieve logged-in user child
+            this.childs = await ChildRegistrationService.findChild(user_ID);
             //retrieve logged in user meta data
             let arrayMeta = await UserLoginService.getMeta(user_ID)
             for (let index = 0; index < arrayMeta.length; index++) {
                 const metaElmt = arrayMeta[index];
                 //For take meta_key enter key in the exemple its "phone"
                 if (metaElmt.meta_key == "phone") {
-                    console.log(metaElmt.meta_value)
                     return this.phone = metaElmt.meta_value
                 }
             }
@@ -113,17 +118,13 @@ export default {
             ChildRegistrationLayout.classList.toggle("active");
         },
 
-        //When user click on button add children display the component
-        /* showUpdatePassword() {
-             let updatePassword = document.querySelector(".updatePassword--display");
-             updatePassword.classList.toggle("active");
-         },*/
-
+        //When user click on button add form for modification information
         showUserUpdateInformationLayout() {
             let UserUpdateInformationLayout = document.querySelector(".UserUpdateInformationLayout--display");
             UserUpdateInformationLayout.classList.toggle("active");
         },
 
+        //Delete ours personnal account 
         async removeUser() {
             if (this.$store.getters.getUserID) {
                 const response = await UserService.delete(this.$store.getters.getUserID)
@@ -136,6 +137,7 @@ export default {
             }
         },
 
+        // Update ours personnal account 
         async updateUser() {
             if (this.$store.getters.getUserID) {
                 const response = await UserService.update(this.$store.getters.getUserID, {
@@ -145,11 +147,18 @@ export default {
                     "phone": this.user.phone
                 });
                 if (response.id) {
-                    this.succesUpdate.push('Mise à jour réussi');
+                    this.succesUpdate.push('Mise à jour réussie');
+                    setTimeout(() => { this.succesUpdate = []; }, 500);
                 } else {
                     this.errors.push("Echec suppression");
+                    setTimeout(() => { this.errors = []; }, 500);
                 }
             }
+        },
+
+        //When the components Child registration is execute reload the childs array 
+        async reloadChilds() {
+            this.childs = await ChildRegistrationService.findChild(this.$store.getters.getUserID);
         }
     }
 }
@@ -179,71 +188,27 @@ export default {
          box-shadow: 0px 17px 34px -20px $blue-bg-header;
  
          h2 {
-             font-size: 2rem;
+             font-size: 1.5rem;
              margin: 1rem;
              text-align: center;
-         }
- 
-         :before {
-             position: absolute;
-             content: '';
-             bottom: 100%;
-             left: 0;
-             width: 0;
-             height: 0;
-             border-style: solid;
-             border-width: 55px 0 0 400px;
-             border-color: transparent transparent transparent $blue-light-bg;
          }
  
          a {
              padding: 1rem;
              color: $black;
              font-size: 0.7em;
-             text-transform: uppercase;
              margin: 0.5rem;
-             width: 100%;
+             width: 90%;
              text-align: center;
              text-decoration: none;
              font-weight: 600;
              letter-spacing: 1px;
          }
- 
-         a:hover {
-             opacity: 1;
-         }
-     }
- 
-     .profile {
-         border-radius: 50%;
-         bottom: 100%;
-         max-width: 90px;
-         opacity: 1;
-         box-shadow: 0 0 15px $black;
-         margin: 1rem;
-         width: 12%;
-     }
- 
-     .follow {
-         margin-right: 4%;
-         border-color: $green;
-         color: $grey;
-     }
- 
-     h2 {
-         margin: 0 0 5px;
-         font-weight: 300;
- 
-         span {
-             display: block;
-             font-size: 0.5em;
-             color: $grey;
-         }
      }
  
      p {
          margin: 0 0 10px;
-         font-size: 0.8em;
+         font-size: 1rem;
          letter-spacing: 1px;
          opacity: 0.8;
      }
@@ -270,10 +235,17 @@ export default {
          }
  
          .updateConfirm {
-             border: 1px solid $green;
+             color: $white;
+             font-size: 1.3rem;
+             font-weight: 700;
              background-color: $green;
+             display: inline-block;
+             border: none;
              border-radius: 10px;
-             cursor: pointer
+             width: 60%;
+             padding: 0.5rem;
+             margin: 1rem;
+             cursor: pointer;
          }
  
          .succesUpdate {
