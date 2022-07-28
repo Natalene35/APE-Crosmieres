@@ -3,7 +3,11 @@
         <ul class="footer--list">
             <li class="footer--list__link">Facebook</li>
             <li class="footer--list__link">Nous contacter</li>
-            <li class="footer--list__link">Mentions légales</li>
+            <li class="footer--list__link">
+                <router-link v-bind:to="{ name: 'legals-mentions' }" class="link">
+                    Mentions légales
+                </router-link>
+            </li>
         </ul>
 
     </footer>
@@ -24,7 +28,7 @@ footer {
     font-weight: bold;
     font-size: small;
     border-radius: 10px 10px;
-    
+
     .footer--list {
         display: flex;
         list-style-type: none;
@@ -37,6 +41,10 @@ footer {
             cursor: pointer;
             display: inline-block;
             position: relative;
+        }
+
+        a {
+            color: $white;
         }
 
         //WE USE THE underlineAnim.scss for animate footer li  
@@ -53,7 +61,7 @@ footer {
 
         li:after {
             display: none;
-            
+
         }
     }
 }

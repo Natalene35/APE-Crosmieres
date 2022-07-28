@@ -100,6 +100,13 @@ const routes = [{
     name: 'back-office',
      component: () => import(/* webpackChunkName: "login" */ '../views/back-office/BackOfficeView.vue')
   },
+
+  //Road for legals mentions
+  {
+    path: '/legals-mentions',
+    name: 'legals-mentions',
+     component: () => import(/* webpackChunkName: "legals-mentions" */ '../views/legals-mentions/LegalsMentionsView.vue')
+  },
 ]
 
 
