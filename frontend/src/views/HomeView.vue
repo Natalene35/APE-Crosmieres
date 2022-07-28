@@ -44,12 +44,12 @@ export default {
 
 <style scoped lang="scss">
 
-
 main {
     height: 100%;
     display: flex;
     list-style-type: none;
     justify-content: space-between;
+
 }
 @media (max-width: 425px) {
     main{
