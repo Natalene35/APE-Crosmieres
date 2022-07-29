@@ -157,18 +157,7 @@ export default {
         };
         const response = await EventService.addEvent(params);
 
-        // if event create status is ok and if there was an image to uplaod
-        if (response && this.currentImage) {
-
-          //for take the post publish
-          const majPost = await EventService.update({
-            "status": "publish",
-            "id": response.data.id
-          });
-          console.log(majPost)
-          //response.data.id is the post id
-          this.upload(response.data.id);
-        } else if (response) {
+        if (response) {
           // if there was not image to upload but event was create
           this.title = null;
           this.content = null;

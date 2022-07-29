@@ -19,7 +19,7 @@ function ape_rest_sale_register()
 //FUNCTION GET CUSTOM META BY ID 
 function ape_rest_sale_meta()
 {
-// WE DEFINE NEW ROAD FOR GET ALL META BY USER ID
+    // WE DEFINE NEW ROAD FOR GET ALL META BY USER ID
     register_rest_route(
         'wp/v2',
         'sale/meta/(?P<id>\d+)',
@@ -35,7 +35,7 @@ function ape_rest_sale_meta()
 //FUNCTION POST UPDATE SALE BY ID 
 function ape_rest_sale_update()
 {
-// WE DEFINE NEW ROAD FOR GET ALL META BY USER ID
+    // WE DEFINE NEW ROAD FOR GET ALL META BY USER ID
     register_rest_route(
         'wp/v2',
         'sale/update/(?P<id>\d+)',
@@ -50,28 +50,28 @@ function ape_rest_sale_update()
 }
 // update sale by post_id
 function ape_rest_sale_update_handler($request)
-{    
+{
     // translate request with JSON
-    $parameters = $request->get_json_params();   
-    $id=$parameters['id']; 
+    $parameters = $request->get_json_params();
+    $id = $parameters['id'];
     $title = sanitize_text_field($parameters['title']);
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
     $lien = sanitize_url($parameters['lien']);
     $lieu = sanitize_text_field($parameters['lieu']);
-  
+
     // add to the database
     $post_id = wp_update_post([
         'post_title' => $title,
         'post_content' => $content,
         'post_type' => 'sale',
-        'ID'=> $id,
+        'ID' => $id,
         'meta_input' => array(
             'lien' => $lien,
             'date' => $date,
             'lieu' => $lieu
-           )
-    ]);   
+        )
+    ]);
     // return post's id or false
     return $post_id ? ["id" => $post_id] : false;
 }
@@ -118,13 +118,14 @@ function ape_rest_add_sale_handler($request)
     $date = sanitize_text_field($parameters['date']);
     $lien = sanitize_url($parameters['lien']);
     $lieu = sanitize_text_field($parameters['lieu']);
-    
+
 
     // add to the database
     $post_id = wp_insert_post([
         'post_title' => $title,
         'post_content' => $content,
-        'post_type' => 'sale'
+        'post_type' => 'sale',
+        'post_status' => 'publish',
     ]);
     add_post_meta($post_id, 'lien', $lien);
     add_post_meta($post_id, 'date', $date);

@@ -58,15 +58,14 @@ function ape_rest_event_meta_handler($request)
 
     // add the meta data to the post object
     return ['lieu' => $lieu[0]->meta_value, 'date' => $eventDate[0]->meta_value];
-
 };
 
 function ape_rest_add_event_handler($request)
 {
-    
+
     // translate request with JSON
     $parameters = $request->get_json_params();
-    
+
     $title = sanitize_text_field($parameters['title']);
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
@@ -76,7 +75,8 @@ function ape_rest_add_event_handler($request)
     $post_id = wp_insert_post([
         'post_title' => $title,
         'post_content' => $content,
-        'post_type' => 'event'
+        'post_type' => 'event',
+        'post_status' => 'publish'
     ]);
     //add the meta key and value with the post id
     add_post_meta($post_id, 'lieu', $lieu);
