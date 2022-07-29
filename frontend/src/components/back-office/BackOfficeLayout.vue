@@ -20,13 +20,13 @@
             </div>
 
             <div v-if="this.menu == 3" class="back-office--container__components">
-                <EventListLayout v-bind:backOffice="this.backOffice"
+                <EventListLayout v-on:reloadEvent="reload" v-bind:backOffice="this.backOffice"
                     v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'"
                     v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered"
                     v-for="event in eventsList" v-bind:key="event.id" />
             </div>
             <div v-if="this.menu == 1" class="back-office--container__components">
-                <SaleListLayout v-bind:backOffice="this.backOffice" v-bind:id="sale.id"
+                <SaleListLayout v-on:reloadSal="reload" v-bind:backOffice="this.backOffice" v-bind:id="sale.id"
                     v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesList"
                     v-bind:key="sale.id" />
             </div>
