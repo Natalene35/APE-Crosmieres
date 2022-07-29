@@ -32,7 +32,7 @@
         <label class="field__label">Date de la vente </label>
         <input
           class="field__input"
-          type="date"
+          type="text"
           placeholder=""
           v-model="saleDate"
         />

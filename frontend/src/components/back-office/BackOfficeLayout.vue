@@ -5,17 +5,17 @@
             <!-- //MENU NAV -->
             <div class="back-office--menu__nav">
 
-                <div class="updateSale" v-on:click="showMenu" >Modifier une ventes</div>
+                <div class="updateSale" v-on:click="showMenu" >Modifier une vente</div>
                 <div class="createSale" v-on:click="showMenu">Créer une vente</div>
-                <div class="updateEvent" v-on:click="showMenu">Modifier un evenements</div>
-                <div class="createSale" v-on:click="showMenu">Créer un evenement</div>
+                <div class="updateEvent" v-on:click="showMenu">Modifier un evenement</div>
+                <div class="createEvent" v-on:click="showMenu">Créer un evenement</div>
                 
             </div>
             <div v-if="this.menu==3" class="back-office--container__components" >
-                 <EventListLayout v-bind:backOffice="this.backOffice" v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'" v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered" v-for="event in eventsList" v-bind:key="event.id"  />
+                 <EventListLayout @reloadEvent="reload" v-bind:backOffice="this.backOffice" v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'" v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered" v-for="event in eventsList" v-bind:key="event.id"  />
             </div>
             <div v-if="this.menu==1" class="back-office--container__components" >
-                <SaleListLayout v-bind:backOffice="this.backOffice" v-bind:id="sale.id" v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesList" v-bind:key="sale.id" />
+                <SaleListLayout @reloadSal="reload" v-bind:backOffice="this.backOffice" v-bind:id="sale.id" v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesList" v-bind:key="sale.id" />
             </div>
                        
             <SaleCreateLayout v-if="this.menu==2" class="back-office--container__components" />
@@ -80,6 +80,10 @@ export default {
                 }
             }
         },
+        async reload(){
+        this.eventsList = await EventService.findAll();
+        this.salesList = await SaleService.findAll();
+        }
     },
     components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
     ,
@@ -90,7 +94,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .back-office--container__all{
      width: 100%;
     .back-office--sales__all{
@@ -110,6 +114,9 @@ export default {
             width: 45%;
             position: relative;
        
+        }
+        .container{
+            margin-left: 11%;
         }
         }
         h2{

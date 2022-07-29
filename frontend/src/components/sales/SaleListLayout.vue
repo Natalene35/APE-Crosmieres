@@ -2,7 +2,7 @@
     
 
     <div class="sale--card">
-        <router-link v-bind:to="{name: 'sale', params: {id: id}}">
+        <router-link v-if="backOffice==false" v-bind:to="{name: 'sale', params: {id: id}}">
 
             <h2 class="sale--card__title">
                 <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
@@ -16,6 +16,18 @@
                 <div v-html="content"></div>
             </div>
         </router-link>
+
+            <h2 v-if="backOffice==true" class="sale--card__title">
+                <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
+                <router-link class="sale--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'saleUpdate', params: {id: id}}">
+                    <img  v-bind:src="editPic">
+                </router-link>
+                <div v-html="title"></div>
+            </h2>
+            <img class="sale--card__img">
+            <div class="sale--card__content">
+                <div v-html="content"></div>
+            </div>
     </div>
             
 </template>
@@ -27,6 +39,7 @@ import edit from '@/assets/images/icons8-edit-100.png';
 import trash from '@/assets/images/icons8-trash-can-100.png';
 export default {
     name: 'SaleListLayout',
+    emits: ["reloadSal"],
 
     props: {
         title: String,
@@ -48,6 +61,7 @@ export default {
             const response = await SaleService.delete({
                 "id": e
             });
+            this.$emit("reloadSal");
             console.log(response);            
         },
         
