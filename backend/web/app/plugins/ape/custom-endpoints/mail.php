@@ -39,18 +39,19 @@ function ape_rest_user_send_email($request)
     $mail = new PHPMailer();
 
 
-    $email = "christophe.desmarres@hotmail.com";
+    $email = "chrisdmar12@gmail.com";
     $name = "titi";
     $subject = "test";
-    $body = "test body";
+    $body = "<h1>test body for $name</h1>
+    <p>Hello World !!</p>";
 
 
     //smtp settings
     $mail->isSMTP();
-    $mail->Host = "smtp.office365.com";
+    $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
-    $mail->Username = "christophe.desmarres@hotmail.com";
-    $mail->Password = '';
+    $mail->Username = "chrisdmar12@gmail.com"; //expediteur
+    $mail->Password = 'mypassword';
     $mail->Port = 587;
     $mail->SMTPSecure = "STARTTLS";
 
@@ -58,7 +59,7 @@ function ape_rest_user_send_email($request)
 
     //email settings
     $mail->isHTML(true);
-    $mail->setFrom($email, $name);
+    $mail->setFrom($email, $name); // expediteur and name
     $mail->addAddress("noursausore@gmail.com"); // destinataire
     $mail->Subject = ("$email ($subject)");
     $mail->Body = $body;
