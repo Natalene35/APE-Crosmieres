@@ -1,12 +1,13 @@
 <template>
 
     <div class="event--card">
-        <router-link v-bind:to="{name: 'event', params: {id: id}}">    
-            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
-            <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
-            <router-link class="event--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'eventUpdate', params: {id: id}}">
-            <img  v-bind:src="editPic">
-            </router-link>
+        <router-link v-bind:to="{ name: 'event', params: { id: id } }">
+            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image + ')'">
+                <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice == true">
+                <router-link class="event--card__editPic" v-if="backOffice == true"
+                    v-bind:to="{ name: 'eventUpdate', params: { id: id } }">
+                    <img v-bind:src="editPic">
+                </router-link>
             </div>
             <h2 class="event--card__title">
                 <div v-html="title"></div>
@@ -14,9 +15,9 @@
             <div class="event--card__content">
                 <div v-html="content"></div>
             </div>
-        </router-link>    
+        </router-link>
     </div>
-     
+
 </template>
 
 
@@ -24,6 +25,7 @@
 import EventService from '@/services/events/EventService';
 import trash from '@/assets/images/icons8-trash-can-100.png'
 import edit from '@/assets/images/icons8-edit-100.png'
+
 export default {
     name: "EventListLayout",
 
@@ -36,21 +38,20 @@ export default {
     },
     data() {
         return {
-           trashPic: trash ,
-           editPic: edit
+            trashPic: trash,
+            editPic: edit,
         }
     },
-    methods:{
-        async del(e){
+    methods: {
+        async del(e) {
             const response = await EventService.delete({
                 "id": e
             });
-            console.log(response);            
+            console.log(response);
         },
-        
     }
-
 }
+
 
 </script>
 
@@ -69,51 +70,55 @@ export default {
     width: 95%;
     position: relative;
 
-        .event--card__title {
-            color: $grey;
-            font-weight: bold;
-            padding-right: 2rem;
-            padding-left: 2rem;
-            font-size: 1.2rem;
-            padding-top: 1rem;
-     
+    .event--card__title {
+        color: $grey;
+        font-weight: bold;
+        padding-right: 2rem;
+        padding-left: 2rem;
+        font-size: 1.2rem;
+        padding-top: 1rem;
+
+    }
+
+    .event--card__media--image {
+
+        min-height: 30vh;
+        background-position: center;
+        background-size: cover;
+        border-radius: 2rem 2rem 0 0;
+
+        img,
+        a {
+            height: 4rem;
+            position: absolute;
+            right: 0;
+            top: 0;
+            cursor: pointer;
         }
 
-        .event--card__media--image {
-            
-            min-height: 30vh;
-            background-position: center;
-            background-size: cover;
-            border-radius: 2rem 2rem 0 0;
-            img,a{
-                height: 4rem;
-                position: absolute;
-                right: 0;
-                top: 0;
-                cursor: pointer;
-            }
-           img:hover{
+        img:hover {
             filter: brightness(1.1);
             transform: scale(1.2);
-           }
-           .event--card__editPic{
+        }
+
+        .event--card__editPic {
             right: 8%;
-           }
         }
+    }
 
-        .event--card__content {
-            color: $grey;
-            margin: 1rem 3rem 1rem 3rem;
+    .event--card__content {
+        color: $grey;
+        margin: 1rem 3rem 1rem 3rem;
 
-        }
-    
-}
-//<---------------------MEDIA QUERIES ------------------------>
-@media (max-width: 425px) {
-    .event--card {
-        width:90%;
     }
 
 }
 
+//<---------------------MEDIA QUERIES ------------------------>
+@media (max-width: 425px) {
+    .event--card {
+        width: 90%;
+    }
+
+}
 </style>

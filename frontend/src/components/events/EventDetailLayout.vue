@@ -10,7 +10,7 @@
         <div class="event--card__date">{{ date }}</div>
         <div class="event--card__location">{{ location }}</div>
 
-        <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'"></div>
+        <div class="event--card__media--image" v-bind:style="'background-image:url(' + defaultPicture + ')'"></div>
 
         <div class="event--card__content" v-html="content"></div>
 
@@ -23,6 +23,10 @@
 import EventService from "@/services/events/EventService";
 import mapPic from '@/assets/images/map.jpg';
 import jelly from '@/assets/images/sand-tower.png';
+import PictureFlags from '@/assets/images/events/flags.jpg';
+import PictureBallon1 from '@/assets/images/events/ballon-1.jpg';
+import PictureBallon2 from '@/assets/images/events/ballon-2.jpg';
+import PictureMulticolored from '@/assets/images/events/multicoloured.jpg';
 
 export default {
     name: "EventDetailLayout",
@@ -37,7 +41,13 @@ export default {
             content: null,
             image: null,
             map: null,
-            
+            images: [
+                PictureFlags,
+                PictureBallon1,
+                PictureBallon2,
+                PictureMulticolored
+            ],
+            defaultPicture: null
         }
     },
 
@@ -60,11 +70,19 @@ export default {
                 this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
             }
         }
+    },
+
+    methods: {
+        randomItem(items) {
+            return items[Math.floor(Math.random() * items.length)];
+        }
+    },
+    created() {
+        this.defaultPicture = this.randomItem(this.images)
     }
 }
 
 </script>
-
 
 <style lang="scss" scoped>
 .event--card {
