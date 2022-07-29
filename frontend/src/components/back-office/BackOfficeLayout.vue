@@ -224,15 +224,15 @@ export default {
         .back-office--sales__all {
             .back-office--menu__nav {
                 a {
-                    width: 46%;
+                    
                 }
             }
-                    .back-office--container__components {
-            .event--card{
-                width: 90%;
-                .event--card__media--image{
+            .back-office--container__components {
+                .event--card{
+                    width: 90%;
+                    .event--card__media--image{
+                    }
                 }
-            }
             .sale--card {
                 width: 80%;
                 .sale--card__title{
