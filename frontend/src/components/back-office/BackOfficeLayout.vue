@@ -1,25 +1,38 @@
 <template>
     <section class="back-office--container__all">
         <section class="back-office--sales__all">
-            <h2>Bienvenue {{this.userName}} sur votre espace d'administration</h2>
+
+            <h2>Espace Administration de <span>{{ userName }}</span></h2>
             <!-- //MENU NAV -->
             <div class="back-office--menu__nav">
 
-                <div class="updateSale" v-on:click="showMenu" >Modifier une ventes</div>
-                <div class="createSale" v-on:click="showMenu">Créer une vente</div>
+                <div class="home" v-on:click="showMenu">
+                    <router-link v-bind:to="{ name: 'home' }" class="header--nav__home">
+                        Accueil
+                    </router-link>
+                </div>
                 <div class="updateEvent" v-on:click="showMenu">Modifier un evenements</div>
-                <div class="createSale" v-on:click="showMenu">Créer un evenement</div>
-                
+                <div class="createEvent" v-on:click="showMenu">Créer un evenement</div>
+                <div class="updateSale" v-on:click="showMenu">Modifier une ventes</div>
+                <div class="createSale" v-on:click="showMenu">Créer une vente</div>
+
+
             </div>
-            <div v-if="this.menu==3" class="back-office--container__components" >
-                 <EventListLayout v-bind:backOffice="this.backOffice" v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'" v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered" v-for="event in eventsList" v-bind:key="event.id"  />
+
+            <div v-if="this.menu == 3" class="back-office--container__components">
+                <EventListLayout v-bind:backOffice="this.backOffice"
+                    v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'"
+                    v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered"
+                    v-for="event in eventsList" v-bind:key="event.id" />
             </div>
-            <div v-if="this.menu==1" class="back-office--container__components" >
-                <SaleListLayout v-bind:backOffice="this.backOffice" v-bind:id="sale.id" v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesList" v-bind:key="sale.id" />
+            <div v-if="this.menu == 1" class="back-office--container__components">
+                <SaleListLayout v-bind:backOffice="this.backOffice" v-bind:id="sale.id"
+                    v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesList"
+                    v-bind:key="sale.id" />
             </div>
-                       
-            <SaleCreateLayout v-if="this.menu==2" class="back-office--container__components" />
-            <EventCreateLayout v-if="this.menu==4" class="back-office--container__components" />
+
+            <SaleCreateLayout v-if="this.menu == 2" class="back-office--container__components" />
+            <EventCreateLayout v-if="this.menu == 4" class="back-office--container__components" />
         </section>
     </section>
 </template>
@@ -40,120 +53,161 @@ export default {
             userName: sessionStorage.getItem("username"),
             menu: null,
             eventsList: null,
-            salesList:null,
+            salesList: null,
             backOffice: true
         };
     },
-    methods:{
-        showMenu(e){
-            if(e.currentTarget.classList=="updateSale"){
-                if(this.menu!=1){
-                    this.menu=1
+    methods: {
+        showMenu(e) {
+            if (e.currentTarget.classList == "updateSale") {
+                if (this.menu != 1) {
+                    this.menu = 1
                 }
-                else{
-                    this.menu=null
+                else {
+                    this.menu = null
                 }
-                
+
             }
-            if(e.currentTarget.classList=="createSale"){
-                if(this.menu!=2){
-                    this.menu=2
+            if (e.currentTarget.classList == "createSale") {
+                if (this.menu != 2) {
+                    this.menu = 2
                 }
-                else{
-                    this.menu=null
-                }
-            }
-            if(e.currentTarget.classList=="updateEvent"){
-                if(this.menu!=3){
-                    this.menu=3
-                }
-                else{
-                    this.menu=null
+                else {
+                    this.menu = null
                 }
             }
-            if(e.currentTarget.classList=="createEvent"){
-                if(this.menu!=4){
-                    this.menu=4
+            if (e.currentTarget.classList == "updateEvent") {
+                if (this.menu != 3) {
+                    this.menu = 3
                 }
-                else{
-                    this.menu=null
+                else {
+                    this.menu = null
+                }
+            }
+            if (e.currentTarget.classList == "createEvent") {
+                if (this.menu != 4) {
+                    this.menu = 4
+                }
+                else {
+                    this.menu = null
                 }
             }
         },
     },
     components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
     ,
-    async mounted(){
-         this.eventsList = await EventService.findAll();
-         this.salesList = await SaleService.findAll();
+    async mounted() {
+        this.eventsList = await EventService.findAll();
+        this.salesList = await SaleService.findAll();
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.back-office--container__all{
-     width: 100%;
-    .back-office--sales__all{
+.back-office--container__all {
+    width: 100%;
+
+    .back-office--sales__all {
         width: 94%;
         height: 100%;
         display: flex;
         flex-direction: column;
         padding: 2%;
-        align-items: flex-start;
+        align-items: center;
         padding: 0% 3% 0% 3%;
-        .back-office--container__components{
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        margin: auto;
-        .sale--card{
-            width: 45%;
-            position: relative;
-       
-        }
-        }
-        h2{
-            margin-bottom: 3%;
-            margin-left: 3%;
-            color: black;
-        }
-        .back-office--menu__nav{
-            width: 100%;
+
+        .back-office--container__components {
             display: flex;
             flex-wrap: wrap;
-            height: 5%;
-            margin-bottom: 1%;
-            margin-top: -2%;
-            justify-content: center;            
-            div:hover{
-               filter: brightness(1.4);
+            justify-content: center;
+            margin: auto;
+            flex-direction: column;
+            align-items: center;
+
+            .sale--card {
+                width: 45%;
+                position: relative;
             }
-            div{
-            margin-top:10% ;
-            width: 22%;
-            margin: 1%;
-            padding: 0.2%;
-            border: 1px solid white;
-            cursor: pointer;
-            background-color: #46BFC7;
-            text-shadow: 1px 1px 1px black;
-            border-radius: 10px;
-            color: white;
+        }
+
+        h2 {
+            margin-bottom: 3%;
+            margin-left: 3%;
+            color: $grey;
+            font-family: "Merienda", cursive;
+
+            span {
+                text-transform: uppercase;
             }
-        } 
-    }
-}
-@media (max-width: 555px) {
-    .back-office--container__all{
-    .back-office--sales__all{
-        .back-office--menu__nav{       
-            a{
-                width: 46%;
+        }
+
+        .back-office--menu__nav {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+            a {
+                display: block;
+            }
+
+            div:hover {
+                filter: contrast(1.5)
+            }
+
+            div {
+                width: 22%;
+                padding: 0.5rem;
+                text-shadow: 1px 1px 1px black;
+                border-radius: 10px;
+                cursor: pointer;
+                margin-right: 0.5rem;
+            }
+
+            .home {
+                background-color: $purple;
+                color: white;
+
+                a {
+                    display: block;
+                    color: $white,
                 }
-            } 
+            }
+
+            .updateEvent {
+                background-color: $red;
+                color: white;
+            }
+
+            .createEvent {
+                background-color: $red;
+                color: white;
+            }
+
+            .updateSale {
+                background-color: $orange;
+                color: white;
+            }
+
+            .createSale {
+                background-color: $orange;
+                color: white;
+                margin-right: 0;
+            }
         }
     }
-        
 }
 
+
+@media (max-width: 555px) {
+    .back-office--container__all {
+        .back-office--sales__all {
+            .back-office--menu__nav {
+                a {
+                    width: 46%;
+                }
+            }
+        }
+    }
+
+}
 </style>
