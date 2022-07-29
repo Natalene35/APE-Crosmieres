@@ -1,6 +1,7 @@
 <template>
 
     <div class="event--card">
+        
         <router-link v-if="backOffice==false" v-bind:to="{name: 'event', params: {id: id}}">    
             <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
             <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
@@ -16,7 +17,10 @@
             </div>
         </router-link> 
         
-        <div  v-if="backOffice==true" class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
+        <div   v-if="backOffice==true">
+            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
+            
+            
             <div class="event--backoffice__img">
                 <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
                 <router-link class="event--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'eventUpdate', params: {id: id}}">
@@ -30,7 +34,9 @@
             </h2>
             <div class="event--card__content">
                 <div v-html="content"></div>
+            </div>
         </div>
+        
     </div>
      
 </template>
