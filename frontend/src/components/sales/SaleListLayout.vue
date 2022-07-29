@@ -17,8 +17,8 @@
                 <div v-html="content"></div>
             </div>
         </router-link>
-
-            <h2 v-if="backOffice==true" class="sale--card__title">
+        <div v-if="backOffice==true" v-bind:style="'width:100%'">
+            <h2 class="sale--card__title">
                 <div class="sale--backoffice__img">
                     <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
                     <router-link class="sale--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'saleUpdate', params: {id: id}}">
@@ -32,6 +32,8 @@
             <div class="sale--card__content">
                 <div v-html="content"></div>
             </div>
+        </div>
+            
     </div>
 
 </template>
