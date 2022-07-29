@@ -23,27 +23,30 @@ function ape_rest_user_email()
 
 function ape_rest_user_send_email($request)
 {
-    // if (isset($_POST['name']) && isset($_POST['email'])) {
-    //     $name = $_POST['name'];
-    //     $email = $_POST['email'];
-    //     $subject = $_POST['subject'];
-    //     $body = $_POST['body'];
+    // translate request with JSON
+    $parameters = $request->get_json_params();
 
-
-
-    // require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/PHPMailer.php";
-    // require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/SMTP.php";
-    // require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/Exception.php";
-
+    $name = sanitize_text_field($parameters['name']);
+    $email = sanitize_text_field($parameters['email']);
+    $body = sanitize_text_field($parameters['body']);
 
     $mail = new PHPMailer();
 
+    // $email = "chrisdmar12@gmail.com";
+    // $name = "Kévin";
+    $subject = "$name viens de s'inscrire à l'événement";
+    $body .= "
+        <br>
+        <h1>$name s'est inscrit</h1>
+        <p>Sort le champ's</p>
+        ";
 
-    $email = "chrisdmar12@gmail.com";
-    $name = "titi";
-    $subject = "test";
-    $body = "<h1>test body for $name</h1>
-    <p>Hello World !!</p>";
+
+    // fonctionne avec hotmail
+    // Parametre SMTP
+    // Nom de serveur : smtp.office365.com
+    // Port : 587
+    // Méthode de chiffrement : STARTTLS
 
 
     //smtp settings
@@ -51,7 +54,7 @@ function ape_rest_user_send_email($request)
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
     $mail->Username = "chrisdmar12@gmail.com"; //expediteur
-    $mail->Password = 'mypassword';
+    $mail->Password = 'mypassworddeboitemail';
     $mail->Port = 587;
     $mail->SMTPSecure = "STARTTLS";
 
@@ -60,8 +63,8 @@ function ape_rest_user_send_email($request)
     //email settings
     $mail->isHTML(true);
     $mail->setFrom($email, $name); // expediteur and name
-    $mail->addAddress("noursausore@gmail.com"); // destinataire
-    $mail->Subject = ("$email ($subject)");
+    $mail->addAddress($email); // destinataire
+    $mail->Subject = $subject;
     $mail->Body = $body;
 
     // return  $mail;

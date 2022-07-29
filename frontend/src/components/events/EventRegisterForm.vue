@@ -1,66 +1,119 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <h1>s'inscrire à l'événement</h1>
+      <h1 class="title">s'inscrire à l'événement</h1>
 
-      <div class="link--case">
+      <div class="download">
         <a
-          class="download"
-          href="@/assets/documents/Inscription.pdf"
+          class="download__link"
+          href="./../assets/documents/Inscription.pdf"
           download="Inscription.pdf"
         >
-          <b> fiche d'inscription </b>
-          <img
-            src="../../assets/images/jelly-character-gets-a-printed-document.png"
-            alt=""
-          />
+          <b> Télécharger la fiche d'inscription </b>
         </a>
+        <img
+          class="download__icon"
+          src="../../assets/images/jelly-character-gets-a-printed-document.png"
+          alt=""
+        />
       </div>
 
-      <div class="alert-error">
-        <span>Something went wrong! Please try again.</span>
+      <div class="field">
+        <input
+          type="text"
+          v-model="name"
+          class="field__input"
+          placeholder="Votre nom"
+        />
+        <input
+          type="email"
+          v-model="email"
+          class="field__input"
+          placeholder="Votre adresse email"
+        />
+        <textarea
+          class="field__input"
+          v-model="subject"
+          rows="2"
+          placeholder="Sujet"
+        ></textarea>
+        
+        <button @click="submitForm">Je m'inscris</button>
       </div>
 
-      <div class="alert-success">
-        <span>Message Sent! Thank you for contacting us.</span>
-      </div>
-
-      <!--contact section start-->
-      <div class="contact-section">
-        <div class="contact-form">
-          <h2>Contact Us</h2>
-          <form class="contact" action="" method="post">
-            <input
-              type="text"
-              name="name"
-              class="text-box"
-              placeholder="Your Name"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              class="text-box"
-              placeholder="Your Email"
-              required
-            />
-            <input type="submit" name="submit" class="send-btn" value="Send" />
-          </form>
-        </div>
-      </div>
-      <!--contact section end-->
-
-      <button type="button" onclick="sendEmail()" value="Send An Email">
-        Je m'inscris
-      </button>
+      <p class="alert-error" v-for="error in errors" v-bind:key="error">
+        {{ error }}
+      </p>
+      <p class="alert-success" v-if="alerts">
+        {{ alerts }}
+      </p>
     </div>
   </div>
 </template>
 
 <script>
+import UserService from "@/services/user/UserService";
+
 export default {
   name: "EventRegisterForm",
-  method: {},
+  data() {
+    return {
+      name: null,
+      email: null,
+      subject: null,
+      file: null,
+      errors: [],
+      alerts: null,
+    };
+  },
+  methods: {
+    // to submit fields and send datas to custom post 'event'
+    async submitForm() {
+      setTimeout(() => {
+        this.alert = "c'est parti";
+      }, 5000);
+
+      // Reset error table
+      this.errors = [];
+      this.alerts = null;
+      // Form Content Validation
+      if (!this.name) {
+        this.errors.push("Veuillez remplir un titre svp");
+      }
+      if (!this.email) {
+        this.errors.push("Veuillez remplir une description svp");
+      }
+      if (!this.subject) {
+        this.errors.push("Veuillez remplir une date svp");
+      }
+
+      setTimeout(() => {
+        this.errors = [];
+      }, 5000);
+      // Send form request if no error
+      if (this.errors.length === 0) {
+        let params = {
+          name: this.name,
+          email: this.email,
+          subject: this.subject,
+        };
+        const response = await UserService.sendEmail(params);
+
+        if (response) {
+          this.name = null;
+          this.email = null;
+          this.subject = null;
+          this.alerts = "Email envpyé";
+          // home redirect
+          setTimeout(() => this.$router.push({ name: "home" }), 1500);
+        } else {
+          this.errors.push(
+            "Une erreur s'est produite, veuillez réessayer plus tard..."
+          );
+        }
+      }
+    },
+  },
 };
 </script>
 
@@ -83,6 +136,13 @@ export default {
     margin-bottom: 1rem;
     border-radius: 1em;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
+
+    .title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-align: center;
+      padding-top: 1rem;
+    }
 
     .alert-success {
       z-index: 1;
@@ -110,98 +170,68 @@ export default {
       border-radius: 4px;
     }
 
-    .contact-section {
-      width: 100%;
+    .download {
+      width: 50%;
+      margin: auto;
       display: flex;
       justify-content: center;
       align-items: center;
 
-      .contact-form {
-        max-width: 700px;
-        margin-right: 50px;
-        flex: 1;
+      .download__link {
+        color: black;
+        font-weight: bold;
+        margin: 1rem auto;
 
-        h2 {
-          color: #fff;
-          text-align: center;
-          font-size: 35px;
-          text-transform: uppercase;
-          margin-bottom: 30px;
+        b:before {
+          content: ">>";
         }
 
-        .text-box {
-          background: #000;
-          color: #fff;
-          border: none;
-          width: calc(50% - 10px);
-          height: 50px;
-          padding: 12px;
-          font-size: 15px;
-          border-radius: 5px;
-          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-          margin-bottom: 20px;
-          opacity: 0.9;
-        }
-
-        .text-box:first-child {
-          margin-right: 15px;
-        }
-
-        textarea {
-          background: #000;
-          color: #fff;
-          border: none;
-          width: 100%;
-          padding: 12px;
-          font-size: 15px;
-          min-height: 200px;
-          max-height: 400px;
-          resize: vertical;
-          border-radius: 5px;
-          box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-          margin-bottom: 20px;
-          opacity: 0.9;
-        }
-
-        .send-btn {
-          float: right;
-          background: #2e94e3;
-          color: #fff;
-          border: none;
-          width: 120px;
-          height: 40px;
-          font-size: 15px;
-          font-weight: 600;
-          text-transform: uppercase;
-          letter-spacing: 2px;
-          border-radius: 5px;
-          cursor: pointer;
-          transition: 0.3s;
-          transition-property: background;
-        }
-
-        .send-btn:hover {
-          background: #0582e3;
+        b:after {
+          content: "<<";
         }
       }
-      @media screen and (max-width: 950px) {
-        .container {
-          background-color: transparent;
-          box-shadow: none;
-          border-radius: none;
+      .download__icon {
+        width: 15vw;
+        margin: -1rem auto;
+      }
+    }
 
-          .contact-form {
-            margin: 30px 50px;
+    max-width: 100%;
 
-            h2 {
-              font-size: 30px;
-            }
+    .field {
+      margin: auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      width: 100%;
 
-            .text-box {
-              width: 100%;
-            }
-          }
-        }
+      .title {
+        font-size: 1.6rem;
+        font-weight: 700;
+        text-align: center;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .field__label {
+        width: 100%;
+        float: left;
+        margin: 0.5rem;
+      }
+
+      .field__input {
+        line-height: 3;
+        border: 1px solid $blue-light-bg;
+        border-radius: 0.5em;
+        margin: 0.5rem auto;
+        padding: 0.2rem 1rem;
+        text-align: left;
+        width: 60%;
+        float: right;
+      }
+
+      ::placeholder {
+        color: $red;
       }
 
       button {
@@ -209,7 +239,7 @@ export default {
         width: 50%;
         font-size: 1.2rem;
         padding: 0.5em;
-        margin: 0.2rem;
+        margin: 1rem;
         margin-left: auto;
         margin-right: auto;
         border-radius: 5px;
@@ -221,18 +251,39 @@ export default {
         background-color: #ffc107;
         box-shadow: 0 2px 2px #0000001a;
       }
-      .link--case {
-        height: 50%;
-        background-color: blue;
-        img {
-          display: inline;
-          float: left;
+    }
+  }
+  @media screen and (max-width: 950px) {
+    .container {
+      background-color: transparent;
+      box-shadow: none;
+      border-radius: none;
+      .download {
+        width: 70%;
+        flex-direction: column-reverse;
+
+        .download__icon {
+          width: 55vw;
         }
-        .download {
-          height: 10%;
-          background-color: #ffc107;
-          margin: 1rem;
-          display: inline;
+      }
+      .form {
+        .field {
+          display: flex;
+          flex-wrap: wrap;
+          flex-direction: column;
+          align-items: baseline;
+          width: 100%;
+
+          .field__input {
+            line-height: 3;
+            border: 1px solid $blue-light-bg;
+            border-radius: 0.5em;
+            margin: 0.5rem auto;
+            padding: 0.2rem 1rem;
+            text-align: left;
+            width: 80%;
+            float: right;
+          }
         }
       }
     }

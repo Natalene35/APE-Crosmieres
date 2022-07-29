@@ -32,4 +32,12 @@ export default {
             return errors.response.data
         }
     },
+    async sendEmail(params) {
+        try {
+            const response = await apiClient.post('/wp/v2/send', params);
+            return response.data
+        } catch (errors) {
+            return errors.response.data
+        }
+    },
 }
