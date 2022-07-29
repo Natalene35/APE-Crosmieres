@@ -354,6 +354,7 @@ export default {
       border-radius: 5px;
       border: 1px solid #ffc107;
       box-shadow: 0 5px 5px #0000001a;
+      cursor: pointer;
     }
 
     button:hover {

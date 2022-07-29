@@ -180,6 +180,7 @@ export default {
                 margin-right: 0.5rem;
                 display: flex;
                 align-items: center;
+                justify-content: center;
             }
 
             .home {

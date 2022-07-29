@@ -332,6 +332,7 @@ export default {
       border-radius: 5px;
       border: 1px solid #ffc107;
       box-shadow: 0 5px 5px #0000001a;
+      cursor: pointer;
     }
 
     button:hover {
@@ -345,7 +346,7 @@ export default {
       background-color: white;
       box-shadow: 0 0 5px #0000001a;
       border-radius: 5px;
-      font-size: 1.5rem;
+      font-size: 1.5rem;      
       padding: 1rem;
       position: fixed;
       z-index: 9998;
