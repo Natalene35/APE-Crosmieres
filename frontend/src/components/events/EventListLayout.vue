@@ -17,10 +17,13 @@
         </router-link> 
         
         <div  v-if="backOffice==true" class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
-            <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
-            <router-link class="event--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'eventUpdate', params: {id: id}}">
-            <img  v-bind:src="editPic">
-            </router-link>
+            <div class="event--backoffice__img">
+                <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
+                <router-link class="event--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'eventUpdate', params: {id: id}}">
+                <img  v-bind:src="editPic">
+                </router-link>
+            </div>
+            
             </div>
             <h2 class="event--card__title">
                 <div v-html="title"></div>
@@ -81,7 +84,6 @@ export default {
     box-sizing: border-box;
     padding-bottom: 1rem;
     width: 95%;
-    position: relative;
 
         .event--card__title {
             color: $grey;
@@ -99,20 +101,19 @@ export default {
             background-position: center;
             background-size: cover;
             border-radius: 2rem 2rem 0 0;
-            img,a{
+            .event--backoffice__img{
+                display: flex;
+                flex-direction: row-reverse;
+                img,a{
                 height: 4rem;
-                position: absolute;
-                right: 0;
-                top: 0;
+               
                 cursor: pointer;
             }
-           img:hover{
+            img:hover{
             filter: brightness(1.1);
             transform: scale(1.2);
-           }
-           .event--card__editPic{
-            right: 8%;
-           }
+            }
+            }
         }
 
         .event--card__content {

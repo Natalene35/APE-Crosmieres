@@ -113,7 +113,6 @@ export default {
 
     .back-office--sales__all {
         width: 94%;
-        max-height: 100vh;
         display: flex;
         flex-direction: column;
         padding: 2%;
@@ -138,7 +137,6 @@ export default {
             }
             .sale--card {
                 width: 55%;
-                position: relative;
                 .sale--card__title{
                     display: flex;
                     flex-direction: row-reverse;
@@ -180,6 +178,8 @@ export default {
                 border-radius: 10px;
                 cursor: pointer;
                 margin-right: 0.5rem;
+                display: flex;
+                align-items: center;
             }
 
             .home {
@@ -219,6 +219,7 @@ export default {
 
 @media (max-width: 555px) {
     .back-office--container__all {
+            min-height: 108vh;
         .back-office--sales__all {
             .back-office--menu__nav {
                 a {

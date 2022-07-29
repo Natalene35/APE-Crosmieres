@@ -72,7 +72,7 @@ export default {
         },
     },
     async mounted() {        
-        // setInterval(this.SlideAuto, 10000);
+        setInterval(this.SlideAuto, 10000);
         this.saleSlide = await SaleService.findAll();
         this.maxSlide = this.saleSlide.length - 1;
     }
