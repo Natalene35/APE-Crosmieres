@@ -11,9 +11,9 @@
                         Accueil
                     </router-link>
                 </div>
-                <div class="updateEvent" v-on:click="showMenu">Modifier un evenements</div>
-                <div class="createEvent" v-on:click="showMenu">Créer un evenement</div>
-                <div class="updateSale" v-on:click="showMenu">Modifier une ventes</div>
+                <div class="updateEvent" v-on:click="showMenu">Modifier un évènement</div>
+                <div class="createEvent" v-on:click="showMenu">Créer un évènement</div>
+                <div class="updateSale" v-on:click="showMenu">Modifier une vente</div>
                 <div class="createSale" v-on:click="showMenu">Créer une vente</div>
 
 
