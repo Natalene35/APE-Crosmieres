@@ -34,6 +34,12 @@
             <SaleCreateLayout v-if="this.menu == 2" class="back-office--container__components" />
             <EventCreateLayout v-if="this.menu == 4" class="back-office--container__components" />
         </section>
+
+        <section class="back-office--popUp">
+            <div>
+                POPUP
+            </div>
+        </section>
     </section>
 </template>
 
@@ -118,7 +124,9 @@ export default {
         padding: 2%;
         align-items: center;
         padding: 0% 3% 0% 3%;
-
+        .back-office--popUp{
+            background-color: yellow;
+        }
         .back-office--container__components {
             display: flex;
             flex-wrap: wrap;
@@ -136,7 +144,7 @@ export default {
                 }
             }
             .sale--card {
-                width: 55%;
+                width: 100%;
                 .sale--card__title{
                     display: flex;
                     flex-direction: row-reverse;
