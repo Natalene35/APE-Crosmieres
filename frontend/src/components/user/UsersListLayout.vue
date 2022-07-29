@@ -13,7 +13,9 @@
                         <option value="utilisateur">Utilisateur</option>
                         <option value="admin">Admin</option>
                     </select>
-                    <img class="picture" title="Supprimer ce compte" alt="trash" v-bind:src="trash" />
+                    <img v-on:click="doDelete" class="picture" title="Supprimer ce compte" alt="trash" v-bind:src="trash" />
+                    <button  @click="doDelete">Delete Page</button>
+                    <ConfirmDialogue ref="confirmDialogue" />
                 </div>
             </li>
         </ul>
@@ -24,14 +26,18 @@
 import UserloginService from '@/services/login/UserLoginService';
 import UserRegistrationService from '@/services/user/UserService';
 import trash from '@/assets/images/icons8-trash-can-100.png'
+import ConfirmDialogue from '@/components/confirmation-box/ConfirmDialogue.vue'
 
 export default {
     name: 'UsersListLayout',
+    components: { 
+        ConfirmDialogue 
+        },
 
     data() {
         return {
             users: [],
-            trash: trash
+            trash: trash,
         }
     },
     async mounted() {
@@ -40,6 +46,22 @@ export default {
         //
         let id = this.$route.params.id;
         this.user = await UserRegistrationService.delete(id);
+    },
+    methods: {
+        async doDelete() {
+            console.log(this.$ref);
+            const ok = await this.$refs.confirmDialogue.show({
+                title: "Suppression d'un utilisateur",
+                message: "Etes vous sûr de vouloir supprimer ce compte ?",
+                okButton: "Supprimer",
+            })
+            // If you throw an error, the method will terminate here unless you surround it wil try/catch
+            if (ok) {
+                alert('Cet utilisateur a bien été supprimé')
+            } else {
+                alert('Retour à la liste des utilisateurs')
+            }
+        }
     }
 }
 </script>

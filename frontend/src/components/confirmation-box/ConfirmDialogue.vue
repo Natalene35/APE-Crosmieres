@@ -10,10 +10,12 @@
 </template>
 
 <script>
-import PopupModal from './PopupModal.vue'
+import PopupModal from './PopupModal.vue';
 export default {
     name: 'ConfirmDialogue',
-    components: { PopupModal },
+    components: {
+        PopupModal
+    },
     data: () => ({
         // Parameters that change depending on the type of dialogue
         title: undefined,
@@ -56,25 +58,27 @@ export default {
 
 <style lang="scss" scoped>
 .btns {
-display: flex;
-flex-direction: row;
-justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
+
 .ok-btn {
-color: red;
-text-decoration: underline;
-line-height: 2.5rem;
-cursor: pointer;
+    color: red;
+    text-decoration: underline;
+    line-height: 2.5rem;
+    cursor: pointer;
 }
+
 .cancel-btn {
-padding: 0.5em 1em;
-background-color: #d5eae7;
-color: #35907f;
-border: 2px solid #0ec5a4;
-border-radius: 5px;
-font-weight: bold;
-font-size: 16px;
-text-transform: uppercase;
-cursor: pointer;
+    padding: 0.5em 1em;
+    background-color: #d5eae7;
+    color: #35907f;
+    border: 2px solid #0ec5a4;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
 }
 </style>
