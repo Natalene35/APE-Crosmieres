@@ -140,6 +140,16 @@ export default {
             return error.response.data
         }        
     },
+    //CUSTOM UPDATE WITH META TO 
+    async updateCustom(params) {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.post("/event/update/"+ params.id+ "", params);
+            return response.data;
+        } catch(error) {
+            return error.response.data
+        }        
+    },
     async delete(params) {
         try {
             apiClient.defaults.headers.common['Content-Type'] = "application/json";

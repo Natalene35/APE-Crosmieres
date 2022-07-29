@@ -32,7 +32,7 @@
         <label class="field__label">Date de l'événement </label>
         <input
           class="field__input"
-          type="date"
+          type="text"
           placeholder=""
           v-model="eventDate"
         />
@@ -77,7 +77,7 @@
         <div class="image--modal__wrapper">
           <div class="image--modal__container">
             <p>Il n'y a pas d'image selectionnée</p>
-            <button class="confirm" @click="submitForm">Continuer</button>
+            <button class="confirm" @click="updateEvent">Continuer</button>
             <button class="abort" @click="showModal = false">Annuler</button>
           </div>
         </div>
@@ -98,6 +98,7 @@
 import EventService from "@/services/events/EventService";
 export default {
   name: "EventCreateView",
+
   data() {
     return {
       title: null,
@@ -143,7 +144,7 @@ export default {
                 this.location = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
-                this.alerts = "Evénement créé";
+                this.alerts = "Evénement modifié";
                 //redirection vers la home
                 setTimeout(() => this.$router.push({ name: "home" }), 1500);
               } else {
@@ -157,7 +158,7 @@ export default {
         .catch((err) => {
           this.progress = 0;
           this.errors.push("Erreur sur le chargement de l'image !");
-          this.errors.push("L'événement a été crée sans l'image");
+          this.errors.push("L'événement a été modifié sans l'image");
           this.errors.push(
             "Veuillez modifier dans la page de modification d'événement svp."
           );
@@ -216,9 +217,9 @@ export default {
           this.location = null;
           this.currentImage = undefined;
           this.previewImage = undefined;
-          this.alerts = "Evénement créé sans image";
+          this.alerts = "Evénement modifié sans image";
           // home redirect
-          setTimeout(() => this.$router.push({ name: "home" }), 1500);
+          setTimeout(() => this.$router.push({ name: "event", params: {id: this.id} }), 1500);
         } else {
           this.errors.push(
             "Erreur d'enregistrement de l'événement ! Veuillez verifier la présence de l'événement"
@@ -226,7 +227,37 @@ export default {
         }
       }
     },
+       async updateEvent(){
+        let params = {
+          title: this.title,
+          content: this.content,
+          date: this.eventDate,
+          lieu: this.location,
+          lien: this.link,
+          id: this.id
+        };
+        const response = await EventService.updateCustom(params);
+        console.log(response.code)
+        if(this.currentImage!=undefined&&this.previewImage!=undefined){
+         this.upload(this.id);   
+        }
+        else if (response!=undefined){
+            setTimeout(() => this.$router.push({ name: "event", params: {id: this.id} }), 1500);
+        }
+        
+    }
   },
+  async mounted(){
+    this.id = this.$route.params.id;
+    const selectSale=await EventService.find(this.id);  
+    const selectSaleMeta=await EventService.findMeta(this.id);
+    this.title=selectSale.title.rendered
+    this.content=selectSale.content.rendered
+    this.eventDate=selectSaleMeta.date
+    this.location=selectSaleMeta.lieu
+    this.link=selectSaleMeta.lien
+    this.thumbnail_id=selectSaleMeta._thumbnail_id
+  }
 };
 </script>
 
