@@ -2,7 +2,7 @@
 
 
     <div class="sale--card">
-        <router-link v-bind:to="{ name: 'sale', params: { id: id } }">
+        <router-link v-if="backOffice==false" v-bind:to="{name: 'sale', params: {id: id}}">
 
             <h2 class="sale--card__title">
                 <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice == true">
@@ -17,6 +17,23 @@
                 <div v-html="content"></div>
             </div>
         </router-link>
+        <div v-if="backOffice==true" v-bind:style="'width:100%'">
+            <h2 class="sale--card__title">
+                <div class="sale--backoffice__img">
+                    <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
+                    <router-link class="sale--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'saleUpdate', params: {id: id}}">
+                    <img  v-bind:src="editPic">
+                    </router-link>
+                </div>
+                
+                <div v-html="title"></div>
+            </h2>
+            <img class="sale--card__img">
+            <div class="sale--card__content">
+                <div v-html="content"></div>
+            </div>
+        </div>
+            
     </div>
 
 </template>
@@ -28,6 +45,7 @@ import edit from '@/assets/images/icons8-edit-100.png';
 import trash from '@/assets/images/icons8-trash-can-100.png';
 export default {
     name: 'SaleListLayout',
+    emits: ["reloadSal"],
 
     props: {
         title: String,
@@ -49,7 +67,8 @@ export default {
             const response = await SaleService.delete({
                 "id": e
             });
-            console.log(response);
+            this.$emit("reloadSal");
+            console.log(response);            
         },
 
     }
@@ -78,13 +97,18 @@ export default {
         background-color: $orange;
         color: $white;
         font-weight: bold;
-
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        justify-content: center;
+        .sale--backoffice__img{
+            display: flex;
+            width: 40%;
+            justify-content: flex-end;
+        }
         img,
         a {
-            height: 4rem;
-            position: absolute;
-            right: -109px;
-            top: 0px;
+            height: 4rem;           
             cursor: pointer;
         }
 
