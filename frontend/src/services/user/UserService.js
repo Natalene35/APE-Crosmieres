@@ -26,14 +26,11 @@ export default {
 
     async deleteById(id) {
         try {
-            const response = await apiClient.delete('/wp/v2/users/'+ id +'', {
-	"force":true,
-	"reassign":1
-});
+            const response = await apiClient.delete('/wp/v2/users/' + id + '?reassign=1&force=true');
             return response.data;
         } catch (error) {
             return error.response.data
-        } 
+        }
     },
 
     async update(id, params) {

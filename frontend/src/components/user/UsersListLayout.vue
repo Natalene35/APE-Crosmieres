@@ -6,16 +6,20 @@
                 <div class="detail">
                     <div>{{ user.last_name }} {{ user.first_name }}</div>
                     <div>{{ user.email }}</div>
+                    <div>{{ user.role }}</div>
                 </div>
                 <div class="change">
-                    <label for="role-select">Changer le rôle </label>
-                    <select name="role" id="role-select" @change="changeRole(user.id)">
-                        <option value="current role"></option>
-                        <option value="membre">Membre</option>
-                        <option value="utilisateur">Utilisateur</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                    <img v-on:click="deleteById(user.id)" class="picture" title="Supprimer ce compte" alt="trash" v-bind:src="trash" />
+                    <div class="select">
+                        <label for="role-select">Changer le rôle </label>
+                        <select name="role" id="role-select" @change="changeRole(user.id)" v-model="selected">
+                            <option value="user.roles[0]">{{ user.roles[0] }}</option>
+                            <option value="apemember">apemember</option>
+                            <option value="apeuser">apeuser</option>
+                            <option value="administrator">administrator</option>
+                        </select>
+                    </div>
+                    <img v-on:click="deleteById(user.id)" class="picture" title="Supprimer ce compte" alt="trash"
+                        v-bind:src="trash" />
                 </div>
             </li>
         </ul>
@@ -33,7 +37,8 @@ export default {
     data() {
         return {
             users: [],
-            trash: trash
+            trash: trash,
+            selected: ''
         }
     },
     async mounted() {
@@ -45,9 +50,10 @@ export default {
     methods: {
         async deleteById(id) {
             const response = await UserService.deleteById(id);
+            this.users = await UserloginService.findAll();
             console.log(response);
         },
-        changeRole(e){
+        changeRole(e) {
             console.log(e);
         }
     }
@@ -67,13 +73,18 @@ section {
     li {
         border: 1px solid $black;
         background-color: $white;
-        width: 60%;
+        width: 90%;
         height: auto;
         margin: 0.2rem auto;
         border-radius: 1rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        .select {
+            display: flex;
+            flex-direction: column;
+        }
 
         .picture {
             height: 3rem;
@@ -91,9 +102,11 @@ section {
             margin-right: 1rem;
         }
 
-        .detail {
-            margin-left: 1rem;
-            text-align: left;
+    }
+
+    @media (min-width: 1024px) {
+        li {
+            width: 60%;
         }
     }
 }
