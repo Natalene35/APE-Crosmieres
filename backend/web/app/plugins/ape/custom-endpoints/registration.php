@@ -89,7 +89,8 @@ function ape_rest_user_register_handler($request)
             'user_login' => $pseudo,
             'user_email' => $email,
             'first_name' => $firstname,
-            'last_name' => $lastname
+            'last_name' => $lastname,
+            'role' => 'apeuser'
         ]);
         if (!is_wp_error($user_id)) {
 
