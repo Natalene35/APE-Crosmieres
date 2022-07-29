@@ -3,10 +3,7 @@
     <div class="container">
       <div class="card">
         <div class="avatar">
-          <img
-            src="@/assets/images/icons8-profile-60.png"
-            alt="avatar de l'utilisateur"
-          />
+          <img src="@/assets/images/icons8-profile-60.png" alt="avatar de l'utilisateur" />
         </div>
         <hr />
         <div class="stats">
@@ -22,11 +19,11 @@
           <div>
             <p v-for="child in childs" v-bind:key="child.id">
               {{
-                child.child_firstname +
-                " " +
-                child.child_lastname +
-                " / " +
-                child.child_class
+                  child.child_firstname +
+                  " " +
+                  child.child_lastname +
+                  " / " +
+                  child.child_class
               }}
             </p>
           </div>
@@ -39,74 +36,33 @@
           {{ error }}
         </p>
 
-        <a v-on:click="showChildRegistrationLayout" class="addChild"
-          >Ajouter mes enfants</a
-        >
-        <ChildRegistrationLayout
-          @reloadChilds="reloadChilds"
-          class="ChildRegistrationLayout--display active"
-        />
+        <a v-on:click="showChildRegistrationLayout" class="addChild">Ajouter mes enfants</a>
+        <ChildRegistrationLayout @reloadChilds="reloadChilds" class="ChildRegistrationLayout--display active" />
 
-        <a v-on:click="showUserUpdateInformationLayout" class="update"
-          >Mise à jour de vos données</a
-        >
+        <a v-on:click="showUserUpdateInformationLayout" class="update">Mise à jour de vos données</a>
         <div class="UserUpdateInformationLayout--display active">
           <div class="user--update">
             <label class="field__label">Prénom</label>
-            <input
-              v-model="user.first_name"
-              type="text"
-              class="inputbox"
-              placeholder="Votre prénom"
-              name="firstname"
-            />
+            <input v-model="user.first_name" type="text" class="inputbox" placeholder="Votre prénom" name="firstname" />
 
             <label class="field__label">Nom</label>
-            <input
-              v-model="user.last_name"
-              type="text"
-              class="inputbox"
-              placeholder="Votre nom"
-              name="lastname"
-            />
+            <input v-model="user.last_name" type="text" class="inputbox" placeholder="Votre nom" name="lastname" />
 
             <label class="field__label">E-mail</label>
-            <input
-              v-model="user.email"
-              type="email"
-              class="inputbox"
-              placeholder="Votre e-mail"
-              name="mail"
-            />
+            <input v-model="user.email" type="email" class="inputbox" placeholder="Votre e-mail" name="mail" />
 
             <label class="field__label">Numéro de téléphone</label>
-            <input
-              v-model="phone"
-              type="text"
-              class="inputbox"
-              placeholder="Votre numéro de contact"
-              name="phone"
-            />
+            <input v-model="phone" type="text" class="inputbox" placeholder="Votre numéro de contact" name="phone" />
 
-            <p
-              class="succesUpdate"
-              v-for="succesMsg in succesUpdate"
-              v-bind:key="succesMsg"
-            >
+            <p class="succesUpdate" v-for="succesMsg in succesUpdate" v-bind:key="succesMsg">
               {{ succesMsg }}
             </p>
 
-            <a v-on:click="updateUser" class="updateConfirm"
-              >Enregistrer vos modifications</a
-            >
+            <a v-on:click="updateUser" class="updateConfirm">Enregistrer vos modifications</a>
           </div>
         </div>
-        <a v-on:click="deleteConfirm" class="delete"
-          >Supprimer votre compte ?</a
-        >
-        <a v-on:click="removeUser" class="deleteConfirm active"
-          >Suppression du compte</a
-        >
+        <a v-on:click="deleteConfirm" class="deleteUser">Supprimer votre compte ?</a>
+        <a v-on:click="removeUser" class="deleteConfirm active">êtes-vous sûrs ? </a>
       </div>
     </div>
   </section>
@@ -173,6 +129,8 @@ export default {
     },
 
     deleteConfirm() {
+      let deleteUser = document.querySelector(".deleteUser");
+      deleteUser.classList.toggle("active")
       let deleteConfirm = document.querySelector(".deleteConfirm");
       deleteConfirm.classList.toggle("active");
     },
@@ -182,8 +140,15 @@ export default {
       if (this.$store.getters.getUserID) {
         const response = await UserService.delete();
         console.log(response);
-        if (response.id) {
-          this.$router.push({ name: "home" });
+        if (response.remove_user) {
+          this.$store.commit("deleteToken");
+          this.$store.commit("deleteUsername");
+          this.$store.commit("deleteUserID");
+          this.$store.commit("deleteRole");
+          this.succesUpdate.push("L'utilisateur " + response.name);
+          setTimeout(() => {
+            this.$router.push({ name: "home" });
+          }, 3000);
         } else {
           this.errors.push("Echec suppression");
         }
@@ -227,142 +192,155 @@ export default {
 </script>
 
  <style scoped lang="scss">
-.wrapper {
-  color: $grey;
-  font-family: "Muli", sans-serif;
-  font-size: 1rem;
-  place-items: center;
-  border-radius: 1em;
-
-  .container {
-    max-width: 400px;
-    overflow: hidden;
-    padding: 0;
-    background-color: $white;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border-radius: 1em;
-    display: -ms-grid;
-    display: grid;
-    place-items: center;
-    justify-content: center;
-    box-shadow: 0px 17px 34px -20px $blue-bg-header;
-
-    h2 {
-      font-size: 1.5rem;
-      margin: 1rem;
-      text-align: center;
-    }
-
-    a {
-      padding: 1rem;
-      color: $black;
-      font-size: 0.7em;
-      margin: 0.5rem;
-      width: 90%;
-      text-align: center;
-      text-decoration: none;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-  }
-
-  p {
-    margin: 0 0 10px;
-    font-size: 1rem;
-    letter-spacing: 1px;
-    opacity: 0.8;
-  }
-
-  .button--link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 2rem;
-
-    .addChild {
-      border: 1px solid $pink;
-      background-color: $pink;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .update {
-      border: 1px solid $orange;
-      background-color: $orange;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .delete {
-      border: 1px solid $red;
-      background-color: $red;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .deleteConfirm {
-      border: 1px solid $red;
-      background-color: $red;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    .updateConfirm {
-      color: $white;
-      font-size: 1.3rem;
-      font-weight: 700;
-      background-color: $green;
-      display: inline-block;
-      border: none;
-      border-radius: 10px;
-      width: 60%;
-      padding: 0.5rem;
-      margin: 1rem;
-      cursor: pointer;
-    }
-
-    .succesUpdate {
-      color: $green;
-      text-transform: uppercase;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .push--error {
-      color: $red;
-      text-transform: uppercase;
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-  }
-
-  .inputbox {
-    padding: 0.5em 0 0.5em 1.5em;
-    font-size: 1rem;
-    line-height: 3;
-    width: 80%;
-    border: 1px solid $blue-bg-header;
-    border-radius: 0.5em;
-    margin: 0 0 1rem 0;
-    padding: 0;
-    text-align: center;
-  }
-}
-
-.active {
-  display: none;
-}
-
-.user--update {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-@media (min-width: 800px) {
-  .wrapper {
-    width: 55vh;
-  }
-}
-</style>
+ .wrapper {
+   color: $grey;
+   font-family: "Muli", sans-serif;
+   font-size: 1rem;
+   place-items: center;
+   border-radius: 1em;
+   width: 55vh;
+ 
+   .container {
+     max-width: 400px;
+     overflow: hidden;
+     padding: 0;
+     background-color: $white;
+     margin-top: 1rem;
+     margin-bottom: 1rem;
+     border-radius: 1em;
+     display: -ms-grid;
+     display: grid;
+     place-items: center;
+     justify-content: center;
+     box-shadow: 0px 17px 34px -20px $blue-bg-header;
+ 
+     h2 {
+       font-size: 1.5rem;
+       margin: 1rem;
+       text-align: center;
+     }
+ 
+     a {
+       padding: 1rem;
+       color: $grey;
+       font-size: 1em;
+       margin: 0.5rem;
+       width: 90%;
+       text-align: center;
+       text-decoration: none;
+       font-weight: 600;
+       letter-spacing: 1px;
+     }
+   }
+ 
+   p {
+     margin: 0 0 10px;
+     font-size: 1rem;
+     letter-spacing: 1px;
+     opacity: 0.8;
+   }
+ 
+   .button--link {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding-bottom: 2rem;
+ 
+     .addChild {
+       border: 1px solid $green;
+       background-color: $green;
+       border-radius: 10px;
+       cursor: pointer;
+     }
+ 
+     .update {
+       border: 1px solid $orange;
+       background-color: $orange;
+       border-radius: 10px;
+       cursor: pointer;
+     }
+ 
+     .deleteUser {
+       border: 1px solid $red;
+       background-color: $red;
+       color: $white;
+       border-radius: 10px;
+       opacity: 0.5;
+       cursor: pointer;
+     }
+ 
+     .deleteUser:hover {
+       opacity: 1;
+       color: $white;
+     }
+ 
+     .deleteConfirm {
+       border: 1px solid $red;
+       background-color: $red;
+       border-radius: 10px;
+       cursor: pointer;
+     }
+ 
+     .updateConfirm {
+       color: $white;
+       font-size: 1.3rem;
+       font-weight: 700;
+       background-color: $green;
+       display: inline-block;
+       border: none;
+       border-radius: 10px;
+       width: 60%;
+       padding: 0.5rem;
+       margin: 1rem;
+       cursor: pointer;
+     }
+ 
+     .succesUpdate {
+       color: $green;
+       text-transform: uppercase;
+       font-size: 1rem;
+       margin-bottom: 1rem;
+     }
+ 
+     .push--error {
+       color: $red;
+       text-transform: uppercase;
+       font-size: 1rem;
+       margin-bottom: 1rem;
+     }
+   }
+ 
+   .inputbox {
+     padding: 0.5em 0 0.5em 1.5em;
+     font-size: 1rem;
+     line-height: 3;
+     width: 80%;
+     border: 1px solid $blue-bg-header;
+     border-radius: 0.5em;
+     margin: 0 0 1rem 0;
+     padding: 0;
+     text-align: center;
+   }
+ }
+ 
+ .active {
+   display: none;
+ }
+ 
+ .user--update {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ }
+ 
+ @media (max-width: 800px) {
+   .wrapper {
+     width: 44vh;
+ 
+ 
+     .button--link .deleteUser {
+       opacity: 1;
+     }
+   }
+ }
+ </style>
