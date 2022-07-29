@@ -1,5 +1,7 @@
 <template>
+
     <!-- //Liste Evenements  -->
+    
     <section class="event--section">
         
         <EventHomeListLayout
@@ -50,6 +52,7 @@ export default {
 
 
 <style lang="scss" scoped>
+
 .event--section {
     width: 100%;
     justify-content: center;

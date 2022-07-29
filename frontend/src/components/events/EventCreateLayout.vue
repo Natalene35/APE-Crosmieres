@@ -3,65 +3,31 @@
     <div class="container">
       <div class="field">
         <div class="field__title">
-          <img
-            class="logo--img"
-            src="../../assets/images/jelly-message-sent-by-character.png"
-            alt=""
-          />
+          <img class="logo--img" src="../../assets/images/jelly-message-sent-by-character.png" alt="" />
           <h1 class="title">Ajout d'un événement</h1>
         </div>
 
         <label class="field__label">Titre de la publication </label>
-        <input
-          class="field__input"
-          type="text"
-          placeholder=""
-          v-model="title"
-        />
+        <input class="field__input" type="text" placeholder="" v-model="title" />
 
         <label class="field__label">Decription </label>
-        <textarea
-          class="textarea field__input"
-          type="text"
-          placeholder=""
-          rows="3"
-          v-model="content"
-        ></textarea>
+        <textarea class="textarea field__input" type="text" placeholder="" rows="3" v-model="content"></textarea>
 
         <label class="field__label">Date de l'événement </label>
-        <input
-          class="field__input"
-          type="date"
-          placeholder=""
-          v-model="eventDate"
-        />
+        <input class="field__input" type="date" placeholder="" v-model="eventDate" />
 
         <label class="field__label">Lieu de l'événement </label>
-        <input
-          class="field__input"
-          type="text"
-          placeholder=""
-          v-model="location"
-        />
+        <input class="field__input" type="text" placeholder="" v-model="location" />
 
         <label class="field__label"> Image </label>
-        <input
-          class="field__input"
-          type="file"
-          accept="image/*"
-          ref="file"
-          @change="selectImage"
-        />
+        <input class="field__input" type="file" accept="image/*" ref="file" @change="selectImage" />
         <p class="error" v-for="error in errors" v-bind:key="error">
           {{ error }}
         </p>
         <p class="alert" v-if="alerts">
           {{ alerts }}
         </p>
-        <button
-          class="btn btn-success btn-sm float-right"
-          @click="imageValidate"
-        >
+        <button class="btn btn-success btn-sm float-right" @click="imageValidate">
           Soumettre
         </button>
       </div>
@@ -85,9 +51,7 @@
 
     <p style="visibility: hidden">
       Illustration by
-      <a href="https://icons8.com/illustrations/author/541847"
-        >Murat Kalkavan</a
-      >
+      <a href="https://icons8.com/illustrations/author/541847">Murat Kalkavan</a>
       from <a href="https://icons8.com/illustrations">Ouch!</a>
     </p>
   </section>
@@ -195,13 +159,13 @@ export default {
 
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
-          
+
           //for take the post publish
           const majPost = await EventService.update({
-                "status": "publish",
-                "id": response.data.id
-            });
-            console.log(majPost)
+            "status": "publish",
+            "id": response.data.id
+          });
+          console.log(majPost)
           //response.data.id is the post id
           this.upload(response.data.id);
         } else if (response) {
@@ -235,17 +199,19 @@ export default {
   display: grid;
   place-items: center;
   border-radius: 1em;
+
   .container {
     width: 80%;
     overflow: hidden;
-    background-color: $white;
+    //background-color: $white;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
     border-radius: 1em;
     display: -ms-grid;
     display: grid;
     place-items: center;
-    box-shadow: 0px 17px 34px -20px $blue-bg-header;
+    box-shadow: 2px 29px 72px -20px #46bfc7;
+
     .progress {
       width: 50%;
       border-radius: 1rem;
@@ -256,25 +222,25 @@ export default {
       padding: 0.2rem;
       margin-bottom: 1rem;
     }
+
     .progress-bar {
       border-radius: 1rem;
       background-color: aquamarine;
       height: 1rem;
-      background: repeating-linear-gradient(
-          -60deg,
+      background: repeating-linear-gradient(-60deg,
           rgb(0, 0, 0, 0.5) 0,
           black 10px,
           #ffc107 10px,
-          white 20px
-        )
-        0 / 200%;
+          white 20px) 0 / 200%;
       animation: progress-bar 1s linear infinite;
     }
+
     @keyframes progress-bar {
       to {
         background-position: 100% 0;
       }
     }
+
     .preview {
       width: 50%;
       border-radius: 5px;
@@ -282,6 +248,7 @@ export default {
       box-shadow: 0px 17px 34px -20px $blue-bg-header;
       margin-bottom: 1rem;
     }
+
     .field {
       padding: 1rem;
       margin: 1rem;
@@ -289,13 +256,16 @@ export default {
       flex-wrap: wrap;
       align-items: baseline;
       width: 100%;
+
       .field__title {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
+
         .logo--img {
           display: none;
         }
+
         .title {
           font-size: 1.6rem;
           font-weight: 700;
@@ -304,11 +274,13 @@ export default {
           margin-bottom: 1rem;
         }
       }
+
       .field__label {
         width: 45%;
         float: left;
         margin: 0.5rem;
       }
+
       .field__input {
         line-height: 3;
         border: 1px solid $blue-light-bg;
@@ -319,9 +291,11 @@ export default {
         width: 45%;
         float: right;
       }
+
       ::placeholder {
         color: $red;
       }
+
       .error {
         background-color: lightcoral;
         font-weight: bold;
@@ -333,6 +307,7 @@ export default {
         border-radius: 5px;
         color: white;
       }
+
       .alert {
         background-color: lightblue;
         font-weight: bold;
@@ -345,6 +320,7 @@ export default {
         color: Black;
       }
     }
+
     button {
       display: inline-block;
       width: 50%;
@@ -357,11 +333,13 @@ export default {
       border: 1px solid #ffc107;
       box-shadow: 0 5px 5px #0000001a;
     }
+
     button:hover {
       color: white;
       background-color: #ffc107;
       box-shadow: 0 2px 2px #0000001a;
     }
+
     .image--modal__mask {
       position: fixed;
       background-color: white;
@@ -382,6 +360,7 @@ export default {
       .image--modal__wrapper {
         display: table-cell;
         vertical-align: middle;
+
         .image--modal__container {
           width: 300px;
           margin: 0px auto;
@@ -390,16 +369,20 @@ export default {
           border-radius: 2px;
           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
           transition: all 0.3s ease;
+
           .confirm {
             margin: 1rem;
             border: 3px solid $green;
           }
+
           .confirm:hover {
             background-color: $green;
           }
+
           .abort {
             border: 3px solid $red;
           }
+
           .abort:hover {
             background-color: $red;
           }
@@ -407,17 +390,20 @@ export default {
       }
     }
   }
+
   @media (max-width: 600px) {
     .container {
       background-color: transparent;
       box-shadow: none;
       border-radius: none;
+
       .field {
         padding: 1rem;
         margin: 1rem;
         display: flex;
         flex-wrap: wrap;
         width: 100%;
+
         .field__title {
           .logo--img {
             display: inline;
@@ -426,9 +412,11 @@ export default {
             margin-right: auto;
           }
         }
+
         .field__label {
           width: 100%;
         }
+
         .field__input {
           width: 100%;
         }
