@@ -3,6 +3,8 @@
         "psr-4": {
             "Migration\\":"Migration/"
         }   
+    },
+    "require": {
+        "phpmailer/phpmailer": "^6.6"
     }
-  }
-  
+}
