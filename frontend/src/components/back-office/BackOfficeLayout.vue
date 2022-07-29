@@ -93,6 +93,10 @@ export default {
                 }
             }
         },
+        async reload(){
+        this.eventsList = await EventService.findAll();
+        this.salesList = await SaleService.findAll();
+        }
     },
     components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
     ,
@@ -109,7 +113,6 @@ export default {
 
     .back-office--sales__all {
         width: 94%;
-        height: 100%;
         display: flex;
         flex-direction: column;
         padding: 2%;
@@ -123,10 +126,24 @@ export default {
             margin: auto;
             flex-direction: column;
             align-items: center;
-
+            .event--card{
+                min-width: 50VH;
+                margin-top: 5%;
+                .event--card__media--image{
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                }
+            }
             .sale--card {
-                width: 45%;
-                position: relative;
+                width: 55%;
+                .sale--card__title{
+                    display: flex;
+                    flex-direction: row-reverse;
+                    align-items: center;
+                    justify-content: flex-start;
+                    text-align: end;
+                }
             }
         }
 
@@ -161,6 +178,9 @@ export default {
                 border-radius: 10px;
                 cursor: pointer;
                 margin-right: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .home {
@@ -200,12 +220,25 @@ export default {
 
 @media (max-width: 555px) {
     .back-office--container__all {
+            min-height: 108vh;
         .back-office--sales__all {
             .back-office--menu__nav {
                 a {
                     width: 46%;
                 }
             }
+                    .back-office--container__components {
+            .event--card{
+                width: 90%;
+                .event--card__media--image{
+                }
+            }
+            .sale--card {
+                width: 80%;
+                .sale--card__title{
+                }
+            }
+        }
         }
     }
 

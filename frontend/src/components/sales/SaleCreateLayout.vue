@@ -177,6 +177,12 @@ export default {
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
           console.log(response);
+          //for take the post publish
+          const majPost = await SaleService.update({
+            "status": "publish",
+            "id": response.data.id
+          });
+          console.log(majPost)
           //response.data.id is the post id
           this.upload(response.data.id);
         } else if (response) {
@@ -348,6 +354,7 @@ export default {
       border-radius: 5px;
       border: 1px solid #ffc107;
       box-shadow: 0 5px 5px #0000001a;
+      cursor: pointer;
     }
 
     button:hover {
