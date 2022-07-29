@@ -100,6 +100,7 @@ export default {
         display: flex;
         flex-direction: row-reverse;
         align-items: center;
+        justify-content: center;
         .sale--backoffice__img{
             display: flex;
             width: 40%;
