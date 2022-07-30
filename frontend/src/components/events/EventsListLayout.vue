@@ -1,5 +1,6 @@
 <template>
   <section class="event--section">
+    <h1>Liste des évènements</h1>
     <div class="event--section__search">
       <img class="event--img" v-bind:src="eventPicture" />
       <!-- Load icon library from font awesome -->
@@ -8,15 +9,24 @@
       <button class="search-icon"><i class="fa fa-search"></i></button>
       <input type="text" class="search--input" placeholder="Rechercher..." v-model="searchString" />
 
-      <div class="button--title"></div>
-      <input type="radio" class="button--radio" id="all" v-model="picked" value="all" />
-      <label class="button--radio__title" for="all">Tout</label>
-      <!-- value 3 = id of taxonomie statement "réunion in backoffice wp" -->
-      <input type="radio" class="button--radio" id="statement" value="3" v-model="picked" />
-      <label class="button--radio__title" for="statement">Réunions</label>
-      <!-- value 4 = id of taxonomie actuality "actualité in backoffice wp" -->
-      <input type="radio" class="button--radio" id="actuality" value="4" v-model="picked" />
-      <label class="button--radio__title" for="actuality">Actualités</label>
+      <div class="button--radio__group"> 
+          <div class="button--title">
+          </div>
+          <div class="button--radio__element">
+            <input type="radio" class="button--radio" id="all" v-model="picked" value="all" />
+            <label class="button--radio__title" for="all">Tout</label>
+        </div>
+        <div class="button--radio__element">
+          <!-- value 3 = id of taxonomie statement "réunion in backoffice wp" -->
+          <input type="radio" class="button--radio" id="statement" value="3" v-model="picked" />
+          <label class="button--radio__title" for="statement">Réunions</label>
+        </div>
+        <div class="button--radio__element">
+          <!-- value 4 = id of taxonomie actuality "actualité in backoffice wp" -->
+          <input type="radio" class="button--radio" id="actuality" value="4" v-model="picked" />
+          <label class="button--radio__title" for="actuality">Actualités</label>
+        </div>
+      </div>
     </div>
 
     <EventListLayout
@@ -94,6 +104,13 @@ export default {
   flex-direction: column;
   align-items: center;
 
+  h1 {
+    color: $red;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 0px 1px 1px $grey;
+  }
+
   .event--section__search {
     width: 100%;
     display: flex;
@@ -122,24 +139,109 @@ export default {
     margin-left: 1rem;
   }
 
-  .button--radio {
-    
-  }
-
-  .button--title {
-    color: $grey;
-    padding-left: 3px;
-  }
-
-  .button--radio__title {
-    color: $grey;
-    
-  }
-
-  .event--img {
+   .event--img {
     width: 6rem;
   }
+
+
+  .button--radio__group {
+    width: 8rem;
+
+
+    .button--radio__element {
+      background-color: $white;
+      display: block;
+      margin: 10px 0;
+      position: relative;
+
+      .button--radio__title {
+        padding: 12px 30px;
+        width: 100%;
+        display: block;
+        text-align: left;
+        color: $grey;
+        cursor: pointer;
+        position: relative;
+        z-index: 2;
+    
+        overflow: hidden;
+
+        &:before {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          content: '';
+          background-color: $red;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+        
+          opacity: 0;
+          z-index: -1;
+        }
+
+        &:after {
+          width: 32px;
+          height: 32px;
+          content: '';
+          border: 2px solid #D1D7DC;
+          background-color: $white;
+          background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+          background-repeat: no-repeat;
+          background-position: 2px 3px;
+          border-radius: 50%;
+          z-index: 2;
+          position: absolute;
+          right: 30px;
+          top: 50%;
+          transform: translateY(-50%);
+          cursor: pointer;
+          transition: all 200ms ease-in;
+        }
+      }
+
+      .button--radio:checked ~ label {
+        color: $white;
+
+        &:before {
+          transform: translate(-50%, -50%) scale3d(56, 56, 1);
+          opacity: 1;
+        }
+
+        &:after {
+          background-color: $blue;
+          border-color: $blue;
+        }
+      }
+
+      .button--radio {
+        width: 32px;
+        height: 32px;
+        order: 1;
+        z-index: 2;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        visibility: hidden;
+      }
+    }
+  }
 }
+
+
+
+
+
+
+
+
+
+  
+
+ 
+
 </style>
 
 
