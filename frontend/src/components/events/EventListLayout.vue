@@ -3,11 +3,7 @@
     <div class="event--card">
         
         <router-link v-if="backOffice==false" v-bind:to="{name: 'event', params: {id: id}}">    
-            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
-            <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
-            <router-link class="event--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'eventUpdate', params: {id: id}}">
-            <img  v-bind:src="editPic">
-            </router-link>
+            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">         
             </div>
             <h2 class="event--card__title">
                 <div v-html="title"></div>
@@ -17,12 +13,12 @@
             </div>
         </router-link> 
         
-        <div   v-if="backOffice==true">
+        <div v-if="backOffice==true">
             <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
             
             
             <div class="event--backoffice__img">
-                <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
+                <img v-on:click="opacity=1;zindex=20;selectEvent=id" v-bind:src="trashPic" v-if="backOffice==true">
                 <router-link class="event--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'eventUpdate', params: {id: id}}">
                 <img  v-bind:src="editPic">
                 </router-link>
@@ -35,6 +31,7 @@
             <div class="event--card__content">
                 <div v-html="content"></div>
             </div>
+            <PopUpLayout v-bind:id="id" v-bind:opacity="this.opacity" v-bind:zindex="this.zindex" v-on:yes="del" v-on:no="this.opacity=0,this.zindex=-20"/> 
         </div>
         
     </div>
@@ -44,6 +41,7 @@
 
 <script>
 import EventService from '@/services/events/EventService';
+import PopUpLayout from '../back-office/PopUpLayout.vue';
 import trash from '@/assets/images/icons8-trash-can-100.png'
 import edit from '@/assets/images/icons8-edit-100.png'
 export default {
@@ -58,20 +56,26 @@ export default {
     },
     data() {
         return {
-           trashPic: trash ,
-           editPic: edit
+            trashPic: trash ,
+            editPic: edit,
+            zindex: -20,
+            opacity: 0,
+            selectEvent: null,
         }
     },
     methods:{
-        async del(e){
+        async del(){
+            this.opacity=0
+            this.zindex=-20 
             const response = await EventService.delete({
-                "id": e
+                "id": this.selectEvent
             });
              this.$emit("reloadEvent");
             console.log(response);            
         },
         
-    }
+    },
+    components: { PopUpLayout }
 
 }
 

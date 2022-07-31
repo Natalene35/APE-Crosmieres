@@ -156,8 +156,13 @@ export default {
           lieu: this.location,
         };
         const response = await EventService.addEvent(params);
-
-        if (response) {
+         // if event create status is ok and if there was an image to uplaod
+        if (response && this.currentImage) {
+          console.log(response);
+          //response.data.id is the post id
+          this.upload(response.data.id);
+        }
+        else if (response) {
           // if there was not image to upload but event was create
           this.title = null;
           this.content = null;

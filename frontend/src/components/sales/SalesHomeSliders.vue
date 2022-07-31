@@ -2,7 +2,7 @@
 
     <section class="sale--sliders__all">
         <!-- <------------------BUBBLE---------------->
-        <div class="background--bubble__container">
+        <div class="background--bubble__container" v-if="this.slideActive==true">
             <div class="background--design__bubble"></div>
             <div class="background--design__bubble"></div>
             <div class="background--design__bubble"></div>
@@ -48,25 +48,28 @@ export default {
             maxSlide: null,
             saleSlide: null,
             scroll: null,
+            slideActive: false,
         }
     },
     methods: {
         SlideAuto() {
             if(screen.width<=425){
+                this.slideActive=true
+                console.log("coucou la slide est "+this.slideActive)
                 let allSlideText = document.getElementsByClassName("hidden")
-            allSlideText[0].classList.remove("first")
-            if (this.slide != this.maxSlide) {
-                this.slide++
-                allSlideText[this.slide - 1].classList.remove("active")
-                allSlideText[this.slide - 1].classList.remove("animsliders")
-            }
-            else {
-                this.slide = 0
-                allSlideText[this.maxSlide].classList.remove("active")
-                allSlideText[this.maxSlide].classList.remove("animsliders")
-            }
-            allSlideText[this.slide].classList.add("active")
-            allSlideText[this.slide].classList.add("animsliders")
+                allSlideText[0].classList.remove("first")
+                if (this.slide != this.maxSlide) {
+                    this.slide++
+                    allSlideText[this.slide - 1].classList.remove("active")
+                    allSlideText[this.slide - 1].classList.remove("animsliders")
+                }
+                else {
+                    this.slide = 0
+                    allSlideText[this.maxSlide].classList.remove("active")
+                    allSlideText[this.maxSlide].classList.remove("animsliders")
+                }
+                allSlideText[this.slide].classList.add("active")
+                allSlideText[this.slide].classList.add("animsliders")
             }
             
         },

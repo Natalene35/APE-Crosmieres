@@ -167,7 +167,7 @@ export default {
         let params = {
           title: this.title,
           content: this.content,
-          date: this.eventDate,
+          date: this.saleDate,
           lieu: this.location,
           lien: this.link,
         };
