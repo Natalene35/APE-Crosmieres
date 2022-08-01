@@ -83,7 +83,7 @@ export default {
 </script>
 
 
-<style  lang="scss">
+<style scoped  lang="scss">
 .sale--sliders__all {
 
     display: none;
