@@ -1,54 +1,139 @@
 <template>
   <div class="wrapper">
     <div class="container">
-      <h1 class="title">s'inscrire à l'événement</h1>
+      <button v-if="showForm == false" @click="showForm = true">
+        Je m'inscris
+      </button>
+      <div v-if="showForm">
 
-      <div class="download">
-        <a class="download__link" href="register.jpg" download="file.jpg">
-          <b> Télécharger la fiche d'inscription </b>
-        </a>
-        <img
-          class="download__icon"
-          src="../../assets/images/jelly-character-gets-a-printed-document.png"
-          alt=""
-        />
+        <div class="download">
+          <a @click="downloadimg" class="download__link">
+            Formulaire d'inscription
+          </a>
+          <img
+            class="download__icon"
+            src="../../assets/images/jelly-character-gets-a-printed-document.png"
+            alt=""
+          />
+        </div>
+
+        <div class="field">
+          <label class="field__label"> Nom </label>
+          <input
+            type="text"
+            v-model="name"
+            class="field__input"
+            placeholder="Votre nom"
+          />
+
+          <label class="field__label"> Email </label>
+          <input
+            type="email"
+            v-model="email"
+            class="field__input"
+            placeholder="Votre adresse email"
+          />
+
+          <label class="field__label"> Je veux </label>
+          <div class="button--radio__group">
+            <!-- <div class="button--title">Je veux</div> -->
+            <div class="button--radio__element">
+              <input
+                type="radio"
+                class="button--radio"
+                v-model="picked"
+                value="participer"
+                id="participate"
+              />
+              <label class="button--radio__title" for="participate"
+                >Participer</label
+              >
+            </div>
+            <div class="button--radio__element">
+              <input
+                type="radio"
+                class="button--radio"
+                v-model="picked"
+                value="aider"
+                id="help"
+              />
+              <label class="button--radio__title" for="help"
+                >Aider à l'organisation</label
+              >
+            </div>
+            <div class="button--radio__element">
+              <input
+                type="radio"
+                class="button--radio"
+                v-model="picked"
+                value="commander"
+                id="order"
+              />
+              <label class="button--radio__title" for="order"
+                >Commander mes saucisses</label
+              >
+            </div>
+          </div>
+
+          <label v-if="picked === 'aider'" class="field__label">
+            Je suis disponible
+          </label>
+          <div v-if="picked === 'aider'" class="field__time">
+            <div class="field__input--start">
+              <label class="field__label--time"> à partir de </label>
+              <input
+                type="time"
+                v-model="startTime"
+                class="field__input--time"
+                placeholder="Heure début de votre disponibilité"
+              />
+            </div>
+            <div class="field__input--end">
+              <label class="field__label--time"> Jusqu'à </label>
+              <input
+                type="time"
+                v-model="endTime"
+                class="field__input--time"
+                placeholder="Heure début de votre disponibilité"
+              />
+            </div>
+          </div>
+          <label v-if="picked === 'commander'" class="field__label">
+            Combien de saucisse voulez vous
+          </label>
+          <input
+            v-if="picked === 'commander'"
+            type="text"
+            v-model="nbsaucisse"
+            class="field__input"
+            placeholder="Tu veux combien de saucisses Loïc ?"
+          />
+
+          <label class="field__label"> Commentaire </label>
+          <textarea
+            class="field__input"
+            v-model="subject"
+            rows="2"
+            placeholder="Sujet"
+          ></textarea>
+
+          <button @click="submitForm">Je m'inscris</button>
+        </div>
+
+        <p class="alert-error" v-for="error in errors" v-bind:key="error">
+          {{ error }}
+        </p>
+        <p class="alert-success" v-if="alerts">
+          {{ alerts }}
+        </p>
       </div>
-
-      <div class="field">
-        <input
-          type="text"
-          v-model="name"
-          class="field__input"
-          placeholder="Votre nom"
-        />
-        <input
-          type="email"
-          v-model="email"
-          class="field__input"
-          placeholder="Votre adresse email"
-        />
-        <textarea
-          class="field__input"
-          v-model="subject"
-          rows="2"
-          placeholder="Sujet"
-        ></textarea>
-
-        <button @click="submitForm">Je m'inscris</button>
-      </div>
-
-      <p class="alert-error" v-for="error in errors" v-bind:key="error">
-        {{ error }}
-      </p>
-      <p class="alert-success" v-if="alerts">
-        {{ alerts }}
-      </p>
     </div>
   </div>
 </template>
 
 <script>
 import UserService from "@/services/user/UserService";
+import EventService from "@/services/events/EventService";
 
 export default {
   name: "EventRegisterForm",
@@ -60,15 +145,16 @@ export default {
       file: null,
       errors: [],
       alerts: null,
+      picked: null,
+      nbsaucisse: null,
+      showForm: false,
+      startTime: null,
+      endTime: null,
     };
   },
   methods: {
-    // to submit fields and send datas to custom post 'event'
+    // to submit fields and send email
     async submitForm() {
-      setTimeout(() => {
-        this.alert = "c'est parti";
-      }, 5000);
-
       // Reset error table
       this.errors = [];
       this.alerts = null;
@@ -88,10 +174,21 @@ export default {
       }, 5000);
       // Send form request if no error
       if (this.errors.length === 0) {
+        let id = this.$route.params.id;
+        const event = await EventService.find(id);
+        console.log(event);
+        if (event.code) {
+          this.$router.push({ name: "404" });
+        }
         let params = {
           name: this.name,
           email: this.email,
           subject: this.subject,
+          nbsaucisse: this.nbsaucisse,
+          motive: this.picked,
+          startTime: this.startTime,
+          endTime: this.endTime,
+          eventTitle: event.title.rendered,
         };
         const response = await UserService.sendEmail(params);
         console.log(response);
@@ -99,8 +196,16 @@ export default {
           this.name = null;
           this.email = null;
           this.subject = null;
+          this.nbsaucisse = null;
+          this.picked = null;
+          this.startTime = null;
+          this.endTime = null;
           this.alerts = response.data.message;
-          setTimeout(() => (this.alerts = null), 1500);
+          setTimeout(() => {
+            this.alerts = null;
+            this.showForm = false;
+          }, 1500);
+
           // home redirect
           // setTimeout(() => this.$router.push({ name: "home" }), 1500);
         } else {
@@ -131,6 +236,24 @@ export default {
     margin-bottom: 1rem;
     border-radius: 1em;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
+
+    button {
+      display: inline-block;
+      width: 50%;
+      font-size: 1.2rem;
+      padding: 0.5em;
+      margin: 1rem;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 5px;
+      border: 1px solid #ffc107;
+      box-shadow: 0 5px 5px #0000001a;
+    }
+    button:hover {
+      color: white;
+      background-color: #ffc107;
+      box-shadow: 0 2px 2px #0000001a;
+    }
 
     .title {
       font-size: 1.6rem;
@@ -208,12 +331,16 @@ export default {
         margin-bottom: 1rem;
       }
 
+      .field__label--time,
       .field__label {
-        width: 100%;
-        float: left;
-        margin: 0.5rem;
+        width: 60%;
+        text-align: left;
+        margin: 0.5rem auto;
+        font-weight: bold;
       }
 
+      .field__time,
+      .field__input--time,
       .field__input {
         line-height: 3;
         border: 1px solid $blue-light-bg;
@@ -223,8 +350,29 @@ export default {
         text-align: left;
         width: 60%;
         float: right;
+        box-shadow: 0 2px 2px #0000001a;
       }
 
+      .field__time {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      .field__input--end,
+      .field__input--start {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+      }
+
+      .field__label--time {
+        width: 100%;
+        text-align: center;
+      }
+
+      .field__input--time {
+        width: 65%;
+      }
       ::placeholder {
         color: $red;
       }
@@ -245,6 +393,106 @@ export default {
         color: white;
         background-color: #ffc107;
         box-shadow: 0 2px 2px #0000001a;
+      }
+    }
+
+    .button--radio__group {
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      align-content: flex-start;
+      border: 1px solid $blue-light-bg;
+      border-radius: 0.5em;
+      margin: 0.5rem auto;
+      padding: 0.2rem 1rem;
+      text-align: left;
+      width: 60%;
+      float: right;
+      box-shadow: 0 2px 2px #0000001a;
+
+      .button--title {
+        width: 60%;
+        text-align: left;
+        margin: 0.5rem auto;
+        font-weight: bold;
+      }
+
+      .button--radio__element {
+        display: inline-block;
+        width: 60%;
+        margin: auto;
+
+        .button--radio__title {
+          padding: 5px 25px;
+          // width: 80%;
+          display: block;
+          text-align: left;
+          color: $grey;
+          cursor: pointer;
+          position: relative;
+          z-index: 2;
+          border-radius: 2rem;
+
+          overflow: hidden;
+          &:before {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            content: "";
+            background-color: $red;
+
+            position: absolute;
+            left: 50%;
+            top: 50%;
+
+            opacity: 0;
+            z-index: -1;
+          }
+          &:after {
+            width: 15px;
+            height: 15px;
+            content: "";
+            border: 1.9px solid $blue;
+            background-color: $white;
+            background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
+            background-repeat: no-repeat;
+            background-position: -2px -5px;
+            border-radius: 50%;
+            z-index: 2;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            transition: all 200ms ease-in;
+          }
+        }
+        .button--radio:checked ~ label {
+          color: $white;
+
+          &:before {
+            transform: translate(-50%, -50%) scale3d(56, 56, 1);
+            opacity: 1;
+          }
+          &:after {
+            background-color: $blue;
+            border-color: $blue;
+          }
+        }
+        .button--radio {
+          width: 32px;
+          height: 32px;
+          order: 1;
+          z-index: 2;
+          position: absolute;
+          right: 30px;
+          top: 50%;
+          transform: translateY(-50%);
+          cursor: pointer;
+          visibility: hidden;
+        }
       }
     }
   }

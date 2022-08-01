@@ -29,22 +29,43 @@ function ape_rest_user_send_email($request)
     $name = sanitize_text_field($parameters['name']);
     $email = sanitize_text_field($parameters['email']);
     $subject = sanitize_text_field($parameters['subject']);
-    // $name = $parameters['name'];
-    // $email = $parameters['email'];
-    // $subject = $parameters['subject'];
+
+    $nbsaucisse = sanitize_text_field($parameters['nbsaucisse']);
+    $motive = sanitize_text_field($parameters['motive']);
+    $startTime = sanitize_text_field($parameters['startTime']);
+    $endTime = sanitize_text_field($parameters['endTime']);
+    $eventTitle = sanitize_text_field($parameters['eventTitle']);
+
+
 
     $mail = new PHPMailer();
 
-    // $email = "chrisdmar12@gmail.com";
-    // $name = "Kévin";
-    // $subject = html_entity_decode("$name viens de s'inscrire à l'événement");
-    $body = "
-        <h1>$name s'est inscrit</h1>
+    if ($motive === 'participer') {
+        $body = "
+        <h3>$name viens à l'événement : $eventTitle</h3>
         <p>mail : $email</p>
         <p>Message :</p> $subject";
+    } else if ($motive === 'aider') {
+        $body = "
+        <h3>$name veux participer à l'événement : $eventTitle</h3>
+        <p>Il est disponible de $startTime à $endTime</p>
+        <p>mail : $email</p>
+        <p>Message :</p> $subject";
+    } else  if ($motive === 'commander') {
+        $body = "
+        <h3>$name veux $nbsaucisse saucisses pour l'événement : $eventTitle</h3>
+        <p>mail : $email</p>
+        <p>Message :</p> $subject";
+    } else {
+        $body = "
+        <h3>$name s'est inscrit à l'événement : $eventTitle</h3>
+        <p>Son message n'est pas très clair.</p>
+        <p>mail : $email</p>
+        <p>Message :</p> $subject";
+    }
 
 
-    // fonctionne avec hotmail
+    // configuration avec hotmail
     // Parametre SMTP
     // Nom de serveur : smtp.office365.com
     // Port : 587
@@ -60,16 +81,14 @@ function ape_rest_user_send_email($request)
     $mail->Port = 587;
     $mail->SMTPSecure = "tls";
 
-
+    $mail->CharSet = 'utf-8';
 
     //email settings
     $mail->isHTML(true);
     $mail->setFrom("Page inscription", $name); // expediteur and name
     $mail->addAddress("chrisdmar12@gmail.com"); // destinataire
-    $mail->Subject = utf8_decode("Inscription à un événement");
+    $mail->Subject = utf8_decode("Inscription à $eventTitle");
     $mail->Body = $body;
-
-    // return  $mail;
 
     if ($mail->send()) {
         return [
@@ -82,60 +101,4 @@ function ape_rest_user_send_email($request)
             "message" => "Une erreur s'est produite, veuillez réessayer plus tard..."
         ];
     }
-
-    // exit(json_encode(array("status" => $status, "response" => $response)));
-}
-
-
-
-function sendWithPhpMailer($subject, $body, $reply)
-{
-    require(ABSPATH . WPINC . '/class-phpmailer.php');
-    require(ABSPATH . WPINC . '/class-smtp.php');
-
-    // date_default_timezone_set( 'America/Sao_Paulo' );
-
-    $blogname = wp_strip_all_tags(trim(get_option('blogname')));
-    $smtpHost = wp_strip_all_tags(trim(get_option('smtp_host')));
-    $mailPort = wp_strip_all_tags(trim(get_option('smtp_port')));
-    $smtpUser = wp_strip_all_tags(trim(get_option('smtp_user')));
-    $smtpPass = wp_strip_all_tags(trim(get_option('smtp_pass')));
-    $mailTo = wp_strip_all_tags(trim(get_option('mail_to')));
-
-    $send = false;
-    $mail = new PHPMailer;
-
-    try {
-        $mail->IsSMTP();
-        $mail->SMTPDebug = 0;
-        $mail->Sender = $smtpUser;
-        $mail->CharSet = 'utf-8';
-        $mail->SMTPSecure = 'tls';
-        $mail->SMTPAuth = true;
-        $mail->Port = $mailPort;
-        $mail->Host = $smtpHost;
-        $mail->Username = $smtpUser;
-        $mail->Password = $smtpPass;
-        $mail->Subject = $subject;
-        $mail->From = $smtpUser;
-        $mail->setFrom($smtpUser, $blogname);
-        $mail->addReplyTo($reply);
-        $mail->addAddress($mailTo);
-
-        // Attachments
-        // $mail->addAttachment('/var/tmp/file.tar.gz');
-
-        $mail->isHTML(true);
-        $mail->Body = $body;
-
-        $send = $mail->Send();
-
-        $mail->ClearAllRecipients();
-    } catch (Exception $e) {
-        echo "Message could not be sent. Mailer Error: $mail->ErrorInfo \n";
-        echo "Error: $e";
-        return false;
-    }
-
-    return $send;
 }
