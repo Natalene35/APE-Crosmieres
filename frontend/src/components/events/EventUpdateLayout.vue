@@ -111,6 +111,7 @@ export default {
       errors: [],
       alerts: null,
       showModal: false,
+      selected: null,
     };
   },
   methods: {
