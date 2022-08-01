@@ -28,18 +28,20 @@ function ape_rest_user_send_email($request)
 
     $name = sanitize_text_field($parameters['name']);
     $email = sanitize_text_field($parameters['email']);
-    $body = sanitize_text_field($parameters['body']);
+    $subject = sanitize_text_field($parameters['subject']);
+    // $name = $parameters['name'];
+    // $email = $parameters['email'];
+    // $subject = $parameters['subject'];
 
     $mail = new PHPMailer();
 
-    $email = "chrisdmar12@gmail.com";
+    // $email = "chrisdmar12@gmail.com";
     // $name = "Kévin";
-    $subject = "$name viens de s'inscrire à l'événement";
-    $body .= "
-        <br>
+    // $subject = html_entity_decode("$name viens de s'inscrire à l'événement");
+    $body = "
         <h1>$name s'est inscrit</h1>
-        <p>Sort le champ's</p>
-        ";
+        <p>mail : $email</p>
+        <p>Message :</p> $subject";
 
 
     // fonctionne avec hotmail
@@ -54,7 +56,7 @@ function ape_rest_user_send_email($request)
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
     $mail->Username = "chrisdmar12@gmail.com"; //expediteur
-    $mail->Password = '';
+    $mail->Password = 'qsxriotatequwnsc';
     $mail->Port = 587;
     $mail->SMTPSecure = "tls";
 
@@ -62,22 +64,26 @@ function ape_rest_user_send_email($request)
 
     //email settings
     $mail->isHTML(true);
-    $mail->setFrom($email, $name); // expediteur and name
-    $mail->addAddress($email); // destinataire
-    $mail->Subject = $subject;
+    $mail->setFrom("Page inscription", $name); // expediteur and name
+    $mail->addAddress("chrisdmar12@gmail.com"); // destinataire
+    $mail->Subject = utf8_decode("Inscription à un événement");
     $mail->Body = $body;
 
     // return  $mail;
 
     if ($mail->send()) {
-        $status = "success";
-        $response = "Email is sent!";
+        return [
+            "status" => "success",
+            "message" => "Message envoyé"
+        ];
     } else {
-        $status = "failed";
-        $response = "Something is wrong: <br>" . $mail->ErrorInfo;
+        return [
+            "status" => "failed",
+            "message" => "Une erreur s'est produite, veuillez réessayer plus tard..."
+        ];
     }
 
-    exit(json_encode(array("status" => $status, "response" => $response)));
+    // exit(json_encode(array("status" => $status, "response" => $response)));
 }
 
 

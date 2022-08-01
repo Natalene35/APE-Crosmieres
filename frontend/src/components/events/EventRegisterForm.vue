@@ -4,11 +4,7 @@
       <h1 class="title">s'inscrire à l'événement</h1>
 
       <div class="download">
-        <a
-          class="download__link"
-          href="./../assets/documents/Inscription.pdf"
-          download="Inscription.pdf"
-        >
+        <a class="download__link" href="register.jpg" download="file.jpg">
           <b> Télécharger la fiche d'inscription </b>
         </a>
         <img
@@ -37,7 +33,7 @@
           rows="2"
           placeholder="Sujet"
         ></textarea>
-        
+
         <button @click="submitForm">Je m'inscris</button>
       </div>
 
@@ -58,9 +54,9 @@ export default {
   name: "EventRegisterForm",
   data() {
     return {
-      name: null,
-      email: null,
-      subject: null,
+      name: "Gégé",
+      email: "gerard.mensoif@groutmail.com",
+      subject: "Hello, je veux m'inscrire yéyé@",
       file: null,
       errors: [],
       alerts: null,
@@ -78,13 +74,13 @@ export default {
       this.alerts = null;
       // Form Content Validation
       if (!this.name) {
-        this.errors.push("Veuillez remplir un titre svp");
+        this.errors.push("Veuillez remplir un nom svp");
       }
       if (!this.email) {
-        this.errors.push("Veuillez remplir une description svp");
+        this.errors.push("Veuillez remplir une adresse email svp");
       }
       if (!this.subject) {
-        this.errors.push("Veuillez remplir une date svp");
+        this.subject = "pas de message";
       }
 
       setTimeout(() => {
@@ -98,18 +94,17 @@ export default {
           subject: this.subject,
         };
         const response = await UserService.sendEmail(params);
-
-        if (response) {
+        console.log(response);
+        if (response.data.status === "success") {
           this.name = null;
           this.email = null;
           this.subject = null;
-          this.alerts = "Email envpyé";
+          this.alerts = response.data.message;
+          setTimeout(() => (this.alerts = null), 1500);
           // home redirect
-          setTimeout(() => this.$router.push({ name: "home" }), 1500);
+          // setTimeout(() => this.$router.push({ name: "home" }), 1500);
         } else {
-          this.errors.push(
-            "Une erreur s'est produite, veuillez réessayer plus tard..."
-          );
+          this.errors.push(response.data.message);
         }
       }
     },
@@ -152,7 +147,7 @@ export default {
       min-width: 420px;
       position: fixed;
       right: 0;
-      top: 10px;
+      bottom: 10%;
       border-left: 8px solid #3ad66e;
       border-radius: 4px;
     }
@@ -165,7 +160,7 @@ export default {
       min-width: 420px;
       position: fixed;
       right: 0;
-      top: 10px;
+      bottom: 10%;
       border-left: 8px solid #ffa502;
       border-radius: 4px;
     }
@@ -253,7 +248,7 @@ export default {
       }
     }
   }
-  @media screen and (max-width: 950px) {
+  @media screen and (max-width: 750px) {
     .container {
       background-color: transparent;
       box-shadow: none;
