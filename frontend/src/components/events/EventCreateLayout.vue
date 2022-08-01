@@ -4,10 +4,11 @@
       <div class="field">
         <div class="field__title">
           <img class="logo--img" src="../../assets/images/jelly-message-sent-by-character.png" alt="" />
-          <h1 class="title">Ajout d'un événement</h1>
+          <h1 class="title">Ajout d'un évènement</h1>
         </div>
 
-        <select v-model="selected">
+        <label class="field__label">Catégorie</label>
+        <select id="field__select" v-model="selected">
         <option disabled value="">Choisissez la catégorie</option>
         <option value="4">Actualité</option>
         <option value="3">Réunion</option>
@@ -19,10 +20,10 @@
         <label class="field__label">Decription </label>
         <textarea class="textarea field__input" type="text" placeholder="" rows="3" v-model="content"></textarea>
 
-        <label class="field__label">Date de l'événement </label>
+        <label class="field__label">Date de l'évènement </label>
         <input class="field__input" type="date" placeholder="" v-model="eventDate" />
 
-        <label class="field__label">Lieu de l'événement </label>
+        <label class="field__label">Lieu de l'évènement </label>
         <input class="field__input" type="text" placeholder="" v-model="location" />
 
         <label class="field__label"> Image </label>
@@ -82,20 +83,19 @@ export default {
       alerts: null,
       showModal: false,
       selected: null,
-
     };
   },
 
   methods: {
 
     imageValidate() {
-
       if (this.currentImage) {
         this.submitForm();
       } else {
         this.showModal = true;
       }
     },
+
     selectImage() {
       this.currentImage = this.$refs.file.files.item(0);
       this.previewImage = URL.createObjectURL(this.currentImage);
@@ -173,6 +173,7 @@ export default {
           date: this.eventDate,
           lieu: this.location,
         };
+
         //custom resquest for post new event with meta
         const response = await EventService.addEvent(params);
 
