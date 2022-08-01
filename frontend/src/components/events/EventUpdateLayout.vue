@@ -251,15 +251,6 @@ export default {
         };
         
         const response = await EventService.updateCustom(params);
-<<<<<<< HEAD
-        //UPDATE TAXONOMIE
-        // const updateTax= await EventService.update({
-        //   id: this.id,
-        //   types: 4
-        // });
-        // console.log(updateTax)
-        console.log(response)
-=======
         console.log(response.code);
 
         //native request from wordpress for the types taxonomy
@@ -270,7 +261,6 @@ export default {
             console.log(updateTaxonomy);
 
 
->>>>>>> event-taxonomy-create
         if(this.currentImage!=undefined&&this.previewImage!=undefined){
          this.upload(this.id);   
         }
