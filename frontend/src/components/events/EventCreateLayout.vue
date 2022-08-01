@@ -7,6 +7,12 @@
           <h1 class="title">Ajout d'un événement</h1>
         </div>
 
+        <select v-model="selected">
+        <option disabled value="">Choisissez la catégorie</option>
+        <option value="4">Actualité</option>
+        <option value="3">Réunion</option>
+        </select>
+
         <label class="field__label">Titre de la publication </label>
         <input class="field__input" type="text" placeholder="" v-model="title" />
 
@@ -57,6 +63,7 @@
   </section>
 </template>
 
+
 <script>
 import EventService from "@/services/events/EventService";
 
@@ -74,6 +81,8 @@ export default {
       errors: [],
       alerts: null,
       showModal: false,
+      selected: null,
+
     };
   },
 
@@ -101,6 +110,7 @@ export default {
           EventService.addMediaToEvent(postId, this.imageInfos.id).then(
             (response) => {
               if (response.status === 200) {
+                this.selected = null;
                 this.title = null;
                 this.content = null;
                 this.eventDate = null;
@@ -137,6 +147,9 @@ export default {
       this.errors = [];
       this.alerts = null;
       // Form Content Validation
+      if (!this.selected) {
+        this.errors.push("Veuillez sélectionner une catégorie svp");
+      }
       if (!this.title) {
         this.errors.push("Veuillez remplir un titre svp");
       }
@@ -160,10 +173,18 @@ export default {
           date: this.eventDate,
           lieu: this.location,
         };
+        //custom resquest for post new event with meta
         const response = await EventService.addEvent(params);
+
+        //native request from wordpress for the types taxonomy
+        const updateTaxonomy= await EventService.update({
+          id: response.data.id,
+          types: this.selected
+        });
+            console.log(updateTaxonomy);
+
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
-
           //for take the post publish
           const majPost = await EventService.update({
             "status": "publish",
@@ -174,6 +195,7 @@ export default {
           this.upload(response.data.id);
         } else if (response) {
           // if there was not image to upload but event was create
+          this.selected = null;
           this.title = null;
           this.content = null;
           this.eventDate = null;

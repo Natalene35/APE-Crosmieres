@@ -237,7 +237,16 @@ export default {
           id: this.id
         };
         const response = await EventService.updateCustom(params);
-        console.log(response.code)
+        console.log(response.code);
+
+        //native request from wordpress for the types taxonomy
+        const updateTaxonomy= await EventService.update({
+          id: this.id,
+          types: 4
+        });
+            console.log(updateTaxonomy);
+
+
         if(this.currentImage!=undefined&&this.previewImage!=undefined){
          this.upload(this.id);   
         }
