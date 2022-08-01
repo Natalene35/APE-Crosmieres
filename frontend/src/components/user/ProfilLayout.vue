@@ -63,8 +63,8 @@
         </div>
         <a v-on:click="deleteConfirm" class="deleteUser">Supprimer votre compte ?</a>
         <div class="deleteConfirm display--none">
-          <a class="deleteConfirm--return" v-on:click="hiddenDeleteConfirm">annuler ?</a>
-          <a class="deleteConfirm--button" v-on:click="removeUser">êtes-vous sûrs ? </a>
+          <a class="deleteConfirm--return" v-on:click="hiddenDeleteConfirm">Conserver son compte ?</a>
+          <a class="deleteConfirm--button" v-on:click="removeUser">Confirmer la suppression ? </a>
         </div>
       </div>
     </div>
@@ -300,8 +300,9 @@ export default {
      }
  
      .deleteConfirm--return {
-       border: 1px solid $green;
-       background-color: $green;
+       border: 1px solid rgb(20, 153, 20);
+       background-color: rgb(20, 153, 20);
+       color: $white;
        border-radius: 10px;
        cursor: pointer;
      }
