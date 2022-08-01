@@ -4,8 +4,15 @@
       <div class="field">
         <div class="field__title">
           <img class="logo--img" src="../../assets/images/jelly-message-sent-by-character.png" alt="" />
-          <h1 class="title">Ajout d'un événement</h1>
+          <h1 class="title">Ajout d'un évènement</h1>
         </div>
+
+        <label class="field__label">Catégorie</label>
+        <select id="field__select" v-model="selected">
+        <option disabled value="">Choisissez la catégorie</option>
+        <option value="4">Actualité</option>
+        <option value="3">Réunion</option>
+        </select>
 
         <label class="field__label">Titre de la publication </label>
         <input class="field__input" type="text" placeholder="" v-model="title" />
@@ -13,10 +20,10 @@
         <label class="field__label">Decription </label>
         <textarea class="textarea field__input" type="text" placeholder="" rows="3" v-model="content"></textarea>
 
-        <label class="field__label">Date de l'événement </label>
+        <label class="field__label">Date de l'évènement </label>
         <input class="field__input" type="date" placeholder="" v-model="eventDate" />
 
-        <label class="field__label">Lieu de l'événement </label>
+        <label class="field__label">Lieu de l'évènement </label>
         <input class="field__input" type="text" placeholder="" v-model="location" />
 
         <label class="field__label"> Image </label>
@@ -57,6 +64,7 @@
   </section>
 </template>
 
+
 <script>
 import EventService from "@/services/events/EventService";
 
@@ -74,19 +82,20 @@ export default {
       errors: [],
       alerts: null,
       showModal: false,
+      selected: null,
     };
   },
 
   methods: {
 
     imageValidate() {
-
       if (this.currentImage) {
         this.submitForm();
       } else {
         this.showModal = true;
       }
     },
+
     selectImage() {
       this.currentImage = this.$refs.file.files.item(0);
       this.previewImage = URL.createObjectURL(this.currentImage);
@@ -101,6 +110,7 @@ export default {
           EventService.addMediaToEvent(postId, this.imageInfos.id).then(
             (response) => {
               if (response.status === 200) {
+                this.selected = null;
                 this.title = null;
                 this.content = null;
                 this.eventDate = null;
@@ -137,6 +147,9 @@ export default {
       this.errors = [];
       this.alerts = null;
       // Form Content Validation
+      if (!this.selected) {
+        this.errors.push("Veuillez sélectionner une catégorie svp");
+      }
       if (!this.title) {
         this.errors.push("Veuillez remplir un titre svp");
       }
@@ -160,10 +173,19 @@ export default {
           date: this.eventDate,
           lieu: this.location,
         };
+
+        //custom resquest for post new event with meta
         const response = await EventService.addEvent(params);
+
+        //native request from wordpress for the types taxonomy
+        const updateTaxonomy= await EventService.update({
+          id: response.data.id,
+          types: this.selected
+        });
+            console.log(updateTaxonomy);
+
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
-
           //for take the post publish
           const majPost = await EventService.update({
             "status": "publish",
@@ -174,6 +196,7 @@ export default {
           this.upload(response.data.id);
         } else if (response) {
           // if there was not image to upload but event was create
+          this.selected = null;
           this.title = null;
           this.content = null;
           this.eventDate = null;

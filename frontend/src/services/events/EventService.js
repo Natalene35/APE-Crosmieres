@@ -52,6 +52,7 @@ export default {
         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
 
         let formData = new FormData();
+
         formData.append("title", 'event-' + title);
         formData.append("file", file);
         formData.append("post", postId);
