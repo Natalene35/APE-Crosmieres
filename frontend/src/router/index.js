@@ -193,19 +193,19 @@ router.beforeEach((to) => {
     // Road for members 
     case 'back-office':
       // Only with if connected and the role 'admin' or APE members 
-      if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
+      if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
         return true
       }
       return { name: "login" };
     
        case 'saleUpdate':
-    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
         return true
       }
       return { name: "login" };
     
      case 'saleCreate':
-    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
         return true
       }
       return { name: "login" };
@@ -217,7 +217,7 @@ router.beforeEach((to) => {
       return { name: "login" };
     
     case 'eventUpdate':
-    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
         return true
       }
       return { name: "login" };
