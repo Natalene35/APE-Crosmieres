@@ -1,7 +1,7 @@
 <template>
 
     <div class="event--card">
-        
+
         <router-link v-if="backOffice==false" v-bind:to="{name: 'event', params: {id: id}}">    
             <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">         
             </div>
@@ -35,15 +35,14 @@
         </div>
         
     </div>
-     
 </template>
-
 
 <script>
 import EventService from '@/services/events/EventService';
 import PopUpLayout from '../back-office/PopUpLayout.vue';
 import trash from '@/assets/images/icons8-trash-can-100.png'
 import edit from '@/assets/images/icons8-edit-100.png'
+
 export default {
     name: "EventListLayout",
     emits: ["reloadEvent"],
@@ -70,6 +69,7 @@ export default {
             const response = await EventService.delete({
                 "id": this.selectEvent
             });
+
              this.$emit("reloadEvent");
             console.log(response);            
         },
@@ -80,7 +80,6 @@ export default {
 }
 
 </script>
-
 
 <style scoped lang="scss">
 .event--card {
@@ -95,15 +94,14 @@ export default {
     padding-bottom: 1rem;
     width: 95%;
 
-        .event--card__title {
-            color: $grey;
-            font-weight: bold;
-            padding-right: 2rem;
-            padding-left: 2rem;
-            font-size: 1.2rem;
-            padding-top: 1rem;
-     
-        }
+    .event--card__title {
+        color: $grey;
+        font-weight: bold;
+        padding-right: 2rem;
+        padding-left: 2rem;
+        font-size: 1.2rem;
+        padding-top: 1rem;
+    }
 
         .event--card__media--image {
             
@@ -113,7 +111,10 @@ export default {
             border-radius: 2rem 2rem 0 0;
             .event--backoffice__img{
                 display: flex;
-                flex-direction: row-reverse;
+                justify-content: flex-end;
+                align-items: center;
+                align-content: center;
+            cursor: pointer;
                 img,a{
                 height: 4rem;
                
@@ -125,20 +126,18 @@ export default {
             }
             }
         }
-
-        .event--card__content {
-            color: $grey;
-            margin: 1rem 3rem 1rem 3rem;
-
-        }
-    
-}
-//<---------------------MEDIA QUERIES ------------------------>
-@media (max-width: 425px) {
-    .event--card {
-        width:90%;
+    .event--card__content {
+        color: $grey;
+        margin: 1rem 3rem 1rem 3rem;
     }
 
 }
 
+//<---------------------MEDIA QUERIES ------------------------>
+@media (max-width: 425px) {
+    .event--card {
+        width: 90%;
+    }
+
+}
 </style>

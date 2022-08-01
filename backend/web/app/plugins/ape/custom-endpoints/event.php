@@ -61,6 +61,7 @@ function ape_rest_event_update_handler($request)
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
     $lieu = sanitize_text_field($parameters['lieu']);
+    $type=$parameters['types']; 
   
     // add to the database
     $post_id = wp_update_post([
@@ -71,8 +72,9 @@ function ape_rest_event_update_handler($request)
         'meta_input' => array(
             'date' => $date,
             'lieu' => $lieu
-           )
-    ]);   
+        )
+    ]);
+
     // return post's id or false
     return $post_id ? ["id" => $post_id] : false;
 }
