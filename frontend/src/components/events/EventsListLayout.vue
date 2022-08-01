@@ -146,23 +146,24 @@ export default {
 
   .button--radio__group {
     width: 8rem;
-
+    margin-left: 10%;
 
     .button--radio__element {
-      background-color: $white;
+      
       display: block;
       margin: 10px 0;
       position: relative;
 
       .button--radio__title {
-        padding: 12px 30px;
-        width: 100%;
+        padding: 5px 25px;
+        width: 80%;
         display: block;
         text-align: left;
         color: $grey;
         cursor: pointer;
         position: relative;
         z-index: 2;
+        border-radius: 2rem;
     
         overflow: hidden;
 
@@ -172,6 +173,7 @@ export default {
           border-radius: 50%;
           content: '';
           background-color: $red;
+          
           position: absolute;
           left: 50%;
           top: 50%;
@@ -181,18 +183,18 @@ export default {
         }
 
         &:after {
-          width: 32px;
-          height: 32px;
+          width: 15px;
+          height: 15px;
           content: '';
-          border: 2px solid #D1D7DC;
+          border: 1.9px solid $blue;
           background-color: $white;
           background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
           background-repeat: no-repeat;
-          background-position: 2px 3px;
+          background-position: -2px -5px;
           border-radius: 50%;
           z-index: 2;
           position: absolute;
-          right: 30px;
+          right: 1rem;
           top: 50%;
           transform: translateY(-50%);
           cursor: pointer;
@@ -202,6 +204,7 @@ export default {
 
       .button--radio:checked ~ label {
         color: $white;
+        
 
         &:before {
           transform: translate(-50%, -50%) scale3d(56, 56, 1);
@@ -230,18 +233,25 @@ export default {
   }
 }
 
+//<---------------------MEDIA QUERIES ------------------------>
+@media (max-width: 425px) {
 
+  .event--section {
+    .search-icon {
+      margin-left: inherit;
+    }
 
+    .event--img {
+      display:none;
+    }
 
+    .button--radio__group {
+        margin-left:1%;
+    }
+  }
 
-
-
-
-
-  
-
- 
-
+}
 </style>
+
 
 
