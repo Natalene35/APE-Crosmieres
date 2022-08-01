@@ -34,12 +34,8 @@
             <SaleCreateLayout v-if="this.menu == 2" class="back-office--container__components" />
             <EventCreateLayout v-if="this.menu == 4" class="back-office--container__components" />
         </section>
-
-        <section class="back-office--popUp">
-            <div>
-                POPUP
-            </div>
-        </section>
+       
+        
     </section>
 </template>
 
@@ -60,7 +56,8 @@ export default {
             menu: null,
             eventsList: null,
             salesList: null,
-            backOffice: true
+            backOffice: true,
+            
         };
     },
     methods: {
@@ -102,7 +99,8 @@ export default {
         async reload(){
         this.eventsList = await EventService.findAll();
         this.salesList = await SaleService.findAll();
-        }
+        },       
+
     },
     components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
     ,
@@ -116,7 +114,6 @@ export default {
 <style lang="scss" scoped>
 .back-office--container__all {
     width: 100%;
-
     .back-office--sales__all {
         width: 94%;
         display: flex;
@@ -124,9 +121,7 @@ export default {
         padding: 2%;
         align-items: center;
         padding: 0% 3% 0% 3%;
-        .back-office--popUp{
-            background-color: yellow;
-        }
+       
         .back-office--container__components {
             display: flex;
             flex-wrap: wrap;

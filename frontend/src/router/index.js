@@ -4,6 +4,9 @@ import {
 } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
+// We load the store to have access to it outside the component context
+import store from '@/store/index'
+
 const routes = [{
     path: '/',
     name: 'home',
@@ -126,5 +129,101 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 });
+
+// Will execute before displaying the contents of the new route
+router.beforeEach((to) => {
+  // administrator
+  // apemember
+  // apeuser
+
+  // Road page for visitor 
+  switch (to.name) {
+    case 'home':
+      return true;
+    
+    case 'login':
+      return true;
+    
+    case 'registration':
+      return true;
+    
+    case '404':
+      return true;
+    
+    case 'legals-mentions':
+      return true;
+    
+    // Road page for Registered 
+    case 'memberList':
+      if (store.getters.getToken) {
+        return true
+      }
+      return { name: "registration" };
+
+    case 'eventsList':
+      if (store.getters.getToken) {
+        return true
+      }
+      return { name: "registration" };
+    
+    case 'salesList':
+      if (store.getters.getToken) {
+        return true
+      }
+      return { name: "registration" };
+    
+    case 'event':
+      if (store.getters.getToken) {
+        return true
+      }
+      return { name: "registration" };
+    
+    case 'sale':
+      if (store.getters.getToken) {
+        return true
+      }
+      return { name: "registration" };
+    
+    case 'userprofil':
+      if (store.getters.getToken) {
+        return true
+      }
+      return { name: "registration" };
+    
+    // Road for members 
+    case 'back-office':
+      // Only with if connected and the role 'admin' or APE members 
+      if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+        return true
+      }
+      return { name: "login" };
+    
+       case 'saleUpdate':
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+        return true
+      }
+      return { name: "login" };
+    
+     case 'saleCreate':
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+        return true
+      }
+      return { name: "login" };
+    
+    case 'eventCreate':
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
+        return true
+      }
+      return { name: "login" };
+    
+    case 'eventUpdate':
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+        return true
+      }
+      return { name: "login" };
+  }
+  // if the road doesn't exit we return a 404
+ return { name: "404" };
+})
 
 export default router;
