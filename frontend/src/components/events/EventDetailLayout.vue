@@ -10,7 +10,7 @@
         <div class="event--card__date">{{ date }}</div>
         <div class="event--card__location">{{ location }}</div>
 
-        <div class="event--card__media--image" v-bind:style="'background-image:url(' + defaultPicture + ')'"></div>
+        <div class="event--card__media--image" v-bind:style="'background-image:url(' + image + ')'"></div>
 
         <div class="event--card__content" v-html="content"></div>
 
@@ -67,7 +67,7 @@ export default {
             } else {
                 this.title = response.title.rendered;
                 this.content = response.content.rendered;
-                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
+                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : this.defaultPicture;
             }
         }
     },

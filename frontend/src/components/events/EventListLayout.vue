@@ -1,14 +1,14 @@
 <template>
 
     <div class="event--card">
-default-event-sale-image
 
-        <router-link v-if="backOffice==false" v-bind:to="{name: 'event', params: {id: id}}">    
-            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
-            <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
-            <router-link class="event--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'eventUpdate', params: {id: id}}">
-            <img  v-bind:src="editPic">
-            </router-link>
+        <router-link v-if="backOffice == false" v-bind:to="{ name: 'event', params: { id: id } }">
+            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image + ')'">
+                <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice == true">
+                <router-link class="event--card__editPic" v-if="backOffice == true"
+                    v-bind:to="{ name: 'eventUpdate', params: { id: id } }">
+                    <img v-bind:src="editPic">
+                </router-link>
 
             </div>
             <h2 class="event--card__title">
@@ -17,19 +17,20 @@ default-event-sale-image
             <div class="event--card__content">
                 <div v-html="content"></div>
             </div>
-        </router-link> 
-        
-        <div   v-if="backOffice==true">
-            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">
-            
-            
-            <div class="event--backoffice__img">
-                <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice==true">
-                <router-link class="event--card__editPic" v-if="backOffice==true" v-bind:to="{name: 'eventUpdate', params: {id: id}}">
-                <img  v-bind:src="editPic">
-                </router-link>
-            </div>
-            
+        </router-link>
+
+        <div v-if="backOffice == true">
+            <div class="event--card__media--image" v-bind:style="'background-image:url(' + image + ')'">
+
+
+                <div class="event--backoffice__img">
+                    <img v-on:click="del(id)" v-bind:src="trashPic" v-if="backOffice == true">
+                    <router-link class="event--card__editPic" v-if="backOffice == true"
+                        v-bind:to="{ name: 'eventUpdate', params: { id: id } }">
+                        <img v-bind:src="editPic">
+                    </router-link>
+                </div>
+
             </div>
             <h2 class="event--card__title">
                 <div v-html="title"></div>
@@ -38,7 +39,7 @@ default-event-sale-image
                 <div v-html="content"></div>
             </div>
         </div>
-        
+
     </div>
 </template>
 
@@ -69,8 +70,8 @@ export default {
                 "id": e
             });
 
-             this.$emit("reloadEvent");
-            console.log(response);            
+            this.$emit("reloadEvent");
+            console.log(response);
         },
     }
 }
@@ -116,23 +117,27 @@ export default {
         }
 
         .event--card__media--image {
-            
+
             min-height: 30vh;
             background-position: center;
             background-size: cover;
             border-radius: 2rem 2rem 0 0;
-            .event--backoffice__img{
+
+            .event--backoffice__img {
                 display: flex;
                 flex-direction: row-reverse;
-                img,a{
-                height: 4rem;
-               
-                cursor: pointer;
-            }
-            img:hover{
-            filter: brightness(1.1);
-            transform: scale(1.2);
-            }
+
+                img,
+                a {
+                    height: 4rem;
+
+                    cursor: pointer;
+                }
+
+                img:hover {
+                    filter: brightness(1.1);
+                    transform: scale(1.2);
+                }
             }
         }
     }
