@@ -61,10 +61,15 @@ function ape_rest_event_update_handler($request)
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
     $lieu = sanitize_text_field($parameters['lieu']);
+<<<<<<< HEAD
     $type=$parameters['types']; 
+=======
+    $type=$parameters['type']; 
+>>>>>>> event-taxonomy-create
   
-    // add to the database
+   // add to the database
     $post_id = wp_update_post([
+        
         'post_title' => $title,
         'post_content' => $content,
         'post_type' => 'event',
