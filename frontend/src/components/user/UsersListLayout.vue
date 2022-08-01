@@ -3,29 +3,33 @@
 >
         <h1>Liste des utilisateurs</h1>
         <ul>
-            <li v-for="user in users" v-bind:key="user.id" v-on:changeUserRole="UserRole">
+            <li v-for="user in users" v-bind:key="user.id">
                 <div class="detail">
                     <div>{{ user.last_name }} {{ user.first_name }}</div>
                     <div>{{ user.email }}</div>
                     <div>{{ user.roles[0] }}</div>
                 </div>
                 <div class="change">
-                    <button v-on:click="chooseARole(user.id)">Modifier le role</button>
+                    <!-- This button calls the chooseARole methods et make appears the selected form -->
+                    <button v-on:click="chooseARole(user.id)">Modifier le rôle</button>
+                    <!-- Calls the delete method to delete a user -->
                     <img v-on:click="deleteById(user.id)" class="picture" title="Supprimer ce compte" alt="trash"
                         v-bind:src="trash" />
                 </div>
             </li>
         </ul>
+        <!-- The selected form appears on the click of the button by the chooseARole method -->
         <div class="select" v-if="showSelected">
-            <label for="role-select">Statut actuel : </label>
+            <label for="role-select">Choisir un nouveau rôle </label>
             <select name="role" id="role-select" v-model="selectedRole">
-                <option selected>Changer le statut </option>
                 <option value="apemember">apemember</option>
                 <option value="apeuser">apeuser</option>
                 <option value="administrator">administrator</option>
             </select>
-            <input type="submit" v-on:click="updateRole()"   value="Modifier le rôle">
+            
+            <input type="submit" v-on:click="updateRole()" value="Modifier le rôle">
         </div>
+        <!-- display a succes message if the role is correctly modified -->
         <p class="succesUpdate" v-for="succesMsg in succesUpdate" v-bind:key="succesMsg">
               {{ succesMsg }}
             </p>
@@ -39,7 +43,6 @@ import trash from '@/assets/images/icons8-trash-can-100.png'
 
 export default {
     name: 'UsersListLayout',
-    // emits: ["reloadRole"],
 
     data() {
         return {
@@ -66,7 +69,7 @@ export default {
         },
 
         chooseARole(id) {
-            console.log(id);
+            // console.log(id);
             this.showSelected = true;
             this.idToChange = id;
         },
@@ -79,9 +82,9 @@ export default {
                         roles: [this.selectedRole]
                     });
                 if (response.id) {
-                    console.log(response);
-                    this.$emit("changeUserRole");
-                    this.succesUpdate.push("Mise à jour du rôle réussie");
+                    // console.log(response);
+                    this.users = await UserloginService.findAll();
+                    this.succesUpdate.push("Le statut de " + response.name + "a bien été modifié");
                     setTimeout(() => {
                         this.succesUpdate = [];
                     }, 5000);
