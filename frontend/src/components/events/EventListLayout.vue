@@ -2,8 +2,10 @@
 
     <div class="event--card">
 
+
         <router-link v-if="backOffice==false" v-bind:to="{name: 'event', params: {id: id}}">    
             <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'">         
+
             </div>
             <h2 class="event--card__title">
                 <div v-html="title"></div>
@@ -11,6 +13,7 @@
             <div class="event--card__content">
                 <div v-html="content"></div>
             </div>
+
         </router-link> 
         
         <div v-if="backOffice==true">
@@ -24,6 +27,7 @@
                 </router-link>
             </div>
             
+
             </div>
             <h2 class="event--card__title">
                 <div v-html="title"></div>
@@ -33,7 +37,7 @@
             </div>
             <PopUpLayout v-bind:id="id" v-bind:opacity="this.opacity" v-bind:zindex="this.zindex" v-on:yes="del" v-on:no="this.opacity=0,this.zindex=-20"/> 
         </div>
-        
+
     </div>
 </template>
 
@@ -70,8 +74,8 @@ export default {
                 "id": this.selectEvent
             });
 
-             this.$emit("reloadEvent");
-            console.log(response);            
+            this.$emit("reloadEvent");
+            console.log(response);
         },
         
     },
@@ -104,13 +108,15 @@ export default {
     }
 
         .event--card__media--image {
-            
+
             min-height: 30vh;
             background-position: center;
             background-size: cover;
             border-radius: 2rem 2rem 0 0;
-            .event--backoffice__img{
+
+            .event--backoffice__img {
                 display: flex;
+
                 justify-content: flex-end;
                 align-items: center;
                 align-content: center;
@@ -124,6 +130,7 @@ export default {
             filter: brightness(1.1);
             transform: scale(1.2);
             }
+
             }
         }
     .event--card__content {
