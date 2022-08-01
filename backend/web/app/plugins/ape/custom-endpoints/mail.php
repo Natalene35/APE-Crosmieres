@@ -32,7 +32,7 @@ function ape_rest_user_send_email($request)
 
     $mail = new PHPMailer();
 
-    // $email = "chrisdmar12@gmail.com";
+    $email = "chrisdmar12@gmail.com";
     // $name = "Kévin";
     $subject = "$name viens de s'inscrire à l'événement";
     $body .= "
@@ -54,9 +54,9 @@ function ape_rest_user_send_email($request)
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
     $mail->Username = "chrisdmar12@gmail.com"; //expediteur
-    $mail->Password = 'mypassworddeboitemail';
+    $mail->Password = '';
     $mail->Port = 587;
-    $mail->SMTPSecure = "STARTTLS";
+    $mail->SMTPSecure = "tls";
 
 
 
