@@ -132,7 +132,6 @@ export default {
     },
     async update(params) {
         try {
-            apiClient.defaults.headers.common['Content-Type'] = "application/json";
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const response = await apiClient.post("/event/"+ params.id+ "", params);
             return response.data;
