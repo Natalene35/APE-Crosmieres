@@ -145,7 +145,6 @@ export default {
     margin-top: 4rem;
 }
 
-
 .wrapper {
     color: $grey;
     font-family: 'Muli', sans-serif;
