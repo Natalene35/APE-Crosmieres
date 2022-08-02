@@ -97,7 +97,7 @@ const routes = [{
 
   //Road for 404 page
   {
-    path: '/erreur-404',
+    path: '/404',
     name: '404',
     component: () => import( /* webpackChunkName: "404" */ '../views/errors/Page404View.vue')
   },
