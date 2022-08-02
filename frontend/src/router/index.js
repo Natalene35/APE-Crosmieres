@@ -222,6 +222,8 @@ router.beforeEach((to) => {
       }
       return { name: "login" };
   }
+
+
   // if the road doesn't exit we return a 404
  return { name: "404" };
 })
