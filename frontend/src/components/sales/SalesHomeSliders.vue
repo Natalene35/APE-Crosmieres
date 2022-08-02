@@ -53,7 +53,9 @@ export default {
     },
     methods: {
         SlideAuto() {
-            if(screen.width<=425& this.nameRoute=="home"){
+            const nameRoute=this.$route.name;
+            if(screen.width<=425 & nameRoute=="home"){
+                console.log("sliders actif")
                 this.slideActive=true
                 console.log("coucou la slide est "+this.slideActive)
                 let allSlideText = document.getElementsByClassName("hidden")
@@ -74,9 +76,8 @@ export default {
             
         },
     },
-    async mounted() { 
-        const nameRoute=this.$route.name;
-        console.log(nameRoute)     
+    async mounted() {   
+        this.slideAuto        
         setInterval(this.SlideAuto, 10000);
         this.saleSlide = await SaleService.findAll();
         this.maxSlide = this.saleSlide.length - 1;
@@ -174,10 +175,10 @@ export default {
             flex-direction: column;
             overflow: hidden;
             opacity: 1;
-            color: $grey;
+            color: #313846;
             width: 100%;
-            height: 70%;
-            padding: 7% 7% 0% 7%;
+            height: 65%;
+            margin-top: -18%;
 
             h2 {
                 text-shadow: 1px 1px 1px black;
@@ -188,10 +189,12 @@ export default {
                 color: $white;
                 font-size: large;
                 font-weight: bold;
+                margin-top: 4%;
             }
 
             p {
                 margin-right: 300px;
+                padding: 1% 5% 0% 5%;
 
             }
 
