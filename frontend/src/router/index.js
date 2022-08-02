@@ -22,26 +22,26 @@ const routes = [{
 
   // route for creating event
   {
-    path: '/creez-vos-evenements',
+    path: '/creer-un-evenement',
     name: 'eventCreate',
     component: () => import( /* webpackChunkName: "create-event" */ '../views/events/EventCreateView.vue')
   },
    // route for update sale
    {
-    path: '/modifier-votre-evenement/:id',
+    path: '/modifier-un-evenement/:id',
     name: 'eventUpdate',
     component: () => import( /* webpackChunkName: "create-sale" */ '../views/events/EventUpdateView.vue')
   },
 
   // route for creating sale
   {
-    path: '/creez-vos-ventes',
+    path: '/creer-une-vente',
     name: 'saleCreate',
     component: () => import( /* webpackChunkName: "create-sale" */ '../views/sales/SaleCreateView.vue')
   },
    // route for update sale
    {
-    path: '/modifier-votre-vente/:id',
+    path: '/modifier-une-vente/:id',
     name: 'saleUpdate',
     component: () => import( /* webpackChunkName: "create-sale" */ '../views/sales/SaleUpdateView.vue')
   },
@@ -69,14 +69,14 @@ const routes = [{
 
   //Road for an event
   {
-    path: '/detail-de-cet-evenement/:id',
+    path: '/detail-evenement/:id',
     name: 'event',
     component: () => import(/* webpackChunkName: "event" */ '../views/events/EventDetailView.vue')
   },
  
   //Road for a sale
   {
-    path: '/detail-de-cette-vente/:id',
+    path: '/detail-vente/:id',
     name: 'sale',
     component: () => import(/* webpackChunkName: "sale" */ '../views/sales/SaleDetailView.vue')
   },
@@ -90,7 +90,7 @@ const routes = [{
 
   // route for creating event
   {
-    path: '/presentation-des-membre-APE',
+    path: '/presentation-des-membres-APE',
     name: 'memberList',
     component: () => import( /* webpackChunkName: "member-list" */ '../views/user/MemberView.vue')
   },
