@@ -32,4 +32,13 @@ export default {
             return errors.response.data
         }
     },
+
+    async updatePhone(id, params) {
+        try {
+            const response = await apiClient.put('/wp/v2/users/meta/' + id, params);
+            return response.data
+        } catch (errors) {
+            return errors.response.data
+        }
+    },
 }
