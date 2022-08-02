@@ -88,8 +88,11 @@ export default {
                     this.errors.push("Confirmer votre mot de passe !");
                 }
             }
+            if (this.checkPhoneNumber(this.phone) === false) {
+                this.errors.push("Format numéro de téléphone non pris en charge !");
+            }
 
-            // Verification d'absence d'erreurs et transmision des données 
+            // Check if error array is empty and if it's ok transmission of the data
             if (this.errors.length === 0) {
                 const response = await UserRegistrationService.register({
                     "pseudo": this.username,
@@ -123,6 +126,16 @@ export default {
                 }
             }
         }
+    },
+
+    checkPhoneNumber(param) {
+        const regexPhoneNumber = /^((\+)33|0)[1-9](\d{2}){4}$/;
+
+        if (param.match(regexPhoneNumber)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 </script>
@@ -131,7 +144,6 @@ export default {
 .form {
     margin-top: 4rem;
 }
-
 
 .wrapper {
     color: $grey;

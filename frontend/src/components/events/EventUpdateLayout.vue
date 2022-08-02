@@ -14,9 +14,9 @@
 
         <label class="field__label">Catégorie</label>
         <select id="field__select" v-model="selected">
-        <option disabled value="">Choisissez la catégorie</option>
-        <option value="4">Actualité</option>
-        <option value="3">Réunion</option>
+          <option disabled value="">Choisissez la catégorie</option>
+          <option value="actuality">Actualité</option>
+          <option value="statement">Réunion</option>
         </select>
 
         <label class="field__label">Titre de la publication </label>
@@ -123,7 +123,7 @@ export default {
   },
   methods: {
     rtn() {
-        window.history.back();
+      window.history.back();
     },
     imageValidate() {
       if (this.currentImage) {
@@ -181,7 +181,6 @@ export default {
       this.alerts = null;
       // Form Content Validation
 
-
       //TODO verif champ categorie
       if (!this.title) {
         this.errors.push("Veuillez remplir un titre svp");
@@ -197,51 +196,48 @@ export default {
       }
       if (this.errors.length === 0) {
         let params = {
-
-
-          
           title: this.title,
           content: this.content,
           date: this.eventDate,
           lieu: this.location,
           lien: this.link,
           id: this.id,
+          term: this.selected,
         };
         
-        const response = await EventService.updateCustom(params);
-        console.log(response.code);
+      const response = await EventService.updateCustom(params);
+      console.log(response.code);
 
-        //native request from wordpress for the types taxonomy
-        const updateTaxonomy= await EventService.update({
-          id: this.id,
-          types: this.selected
-        });
-            console.log(updateTaxonomy);
+      //native request from wordpress for the types taxonomy
+      const updateTaxonomy = await EventService.update({
+        id: this.id,
+        types: this.selected,
+      });
+      console.log(updateTaxonomy);
 
-
-        if(this.currentImage!=undefined&&this.previewImage!=undefined){
-         this.upload(this.id);   
-        }
-        else if (response!=undefined){
-            setTimeout(() => this.$router.push({ name: "event", params: {id: this.id} }), 1500);
-        }
+      if (this.currentImage != undefined && this.previewImage != undefined) {
+        this.upload(this.id);
+      } else if (response != undefined) {
+        setTimeout(
+          () => this.$router.push({ name: "event", params: { id: this.id } }),
+          1500
+        );
       }
-        
-        
     }
+    },
   },
-  async mounted(){
-   
+  async mounted() {
     this.id = this.$route.params.id;
-    const selectEvent=await EventService.find(this.id);  
-    const selectEventMeta=await EventService.findMeta(this.id);
-    this.title=selectEvent.title.rendered
-    this.content=selectEvent.content.rendered
-    this.eventDate=selectEventMeta.date
-    this.location=selectEventMeta.lieu
-    this.link=selectEventMeta.lien
-    this.thumbnail_id=selectEventMeta._thumbnail_id
-  }
+    const selectSale = await EventService.find(this.id);
+    const selectSaleMeta = await EventService.findMeta(this.id);
+    this.title = selectSale.title.rendered;
+    this.content = selectSale.content.rendered;
+    this.eventDate = selectSaleMeta.date;
+    this.location = selectSaleMeta.lieu;
+    this.link = selectSaleMeta.lien;
+    this.selected = selectSaleMeta.terms;
+    this.thumbnail_id = selectSaleMeta._thumbnail_id;
+  },
 };
 </script>
 
@@ -284,7 +280,7 @@ export default {
         width: 100%;
         margin-left: auto;
         margin-right: auto;
-        .btn--return{
+        .btn--return {
           width: 12%;
           position: absolute;
           left: 9%;
