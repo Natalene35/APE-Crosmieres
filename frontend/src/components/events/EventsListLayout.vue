@@ -4,37 +4,68 @@
     <div class="event--section__search">
       <img class="event--img" v-bind:src="eventPicture" />
       <!-- Load icon library from font awesome -->
-      <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+      />
       <button class="search-icon"><i class="fa fa-search"></i></button>
-      <input type="text" class="search--input" placeholder="Rechercher..." v-model="searchString" />
+      <input
+        type="text"
+        class="search--input"
+        placeholder="Rechercher..."
+        v-model="searchString"
+      />
 
       <div class="button--radio__group">
-        <div class="button--title">
-        </div>
+        <div class="button--title"></div>
         <div class="button--radio__element">
-          <input type="radio" class="button--radio" id="all" v-model="picked" value="all" />
+          <input
+            type="radio"
+            class="button--radio"
+            id="all"
+            v-model="picked"
+            value="all"
+          />
           <label class="button--radio__title" for="all">Tout</label>
         </div>
         <div class="button--radio__element">
           <!-- value 3 = id of taxonomie statement "réunion in backoffice wp" -->
-          <input type="radio" class="button--radio" id="statement" value="3" v-model="picked" />
+          <input
+            type="radio"
+            class="button--radio"
+            id="statement"
+            value="statement"
+            v-model="picked"
+          />
           <label class="button--radio__title" for="statement">Réunions</label>
         </div>
         <div class="button--radio__element">
           <!-- value 4 = id of taxonomie actuality "actualité in backoffice wp" -->
-          <input type="radio" class="button--radio" id="actuality" value="4" v-model="picked" />
+          <input
+            type="radio"
+            class="button--radio"
+            id="actuality"
+            value="actuality"
+            v-model="picked"
+          />
           <label class="button--radio__title" for="actuality">Actualités</label>
         </div>
       </div>
     </div>
 
-    <EventListLayout v-bind:image="
-      event.featured_media !== 0
-        ? event._embedded['wp:featuredmedia'][0].source_url
-        : defaultPicture
-    " v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered"
-      v-for="event in eventsNewList" v-bind:key="event.id" />
+    <EventListLayout
+      v-bind:image="
+        event.featured_media !== 0
+          ? event._embedded['wp:featuredmedia'][0].source_url
+          : defaultPicture
+      "
+      v-bind:id="event.id"
+      v-bind:title="event.title.rendered"
+      v-bind:content="event.content.rendered"
+      v-bind:term="event._embedded['wp:term']"
+      v-for="event in eventsNewList"
+      v-bind:key="event.id"
+    />
   </section>
 </template>
 
@@ -43,7 +74,7 @@
 import EventListLayout from "@/components/events/EventListLayout.vue";
 import EventService from "@/services/events/EventService";
 import picture from "@/assets/images/surr-holidays.png";
-import defaultPicture from '@/assets/images/events/flags.jpg';
+import defaultPicture from "@/assets/images/events/flags.jpg";
 
 export default {
   name: "EventsListLayout",
@@ -61,17 +92,44 @@ export default {
     eventsNewList() {
       //Return an array that contains the rows where the callback returned true
       return this.eventsList.filter((event) => {
+        let eventTerm = "";
+        if (event._embedded["wp:term"]) {
+          eventTerm = event._embedded["wp:term"][0][0].name;
+        }
         // We take the title of the current event and we check if the searched term is contained in this title.
         // If yes, return true
         // search possible in lowercase and without accent
         if (this.picked == "all") {
-          if (event.title.rendered.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(this.searchString.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())) {
+          if (
+            event.title.rendered
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(
+                this.searchString
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "")
+                  .toLowerCase()
+              )
+          ) {
             return true;
           } else {
             return false;
           }
         } else {
-          if (event.title.rendered.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(this.searchString.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()) && (this.picked == event.types[0])) {
+          if (
+            event.title.rendered
+              .toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(
+                this.searchString
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "")
+                  .toLowerCase()
+              ) &&
+            this.picked == eventTerm
+          ) {
             return true;
           } else {
             return false;
@@ -86,9 +144,9 @@ export default {
       eventsList: [],
       eventPicture: picture,
       searchString: "",
-      //default value for radio buttons 
+      //default value for radio buttons
       picked: "all",
-      defaultPicture
+      defaultPicture,
     };
   },
 };
@@ -139,13 +197,11 @@ export default {
     width: 6rem;
   }
 
-
   .button--radio__group {
     width: 8rem;
     margin-left: 10%;
 
     .button--radio__element {
-
       display: block;
       margin: 10px 0;
       position: relative;
@@ -167,7 +223,7 @@ export default {
           width: 10px;
           height: 10px;
           border-radius: 50%;
-          content: '';
+          content: "";
           background-color: $red;
 
           position: absolute;
@@ -181,7 +237,7 @@ export default {
         &:after {
           width: 15px;
           height: 15px;
-          content: '';
+          content: "";
           border: 1.9px solid $blue;
           background-color: $white;
           background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
@@ -198,9 +254,8 @@ export default {
         }
       }
 
-      .button--radio:checked~label {
+      .button--radio:checked ~ label {
         color: $white;
-
 
         &:before {
           transform: translate(-50%, -50%) scale3d(56, 56, 1);
@@ -231,7 +286,6 @@ export default {
 
 //<---------------------MEDIA QUERIES ------------------------>
 @media (max-width: 425px) {
-
   .event--section {
     .search-icon {
       margin-left: inherit;
@@ -245,7 +299,6 @@ export default {
       margin-left: 1%;
     }
   }
-
 }
 </style>
 
