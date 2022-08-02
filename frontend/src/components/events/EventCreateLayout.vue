@@ -26,14 +26,8 @@
           v-model="title"
         />
 
-        <label class="field__label">Decription </label>
-        <textarea
-          class="textarea field__input"
-          type="text"
-          placeholder=""
-          rows="3"
-          v-model="content"
-        ></textarea>
+        <label class="field__label">Description </label>
+        <textarea class="textarea field__input" type="text" placeholder="" rows="3" v-model="content"></textarea>
 
         <label class="field__label">Date de l'évènement </label>
         <input
@@ -268,7 +262,6 @@ export default {
   .container {
     width: 80%;
     overflow: hidden;
-    //background-color: $white;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
     border-radius: 1em;
@@ -276,38 +269,6 @@ export default {
     display: grid;
     place-items: center;
     box-shadow: 2px 29px 72px -20px #46bfc7;
-
-    .progress {
-      width: 50%;
-      border-radius: 1rem;
-      background-color: #ffc107;
-      height: 1rem;
-      color: aliceblue;
-      font-weight: bold;
-      padding: 0.2rem;
-      margin-bottom: 1rem;
-    }
-
-    .progress-bar {
-      border-radius: 1rem;
-      background-color: aquamarine;
-      height: 1rem;
-      background: repeating-linear-gradient(
-          -60deg,
-          rgb(0, 0, 0, 0.5) 0,
-          black 10px,
-          #ffc107 10px,
-          white 20px
-        )
-        0 / 200%;
-      animation: progress-bar 1s linear infinite;
-    }
-
-    @keyframes progress-bar {
-      to {
-        background-position: 100% 0;
-      }
-    }
 
     .preview {
       width: 50%;
@@ -348,10 +309,12 @@ export default {
         float: left;
         margin: 0.5rem;
       }
-
+        select{
+          border: 1px solid $blue;
+        }
       .field__input {
         line-height: 3;
-        border: 1px solid $blue-light-bg;
+        border: 1px solid $blue;
         border-radius: 0.5em;
         margin: 1rem 0 1rem 0;
         padding: 0.5em 0 0.5em 1.5em;
