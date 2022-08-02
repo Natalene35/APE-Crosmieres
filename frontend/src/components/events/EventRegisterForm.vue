@@ -137,9 +137,9 @@ export default {
   name: "EventRegisterForm",
   data() {
     return {
-      name: "Gégé",
-      email: "gerard.mensoif@groutmail.com",
-      message: "Hello, je veux m'inscrire yéyé@",
+      name: null,
+      email: null,
+      message: null,
       file: null,
       errors: [],
       alerts: null,
