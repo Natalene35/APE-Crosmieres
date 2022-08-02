@@ -3,38 +3,72 @@
     <div class="container">
       <div class="field">
         <div class="field__title">
-          <img class="logo--img" src="../../assets/images/jelly-message-sent-by-character.png" alt="" />
+          <img
+            class="logo--img"
+            src="../../assets/images/jelly-message-sent-by-character.png"
+            alt=""
+          />
           <h1 class="title">Ajout d'un évènement</h1>
         </div>
 
         <label class="field__label">Catégorie</label>
         <select id="field__select" v-model="selected">
-        <option disabled value="">Choisissez la catégorie</option>
-        <option value="4">Actualité</option>
-        <option value="3">Réunion</option>
+          <option disabled value="">Choisissez la catégorie</option>
+          <option value="actuality">Actualité</option>
+          <option value="statement">Réunion</option>
         </select>
 
         <label class="field__label">Titre de la publication </label>
-        <input class="field__input" type="text" placeholder="" v-model="title" />
+        <input
+          class="field__input"
+          type="text"
+          placeholder=""
+          v-model="title"
+        />
 
         <label class="field__label">Decription </label>
-        <textarea class="textarea field__input" type="text" placeholder="" rows="3" v-model="content"></textarea>
+        <textarea
+          class="textarea field__input"
+          type="text"
+          placeholder=""
+          rows="3"
+          v-model="content"
+        ></textarea>
 
         <label class="field__label">Date de l'évènement </label>
-        <input class="field__input" type="date" placeholder="" v-model="eventDate" />
+        <input
+          class="field__input"
+          type="date"
+          placeholder=""
+          v-model="eventDate"
+        />
 
         <label class="field__label">Lieu de l'évènement </label>
-        <input class="field__input" type="text" placeholder="" v-model="location" />
+        <input
+          class="field__input"
+          type="text"
+          placeholder=""
+          v-model="location"
+        />
 
         <label class="field__label"> Image </label>
-        <input class="field__input" type="file" accept="image/*" ref="file" @change="selectImage" />
+        <input
+          class="field__input"
+          type="file"
+          accept="image/*"
+          ref="file"
+          @change="selectImage"
+        />
         <p class="error" v-for="error in errors" v-bind:key="error">
           {{ error }}
         </p>
         <p class="alert" v-if="alerts">
           {{ alerts }}
         </p>
-        <button class="btn btn-success btn-sm float-right" @click="imageValidate">
+        <button
+          class="btn btn-success btn-sm float-right"
+          @click="imageValidate"
+        >
           Soumettre
         </button>
       </div>
@@ -58,7 +92,9 @@
 
     <p style="visibility: hidden">
       Illustration by
-      <a href="https://icons8.com/illustrations/author/541847">Murat Kalkavan</a>
+      <a href="https://icons8.com/illustrations/author/541847"
+        >Murat Kalkavan</a
+      >
       from <a href="https://icons8.com/illustrations">Ouch!</a>
     </p>
   </section>
@@ -87,7 +123,6 @@ export default {
   },
 
   methods: {
-
     imageValidate() {
       if (this.currentImage) {
         this.submitForm();
@@ -172,26 +207,29 @@ export default {
           content: this.content,
           date: this.eventDate,
           lieu: this.location,
+          terms: this.selected,
         };
 
         //custom resquest for post new event with meta
         const response = await EventService.addEvent(params);
 
-        //native request from wordpress for the types taxonomy
-        const updateTaxonomy= await EventService.update({
-          id: response.data.id,
-          types: this.selected
-        });
-            console.log(updateTaxonomy);
+        // //native request from wordpress for the types taxonomy
+        // const updateTaxonomy = await EventService.update({
+        //   id: response.data.id,
+        //   types: this.selected,
+        // });
+        // console.log(updateTaxonomy);
 
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
-          //for take the post publish
-          const majPost = await EventService.update({
-            "status": "publish",
-            "id": response.data.id
-          });
-          console.log(majPost)
+
+          // //for take the post publish
+          // const majPost = await EventService.update({
+          //   status: "publish",
+          //   id: response.data.id,
+          // });
+          // console.log(majPost);
+          
           //response.data.id is the post id
           this.upload(response.data.id);
         } else if (response) {
@@ -213,9 +251,8 @@ export default {
         }
       }
     },
-  }
-}
-
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -255,11 +292,14 @@ export default {
       border-radius: 1rem;
       background-color: aquamarine;
       height: 1rem;
-      background: repeating-linear-gradient(-60deg,
+      background: repeating-linear-gradient(
+          -60deg,
           rgb(0, 0, 0, 0.5) 0,
           black 10px,
           #ffc107 10px,
-          white 20px) 0 / 200%;
+          white 20px
+        )
+        0 / 200%;
       animation: progress-bar 1s linear infinite;
     }
 
@@ -374,7 +414,7 @@ export default {
       background-color: white;
       box-shadow: 0 0 5px #0000001a;
       border-radius: 5px;
-      font-size: 1.5rem;      
+      font-size: 1.5rem;
       padding: 1rem;
       position: fixed;
       z-index: 9998;
