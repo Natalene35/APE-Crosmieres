@@ -61,7 +61,7 @@ function ape_rest_event_update_handler($request)
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
     $lieu = sanitize_text_field($parameters['lieu']);
-    $type = $parameters['type'];
+    $term = sanitize_text_field($parameters['term']);
 
     // add to the database
     $post_id = wp_update_post([
@@ -75,6 +75,12 @@ function ape_rest_event_update_handler($request)
             'lieu' => $lieu
         )
     ]);
+
+    // source : https://developer.wordpress.org/reference/functions/wp_set_post_terms/
+    // Default value: replace the terms with the new terms
+    wp_set_post_terms($id, $term, 'eventtype');
+
+
 
     // return post's id or false
     return $post_id ? ["id" => $post_id] : false;
