@@ -10,26 +10,24 @@
         <div class="event--card__date">{{ date }}</div>
         <div class="event--card__location">{{ location }}</div>
 
-        <div class="event--card__media--image" v-bind:style="'background-image:url(' + image +')'"></div>
+        <div class="event--card__media--image" v-bind:style="'background-image:url(' + image + ')'"></div>
 
         <div class="event--card__content" v-html="content"></div>
 
-        <img class="event--card__map" v-bind:src="mapPic">
     </section>
 </template>
 
 
 <script>
 import EventService from "@/services/events/EventService";
-import mapPic from '@/assets/images/map.jpg';
 import jelly from '@/assets/images/sand-tower.png';
+import defaultPicture from '@/assets/images/events/flags.jpg';
 
 export default {
     name: "EventDetailLayout",
 
     data() {
         return {
-            mapPic: mapPic,
             picture: jelly,
             title: null,
             date: null,
@@ -37,7 +35,7 @@ export default {
             content: null,
             image: null,
             map: null,
-            
+            defaultPicture
         }
     },
 
@@ -57,14 +55,13 @@ export default {
             } else {
                 this.title = response.title.rendered;
                 this.content = response.content.rendered;
-                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
+                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : this.defaultPicture;
             }
         }
     }
 }
 
 </script>
-
 
 <style lang="scss" scoped>
 .event--card {
@@ -120,7 +117,6 @@ export default {
     }
 
     .event--card__media--image {
-        width: 100vh;
         height: 30vh;
         background-position: center;
         background-size: cover;
@@ -159,7 +155,7 @@ export default {
 
         .event--card__media--image {
             width: 100vh;
-            height: 30vh;
+            height: 50vh;
         }
 
         .event--card__content {

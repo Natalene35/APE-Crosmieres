@@ -8,13 +8,13 @@
 
         <div class="event--card__date">{{ date }}</div>
 
-        <div class="media-image" v-bind:style="'background-image:url(' + image + ')'"></div>
-
         <div class="event--card__content" v-html="content"></div>
 
         <a class="event--card__link" target="_blank" v-bind:href="link">Lien vers le site marchand
             <img class="snake" alt="Arrow" v-bind:src="bigSnake" />
         </a>
+
+        <div class="media-image" v-bind:style="'background-image:url(' + image + ')'"></div>
     </section>
 </template>
 
@@ -22,6 +22,7 @@
 import SaleService from "@/services/sales/SaleService";
 import illustration from '@/assets/images/purchases.png';
 import bigArrow from '@/assets/images/squiggly-32.png';
+import defaultSalePicture from '@/assets/images/sales/colorful.jpg';
 
 
 export default {
@@ -34,11 +35,11 @@ export default {
             date: null,
             content: null,
             image: null,
-            link: null
+            link: null,
         }
     },
     async mounted() {
-         let id = this.$route.params.id;
+        let id = this.$route.params.id;
         if (id) {
             let arrayMeta = await SaleService.getMeta(id)
             // console.log(arrayMeta.lien);
@@ -54,7 +55,7 @@ export default {
             } else {
                 this.title = response.title.rendered;
                 this.content = response.content.rendered;
-                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
+                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : defaultSalePicture;
             }
         }
     }
@@ -73,7 +74,14 @@ export default {
     color: $grey;
     background-color: $white;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
+    .event--card__content {
+        display: flex;
+        width: 100%;
+    }
 
     .picture--container {
         display: flex;
@@ -105,11 +113,6 @@ export default {
         padding: 1rem;
     }
 
-    .event--card__content {
-        width: 100%;
-        margin: auto;
-    }
-
     .media-image {
         width: 100%;
         min-height: 18rem;
@@ -139,6 +142,13 @@ export default {
 // Media query
 
 @media (min-width: 450px) {
+
+    .event--card {
+        .event--card__content {
+            width: none;
+        }
+    }
+
     .picture--container {
         max-width: 70%;
     }
@@ -159,51 +169,37 @@ export default {
         h2 {
             font-size: 1.6rem;
         }
-    }
 
-    @media (min-width: 700px) {
-        .event--card {
-            width: 80%;
+        .media-image {
+            width: 90%;
+            min-height: 25rem;
+        }
 
-            .picture--container {
-                max-width: 50%;
-            }
-
-            h2 {
-                font-size: 1.6rem;
-            }
-
-            .media-image {
-                width: 90%;
-                min-height: 25rem;
-            }
-
-            .event--card__content {
-                width: 90%;
-            }
+        .event--card__content {
+            width: 90%;
         }
     }
+}
 
-    @media (min-width: 1000px) {
-        .event--card {
-            width: 70%;
+@media (min-width: 1000px) {
+    .event--card {
+        width: 70%;
 
-            .picture--container {
-                max-width: 30%;
-            }
+        .picture--container {
+            max-width: 30%;
+        }
 
-            h2 {
-                font-size: 1.8rem;
-            }
+        h2 {
+            font-size: 1.8rem;
+        }
 
-            .media-image {
-                width: 80%;
-                min-height: 35rem;
-            }
+        .media-image {
+            width: 80%;
+            min-height: 35rem;
+        }
 
-            .event--card__content {
-                width: 80%;
-            }
+        .event--card__content {
+            width: 80%;
         }
     }
 }

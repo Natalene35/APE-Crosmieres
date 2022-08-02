@@ -12,6 +12,13 @@
           <h1 class="title">Modification d'un événement</h1>
         </div>
 
+        <label class="field__label">Catégorie</label>
+        <select id="field__select" v-model="selected">
+        <option disabled value="">Choisissez la catégorie</option>
+        <option value="4">Actualité</option>
+        <option value="3">Réunion</option>
+        </select>
+
         <label class="field__label">Titre de la publication </label>
         <input
           class="field__input"
@@ -29,15 +36,15 @@
           v-model="content"
         ></textarea>
 
-        <label class="field__label">Date de l'événement </label>
+        <label class="field__label">Date de l'évènement </label>
         <input
           class="field__input"
-          type="date"
+          type="text"
           placeholder=""
           v-model="eventDate"
         />
 
-        <label class="field__label">Lieu de l'événement </label>
+        <label class="field__label">Lieu de l'évènement </label>
         <input
           class="field__input"
           type="text"
@@ -77,7 +84,7 @@
         <div class="image--modal__wrapper">
           <div class="image--modal__container">
             <p>Il n'y a pas d'image selectionnée</p>
-            <button class="confirm" @click="submitForm">Continuer</button>
+            <button class="confirm" @click="updateEvent">Continuer</button>
             <button class="abort" @click="showModal = false">Annuler</button>
           </div>
         </div>
@@ -98,6 +105,7 @@
 import EventService from "@/services/events/EventService";
 export default {
   name: "EventCreateView",
+
   data() {
     return {
       title: null,
@@ -110,6 +118,7 @@ export default {
       errors: [],
       alerts: null,
       showModal: false,
+      selected: null,
     };
   },
   methods: {
@@ -118,7 +127,7 @@ export default {
     },
     imageValidate() {
       if (this.currentImage) {
-        this.submitForm();
+        this.updateEvent();
       } else {
         this.showModal = true;
       }
@@ -137,13 +146,14 @@ export default {
           EventService.addMediaToEvent(postId, this.imageInfos.id).then(
             (response) => {
               if (response.status === 200) {
+                this.selected = null;
                 this.title = null;
                 this.content = null;
                 this.eventDate = null;
                 this.location = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
-                this.alerts = "Evénement créé";
+                this.alerts = "Evénement modifié";
                 //redirection vers la home
                 setTimeout(() => this.$router.push({ name: "home" }), 1500);
               } else {
@@ -157,7 +167,7 @@ export default {
         .catch((err) => {
           this.progress = 0;
           this.errors.push("Erreur sur le chargement de l'image !");
-          this.errors.push("L'événement a été crée sans l'image");
+          this.errors.push("L'événement a été modifié sans l'image");
           this.errors.push(
             "Veuillez modifier dans la page de modification d'événement svp."
           );
@@ -172,6 +182,9 @@ export default {
       this.errors = [];
       this.alerts = null;
       // Form Content Validation
+
+
+      //TODO verif champ categorie
       if (!this.title) {
         this.errors.push("Veuillez remplir un titre svp");
       }
@@ -190,6 +203,7 @@ export default {
       // Send form request if no error
       if (this.errors.length === 0) {
         let params = {
+          
           title: this.title,
           content: this.content,
           date: this.eventDate,
@@ -216,9 +230,9 @@ export default {
           this.location = null;
           this.currentImage = undefined;
           this.previewImage = undefined;
-          this.alerts = "Evénement créé sans image";
+          this.alerts = "Evénement modifié sans image";
           // home redirect
-          setTimeout(() => this.$router.push({ name: "home" }), 1500);
+          setTimeout(() => this.$router.push({ name: "event", params: {id: this.id} }), 1500);
         } else {
           this.errors.push(
             "Erreur d'enregistrement de l'événement ! Veuillez verifier la présence de l'événement"
@@ -226,7 +240,48 @@ export default {
         }
       }
     },
+       async updateEvent(){
+        let params = {
+          title: this.title,
+          content: this.content,
+          date: this.eventDate,
+          lieu: this.location,
+          lien: this.link,
+          id: this.id,
+        };
+        
+        const response = await EventService.updateCustom(params);
+        console.log(response.code);
+
+        //native request from wordpress for the types taxonomy
+        const updateTaxonomy= await EventService.update({
+          id: this.id,
+          types: this.selected
+        });
+            console.log(updateTaxonomy);
+
+
+        if(this.currentImage!=undefined&&this.previewImage!=undefined){
+         this.upload(this.id);   
+        }
+        else if (response!=undefined){
+            setTimeout(() => this.$router.push({ name: "event", params: {id: this.id} }), 1500);
+        }
+        
+    }
   },
+  async mounted(){
+   
+    this.id = this.$route.params.id;
+    const selectSale=await EventService.find(this.id);  
+    const selectSaleMeta=await EventService.findMeta(this.id);
+    this.title=selectSale.title.rendered
+    this.content=selectSale.content.rendered
+    this.eventDate=selectSaleMeta.date
+    this.location=selectSaleMeta.lieu
+    this.link=selectSaleMeta.lien
+    this.thumbnail_id=selectSaleMeta._thumbnail_id
+  }
 };
 </script>
 
@@ -267,9 +322,9 @@ export default {
       background: repeating-linear-gradient(
           -60deg,
           rgb(0, 0, 0, 0.5) 0,
-          black 10px,
+          $black 10px,
           #ffc107 10px,
-          white 20px
+          $white 20px
         )
         0 / 200%;
       animation: progress-bar 1s linear infinite;
@@ -341,7 +396,7 @@ export default {
         margin-left: auto;
         margin-right: auto;
         border-radius: 5px;
-        color: white;
+        color: $white;
       }
       .alert {
         background-color: lightblue;
@@ -368,13 +423,13 @@ export default {
       box-shadow: 0 5px 5px #0000001a;
     }
     button:hover {
-      color: white;
+      color: $white;
       background-color: #ffc107;
       box-shadow: 0 2px 2px #0000001a;
     }
     .image--modal__mask {
       position: fixed;
-      background-color: white;
+      background-color: $white;
       box-shadow: 0 0 5px #0000001a;
       border-radius: 5px;
       font-size: 1.5rem;

@@ -38,6 +38,8 @@ require_once plugin_dir_path(__FILE__) . "custom-endpoints/mail.php";
 require_once plugin_dir_path(__FILE__) . "custom-roles/ApeMember.php";
 require_once plugin_dir_path(__FILE__) . "custom-roles/ApeUser.php";
 
+// add files to create custom taxonomy type
+require_once plugin_dir_path(__FILE__) . "custom-taxonomies/type.php";
 
 // function to load when plugin is actived or desactived
 register_activation_hook(__FILE__, 'ape_create_custom_roles');
@@ -70,3 +72,6 @@ function ape_remove_custom_roles()
     ape_remove_apemember_role();
     ape_remove_apeuser_role();
 }
+
+
+

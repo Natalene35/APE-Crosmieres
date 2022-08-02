@@ -52,6 +52,7 @@ export default {
         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
 
         let formData = new FormData();
+
         formData.append("title", 'event-' + title);
         formData.append("file", file);
         formData.append("post", postId);
@@ -132,9 +133,18 @@ export default {
     },
     async update(params) {
         try {
-            apiClient.defaults.headers.common['Content-Type'] = "application/json";
             apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
             const response = await apiClient.post("/event/"+ params.id+ "", params);
+            return response.data;
+        } catch(error) {
+            return error.response.data
+        }        
+    },
+    //CUSTOM UPDATE WITH META TO 
+    async updateCustom(params) {
+        try {
+            apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+            const response = await apiClient.post("/event/update/"+ params.id+ "", params);
             return response.data;
         } catch(error) {
             return error.response.data

@@ -11,22 +11,22 @@
                         Accueil
                     </router-link>
                 </div>
-                <div class="updateEvent" v-on:click="showMenu">Modifier un evenements</div>
-                <div class="createEvent" v-on:click="showMenu">Créer un evenement</div>
-                <div class="updateSale" v-on:click="showMenu">Modifier une ventes</div>
+                <div class="updateEvent" v-on:click="showMenu">Modifier un évènement</div>
+                <div class="createEvent" v-on:click="showMenu">Créer un évènement</div>
+                <div class="updateSale" v-on:click="showMenu">Modifier une vente</div>
                 <div class="createSale" v-on:click="showMenu">Créer une vente</div>
 
 
             </div>
 
             <div v-if="this.menu == 3" class="back-office--container__components">
-                <EventListLayout v-bind:backOffice="this.backOffice"
+                <EventListLayout v-on:reloadEvent="reload" v-bind:backOffice="this.backOffice"
                     v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'"
                     v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered"
                     v-for="event in eventsList" v-bind:key="event.id" />
             </div>
             <div v-if="this.menu == 1" class="back-office--container__components">
-                <SaleListLayout v-bind:backOffice="this.backOffice" v-bind:id="sale.id"
+                <SaleListLayout v-on:reloadSal="reload" v-bind:backOffice="this.backOffice" v-bind:id="sale.id"
                     v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesList"
                     v-bind:key="sale.id" />
             </div>
@@ -34,6 +34,8 @@
             <SaleCreateLayout v-if="this.menu == 2" class="back-office--container__components" />
             <EventCreateLayout v-if="this.menu == 4" class="back-office--container__components" />
         </section>
+       
+        
     </section>
 </template>
 
@@ -54,7 +56,8 @@ export default {
             menu: null,
             eventsList: null,
             salesList: null,
-            backOffice: true
+            backOffice: true,
+            
         };
     },
     methods: {
@@ -93,6 +96,11 @@ export default {
                 }
             }
         },
+        async reload(){
+        this.eventsList = await EventService.findAll();
+        this.salesList = await SaleService.findAll();
+        },       
+
     },
     components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
     ,
@@ -106,16 +114,14 @@ export default {
 <style lang="scss" scoped>
 .back-office--container__all {
     width: 100%;
-
     .back-office--sales__all {
         width: 94%;
-        height: 100%;
         display: flex;
         flex-direction: column;
         padding: 2%;
         align-items: center;
         padding: 0% 3% 0% 3%;
-
+       
         .back-office--container__components {
             display: flex;
             flex-wrap: wrap;
@@ -123,10 +129,24 @@ export default {
             margin: auto;
             flex-direction: column;
             align-items: center;
-
+            .event--card{
+                min-width: 50VH;
+                margin-top: 5%;
+                .event--card__media--image{
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                }
+            }
             .sale--card {
-                width: 45%;
-                position: relative;
+                width: 100%;
+                .sale--card__title{
+                    display: flex;
+                    flex-direction: row-reverse;
+                    align-items: center;
+                    justify-content: flex-start;
+                    text-align: end;
+                }
             }
         }
 
@@ -161,6 +181,9 @@ export default {
                 border-radius: 10px;
                 cursor: pointer;
                 margin-right: 0.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
 
             .home {
@@ -200,12 +223,25 @@ export default {
 
 @media (max-width: 555px) {
     .back-office--container__all {
+            min-height: 108vh;
         .back-office--sales__all {
             .back-office--menu__nav {
                 a {
-                    width: 46%;
+                    
                 }
             }
+            .back-office--container__components {
+                .event--card{
+                    width: 90%;
+                    .event--card__media--image{
+                    }
+                }
+            .sale--card {
+                width: 80%;
+                .sale--card__title{
+                }
+            }
+        }
         }
     }
 
