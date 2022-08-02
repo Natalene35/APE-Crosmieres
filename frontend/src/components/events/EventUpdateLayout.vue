@@ -265,11 +265,7 @@ export default {
     display: grid;
     place-items: center;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
-<<<<<<< HEAD
     
-=======
-
->>>>>>> master
     .preview {
       width: 50%;
       border-radius: 5px;

@@ -62,7 +62,6 @@ export default {
 
 
 <style scopped lang="scss">
-<<<<<<< HEAD
 
 .sale--section__list {  
 height: 100%;
@@ -76,10 +75,6 @@ height: 100%;
     margin-top: 0.5rem;
     }
 
-=======
-.sale--section__list {
-    height: 100%;
->>>>>>> master
 
     .sale--section__search {
         width: 100%;
@@ -126,7 +121,6 @@ height: 100%;
     }
 }
 
-<<<<<<< HEAD
 //<---------------------MEDIA QUERIES ------------------------>
 @media (max-width: 576px) {
     .sale--section__list {
@@ -136,18 +130,6 @@ height: 100%;
     }
 }
     
-=======
-@media (min-width: 800px) {
-
-    .sale--section__list {
-        .sale--list {
-            .sale--card {
-                width: 60%;
-            }
-        }
-    }
-}
->>>>>>> master
 </style>
 
  

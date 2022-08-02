@@ -378,7 +378,7 @@ header {
     }
 
     .header--nav__backoffice {
-      background-color: $grey;
+      background-color: $purple;
       color: $white;
     }
 
