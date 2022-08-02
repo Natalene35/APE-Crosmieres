@@ -1,5 +1,6 @@
 <template>
     <section class="sale--section__list">
+        <h1>Liste des ventes de l'école</h1>
         <div class="sale--section__search">
             <img class="sale--card__img" v-bind:src="salePicture">
             <!-- Load icon library from font awesome -->
@@ -61,7 +62,17 @@ export default {
 <style scopped lang="scss">
 
 .sale--section__list {  
-    height: 100%;
+height: 100%;
+
+    h1 {
+    color: $orange;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 0px 1px 1px $grey;
+    font-family: 'Merienda', cursive;
+    margin-top: 0.5rem;
+    }
+
 
     .sale--section__search {
         width: 100%;
@@ -98,6 +109,15 @@ export default {
     }
 }
 
+//<---------------------MEDIA QUERIES ------------------------>
+@media (max-width: 576px) {
+    .sale--section__list {
+        .search-icon {
+        margin-left: 1rem;
+        }
+    }
+}
+    
 </style>
 
  

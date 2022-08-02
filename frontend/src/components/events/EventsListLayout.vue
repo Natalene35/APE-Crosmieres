@@ -1,6 +1,6 @@
 <template>
   <section class="event--section">
-    <h1>Liste des évènements</h1>
+    <h1>Liste de vos évènements</h1>
     <div class="event--section__search">
       <img class="event--img" v-bind:src="eventPicture" />
       <!-- Load icon library from font awesome -->
@@ -99,6 +99,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
+
 .event--section {
   display: flex;
   flex-direction: column;
@@ -106,9 +107,11 @@ export default {
 
   h1 {
     color: $red;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: bold;
     text-shadow: 0px 1px 1px $grey;
+    font-family: 'Merienda', cursive;
+    margin-top: 0.5rem;
   }
 
   .event--section__search {
@@ -234,8 +237,7 @@ export default {
 }
 
 //<---------------------MEDIA QUERIES ------------------------>
-@media (max-width: 425px) {
-
+@media (max-width: 576px) {
   .event--section {
     .search-icon {
       margin-left: inherit;

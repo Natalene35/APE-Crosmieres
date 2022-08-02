@@ -1,8 +1,8 @@
 <template>
     <section class="back-office--container__all">
-        <section class="back-office--sales__all">
+        <section class="back-office--container__nav">
 
-            <h2>Espace Administration de <span>{{ userName }}</span></h2>
+            <h1 class="bacck-office--container__title">Espace Administration de <span>{{ userName }}</span></h1>
             <!-- //MENU NAV -->
             <div class="back-office--menu__nav">
 
@@ -114,7 +114,7 @@ export default {
 <style lang="scss" scoped>
 .back-office--container__all {
     width: 100%;
-    .back-office--sales__all {
+    .back-office--container__nav {
         width: 94%;
         display: flex;
         flex-direction: column;
@@ -150,11 +150,13 @@ export default {
             }
         }
 
-        h2 {
-            margin-bottom: 3%;
-            margin-left: 3%;
+        .bacck-office--container__title {
             color: $grey;
-            font-family: "Merienda", cursive;
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: 'Merienda', cursive;
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
 
             span {
                 text-transform: uppercase;
@@ -165,6 +167,7 @@ export default {
             width: 100%;
             display: flex;
             justify-content: center;
+            font-weight: bold;
 
             a {
                 display: block;
