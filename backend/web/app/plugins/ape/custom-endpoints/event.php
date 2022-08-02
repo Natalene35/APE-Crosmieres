@@ -62,7 +62,7 @@ function ape_rest_event_update_handler($request)
     $date = sanitize_text_field($parameters['date']);
     $lieu = sanitize_text_field($parameters['lieu']);
     $type=$parameters['type']; 
-  
+
    // add to the database
     $post_id = wp_update_post([
         
@@ -97,10 +97,11 @@ function ape_rest_event_meta_handler($request)
     $eventDate = $wpdb->get_results("
     SELECT meta_value FROM wp_postmeta
     WHERE meta_key = 'date' AND post_id = $id 
-    ");
-
+    ");      
+    $post = get_post( $id ); 
+    $content = $post->post_content;  
     // add the meta data to the post object
-    return ['lieu' => $lieu[0]->meta_value, 'date' => $eventDate[0]->meta_value];
+    return ['content' => $content, 'lieu' => $lieu[0]->meta_value, 'date' => $eventDate[0]->meta_value];
 };
 
 function ape_rest_add_event_handler($request)

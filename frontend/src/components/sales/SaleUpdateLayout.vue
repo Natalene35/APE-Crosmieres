@@ -198,7 +198,7 @@ export default {
     const selectSaleMeta=await SaleService.findMeta(this.id);
     this.thumbnail_id=selectSale.featured_media
     this.title=selectSale.title.rendered
-    this.content=selectSale.content.rendered
+    this.content=selectSaleMeta.content
     this.saleDate=selectSaleMeta.date
     this.location=selectSaleMeta.lieu
     this.link=selectSaleMeta.lien

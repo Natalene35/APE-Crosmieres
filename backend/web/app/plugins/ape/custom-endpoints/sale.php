@@ -100,11 +100,14 @@ function ape_rest_sale_meta_handler($request)
      SELECT meta_value FROM wp_postmeta
      WHERE meta_key = 'lien' AND post_id = $id 
      ");
+     $post = get_post( $id ); 
+    $content = $post->post_content; 
     // add the meta data to the post object
     return [
         'date' => $saleDate[0]->meta_value,
         'lieu' => $saleLieu[0]->meta_value,
-        'lien' => $saleLien[0]->meta_value
+        'lien' => $saleLien[0]->meta_value,
+        'content' => $content
     ];
 };
 
