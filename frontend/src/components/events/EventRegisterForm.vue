@@ -5,7 +5,6 @@
         Je m'inscris
       </button>
       <div v-if="showForm">
-
         <div class="download">
           <a @click="downloadimg" class="download__link">
             Formulaire d'inscription
@@ -36,7 +35,6 @@
 
           <label class="field__label"> Je veux </label>
           <div class="button--radio__group">
-            <!-- <div class="button--title">Je veux</div> -->
             <div class="button--radio__element">
               <input
                 type="radio"
@@ -99,7 +97,7 @@
             </div>
           </div>
           <label v-if="picked === 'commander'" class="field__label">
-            Combien de saucisse voulez vous
+            Combien de saucisses voulez vous
           </label>
           <input
             v-if="picked === 'commander'"
@@ -109,10 +107,10 @@
             placeholder="Tu veux combien de saucisses Loïc ?"
           />
 
-          <label class="field__label"> Commentaire </label>
+          <label class="field__label"> Commentaires </label>
           <textarea
             class="field__input"
-            v-model="subject"
+            v-model="message"
             rows="2"
             placeholder="Sujet"
           ></textarea>
@@ -141,7 +139,7 @@ export default {
     return {
       name: "Gégé",
       email: "gerard.mensoif@groutmail.com",
-      subject: "Hello, je veux m'inscrire yéyé@",
+      message: "Hello, je veux m'inscrire yéyé@",
       file: null,
       errors: [],
       alerts: null,
@@ -155,7 +153,7 @@ export default {
   methods: {
     // to submit fields and send email
     async submitForm() {
-      // Reset error table
+      // Reset error and alert table
       this.errors = [];
       this.alerts = null;
       // Form Content Validation
@@ -165,10 +163,26 @@ export default {
       if (!this.email) {
         this.errors.push("Veuillez remplir une adresse email svp");
       }
-      if (!this.subject) {
-        this.subject = "pas de message";
+      if (!this.message) {
+        this.message = "pas de message";
       }
-
+      if (!this.picked) {
+        this.errors.push("Veuillez choisir la raison de votre inscription");
+      }
+      if (
+        this.picked === "aider" &&
+        (this.startTime === null || this.endTime === null)
+      ) {
+        this.errors.push(
+          "Veuillez remplir une heure de début et une heure de fin svp"
+        );
+      }
+      console.log(isNaN(this.nbsaucisse));
+      if (this.picked === "commander" && isNaN(this.nbsaucisse)) {
+        this.errors.push(
+          "Veuillez remplir un nombre de saucisses correct (0-99)"
+        );
+      }
       setTimeout(() => {
         this.errors = [];
       }, 5000);
@@ -178,12 +192,12 @@ export default {
         const event = await EventService.find(id);
         console.log(event);
         if (event.code) {
-          this.$router.push({ name: "404" });
+          // this.$router.push({ name: "404" });
         }
         let params = {
           name: this.name,
           email: this.email,
-          subject: this.subject,
+          message: this.message,
           nbsaucisse: this.nbsaucisse,
           motive: this.picked,
           startTime: this.startTime,
@@ -195,7 +209,7 @@ export default {
         if (response.data.status === "success") {
           this.name = null;
           this.email = null;
-          this.subject = null;
+          this.message = null;
           this.nbsaucisse = null;
           this.picked = null;
           this.startTime = null;
@@ -509,23 +523,38 @@ export default {
           width: 55vw;
         }
       }
-      .form {
-        .field {
-          display: flex;
-          flex-wrap: wrap;
-          flex-direction: column;
-          align-items: baseline;
-          width: 100%;
+      .field {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: baseline;
+        width: 100%;
 
-          .field__input {
-            line-height: 3;
-            border: 1px solid $blue-light-bg;
-            border-radius: 0.5em;
-            margin: 0.5rem auto;
-            padding: 0.2rem 1rem;
+        .field__label {
+          width: 80%;
+          float: right;
+          font-size: 1.2rem;
+        }
+        .button--radio__group,
+        .field__input {
+          line-height: 3;
+          border: 1px solid $blue-light-bg;
+          border-radius: 0.5em;
+          margin: 0.5rem auto;
+          padding: 0.2rem 1rem;
+          text-align: left;
+          width: 80%;
+          float: right;
+        }
+        .button--radio__group {
+          background-color: white;
+
+          .button--title {
+            width: 60%;
             text-align: left;
-            width: 80%;
-            float: right;
+            margin: 0.5rem auto;
+            padding: 0.1rem auto;
+            font-weight: bold;
           }
         }
       }

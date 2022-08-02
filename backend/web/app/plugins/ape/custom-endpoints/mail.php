@@ -23,45 +23,47 @@ function ape_rest_user_email()
 
 function ape_rest_user_send_email($request)
 {
-    // translate request with JSON
+    // translate request with JSON and sanitize every field send
     $parameters = $request->get_json_params();
 
     $name = sanitize_text_field($parameters['name']);
     $email = sanitize_text_field($parameters['email']);
-    $subject = sanitize_text_field($parameters['subject']);
-
+    $message = sanitize_text_field($parameters['message']);
     $nbsaucisse = sanitize_text_field($parameters['nbsaucisse']);
     $motive = sanitize_text_field($parameters['motive']);
     $startTime = sanitize_text_field($parameters['startTime']);
     $endTime = sanitize_text_field($parameters['endTime']);
     $eventTitle = sanitize_text_field($parameters['eventTitle']);
 
-
-
     $mail = new PHPMailer();
-
+    
+    // to choose subject and message to send
     if ($motive === 'participer') {
+        $subject = utf8_decode("Inscription à ") . html_entity_decode($eventTitle);
         $body = "
         <h3>$name viens à l'événement : $eventTitle</h3>
         <p>mail : $email</p>
-        <p>Message :</p> $subject";
+        <p>Message :</p> $message";
     } else if ($motive === 'aider') {
+        $subject = utf8_decode("Volontariat pour ") . html_entity_decode($eventTitle);
         $body = "
         <h3>$name veux participer à l'événement : $eventTitle</h3>
         <p>Il est disponible de $startTime à $endTime</p>
         <p>mail : $email</p>
-        <p>Message :</p> $subject";
+        <p>Message :</p> $message";
     } else  if ($motive === 'commander') {
+        $subject = utf8_decode("Commande pour ") . html_entity_decode($eventTitle);
         $body = "
         <h3>$name veux $nbsaucisse saucisses pour l'événement : $eventTitle</h3>
         <p>mail : $email</p>
-        <p>Message :</p> $subject";
+        <p>Message :</p> $message";
     } else {
+        $subject = utf8_decode("Erreur de lecture du motif pour ") . html_entity_decode($eventTitle);
         $body = "
         <h3>$name s'est inscrit à l'événement : $eventTitle</h3>
         <p>Son message n'est pas très clair.</p>
         <p>mail : $email</p>
-        <p>Message :</p> $subject";
+        <p>Message :</p> $message";
     }
 
 
@@ -76,7 +78,7 @@ function ape_rest_user_send_email($request)
     $mail->isSMTP();
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
-    $mail->Username = "chrisdmar12@gmail.com"; //expediteur
+    $mail->Username = "chrisdmar12@gmail.com"; // the sender
     $mail->Password = 'qsxriotatequwnsc';
     $mail->Port = 587;
     $mail->SMTPSecure = "tls";
@@ -85,9 +87,9 @@ function ape_rest_user_send_email($request)
 
     //email settings
     $mail->isHTML(true);
-    $mail->setFrom("Page inscription", $name); // expediteur and name
-    $mail->addAddress("chrisdmar12@gmail.com"); // destinataire
-    $mail->Subject = utf8_decode("Inscription à $eventTitle");
+    $mail->setFrom("Page inscription", $name); // sender and his name
+    $mail->addAddress("chrisdmar12@gmail.com"); // recipient
+    $mail->Subject = $subject;
     $mail->Body = $body;
 
     if ($mail->send()) {
