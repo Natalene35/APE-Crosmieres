@@ -1,8 +1,17 @@
 <template>
     <section>
         <h1>Liste des utilisateurs</h1>
+
+        <div class="user--section__search">
+            <img class="sale--card__img">
+            <!-- Load icon library from font awesome -->
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <button class="search-icon"> <i class="fa fa-search"></i></button>
+            <input type="text" placeholder="Rechercher..." v-model="searchString">
+        </div>
         <ul>
-            <li v-for="user in users" v-bind:key="user.id">
+            <li v-for="user in usersNewList" v-bind:key="user.id">
                 <div class="detail">
                     <div>{{ user.last_name }} {{ user.first_name }}</div>
                     <div>{{ user.email }}</div>
@@ -12,10 +21,10 @@
                 <div v-if="this.$store.getters.getRole === 'administrator'" class="change">
                     <!-- This button calls the chooseARole methods et make appears the selected form -->
                     <button v-on:click="chooseARole(user.id)">Modifier le rôle</button>
-                    <!-- Calls the delete method to delete a user -->
 
-                    <img v-on:click="opacity = 1; zindex = 20;selectUserId=user.id" class="picture" title="Supprimer ce compte" alt="trash"
-                        v-bind:src="trash" />
+                    <!-- Calls a popup to confirm the user's delete -->
+                    <img v-on:click="opacity = 1; zindex = 20; selectUserId = user.id" class="picture"
+                        title="Supprimer ce compte" alt="trash" v-bind:src="trash" />
                 </div>
             </li>
         </ul>
@@ -64,7 +73,8 @@ export default {
             idToChange: null,
             zindex: -20,
             opacity: 0,
-            selectUserId: null
+            selectUserId: null,
+            searchString: "",
         }
     },
     async mounted() {
@@ -75,8 +85,8 @@ export default {
 
     methods: {
         async deleteById(e) {
-            this.opacity=0
-            this.zindex=-20 
+            this.opacity = 0
+            this.zindex = -20
             const response = await UserService.deleteById(e);
             this.users = await UserloginService.findAll();
             console.log(response);
@@ -111,7 +121,23 @@ export default {
             }
             this.showSelected = false;
         }
-    }
+    },
+
+    computed: {
+        usersNewList() {
+            console.log("bla");
+            //Return an array that contains the rows where the callback returned true
+            return this.users.filter((user) => {
+                // We take the title of the current sale and we check if the searched term is contained in this title.
+                // If yes, return true   
+                if (user.last_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(this.searchString.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase())) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        }
+    },
 }
 </script>
 
@@ -125,6 +151,37 @@ section {
         margin-bottom: 2rem;
     }
 
+    // CSS for the search box
+    .user--section__search {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input {
+        padding: 11px;
+        font-size: 15px;
+        border-style: none;
+        width: 25%;
+        background: $white;
+        border: 1px solid $blue-bg-header;
+        border-radius: 0.5em;
+    }
+
+    .search-icon {
+        border-style: none;
+        background-color: $orange;
+        color: $white;
+        height: 40px;
+        width: 40px;
+        border-radius: 25%;
+        margin-right: 5px;
+        margin-left: 2rem;
+
+    }
+
+    // SCSS for the li boxes
     li {
         border: 1px solid $black;
         background-color: $white;
