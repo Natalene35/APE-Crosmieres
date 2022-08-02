@@ -124,11 +124,11 @@ export default {
     },
 
     computed: {
+        // Method to find a user by name
         usersNewList() {
-            console.log("bla");
             //Return an array that contains the rows where the callback returned true
             return this.users.filter((user) => {
-                // We take the title of the current sale and we check if the searched term is contained in this title.
+                // We take the name of the current user and we check if the searched term is contained in this name.
                 // If yes, return true   
                 if (user.last_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(this.searchString.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase())) {
                     return true;
