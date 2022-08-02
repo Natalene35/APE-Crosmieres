@@ -130,7 +130,7 @@ export default {
             flex-direction: column;
             align-items: center;
             .event--card{
-                min-width: 50VH;
+                min-width: 44vh;
                 margin-top: 5%;
                 .event--card__media--image{
                     background-position: center;
@@ -146,6 +146,11 @@ export default {
                     align-items: center;
                     justify-content: flex-start;
                     text-align: end;
+                    div{
+                          display: flex;
+                        width: 100%;
+                        justify-content: center;
+                    }
                 }
                 
             }
@@ -224,11 +229,13 @@ export default {
 
 @media (max-width: 555px) {
     .back-office--container__all {
-            min-height: 108vh;
+            
         .back-office--sales__all {
             .back-office--menu__nav {
-                a {
-                    
+                flex-wrap: wrap;
+                div{
+                    margin: 1%;
+                    width: 26%;
                 }
             }
             .back-office--container__components {
@@ -240,6 +247,9 @@ export default {
             .sale--card {
                 width: 80%;
                 .sale--card__title{
+                    div{
+                      
+                    }
                 }
             }
         }

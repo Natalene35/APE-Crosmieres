@@ -128,7 +128,7 @@ export default {
         @import "../../assets/animations/bubbleAnim.scss";
 
         .background--design__all {
-            height: 700vh;
+            height: 616vh;
             width: 1320VH;
             background-color: transparent;
             position: absolute;
