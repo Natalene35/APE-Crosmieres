@@ -14,26 +14,20 @@
 
         <div class="event--card__content" v-html="content"></div>
 
-        <img class="event--card__map" v-bind:src="mapPic">
     </section>
 </template>
 
 
 <script>
 import EventService from "@/services/events/EventService";
-import mapPic from '@/assets/images/map.jpg';
 import jelly from '@/assets/images/sand-tower.png';
-import PictureFlags from '@/assets/images/events/flags.jpg';
-import PictureBallon1 from '@/assets/images/events/ballon-1.jpg';
-import PictureBallon2 from '@/assets/images/events/ballon-2.jpg';
-import PictureMulticolored from '@/assets/images/events/multicoloured.jpg';
+import defaultPicture from '@/assets/images/events/flags.jpg';
 
 export default {
     name: "EventDetailLayout",
 
     data() {
         return {
-            mapPic: mapPic,
             picture: jelly,
             title: null,
             date: null,
@@ -41,13 +35,7 @@ export default {
             content: null,
             image: null,
             map: null,
-            images: [
-                PictureFlags,
-                PictureBallon1,
-                PictureBallon2,
-                PictureMulticolored
-            ],
-            defaultPicture: null
+            defaultPicture
         }
     },
 
@@ -70,15 +58,6 @@ export default {
                 this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : this.defaultPicture;
             }
         }
-    },
-
-    methods: {
-        randomItem(items) {
-            return items[Math.floor(Math.random() * items.length)];
-        }
-    },
-    created() {
-        this.defaultPicture = this.randomItem(this.images)
     }
 }
 
