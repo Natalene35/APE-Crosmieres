@@ -149,7 +149,7 @@ export default {
     async removeUser() {
       if (this.$store.getters.getUserID) {
         const response = await UserService.delete();
-        console.log(response);
+
         if (response.remove_user) {
           this.$store.commit("deleteToken");
           this.$store.commit("deleteUsername");
@@ -167,6 +167,13 @@ export default {
 
     // Update ours personnal account
     async updateUser() {
+      if (this.checkPhoneNumber(this.phone) === false) {
+        this.errors.push("Format numéro de téléphone non pris en charge !");
+        setTimeout(() => {
+          this.errors = [];
+        }, 1000);
+      }
+
       if (this.$store.getters.getUserID) {
         //update the user information
         const response = await UserService.update(
@@ -179,6 +186,7 @@ export default {
         );
         //if update ok
         if (response.id) {
+
           //update the meta data user phone
           const newphone = await UserService.updatePhone(this.$store.getters.getUserID, {
             phone: this.phone,
@@ -190,13 +198,9 @@ export default {
               this.succesUpdate = [];
             }, 500);
           }
-          else {
-            this.errors.push("Echec mise à jour");
-            setTimeout(() => {
-              this.errors = [];
-            }, 500);
-          }
         }
+      } else {
+        this.errors.push("Echec de la mise à jour, veuillez recommencer");
       }
     },
 
@@ -206,6 +210,15 @@ export default {
         this.$store.getters.getUserID
       );
     },
+
+    checkPhoneNumber(param) {
+      const regexPhoneNumber = /^((\+)33|0)[1-9](\d{2}){4}$/;
+      if (param.match(regexPhoneNumber)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
 };
 </script>

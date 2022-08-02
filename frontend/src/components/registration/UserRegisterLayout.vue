@@ -89,7 +89,7 @@ export default {
                 }
             }
             if (this.checkPhoneNumber(this.phone) === false) {
-                this.errors.push("le numéro de téléphone n'est pas au bon format !");
+                this.errors.push("Format numéro de téléphone non pris en charge !");
             }
 
             // Check if error array is empty and if it's ok transmission of the data
