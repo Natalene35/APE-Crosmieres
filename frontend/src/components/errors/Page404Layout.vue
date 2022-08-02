@@ -51,8 +51,18 @@ p {
         font-size: 2.1rem;
     }
 }
+.picture--container{
+    height: fit-content;
+}
 
 .bottom {
     margin-bottom: 1rem;
+}
+@media (max-width: 425px) {
+    .picture--container{
+        img{
+                height: 250px;
+        }
+}
 }
 </style>

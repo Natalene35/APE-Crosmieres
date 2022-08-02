@@ -49,6 +49,7 @@ export default {
 
   mounted(){
     //HER FIX FOR SLIDERS 
+    console.log(screen.width)
       if(screen.width<=425){
         this.hiddenSale=true;
       }

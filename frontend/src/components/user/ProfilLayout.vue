@@ -356,7 +356,7 @@ export default {
      font-size: 1rem;
      line-height: 3;
      width: 80%;
-     border: 1px solid $blue-bg-header;
+     border: 1px solid $blue;
      border-radius: 0.5em;
      margin: 0 0 1rem 0;
      padding: 0;

@@ -175,10 +175,8 @@ export default {
           this.currentImage = undefined;
         });
     },
-    // to submit fields and send datas to custom post 'event'
-    async submitForm() {
-      this.showModal = false;
-      // Reset error table
+       async updateEvent(){
+              // Reset error table
       this.errors = [];
       this.alerts = null;
       // Form Content Validation
@@ -197,51 +195,11 @@ export default {
       if (!this.location) {
         this.errors.push("Veuillez remplir un lieu svp");
       }
-      setTimeout(() => {
-        this.errors = [];
-      }, 5000);
-      // Send form request if no error
       if (this.errors.length === 0) {
         let params = {
-          
-          title: this.title,
-          content: this.content,
-          date: this.eventDate,
-          lieu: this.location,
-        };
-        const response = await EventService.addEvent(params);
 
-        // if event create status is ok and if there was an image to uplaod
-        if (response && this.currentImage) {
+
           
-          //for take the post publish
-          const majPost = await EventService.update({
-                "status": "publish",
-                "id": response.data.id
-            });
-            console.log(majPost)
-          //response.data.id is the post id
-          this.upload(response.data.id);
-        } else if (response) {
-          // if there was not image to upload but event was create
-          this.title = null;
-          this.content = null;
-          this.eventDate = null;
-          this.location = null;
-          this.currentImage = undefined;
-          this.previewImage = undefined;
-          this.alerts = "Evénement modifié sans image";
-          // home redirect
-          setTimeout(() => this.$router.push({ name: "event", params: {id: this.id} }), 1500);
-        } else {
-          this.errors.push(
-            "Erreur d'enregistrement de l'événement ! Veuillez verifier la présence de l'événement"
-          );
-        }
-      }
-    },
-       async updateEvent(){
-        let params = {
           title: this.title,
           content: this.content,
           date: this.eventDate,
@@ -267,20 +225,22 @@ export default {
         else if (response!=undefined){
             setTimeout(() => this.$router.push({ name: "event", params: {id: this.id} }), 1500);
         }
+      }
+        
         
     }
   },
   async mounted(){
    
     this.id = this.$route.params.id;
-    const selectSale=await EventService.find(this.id);  
-    const selectSaleMeta=await EventService.findMeta(this.id);
-    this.title=selectSale.title.rendered
-    this.content=selectSale.content.rendered
-    this.eventDate=selectSaleMeta.date
-    this.location=selectSaleMeta.lieu
-    this.link=selectSaleMeta.lien
-    this.thumbnail_id=selectSaleMeta._thumbnail_id
+    const selectEvent=await EventService.find(this.id);  
+    const selectEventMeta=await EventService.findMeta(this.id);
+    this.title=selectEvent.title.rendered
+    this.content=selectEvent.content.rendered
+    this.eventDate=selectEventMeta.date
+    this.location=selectEventMeta.lieu
+    this.link=selectEventMeta.lien
+    this.thumbnail_id=selectEventMeta._thumbnail_id
   }
 };
 </script>
@@ -305,7 +265,11 @@ export default {
     display: grid;
     place-items: center;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> master
     .preview {
       width: 50%;
       border-radius: 5px;
@@ -346,9 +310,12 @@ export default {
         float: left;
         margin: 0.5rem;
       }
+      select{
+        border: 1px solid $blue;
+      }
       .field__input {
         line-height: 3;
-        border: 1px solid $blue-light-bg;
+        border: 1px solid $blue;
         border-radius: 0.5em;
         margin: 1rem 0 1rem 0;
         padding: 0.5em 0 0.5em 1.5em;

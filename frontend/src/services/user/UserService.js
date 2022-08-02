@@ -32,4 +32,17 @@ export default {
             return errors.response.data
         }
     },
+
+    // to send email for event registration
+    async sendEmail(params) {
+        apiClient.defaults.headers.common['Content-Type'] = "text/html";
+
+        try {
+            const response = await apiClient.post('/wp/v2/send', params);
+            return response
+        } catch (errors) {
+            return errors.response
+        }
+    },
+
 }
