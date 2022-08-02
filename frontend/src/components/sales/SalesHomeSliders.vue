@@ -53,7 +53,7 @@ export default {
     },
     methods: {
         SlideAuto() {
-            if(screen.width<=425){
+            if(screen.width<=425& this.nameRoute=="home"){
                 this.slideActive=true
                 console.log("coucou la slide est "+this.slideActive)
                 let allSlideText = document.getElementsByClassName("hidden")
@@ -74,7 +74,9 @@ export default {
             
         },
     },
-    async mounted() {        
+    async mounted() { 
+        const nameRoute=this.$route.name;
+        console.log(nameRoute)     
         setInterval(this.SlideAuto, 10000);
         this.saleSlide = await SaleService.findAll();
         this.maxSlide = this.saleSlide.length - 1;

@@ -126,7 +126,6 @@ export default {
       this.previewImage = URL.createObjectURL(this.currentImage);
       this.progress = 0;
     },
-
     // upload and send to wordpress
     upload(postId) {
       this.progress = 0;
