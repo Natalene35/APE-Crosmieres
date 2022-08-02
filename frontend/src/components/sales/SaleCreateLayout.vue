@@ -221,7 +221,6 @@ export default {
   .container {
     width: 80%;
     overflow: hidden;
-    //background-color: $white;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
     border-radius: 1em;

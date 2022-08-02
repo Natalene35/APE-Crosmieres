@@ -138,7 +138,7 @@ export default {
     }
 
     .event--card__media--image {
-        width: 100vh;
+        width: 100%;
         height: 30vh;
         background-position: center;
         background-size: cover;

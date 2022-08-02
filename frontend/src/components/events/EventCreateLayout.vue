@@ -17,7 +17,7 @@
         <label class="field__label">Titre de la publication </label>
         <input class="field__input" type="text" placeholder="" v-model="title" />
 
-        <label class="field__label">Decription </label>
+        <label class="field__label">Description </label>
         <textarea class="textarea field__input" type="text" placeholder="" rows="3" v-model="content"></textarea>
 
         <label class="field__label">Date de l'évènement </label>
@@ -231,7 +231,6 @@ export default {
   .container {
     width: 80%;
     overflow: hidden;
-    //background-color: $white;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
     border-radius: 1em;

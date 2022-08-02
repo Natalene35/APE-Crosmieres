@@ -76,7 +76,8 @@ export default {
             
         },
     },
-    async mounted() {           
+    async mounted() {   
+        this.slideAuto        
         setInterval(this.SlideAuto, 10000);
         this.saleSlide = await SaleService.findAll();
         this.maxSlide = this.saleSlide.length - 1;
