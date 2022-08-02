@@ -7,11 +7,7 @@
       <div v-on:keyup.enter="login" class="content">
         <h1 class="title">Connexion</h1>
         <div class="push--message">
-          <p
-            class="succesregistration"
-            v-for="succesMsg in succesLogin"
-            v-bind:key="succesMsg"
-          >
+          <p class="succesregistration" v-for="succesMsg in succesLogin" v-bind:key="succesMsg">
             {{ succesMsg }}
           </p>
           <p class="push--error" v-for="error in errors" v-bind:key="error">
@@ -20,21 +16,11 @@
         </div>
         <div class="field">
           <label class="field__label">Nom utilisateur</label>
-          <input
-            v-model="userName"
-            class="inputbox"
-            type="text"
-            placeholder="Votre pseudo ou e-mail"
-          />
+          <input v-model="userName" class="inputbox" type="text" placeholder="Votre pseudo ou e-mail" />
         </div>
         <div class="field field--error">
           <label class="field__label">Mot de passe</label>
-          <input
-            v-model="password"
-            class="inputbox"
-            type="password"
-            placeholder="Votre mot de passe"
-          />
+          <input v-model="password" class="inputbox" type="password" placeholder="Votre mot de passe" />
         </div>
         <button v-on:click="login" class="subscribe">Connexion</button>
       </div>
@@ -86,7 +72,6 @@ export default {
         this.$store.commit("setUserID", response.data.id);
 
         if (response.success === true) {
-          console.log(response);
           // We store your token in session in the store
           this.$store.commit("setToken", response.data.token);
           this.$store.commit("setUsername", response.data.nicename);
@@ -94,7 +79,6 @@ export default {
           // Recovering the role after having the token with another request
           const roles = await UserLoginService.getRoles(response.data.id);
           this.$store.commit("setRole", roles.roles[0]);
-          console.log(roles);
           // A success message is displayed
           this.succesLogin.push("Connexion réussie");
           // redirect after showing success message
@@ -168,7 +152,7 @@ export default {
       padding: 0.5em 0 0.5em 1.5em;
       line-height: 3;
       width: 100%;
-      border: 1px solid $blue-light-bg;
+      border: 1px solid $blue;
       border-radius: 0.5em;
       margin: 1rem 0 1rem 0;
       padding: 0;

@@ -62,7 +62,10 @@
           </div>
         </div>
         <a v-on:click="deleteConfirm" class="deleteUser">Supprimer votre compte ?</a>
-        <a v-on:click="removeUser" class="deleteConfirm active">êtes-vous sûrs ? </a>
+        <div class="deleteConfirm display--none">
+          <a class="deleteConfirm--return" v-on:click="hiddenDeleteConfirm">Conserver son compte ?</a>
+          <a class="deleteConfirm--button" v-on:click="removeUser">Confirmer la suppression ? </a>
+        </div>
       </div>
     </div>
   </section>
@@ -132,7 +135,14 @@ export default {
       let deleteUser = document.querySelector(".deleteUser");
       deleteUser.classList.toggle("active")
       let deleteConfirm = document.querySelector(".deleteConfirm");
-      deleteConfirm.classList.toggle("active");
+      deleteConfirm.classList.toggle("display--none");
+    },
+
+    hiddenDeleteConfirm() {
+      let hiddenDeleteConfirm = document.querySelector(".deleteConfirm");
+      hiddenDeleteConfirm.classList.add("display--none");
+      let deleteUser = document.querySelector(".deleteUser");
+      deleteUser.classList.toggle("active")
     },
 
     //Delete ours personnal account
@@ -275,10 +285,30 @@ export default {
      }
  
      .deleteConfirm {
-       border: 1px solid $red;
-       background-color: $red;
+       display: flex;
+       justify-content: center;
+       flex-direction: column;
+       align-items: center;
+     }
+ 
+     .deleteConfirm--button {
+       border: 1px solid red;
+       background-color: red;
        border-radius: 10px;
        cursor: pointer;
+       color: aliceblue
+     }
+ 
+     .deleteConfirm--return {
+       border: 1px solid rgb(20, 153, 20);
+       background-color: rgb(20, 153, 20);
+       color: $white;
+       border-radius: 10px;
+       cursor: pointer;
+     }
+ 
+     .display--none {
+       display: none;
      }
  
      .updateConfirm {
@@ -315,7 +345,7 @@ export default {
      font-size: 1rem;
      line-height: 3;
      width: 80%;
-     border: 1px solid $blue-bg-header;
+     border: 1px solid $blue;
      border-radius: 0.5em;
      margin: 0 0 1rem 0;
      padding: 0;
