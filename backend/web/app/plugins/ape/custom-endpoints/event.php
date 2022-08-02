@@ -3,6 +3,7 @@
 // connexion the callback function to init hook for custom routes
 add_action('rest_api_init', 'ape_rest_event_register');
 add_action('rest_api_init', 'ape_rest_event_meta');
+add_action('rest_api_init', 'ape_rest_event_update');
 
 //<----------------------------------ROAD-------------------------->>
 
@@ -35,7 +36,49 @@ function ape_rest_event_meta()
         )
     );
 }
+//FUNCTION POST UPDATE EVENT BY ID 
+function ape_rest_event_update()
+{
+    register_rest_route(
+        'wp/v2',
+        'event/update/(?P<id>\d+)',
+        array(
+            'methods' => 'POST',
+            'callback' => 'ape_rest_event_update_handler',
+            'permission_callback' => function () {
+                return true;
+            }
+        )
+    );
+}
+// update event by post_id
+function ape_rest_event_update_handler($request)
+{    
+    // translate request with JSON
+    $parameters = $request->get_json_params();   
+    $id=$parameters['id']; 
+    $title = sanitize_text_field($parameters['title']);
+    $content = sanitize_text_field($parameters['content']);
+    $date = sanitize_text_field($parameters['date']);
+    $lieu = sanitize_text_field($parameters['lieu']);
+    $type=$parameters['type']; 
+  
+   // add to the database
+    $post_id = wp_update_post([
+        
+        'post_title' => $title,
+        'post_content' => $content,
+        'post_type' => 'event',
+        'ID'=> $id,
+        'meta_input' => array(
+            'date' => $date,
+            'lieu' => $lieu
+        )
+    ]);
 
+    // return post's id or false
+    return $post_id ? ["id" => $post_id] : false;
+}
 // custom post meta by post_id
 function ape_rest_event_meta_handler($request)
 {

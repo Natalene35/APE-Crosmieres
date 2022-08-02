@@ -100,7 +100,6 @@ export default {
                     "phone": this.phone
                 });
                 if (response.code === 200) {
-                    console.log(response);
 
                     // Reset the input in the form
                     this.username = null,
@@ -118,7 +117,7 @@ export default {
                     setTimeout(() => this.$router.push({ name: 'login' }), 1000);
                 }
                 else if (response.code === 406) {
-                    this.errors.push('Cet e-mail est déjà inscrit');
+                    this.errors.push('Cet e-mail ou pseudo est déjà inscrit');
                 } else {
                     this.errors.push("Oups une erreur, veuillez recommencer");
                 }

@@ -22,6 +22,7 @@
 import SaleService from "@/services/sales/SaleService";
 import illustration from '@/assets/images/purchases.png';
 import bigArrow from '@/assets/images/squiggly-32.png';
+import defaultSalePicture from '@/assets/images/sales/chalk.jpg';
 
 
 export default {
@@ -34,11 +35,11 @@ export default {
             date: null,
             content: null,
             image: null,
-            link: null
+            link: null,
         }
     },
     async mounted() {
-         let id = this.$route.params.id;
+        let id = this.$route.params.id;
         if (id) {
             let arrayMeta = await SaleService.getMeta(id)
             // console.log(arrayMeta.lien);
@@ -54,7 +55,7 @@ export default {
             } else {
                 this.title = response.title.rendered;
                 this.content = response.content.rendered;
-                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100';
+                this.image = response._embedded['wp:featuredmedia'] ? response._embedded['wp:featuredmedia'][0].source_url : defaultSalePicture;
             }
         }
     }
