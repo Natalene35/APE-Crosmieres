@@ -17,11 +17,7 @@
 <script>
 import EventHomeListLayout from '@/components/events/EventHomeListLayout.vue';
 import EventService from '@/services/events/EventService';
-import PictureFlags from '@/assets/images/events/flags.jpg';
-import PictureBallon1 from '@/assets/images/events/ballon-1.jpg';
-import PictureBallon2 from '@/assets/images/events/ballon-2.jpg';
-import PictureMulticolored from '@/assets/images/events/multicoloured.jpg';
-
+import defaultPicture from '@/assets/images/events/flags.jpg';
 
 export default {
     name: "EventsHomeLayout",
@@ -48,24 +44,9 @@ export default {
     data() {
         return {
             eventsList: [],
-            images: [
-                PictureFlags,
-                PictureBallon1,
-                PictureBallon2,
-                PictureMulticolored
-            ],
-            defaultPicture: null
+            defaultPicture
         }
     },
-
-    methods: {
-        randomItem(items) {
-            return items[Math.floor(Math.random() * items.length)];
-        }
-    },
-    created() {
-        this.defaultPicture = this.randomItem(this.images)
-    }
 }
 </script>
 

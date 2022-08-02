@@ -197,6 +197,8 @@ export default {
       }
       if (this.errors.length === 0) {
         let params = {
+
+
           
           title: this.title,
           content: this.content,
@@ -263,6 +265,7 @@ export default {
     display: grid;
     place-items: center;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
+
     .preview {
       width: 50%;
       border-radius: 5px;

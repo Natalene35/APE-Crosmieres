@@ -30,7 +30,18 @@
     </div>
 
     <EventListLayout
-      v-bind:image="
+     
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+      <button class="search-icon"><i class="fa fa-search"></i></button>
+      <input type="text" class="search--input" placeholder="Rechercher..." v-model="searchString" />
+
+      <div class="button--radio__group">
+        <div class="button--title">
+        </div>
+        <div class="button--radio__element">
+          <input type="radio" class="button--radio" id="all" v-model="picked" value="all" />
+          <label class="button--radio__title" for="all">Tout</label>
+ v-bind:image="
         event.featured_media !== 0
           ? event._embedded['wp:featuredmedia'][0].source_url
           : 'https://source.unsplash.com/collection/157&random=100'
@@ -41,6 +52,7 @@
       v-for="event in eventsNewList"
       v-bind:key="event.id"
     />
+
   </section>
 </template>
 
@@ -49,6 +61,7 @@
 import EventListLayout from "@/components/events/EventListLayout.vue";
 import EventService from "@/services/events/EventService";
 import picture from "@/assets/images/surr-holidays.png";
+
 
 export default {
   name: "EventsListLayout",
@@ -59,7 +72,7 @@ export default {
 
   async mounted() {
     //list of events from our API
-      this.eventsList = await EventService.findAll();
+    this.eventsList = await EventService.findAll();
   },
 
   computed: {
@@ -69,18 +82,18 @@ export default {
         // We take the title of the current event and we check if the searched term is contained in this title.
         // If yes, return true
         // search possible in lowercase and without accent
-        if(this.picked == "all"){
-            if (event.title.rendered.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(this.searchString.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())) {
-                return true;
-                } else {
-                return false;
-                }
-        } else { 
-            if ( event.title.rendered.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(this.searchString.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()) && (this.picked == event.types[0])) {
+        if (this.picked == "all") {
+          if (event.title.rendered.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(this.searchString.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase())) {
             return true;
-            } else {
+          } else {
             return false;
-            }
+          }
+        } else {
+          if (event.title.rendered.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(this.searchString.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()) && (this.picked == event.types[0])) {
+            return true;
+          } else {
+            return false;
+          }
         }
       });
     },
@@ -93,6 +106,7 @@ export default {
       searchString: "",
       //default value for radio buttons 
       picked: "all",
+      defaultPicture
     };
   },
 };
@@ -139,7 +153,7 @@ export default {
     margin-left: 1rem;
   }
 
-   .event--img {
+  .event--img {
     width: 6rem;
   }
 
@@ -149,7 +163,7 @@ export default {
     margin-left: 10%;
 
     .button--radio__element {
-      
+
       display: block;
       margin: 10px 0;
       position: relative;
@@ -164,7 +178,7 @@ export default {
         position: relative;
         z-index: 2;
         border-radius: 2rem;
-    
+
         overflow: hidden;
 
         &:before {
@@ -173,11 +187,11 @@ export default {
           border-radius: 50%;
           content: '';
           background-color: $red;
-          
+
           position: absolute;
           left: 50%;
           top: 50%;
-        
+
           opacity: 0;
           z-index: -1;
         }
@@ -202,9 +216,9 @@ export default {
         }
       }
 
-      .button--radio:checked ~ label {
+      .button--radio:checked~label {
         color: $white;
-        
+
 
         &:before {
           transform: translate(-50%, -50%) scale3d(56, 56, 1);
@@ -242,13 +256,15 @@ export default {
     }
 
     .event--img {
-      display:none;
+      display: none;
     }
 
     .button--radio__group {
-        margin-left:1%;
+      margin-left: 1%;
+
     }
   }
+
 
 }
 </style>
