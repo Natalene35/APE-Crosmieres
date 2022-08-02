@@ -16,7 +16,7 @@
       </div>
       <div v-if="term[0][0]" class="event--card__term">
         <div>
-          {{ term[0][0].name == "actuality" ? "actualités" : "Réunions" }}
+          {{ term[0][0].name == "actuality" ? "Actualité" : "Réunion" }}
         </div>
       </div>
     </router-link>
