@@ -83,9 +83,9 @@ function ape_rest_user_send_email($request)
     $mail->Port = 587;
     $mail->SMTPSecure = "tls";
 
-    $mail->CharSet = 'utf-8';
-
+    
     //email settings
+    $mail->CharSet = 'utf-8';
     $mail->isHTML(true);
     $mail->setFrom("Page inscription", $name); // sender and his name
     $mail->addAddress("chrisdmar12@gmail.com"); // recipient

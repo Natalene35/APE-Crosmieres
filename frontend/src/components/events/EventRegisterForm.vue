@@ -192,7 +192,7 @@ export default {
         const event = await EventService.find(id);
         console.log(event);
         if (event.code) {
-          // this.$router.push({ name: "404" });
+          this.$router.push({ name: "404" });
         }
         let params = {
           name: this.name,
@@ -206,6 +206,7 @@ export default {
         };
         const response = await UserService.sendEmail(params);
         console.log(response);
+        // reset field if send ok
         if (response.data.status === "success") {
           this.name = null;
           this.email = null;
@@ -221,7 +222,7 @@ export default {
           }, 1500);
 
           // home redirect
-          // setTimeout(() => this.$router.push({ name: "home" }), 1500);
+          setTimeout(() => this.$router.push({ name: "home" }), 1500);
         } else {
           this.errors.push(response.data.message);
         }
