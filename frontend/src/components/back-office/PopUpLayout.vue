@@ -38,7 +38,7 @@ export default {
         hiddenPopUp(e){
            console.log(e.currentTarget.name)
            if(e.currentTarget.name=="yes"){
-            this.$emit("yes")
+            this.$emit("yes", this.id)
            }
            if(e.currentTarget.name=="no"){
             this.$emit("no")

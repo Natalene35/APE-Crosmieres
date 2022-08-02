@@ -1,6 +1,5 @@
 <template>
-    <section
->
+    <section>
         <h1>Liste des utilisateurs</h1>
         <ul>
             <li v-for="user in users" v-bind:key="user.id">
@@ -9,15 +8,21 @@
                     <div>{{ user.email }}</div>
                     <div>{{ user.roles[0] }}</div>
                 </div>
-                <div class="change">
+                <!-- Only the admin can modify the users list -->
+                <div v-if="this.$store.getters.getRole === 'administrator'" class="change">
                     <!-- This button calls the chooseARole methods et make appears the selected form -->
                     <button v-on:click="chooseARole(user.id)">Modifier le rôle</button>
                     <!-- Calls the delete method to delete a user -->
-                    <img v-on:click="deleteById(user.id)" class="picture" title="Supprimer ce compte" alt="trash"
+
+                    <img v-on:click="opacity = 1; zindex = 20;selectUserId=user.id" class="picture" title="Supprimer ce compte" alt="trash"
                         v-bind:src="trash" />
                 </div>
             </li>
         </ul>
+
+        <PopUpLayout v-bind:id="selectUserId" v-bind:opacity="this.opacity" v-bind:zindex="this.zindex"
+            v-on:yes="deleteById" v-on:no="this.opacity = 0, this.zindex = -20" />
+
         <!-- The selected form appears on the click of the button by the chooseARole method -->
         <div class="select" v-if="showSelected">
             <label for="role-select">Choisir un nouveau rôle </label>
@@ -26,23 +31,27 @@
                 <option value="apeuser">apeuser</option>
                 <option value="administrator">administrator</option>
             </select>
-            
+
             <input type="submit" v-on:click="updateRole()" value="Modifier le rôle">
         </div>
         <!-- display a succes message if the role is correctly modified -->
         <p class="succesUpdate" v-for="succesMsg in succesUpdate" v-bind:key="succesMsg">
-              {{ succesMsg }}
-            </p>
+            {{ succesMsg }}
+        </p>
     </section>
 </template>
 
 <script>
 import UserloginService from '@/services/login/UserLoginService';
 import UserService from '@/services/user/UserService';
-import trash from '@/assets/images/icons8-trash-can-100.png'
+import trash from '@/assets/images/icons8-trash-can-100.png';
+import PopUpLayout from '@/components/back-office/PopUpLayout';
 
 export default {
     name: 'UsersListLayout',
+    components: {
+        PopUpLayout
+    },
 
     data() {
         return {
@@ -52,7 +61,10 @@ export default {
             errors: [],
             succesUpdate: [],
             showSelected: false,
-            idToChange: null
+            idToChange: null,
+            zindex: -20,
+            opacity: 0,
+            selectUserId: null
         }
     },
     async mounted() {
@@ -62,8 +74,10 @@ export default {
     },
 
     methods: {
-        async deleteById(id) {
-            const response = await UserService.deleteById(id);
+        async deleteById(e) {
+            this.opacity=0
+            this.zindex=-20 
+            const response = await UserService.deleteById(e);
             this.users = await UserloginService.findAll();
             console.log(response);
         },
@@ -94,9 +108,9 @@ export default {
                         this.errors = [];
                     }, 5000);
                 }
-            } 
+            }
             this.showSelected = false;
-        } 
+        }
     }
 }
 </script>

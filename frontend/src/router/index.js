@@ -228,6 +228,12 @@ router.beforeEach((to) => {
         return true
       }
       return { name: "login" };
+
+      case 'users':
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+        return true
+      }
+      return { name: "login" };
   }
   // if the road doesn't exit we return a 404
  return { name: "404" };
