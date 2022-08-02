@@ -210,7 +210,7 @@ export default {
         padding: 0.5em 0 0.5em 1.5em;
         line-height: 3;
         width: 100%;
-        border: 1px solid $blue-light-bg;
+        border: 1px solid $blue;
         border-radius: 0.5em;
         margin: 1rem 0 1rem 0;
         padding: 0;

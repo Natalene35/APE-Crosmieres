@@ -147,6 +147,7 @@ export default {
                     justify-content: flex-start;
                     text-align: end;
                 }
+                
             }
         }
 

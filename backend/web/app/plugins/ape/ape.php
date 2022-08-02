@@ -28,6 +28,12 @@ require_once plugin_dir_path(__FILE__) . "custom-endpoints/registration.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/child.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/user.php";
 
+
+require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/PHPMailer.php";
+require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/SMTP.php";
+require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/Exception.php";
+require_once plugin_dir_path(__FILE__) . "custom-endpoints/mail.php";
+
 // add files to create custom role
 require_once plugin_dir_path(__FILE__) . "custom-roles/ApeMember.php";
 require_once plugin_dir_path(__FILE__) . "custom-roles/ApeUser.php";
