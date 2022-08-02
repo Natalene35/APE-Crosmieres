@@ -1,12 +1,12 @@
 <template>
 
-  <HeaderLayout />
-  <main>
-    <SalesHomeSliders />
-    <EventsHomeLayout />
-    <SalesHomeLayout v-bind:hiddenSale="this.hiddenSale" />
-  </main>
-  <FooterLayout />
+  <HeaderLayout/>
+    <main class="home--container">
+        <SalesHomeSliders/>
+        <EventsHomeLayout/>
+        <SalesHomeLayout v-bind:hiddenSale="this.hiddenSale"/>
+    </main>
+  <FooterLayout/>
 
 </template>
 
@@ -21,18 +21,21 @@ import SalesHomeSliders from '@/components/sales/SalesHomeSliders.vue'
 
 export default {
   name: 'HomeView',
+
   data(){
     return{
       hiddenSale: false,
     }
   },
+
   components: {
     HeaderLayout,
     EventsHomeLayout,
     SalesHomeLayout,
     FooterLayout,
     SalesHomeSliders
-},
+  },
+
   mounted(){
     //HER FIX FOR SLIDERS 
     console.log(screen.width)
@@ -43,22 +46,27 @@ export default {
 }
 </script>
 
+
 <style scoped lang="scss">
 
-main {
+.home--container {
     height: 100%;
     display: flex;
     list-style-type: none;
     justify-content: space-between;
-
 }
+
+
+//<----------Media queries-------->
+
 @media (max-width: 425px) {
-    main{
-    flex-direction: column;
-    position: relative;
-    z-index: 3;
-    overflow: hidden;
+  .home--container {
+  flex-direction: column;
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
   }
 }
+
 </style>
 

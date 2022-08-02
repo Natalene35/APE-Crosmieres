@@ -1,5 +1,6 @@
 <template>
   <section class="wrapper">
+    <h1 class="wrapper--title">Vos informations</h1>
     <div class="container">
       <div class="card">
         <div class="avatar">
@@ -231,6 +232,16 @@ export default {
    place-items: center;
    border-radius: 1em;
    width: 55vh;
+
+   .wrapper--title {
+    color: $blue-dark;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 0px 0px 0px $grey;
+    font-family: 'Merienda', cursive;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+   }
  
    .container {
      max-width: 400px;
@@ -385,14 +396,24 @@ export default {
    align-items: center;
  }
  
- @media (max-width: 800px) {
-   .wrapper {
-     width: 44vh;
- 
- 
-     .button--link .deleteUser {
-       opacity: 1;
-     }
-   }
+ //<---------------------MEDIA QUERIES ------------------------>
+@media (max-width: 576px) {
+  .wrapper {
+    .button--link {
+      width: 80%;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    width: 44vh;
+
+    .button--link .deleteUser {
+      opacity: 1;
+    }
+  }
  }
+
+
  </style>

@@ -9,7 +9,7 @@
             alt=""
           />
           <button class="btn--return" v-on:click="rtn()">Retour</button>
-          <h1 class="title">Modification d'un événement</h1>
+          <h1 class="title">Modification d'un évènement</h1>
         </div>
 
         <label class="field__label">Catégorie</label>
@@ -261,7 +261,7 @@ export default {
     display: grid;
     place-items: center;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
-
+    
     .preview {
       width: 50%;
       border-radius: 5px;
