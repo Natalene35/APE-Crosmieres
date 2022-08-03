@@ -1,7 +1,7 @@
 <template>
 
   <HeaderLayout />
-  <main>
+  <main class="home--container">
     <SalesHomeSliders />
     <EventsHomeLayout />
     <SalesHomeLayout />
@@ -21,10 +21,12 @@ import SalesHomeSliders from '@/components/sales/SalesHomeSliders.vue'
 
 export default {
   name: 'HomeView',
+
   data(){
     return{
     }
   },
+
   components: {
     HeaderLayout,
     EventsHomeLayout,
@@ -35,22 +37,27 @@ export default {
 }
 </script>
 
+
 <style scoped lang="scss">
 
-main {
+.home--container {
     height: 100%;
     display: flex;
     list-style-type: none;
     justify-content: space-between;
-
 }
+
+
+//<----------Media queries-------->
+
 @media (max-width: 425px) {
-    main{
-    flex-direction: column;
-    position: relative;
-    z-index: 3;
-    overflow: hidden;
+  .home--container {
+  flex-direction: column;
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
   }
 }
+
 </style>
 

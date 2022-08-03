@@ -3,7 +3,7 @@
 Plugin Name: APE Crosmières custom
 Description: ajout de gestion d'évenements et ventes initiatives pour les Association de parent d'élèves
 Author: Natalène D, Emilie P, Loïc D, Julien L et Christophe D
-Version: 0.0.3
+Version: 0.0.4
 */
 
 
@@ -27,13 +27,20 @@ require_once plugin_dir_path(__FILE__) . "custom-endpoints/sale.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/registration.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/child.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/user.php";
+require_once plugin_dir_path(__FILE__) . "custom-endpoints/mail.php";
+
+// add files to use PHP Mailer for email send
+require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/PHPMailer.php";
+require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/SMTP.php";
+require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/Exception.php";
 
 // add files to create custom role
 require_once plugin_dir_path(__FILE__) . "custom-roles/ApeMember.php";
 require_once plugin_dir_path(__FILE__) . "custom-roles/ApeUser.php";
 
 // add files to create custom taxonomy type
-require_once plugin_dir_path(__FILE__) . "custom-taxonomies/type.php";
+require_once plugin_dir_path(__FILE__) . "custom-taxonomies/eventtype.php";
+require_once plugin_dir_path(__FILE__) . "custom-taxonomies/eventtype_terms.php";
 
 // function to load when plugin is actived or desactived
 register_activation_hook(__FILE__, 'ape_create_custom_roles');

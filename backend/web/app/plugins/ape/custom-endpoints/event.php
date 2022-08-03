@@ -53,28 +53,34 @@ function ape_rest_event_update()
 }
 // update event by post_id
 function ape_rest_event_update_handler($request)
-{    
+{
     // translate request with JSON
-    $parameters = $request->get_json_params();   
-    $id=$parameters['id']; 
+    $parameters = $request->get_json_params();
+    $id = $parameters['id'];
     $title = sanitize_text_field($parameters['title']);
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
     $lieu = sanitize_text_field($parameters['lieu']);
-    $type=$parameters['type']; 
+    $term = sanitize_text_field($parameters['term']);
 
-   // add to the database
+    // add to the database
     $post_id = wp_update_post([
-        
+
         'post_title' => $title,
         'post_content' => $content,
         'post_type' => 'event',
-        'ID'=> $id,
+        'ID' => $id,
         'meta_input' => array(
             'date' => $date,
             'lieu' => $lieu
         )
     ]);
+
+    // source : https://developer.wordpress.org/reference/functions/wp_set_post_terms/
+    // Default value: replace the terms with the new terms
+    wp_set_post_terms($id, $term, 'eventtype');
+
+
 
     // return post's id or false
     return $post_id ? ["id" => $post_id] : false;
@@ -97,12 +103,20 @@ function ape_rest_event_meta_handler($request)
     $eventDate = $wpdb->get_results("
     SELECT meta_value FROM wp_postmeta
     WHERE meta_key = 'date' AND post_id = $id 
-    ");      
+    ");
+
+    $terms = wp_get_post_terms($id, "eventtype");
     $post = get_post( $id ); 
-    $content = $post->post_content;  
+    $content = $post->post_content; 
     // add the meta data to the post object
-    return ['content' => $content, 'lieu' => $lieu[0]->meta_value, 'date' => $eventDate[0]->meta_value];
+    return [
+        'content' => $content, 
+        'lieu' => $lieu[0]->meta_value,
+        'date' => $eventDate[0]->meta_value,
+        'terms' => $terms[0]->name
+    ];
 };
+
 
 function ape_rest_add_event_handler($request)
 {
@@ -114,6 +128,8 @@ function ape_rest_add_event_handler($request)
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
     $lieu = sanitize_text_field($parameters['lieu']);
+    $terms = sanitize_text_field($parameters['terms']);
+
 
     // add to the database
     $post_id = wp_insert_post([
@@ -125,6 +141,8 @@ function ape_rest_add_event_handler($request)
     //add the meta key and value with the post id
     add_post_meta($post_id, 'lieu', $lieu);
     add_post_meta($post_id, 'date', $date);
+
+    wp_set_post_terms($post_id, $terms, "eventtype");
 
     // return post's id or false
     return $post_id ? ["id" => $post_id] : false;
