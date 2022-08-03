@@ -88,6 +88,13 @@ const routes = [{
     component: () => import( /* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
   },
 
+  //Road for user list
+  {
+    path: '/users',
+    name: 'users',
+    component: () => import( /* webpackChunkName: "users" */ '../views/user/UsersListView.vue')
+  },
+
   // route for creating event
   {
     path: '/presentation-des-membres-APE',
@@ -186,19 +193,19 @@ router.beforeEach((to) => {
     // Road for members 
     case 'back-office':
       // Only with if connected and the role 'admin' or APE members 
-      if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+      if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
         return true
       }
       return { name: "login" };
     
        case 'saleUpdate':
-    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
         return true
       }
       return { name: "login" };
     
      case 'saleCreate':
-    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
         return true
       }
       return { name: "login" };
@@ -210,7 +217,13 @@ router.beforeEach((to) => {
       return { name: "login" };
     
     case 'eventUpdate':
-    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
+        return true
+      }
+      return { name: "login" };
+
+      case 'users':
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
         return true
       }
       return { name: "login" };
