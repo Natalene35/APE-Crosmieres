@@ -2,7 +2,7 @@
 
     <section class="sale--sliders__all">
         <!-- <------------------BUBBLE---------------->
-        <div class="background--bubble__container" v-if="this.slideActive==true">
+        <div class="background--bubble__container" v-if="this.nameRoute=='home'">
             <div class="background--design__bubble"></div>
             <div class="background--design__bubble"></div>
             <div class="background--design__bubble"></div>
@@ -14,9 +14,9 @@
         </div>
 
         <div class="sale--sliders">
-            <div v-for="sales in saleSlide" v-bind:key="sales" v-bind:class="'sale--sliders__texte hidden first'">
-                <h2 class="sale--sliders__h2">{{ sales.title.rendered }}</h2>
-                <p v-html="sales.excerpt.rendered"></p>
+                <div v-bind:class="'sale--sliders__texte'">                
+                <h2 class="sale--sliders__h2" >{{this.title}}</h2>
+                <p v-html="this.content"></p>
 
             </div>
         </div>
@@ -43,44 +43,40 @@ export default {
         return {
             allSales: null,
             //Define the slide show in first
-            slide: 1,
+            slide: 0,
             //Define number of slide
             maxSlide: null,
             saleSlide: null,
             scroll: null,
             slideActive: false,
+            nameRoute: null,
+            title: null,
+            content: null
         }
     },
     methods: {
         SlideAuto() {
-            const nameRoute=this.$route.name;
-            if(screen.width<=425 & nameRoute=="home"){
-                console.log("sliders actif")
-                this.slideActive=true
-                console.log("coucou la slide est "+this.slideActive)
-                let allSlideText = document.getElementsByClassName("hidden")
-                allSlideText[0].classList.remove("first")
-                if (this.slide != this.maxSlide) {
+                
+                if (this.slide != this.maxSlide){
                     this.slide++
-                    allSlideText[this.slide - 1].classList.remove("active")
-                    allSlideText[this.slide - 1].classList.remove("animsliders")
+                    this.title=this.saleSlide[this.slide].title.rendered 
+                    this.content=this.saleSlide[this.slide].content.rendered 
                 }
-                else {
-                    this.slide = 0
-                    allSlideText[this.maxSlide].classList.remove("active")
-                    allSlideText[this.maxSlide].classList.remove("animsliders")
+                else{
+                    this.slide=0
+                    this.title=this.saleSlide[this.slide].title.rendered 
+                    this.content=this.saleSlide[this.slide].content.rendered
                 }
-                allSlideText[this.slide].classList.add("active")
-                allSlideText[this.slide].classList.add("animsliders")
             }
             
-        },
-    },
+        },   
     async mounted() {   
-        this.slideAuto        
+        this.nameRoute=this.$route.name;
         setInterval(this.SlideAuto, 10000);
         this.saleSlide = await SaleService.findAll();
         this.maxSlide = this.saleSlide.length - 1;
+        this.title=this.saleSlide[this.slide].title.rendered 
+        this.content=this.saleSlide[this.slide].content.rendered 
     }
 }
 </script>
@@ -93,12 +89,6 @@ export default {
 }
 
 @media (max-width: 425px) {
-
-
-    .sale--section {
-        display: none;
-    }
-
     .sale--sliders__all {
 
         display: flex;
@@ -128,7 +118,7 @@ export default {
         @import "../../assets/animations/bubbleAnim.scss";
 
         .background--design__all {
-            height: 700vh;
+            height: 616vh;
             width: 1320VH;
             background-color: transparent;
             position: absolute;
@@ -165,6 +155,9 @@ export default {
             display: flex;
             align-items: center;
             text-align: center;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
         }
 
         .sale--sliders {
@@ -178,7 +171,7 @@ export default {
             color: #313846;
             width: 100%;
             height: 65%;
-            margin-top: -18%;
+            
 
             h2 {
                 text-shadow: 1px 1px 1px black;
@@ -189,7 +182,7 @@ export default {
                 color: $white;
                 font-size: large;
                 font-weight: bold;
-                margin-top: 4%;
+                margin-top: 7%;
             }
 
             p {
@@ -218,10 +211,6 @@ export default {
 
             .hidden {
                 display: none;
-            }
-
-            .first:nth-child(1) {
-                display: contents;
             }
 
             .active {

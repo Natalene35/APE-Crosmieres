@@ -10,7 +10,7 @@
         <div class="event--card__date">{{ date }}</div>
         <div class="event--card__location">{{ location }}</div>
 
-        <div class="event--card__media--image" v-bind:style="'background-image:url(' + image + ')'"></div>
+        <img class="event--card__media--image" v-bind:src="image">
 
         <div class="event--card__content" v-html="content"></div>
 
