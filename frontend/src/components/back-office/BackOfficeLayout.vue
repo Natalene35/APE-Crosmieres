@@ -11,6 +11,7 @@
                         Accueil
                     </router-link>
                 </div>
+                <div class="listUser" v-on:click="showMenu">Liste des utilisateurs</div>
                 <div class="updateEvent" v-on:click="showMenu">Modifier un évènement</div>
                 <div class="createEvent" v-on:click="showMenu">Créer un évènement</div>
                 <div class="updateSale" v-on:click="showMenu">Modifier une vente</div>
@@ -33,6 +34,7 @@
 
             <SaleCreateLayout v-if="this.menu == 2" class="back-office--container__components" />
             <EventCreateLayout v-if="this.menu == 4" class="back-office--container__components" />
+            <UsersListLayout v-if="this.menu == 5" class="back-office--container__components" />
         </section>
        
         
@@ -48,6 +50,7 @@ import SaleListLayout from '../sales/SaleListLayout.vue';
 //SERVICES
 import EventService from '@/services/events/EventService';
 import SaleService from '@/services/sales/SaleService';
+import UsersListLayout from '../user/UsersListLayout.vue';
 export default {
     name: "BackOfficeLayout",
     data() {
@@ -95,6 +98,14 @@ export default {
                     this.menu = null
                 }
             }
+            if (e.currentTarget.classList == "listUser") {
+                if (this.menu != 5) {
+                    this.menu = 5
+                }
+                else {
+                    this.menu = null
+                }
+            }
         },
         async reload(){
         this.eventsList = await EventService.findAll();
@@ -102,7 +113,7 @@ export default {
         },       
 
     },
-    components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
+    components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout, UsersListLayout }
     ,
     async mounted() {
         this.eventsList = await EventService.findAll();
@@ -112,6 +123,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrapper{
+    .container{
+        .field{
+            .field_title{
+                .title{
+                    color: #946973;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    font-family: "Merienda", cursive;
+                    margin-top: 0.5rem;
+                    margin-bottom: 1rem;
+                    text-shadow: 0px 0px 0px #313846;
+                }
+            }
+        }
+    }
+}
 .back-office--container__all {
     width: 100%;
     .back-office--container__nav {
@@ -129,8 +157,17 @@ export default {
             margin: auto;
             flex-direction: column;
             align-items: center;
+            h1{
+                color: #946973;
+                font-size: 1.5rem;
+                font-weight: bold;
+                font-family: "Merienda", cursive;
+                margin-top: 0.5rem;
+                margin-bottom: 1rem;
+                text-shadow: 0px 0px 0px #313846;
+            }
             .event--card{
-                min-width: 50VH;
+                min-width: 44vh;
                 margin-top: 5%;
                 .event--card__media--image{
                     background-position: center;
@@ -146,6 +183,11 @@ export default {
                     align-items: center;
                     justify-content: flex-start;
                     text-align: end;
+                    div{
+                          display: flex;
+                        width: 100%;
+                        justify-content: center;
+                    }
                 }
                 
             }
@@ -221,6 +263,10 @@ export default {
                 color: white;
                 margin-right: 0;
             }
+            .listUser{
+                background-color: $purple;
+                color: white;
+            }
         }
     }
 }
@@ -228,12 +274,34 @@ export default {
 
 @media (max-width: 555px) {
     .back-office--container__all {
-            min-height: 108vh;
-        .back-office--sales__all {
+            
+        .back-office--container__nav {
             .back-office--menu__nav {
-                a {
-                    
+                flex-wrap: wrap;
+                div{
+                    margin: 1%;
+                    width: 26%;
+                    height: 37px;
                 }
+                .createEvent{
+                    order: 1;
+                }
+                .createSale{
+                    order: 1;
+                }
+                .home{
+                    order: -1;
+                }
+                .listUser{
+                    order: 1;
+                }
+                .updateEvent{
+                    order: -1;
+                }
+                .updateSale{
+                    order: -1;
+                }
+
             }
             .back-office--container__components {
                 .event--card{
@@ -244,6 +312,9 @@ export default {
             .sale--card {
                 width: 80%;
                 .sale--card__title{
+                    div{
+                      
+                    }
                 }
             }
         }

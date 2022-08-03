@@ -27,7 +27,7 @@
         <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
         <div class="header--burger__container">
           <div id="menu_button">
-            <input type="checkbox" id="menu_checkbox" v-on:click="showMenu">
+            <input type="checkbox" id="menu_checkbox" v-on:click="showMenu" :checked="menuBurger">
             <label for="menu_checkbox" id="menu_label">
               <div id="menu_text_bar"></div>
 
@@ -61,7 +61,7 @@
           </router-link>
         </div>
 
-        <div v-if="this.$store.getters.getRole === 'administrator' || this.$store.getters.getRole === 'membreape'"
+        <div v-if="this.$store.getters.getRole === 'administrator' || this.$store.getters.getRole === 'apemember'"
           class=" header--nav__backoffice">
           <router-link v-bind:to="{ name: 'back-office' }" class="header--nav__backoffice">Administration</router-link>
         </div>
@@ -70,30 +70,30 @@
     </header>
 
     <!-- /*<--------------------MENU BURGER HIDDEN IN DESKTOP---------------------------->
-    <div class="header--burger__menu">
+    <div class="header--burger__menu" v-if="menuBurger">
       <ul>
-        <li class="header--nav__home burger--ul">
+        <li class="header--nav__home burger--ul" @click="hiddenMenu">
           <router-link v-bind:to="{ name: 'home' }" class="header--nav__home ">
             Accueil
           </router-link>
         </li>
-        <li class="header--nav__sale">
+        <li class="header--nav__sale" @click="hiddenMenu">
           <router-link v-bind:to="{ name: 'salesList' }" class="header--nav__sale burger--ul">
             Ventes
           </router-link>
         </li>
-        <li class="header--nav__event">
+        <li class="header--nav__event" @click="hiddenMenu">
           <router-link v-bind:to="{ name: 'eventsList' }" class="header--nav__event burger--ul">
             Evènements
           </router-link>
         </li>
-        <li class="header--nav__presentation">
+        <li class="header--nav__presentation" @click="hiddenMenu">
           <router-link v-bind:to="{ name: 'memberList' }" class="header--nav__presentation burger--ul">
             Présentation
           </router-link>
         </li>
 
-        <li class="header--nav__inscription">
+        <li class="header--nav__inscription" @click="hiddenMenu">
           <router-link v-if="!this.$store.getters.getUserID" v-bind:to="{ name: 'registration' }"
             class="header--nav__inscription burger--ul">Inscription
           </router-link>
@@ -102,7 +102,7 @@
           </router-link>
         </li>
 
-        <li class="header--nav__connexion">
+        <li class="header--nav__connexion" @click="hiddenMenu">
           <router-link v-if="!this.$store.getters.getToken" v-bind:to="{ name: 'login' }"
             class="header--login burger--ul">
             Connexion
@@ -112,15 +112,12 @@
           </a>
         </li>
 
-        <li class="header--nav__backoffice">
+        <li class="header--nav__backoffice" @click="hiddenMenu">
           <router-link v-if="this.$store.getters.getRole === 'administrator'" v-bind:to="{ name: 'back-office' }"
             class="header--nav__backoffice burger--ul">Administration
           </router-link>
         </li>
       </ul>
-      <div v-bind:class="'burger--menu__picture'">
-        <img v-bind:src="profilPic">
-      </div>
     </div>
   </div>
 
@@ -139,21 +136,26 @@ export default {
     return {
       profilPic: profil,
       logoApe: logoAPE,
+      menuBurger: false
     }
   },
 
   methods: {
-    showMenu() {
-      let headerMenu = document.querySelector(".header--burger__menu");
+    hiddenMenu(){
       let body = document.querySelector("body");
-      let ulLink = document.getElementsByClassName("burger--ul")
-
-      for (const ul of ulLink) {
-        //WHEN WE CLICK IN A BURGER MENU LINK RETURN IN SHOWMENU () AND REMOVE BODY CLASSLIST
-        ul.addEventListener("click", this.showMenu)
+      this.menuBurger=false
+      body.classList.remove("overflow--hidden");
+  },
+    showMenu() {
+      let body = document.querySelector("body");
+      if(this.menuBurger==true){
+        this.menuBurger=false
+          body.classList.remove("overflow--hidden");
       }
-      body.classList.toggle("overflow--hidden");
-      headerMenu.classList.toggle("active");
+      else{
+        this.menuBurger=true
+          body.classList.add("overflow--hidden");
+      }
     },
 
     disconnect() {
@@ -342,7 +344,6 @@ header {
 
 //<----------------------MENU BURGER ---------------->
 .header--burger__menu {
-  display: none;
   height: 1000vh;
 
   ul {

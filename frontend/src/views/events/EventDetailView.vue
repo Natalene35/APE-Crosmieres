@@ -21,6 +21,9 @@ export default {
     EventDetailLayout,
     EventRegisterForm,
   },
+    mounted() {
+    document.title = "Detail événement";
+  },
 };
 </script>
 

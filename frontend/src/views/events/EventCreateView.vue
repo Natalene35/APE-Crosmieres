@@ -23,8 +23,6 @@ export default {
     document.title = "Ajout événement";
   },
 };
-
-
 </script>
 
 

@@ -296,11 +296,15 @@ export default {
         }
 
         .title {
-          font-size: 1.6rem;
-          font-weight: 700;
           text-align: center;
           padding: 1rem;
+          color: $red;
+          font-size: 1.5rem;
+          font-weight: bold;
+          font-family: "Merienda", cursive;
+          margin-top: 0.5rem;
           margin-bottom: 1rem;
+          text-shadow: 0px 0px 0px #313846;
         }
       }
 

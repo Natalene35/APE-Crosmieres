@@ -1,12 +1,12 @@
 <template>
 
-  <HeaderLayout/>
-    <main class="home--container">
-        <SalesHomeSliders/>
-        <EventsHomeLayout/>
-        <SalesHomeLayout v-bind:hiddenSale="this.hiddenSale"/>
-    </main>
-  <FooterLayout/>
+  <HeaderLayout />
+  <main class="home--container">
+    <SalesHomeSliders />
+    <EventsHomeLayout />
+    <SalesHomeLayout />
+  </main>
+  <FooterLayout />
 
 </template>
 
@@ -24,7 +24,6 @@ export default {
 
   data(){
     return{
-      hiddenSale: false,
     }
   },
 
@@ -34,15 +33,9 @@ export default {
     SalesHomeLayout,
     FooterLayout,
     SalesHomeSliders
-  },
 
-  mounted(){
-    //HER FIX FOR SLIDERS 
-    console.log(screen.width)
-      if(screen.width<=425){
-        this.hiddenSale=true;
-      }
-  }
+},
+
 }
 </script>
 

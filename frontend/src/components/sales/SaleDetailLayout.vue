@@ -14,7 +14,8 @@
             <img class="snake" alt="Arrow" v-bind:src="bigSnake" />
         </a>
 
-        <div class="media-image" v-bind:style="'background-image:url(' + image + ')'"></div>
+        <img class="media-image" v-bind:src="image">
+
     </section>
 </template>
 
@@ -23,7 +24,6 @@ import SaleService from "@/services/sales/SaleService";
 import illustration from '@/assets/images/purchases.png';
 import bigArrow from '@/assets/images/squiggly-32.png';
 import defaultSalePicture from '@/assets/images/sales/colorful.jpg';
-
 
 export default {
     name: "SaleDetailLayout",
@@ -78,9 +78,15 @@ export default {
     flex-direction: column;
     align-items: center;
 
+    .img {
+        width: 50%;
+
+    }
+
     .event--card__content {
         display: flex;
-        width: 100%;
+        flex-direction: column;
+        align-items: center;
     }
 
     .picture--container {
