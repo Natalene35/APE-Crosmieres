@@ -398,10 +398,10 @@ section {
 
     @media (min-width: 768px) {
         input {
-            width: 20%;
+            width: 40%;
         }
         li {
-            width: 60%;
+       
 
             .picture {
                 height: 4rem;
