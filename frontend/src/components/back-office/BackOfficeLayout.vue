@@ -34,9 +34,12 @@
 
             <SaleCreateLayout v-if="this.menu == 2" class="back-office--container__components" />
             <EventCreateLayout v-if="this.menu == 4" class="back-office--container__components" />
+
+            <img class="picture" alt="Bonhomme costaud" v-bind:src="picture" />
+
         </section>
-       
-        
+
+
     </section>
 </template>
 
@@ -49,6 +52,9 @@ import SaleListLayout from '../sales/SaleListLayout.vue';
 //SERVICES
 import EventService from '@/services/events/EventService';
 import SaleService from '@/services/sales/SaleService';
+//PICTURE
+import jelly from '@/assets/images/jelly-security-guard-wearing-sunglasses.png';
+
 export default {
     name: "BackOfficeLayout",
     data() {
@@ -58,7 +64,8 @@ export default {
             eventsList: null,
             salesList: null,
             backOffice: true,
-            
+            picture: jelly
+
         };
     },
     methods: {
@@ -105,10 +112,10 @@ export default {
                 }
             }
         },
-        async reload(){
-        this.eventsList = await EventService.findAll();
-        this.salesList = await SaleService.findAll();
-        },       
+        async reload() {
+            this.eventsList = await EventService.findAll();
+            this.salesList = await SaleService.findAll();
+        },
 
     },
     components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
@@ -123,6 +130,7 @@ export default {
 <style lang="scss" scoped>
 .back-office--container__all {
     width: 100%;
+
     .back-office--container__nav {
         width: 94%;
         display: flex;
@@ -130,7 +138,7 @@ export default {
         padding: 2%;
         align-items: center;
         padding: 0% 3% 0% 3%;
-       
+
         .back-office--container__components {
             display: flex;
             flex-wrap: wrap;
@@ -138,30 +146,35 @@ export default {
             margin: auto;
             flex-direction: column;
             align-items: center;
-            .event--card{
+
+            .event--card {
                 min-width: 44vh;
                 margin-top: 5%;
-                .event--card__media--image{
+
+                .event--card__media--image {
                     background-position: center;
                     background-size: cover;
                     background-repeat: no-repeat;
                 }
             }
+
             .sale--card {
                 width: 100%;
-                .sale--card__title{
+
+                .sale--card__title {
                     display: flex;
                     flex-direction: row-reverse;
                     align-items: center;
                     justify-content: flex-start;
                     text-align: end;
-                    div{
-                          display: flex;
+
+                    div {
+                        display: flex;
                         width: 100%;
                         justify-content: center;
                     }
                 }
-                
+
             }
         }
 
@@ -195,7 +208,7 @@ export default {
             div {
                 width: 22%;
                 padding: 0.5rem;
-                text-shadow: 1px 1px 1px black;
+                text-shadow: 1px 1px 1px $black;
                 border-radius: 10px;
                 cursor: pointer;
                 margin-right: 0.5rem;
@@ -206,7 +219,7 @@ export default {
 
             .home {
                 background-color: $purple;
-                color: white;
+                color: $white;
 
                 a {
                     display: block;
@@ -216,61 +229,74 @@ export default {
 
             .updateEvent {
                 background-color: $red;
-                color: white;
+                color: $white;
             }
 
             .createEvent {
                 background-color: $red;
-                color: white;
+                color: $white;
             }
 
             .updateSale {
                 background-color: $orange;
-                color: white;
+                color: $white;
             }
 
             .createSale {
                 background-color: $orange;
-                color: white;
+                color: $white;
                 margin-right: 0;
             }
-            .listUser{
+
+            .listUser {
                 background-color: $purple;
-                color: white;
+                color: $white;
             }
         }
+    }
+
+    .picture {
+        margin: 5rem auto;
+        width: 25rem;
+        max-width: 50%;
+        height: auto;
     }
 }
 
 
 @media (max-width: 555px) {
     .back-office--container__all {
-            
+
         .back-office--container__nav {
             .back-office--menu__nav {
                 flex-wrap: wrap;
-                div{
+
+                div {
                     margin: 1%;
                     width: 26%;
                 }
             }
+
             .back-office--container__components {
-                .event--card{
+                .event--card {
                     width: 90%;
-                    .event--card__media--image{
-                    }
+
+                    .event--card__media--image {}
                 }
-            .sale--card {
-                width: 80%;
-                .sale--card__title{
-                    div{
-                      
+
+                .sale--card {
+                    width: 80%;
+
+                    .sale--card__title {
+                        div {}
                     }
                 }
             }
         }
-        }
     }
 
+    .picture {
+        width: 100%;
+    }
 }
 </style>
