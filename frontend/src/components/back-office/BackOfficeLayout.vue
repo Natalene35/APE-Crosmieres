@@ -246,7 +246,7 @@ export default {
 @media (max-width: 555px) {
     .back-office--container__all {
             
-        .back-office--sales__all {
+        .back-office--container__nav {
             .back-office--menu__nav {
                 flex-wrap: wrap;
                 div{

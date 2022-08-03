@@ -231,7 +231,7 @@ export default {
     const selectEvent = await EventService.find(this.id);
     const selectEventMeta = await EventService.findMeta(this.id);
     this.title = selectEvent.title.rendered;
-    this.content = selectEventMeta.content.rendered;
+    this.content = selectEventMeta.content;
     this.eventDate = selectEventMeta.date;
     this.location = selectEventMeta.lieu;
     this.link = selectEventMeta.lien;
