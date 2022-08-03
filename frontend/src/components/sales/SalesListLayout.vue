@@ -1,14 +1,17 @@
 <template>
     <section class="sale--section__list">
+        <h1>Liste des ventes de l'école</h1>
         <div class="sale--section__search">
             <img class="sale--card__img" v-bind:src="salePicture">
             <!-- Load icon library from font awesome -->
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-            <button class="search-icon"> <i class="fa fa-search"></i></button> 
+            <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <button class="search-icon"> <i class="fa fa-search"></i></button>
             <input type="text" placeholder="Rechercher..." v-model="searchString">
         </div>
         <div class="sale--list">
-            <SaleListLayout v-bind:id="sale.id" v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesNewList" v-bind:key="sale.id"/>
+            <SaleListLayout v-bind:id="sale.id" v-bind:title="sale.title.rendered"
+                v-bind:content="sale.content.rendered" v-for="sale in salesNewList" v-bind:key="sale.id" />
         </div>
     </section>
 </template>
@@ -29,16 +32,16 @@ export default {
     async mounted() {
         //list of s from our API
         this.salesList = await SaleService.findAll();
-        
+
     },
 
     computed: {
         salesNewList() {
-        //Return an array that contains the rows where the callback returned true
+            //Return an array that contains the rows where the callback returned true
             return this.salesList.filter((sale) => {
                 // We take the title of the current sale and we check if the searched term is contained in this title.
                 // If yes, return true   
-                if(sale.title.rendered.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(this.searchString.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase())) {
+                if (sale.title.rendered.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(this.searchString.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase())) {
                     return true;
                 } else {
                     return false;
@@ -51,7 +54,7 @@ export default {
         return {
             salesList: [],
             salePicture: picture,
-            searchString:"",
+            searchString: "",
         }
     },
 }
@@ -59,15 +62,35 @@ export default {
 
 
 <style scopped lang="scss">
-
-.sale--section__list {  
+.sale--section__list {
     height: 100%;
+
+    h1 {
+        color: $orange;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 0px 1px 1px $grey;
+        font-family: 'Merienda', cursive;
+        margin-top: 0.5rem;
+    }
+
 
     .sale--section__search {
         width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+    .sale--list {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+
+        .sale--card {
+            width: 60%;
+        }
     }
 
     input {
@@ -83,10 +106,10 @@ export default {
     .search-icon {
         border-style: none;
         background-color: $orange;
-        color:$white;
+        color: $white;
         height: 40px;
         width: 40px;
-        border-radius:25%;
+        border-radius: 25%;
         margin-right: 5px;
         margin-left: 2rem;
 
@@ -94,10 +117,23 @@ export default {
 
     .sale--card__img {
         width: 8rem;
-            
     }
 }
 
+//<---------------------MEDIA QUERIES ------------------------>
+@media (max-width: 576px) {
+    .sale--section__list {
+        .search-icon {
+            margin-left: 1rem;
+        }
+
+        .sale--list {
+            .sale--card {
+                width: 90%;
+            }
+        }
+    }
+}
 </style>
 
  

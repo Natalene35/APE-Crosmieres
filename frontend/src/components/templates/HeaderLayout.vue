@@ -183,7 +183,7 @@ header {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  padding-bottom: 3%;
+  padding-bottom: 1%;
   font-weight: bold;
 
   //<--------------BANNER------------>
@@ -368,22 +368,22 @@ header {
     }
 
     .header--nav__presentation {
-      background-color: $blue;
-      color: $white;
-    }
-
-    .header--nav__inscription {
       background-color: $pink;
       color: $white;
     }
 
+    .header--nav__inscription {
+      background-color: $blue-dark;
+      color: $white;
+    }
+
     .header--nav__backoffice {
-      background-color: $grey;
+      background-color: $purple;
       color: $white;
     }
 
     .header--nav__connexion {
-      background-color: $purple;
+      background-color: $blue;
 
       .header--login {
         color: $white;
@@ -424,7 +424,7 @@ header {
 
 //<----------Media queries-------->
 
-@media (max-width: 425px) {
+@media (max-width: 576px) {
   header {
     .header--title__mobile {
       font-size: 0.7rem;
@@ -436,7 +436,7 @@ header {
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 768px) {
 
   header {
 

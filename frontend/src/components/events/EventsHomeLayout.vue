@@ -1,8 +1,14 @@
 <template>
-
-    <!-- //Liste Evenements  -->
-
+   <!--Events list-->
     <section class="event--section">
+        <div class="event--section__title">
+            <h1 class="title--event">
+                <div class="title--imgage">
+            <img v-bind:src="treePicture" alt="icône de tilleul"/>
+                </div>
+            Vos évènements du moment <span>à l'école des Tilleuls</span>
+            </h1>
+        </div>
 
         <EventHomeListLayout
             v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : defaultPicture"
@@ -15,13 +21,13 @@
 
 
 <script>
+//Layout
 import EventHomeListLayout from '@/components/events/EventHomeListLayout.vue';
+//Service
 import EventService from '@/services/events/EventService';
-import PictureFlags from '@/assets/images/events/flags.jpg';
-import PictureBallon1 from '@/assets/images/events/ballon-1.jpg';
-import PictureBallon2 from '@/assets/images/events/ballon-2.jpg';
-import PictureMulticolored from '@/assets/images/events/multicoloured.jpg';
-
+//Images
+import defaultPicture from '@/assets/images/events/flags.jpg';
+import picture from "@/assets/images/tree.png";
 
 export default {
     name: "EventsHomeLayout",
@@ -48,24 +54,10 @@ export default {
     data() {
         return {
             eventsList: [],
-            images: [
-                PictureFlags,
-                PictureBallon1,
-                PictureBallon2,
-                PictureMulticolored
-            ],
-            defaultPicture: null
+            defaultPicture,
+            treePicture: picture,
         }
     },
-
-    methods: {
-        randomItem(items) {
-            return items[Math.floor(Math.random() * items.length)];
-        }
-    },
-    created() {
-        this.defaultPicture = this.randomItem(this.images)
-    }
 }
 </script>
 
@@ -76,6 +68,49 @@ export default {
     justify-content: center;
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
 
+    .event--section__title {
+        width:100%;
+
+        .title--event {
+        color: $red;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        font-family: 'Merienda', cursive;
+        text-shadow: 0px 1px 1px $grey;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        }
+            span { 
+                margin-left: 0.5rem;
+            }
+    }
+
+}
+
+//<----------Media queries-------->
+
+@media (max-width: 425px) {
+    .event--section__title {
+            display: none;
+        
+    }
+}
+
+@media (max-width: 576px) {
+    .title--imgage {
+        display: none;
+    }
+
+}
+
+@media (max-width: 992px) {
+  span {
+    display: none;
+  }
 }
 </style>

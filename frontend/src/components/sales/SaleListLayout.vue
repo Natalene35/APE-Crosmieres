@@ -25,7 +25,7 @@
                     </router-link>
                 </div>
                 
-                <div v-html="title"></div>
+                <div v-html="title" class="sale--card__titlewrite"></div>
             </h2>
             <img class="sale--card__img">
             <div class="sale--card__content">
@@ -120,6 +120,11 @@ export default {
 
         .sale--card__editPic {
             right: 15%;
+        }
+        .sale--card__titlewrite{
+            display: flex;
+            width: 100%;
+            justify-content: center;
         }
     }
 

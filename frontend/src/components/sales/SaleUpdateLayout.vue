@@ -126,7 +126,6 @@ export default {
       this.previewImage = URL.createObjectURL(this.currentImage);
       this.progress = 0;
     },
-
     // upload and send to wordpress
     upload(postId) {
       this.progress = 0;
@@ -199,7 +198,7 @@ export default {
     const selectSaleMeta=await SaleService.findMeta(this.id);
     this.thumbnail_id=selectSale.featured_media
     this.title=selectSale.title.rendered
-    this.content=selectSale.content.rendered
+    this.content=selectSaleMeta.content
     this.saleDate=selectSaleMeta.date
     this.location=selectSaleMeta.lieu
     this.link=selectSaleMeta.lien
@@ -233,37 +232,6 @@ export default {
     display: grid;
     place-items: center;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
-
-    .progress {
-      width: 50%;
-      border-radius: 1rem;
-      background-color: #ffc107;
-      height: 1rem;
-      color: aliceblue;
-      font-weight: bold;
-      padding: 0.2rem;
-      margin-bottom: 1rem;
-    }
-    .progress-bar {
-      border-radius: 1rem;
-      background-color: aquamarine;
-      height: 1rem;
-      background: repeating-linear-gradient(
-          -60deg,
-          rgb(0, 0, 0, 0.5) 0,
-          black 10px,
-          #ffc107 10px,
-          white 20px
-        )
-        0 / 200%;
-      animation: progress-bar 1s linear infinite;
-    }
-    @keyframes progress-bar {
-      to {
-        background-position: 100% 0;
-      }
-    }
-
     .preview {
       width: 50%;
       border-radius: 5px;
@@ -308,7 +276,7 @@ export default {
       }
       .field__input {
         line-height: 3;
-        border: 1px solid $blue-light-bg;
+        border: 1px solid $blue;
         border-radius: 0.5em;
         margin: 1rem 0 1rem 0;
         padding: 0.5em 0 0.5em 1.5em;

@@ -11,7 +11,7 @@ div:after {
     height: 2px;
     bottom: -7px;
     left: 0;
-    background-color: #0087ca;
+    background-color: $blue-bg-header;
     transform-origin: bottom right;
     transition: transform 0.50s ease-out;
     }
@@ -20,26 +20,26 @@ div:hover:after {
     transform-origin: bottom left;
     } 
     .header--nav__home:after{
-            background-color: #85B689; 
+            background-color: $green; 
         }
         .header--nav__sale:after{
-                background-color: #FBAD18 ;
+                background-color: $orange ;
             
         }
         .header--nav__event:after{
-                background-color: #EF6852;
+                background-color: $red;
             }
         
         .header--nav__presentation:after{
-                background-color: #F8AAA4;
+                background-color: $pink;
             }
         
         .header--nav__Inscription:after{
-                background-color: #F8AAA4;
+                background-color: $pink;
             }
         
         .header--nav__Connexion:after{
-                background-color: #946973;
+                background-color: $purple;
             }
 
             .header--nav__backoffice:after {
@@ -66,9 +66,6 @@ li:after {
     transform-origin: bottom right;
     transition: transform 0.5s cubic-bezier(0, 0, 0.42, 0.76);
     filter: brightness(1.5);
-    }
-    li:nth-child(2n+0):after{
-        background-color: #b0ca00;
     }
 li:hover:after {
     transform: scaleX(1);
