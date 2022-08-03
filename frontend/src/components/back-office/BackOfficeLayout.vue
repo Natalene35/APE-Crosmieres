@@ -11,6 +11,7 @@
                         Accueil
                     </router-link>
                 </div>
+                <div class="listUser" v-on:click="showMenu">Liste des utilisateurs</div>
                 <div class="updateEvent" v-on:click="showMenu">Modifier un évènement</div>
                 <div class="createEvent" v-on:click="showMenu">Créer un évènement</div>
                 <div class="updateSale" v-on:click="showMenu">Modifier une vente</div>
@@ -95,6 +96,14 @@ export default {
                     this.menu = null
                 }
             }
+            if (e.currentTarget.classList == "listUser") {
+                if (this.menu != 5) {
+                    this.menu = 5
+                }
+                else {
+                    this.menu = null
+                }
+            }
         },
         async reload(){
         this.eventsList = await EventService.findAll();
@@ -130,7 +139,7 @@ export default {
             flex-direction: column;
             align-items: center;
             .event--card{
-                min-width: 50VH;
+                min-width: 44vh;
                 margin-top: 5%;
                 .event--card__media--image{
                     background-position: center;
@@ -146,6 +155,11 @@ export default {
                     align-items: center;
                     justify-content: flex-start;
                     text-align: end;
+                    div{
+                          display: flex;
+                        width: 100%;
+                        justify-content: center;
+                    }
                 }
                 
             }
@@ -220,6 +234,10 @@ export default {
                 color: white;
                 margin-right: 0;
             }
+            .listUser{
+                background-color: $purple;
+                color: white;
+            }
         }
     }
 }
@@ -227,11 +245,13 @@ export default {
 
 @media (max-width: 555px) {
     .back-office--container__all {
-            min-height: 108vh;
-        .back-office--sales__all {
+            
+        .back-office--container__nav {
             .back-office--menu__nav {
-                a {
-                    
+                flex-wrap: wrap;
+                div{
+                    margin: 1%;
+                    width: 26%;
                 }
             }
             .back-office--container__components {
@@ -243,6 +263,9 @@ export default {
             .sale--card {
                 width: 80%;
                 .sale--card__title{
+                    div{
+                      
+                    }
                 }
             }
         }

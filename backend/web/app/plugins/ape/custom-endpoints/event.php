@@ -61,9 +61,11 @@ function ape_rest_event_update_handler($request)
     $content = sanitize_text_field($parameters['content']);
     $date = sanitize_text_field($parameters['date']);
     $lieu = sanitize_text_field($parameters['lieu']);
+
     $term = sanitize_text_field($parameters['term']);
 
     // add to the database
+
     $post_id = wp_update_post([
 
         'post_title' => $title,
@@ -106,12 +108,15 @@ function ape_rest_event_meta_handler($request)
     ");
 
     $terms = wp_get_post_terms($id, "eventtype");
-
+    $post = get_post( $id ); 
+    $content = $post->post_content;
     // add the meta data to the post object
     return [
+        'content' => $content, 
         'lieu' => $lieu[0]->meta_value,
         'date' => $eventDate[0]->meta_value,
-        'terms' => $terms[0]->name
+        'terms' => $terms[0]->name,
+        'content' => $content
     ];
 };
 

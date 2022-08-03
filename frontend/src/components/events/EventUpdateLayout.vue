@@ -228,15 +228,15 @@ export default {
   },
   async mounted() {
     this.id = this.$route.params.id;
-    const selectSale = await EventService.find(this.id);
-    const selectSaleMeta = await EventService.findMeta(this.id);
-    this.title = selectSale.title.rendered;
-    this.content = selectSale.content.rendered;
-    this.eventDate = selectSaleMeta.date;
-    this.location = selectSaleMeta.lieu;
-    this.link = selectSaleMeta.lien;
-    this.selected = selectSaleMeta.terms;
-    this.thumbnail_id = selectSaleMeta._thumbnail_id;
+    const selectEvent = await EventService.find(this.id);
+    const selectEventMeta = await EventService.findMeta(this.id);
+    this.title = selectEvent.title.rendered;
+    this.content = selectEventMeta.content;
+    this.eventDate = selectEventMeta.date;
+    this.location = selectEventMeta.lieu;
+    this.link = selectEventMeta.lien;
+    this.selected = selectEventMeta.terms;
+    this.thumbnail_id = selectEventMeta._thumbnail_id;
   },
 };
 </script>

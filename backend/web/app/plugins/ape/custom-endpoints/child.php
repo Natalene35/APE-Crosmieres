@@ -1,6 +1,7 @@
 <?php
 
 add_action('rest_api_init', 'ape_rest_child_register');
+add_action('rest_api_init', 'ape_rest_child_update');
 
 //ROUTE GET ALL CHILD
 add_action('rest_api_init', function () {
@@ -20,7 +21,7 @@ function ape_rest_child_all()
     return $rows;
 };
 
-//ROUTE GET ALL CHILD
+//ROUTE GET CHILD BY ID
 add_action('rest_api_init', function () {
     register_rest_route(
         'wp/v2',
@@ -61,7 +62,33 @@ function ape_rest_child_register()
         }
     ));
 }
+//ROUTE UPDATE  CHILD
+function ape_rest_child_update()
+{
+    // WE DEFINE NEW ROAD FOR Update NEW CHILD
+    register_rest_route('wp/v2', 'child/update/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'ape_rest_update_child_handler',
+        'permission_callback' => function () {
+            return true;
+        }
+    ));
+}
+function ape_rest_update_child_handler($request)
+{  
+    $parameters = $request->get_json_params();
+    $child_firstname = sanitize_text_field($parameters['child_firstname']);
+    $child_lastname = sanitize_text_field($parameters['child_lastname']);
+    $child_class = sanitize_text_field($parameters['child_class']);
+    $id=$parameters['id'];
+    global $wpdb;
 
+        $rows = $wpdb->get_results(" UPDATE wp_ape_user_child
+        SET child_firstname = '$child_firstname', child_lastname = '$child_lastname', child_class = '$child_class'
+        WHERE id = '$id' ");
+
+    return $rows;
+};
 function ape_rest_user_child_handler($request)
 {
     $response = [];
