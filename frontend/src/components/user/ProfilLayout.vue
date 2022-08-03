@@ -1,5 +1,6 @@
 <template>
   <section class="wrapper">
+    <h1 class="wrapper--title">Vos informations</h1>
     <div class="container">
       <div class="card">
         <div class="avatar">
@@ -149,7 +150,7 @@ export default {
     async removeUser() {
       if (this.$store.getters.getUserID) {
         const response = await UserService.delete();
-        console.log(response);
+
         if (response.remove_user) {
           this.$store.commit("deleteToken");
           this.$store.commit("deleteUsername");
@@ -167,27 +168,40 @@ export default {
 
     // Update ours personnal account
     async updateUser() {
+      if (this.checkPhoneNumber(this.phone) === false) {
+        this.errors.push("Format numéro de téléphone non pris en charge !");
+        setTimeout(() => {
+          this.errors = [];
+        }, 1000);
+      }
+
       if (this.$store.getters.getUserID) {
+        //update the user information
         const response = await UserService.update(
           this.$store.getters.getUserID,
           {
             email: this.user.email,
             first_name: this.user.first_name,
             last_name: this.user.last_name,
-            phone: this.user.phone,
           }
         );
+        //if update ok
         if (response.id) {
-          this.succesUpdate.push("Mise à jour réussie");
-          setTimeout(() => {
-            this.succesUpdate = [];
-          }, 500);
-        } else {
-          this.errors.push("Echec suppression");
-          setTimeout(() => {
-            this.errors = [];
-          }, 500);
+
+          //update the meta data user phone
+          const newphone = await UserService.updatePhone(this.$store.getters.getUserID, {
+            phone: this.phone,
+          })
+
+          if (newphone === true) {
+            this.succesUpdate.push("Mise à jour réussie");
+            setTimeout(() => {
+              this.succesUpdate = [];
+            }, 500);
+          }
         }
+      } else {
+        this.errors.push("Echec de la mise à jour, veuillez recommencer");
       }
     },
 
@@ -197,6 +211,15 @@ export default {
         this.$store.getters.getUserID
       );
     },
+
+    checkPhoneNumber(param) {
+      const regexPhoneNumber = /^((\+)33|0)[1-9](\d{2}){4}$/;
+      if (param.match(regexPhoneNumber)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },
 };
 </script>
@@ -209,6 +232,16 @@ export default {
    place-items: center;
    border-radius: 1em;
    width: 55vh;
+
+   .wrapper--title {
+    color: $blue-dark;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 0px 0px 0px $grey;
+    font-family: 'Merienda', cursive;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+   }
  
    .container {
      max-width: 400px;
@@ -363,14 +396,24 @@ export default {
    align-items: center;
  }
  
- @media (max-width: 800px) {
-   .wrapper {
-     width: 44vh;
- 
- 
-     .button--link .deleteUser {
-       opacity: 1;
-     }
-   }
+ //<---------------------MEDIA QUERIES ------------------------>
+@media (max-width: 576px) {
+  .wrapper {
+    .button--link {
+      width: 80%;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    width: 44vh;
+
+    .button--link .deleteUser {
+      opacity: 1;
+    }
+  }
  }
+
+
  </style>
