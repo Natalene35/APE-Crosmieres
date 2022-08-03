@@ -12,6 +12,9 @@ require __DIR__ . '/vendor/autoload.php';
 use Migration\Link_PostMigration;
 use Migration\Child_PostMigration;
 
+// add upload media config
+// require_once plugin_dir_path(__FILE__) . "functions/media.php";
+
 // add files to table migration
 require_once plugin_dir_path(__FILE__) . "Migration/Link_User_Child_Migration.php";
 require_once plugin_dir_path(__FILE__) . "Migration/User_Child_Migration.php";
@@ -19,7 +22,6 @@ require_once plugin_dir_path(__FILE__) . "Migration/User_Child_Migration.php";
 // add files to create custom post type
 require_once plugin_dir_path(__FILE__) . "post-types/event.php";
 require_once plugin_dir_path(__FILE__) . "post-types/sale.php";
-
 
 // add files to create custom endpoint
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/event.php";
@@ -73,6 +75,3 @@ function ape_remove_custom_roles()
     ape_remove_apemember_role();
     ape_remove_apeuser_role();
 }
-
-
-

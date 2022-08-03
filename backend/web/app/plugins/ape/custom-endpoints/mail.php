@@ -36,7 +36,7 @@ function ape_rest_user_send_email($request)
     $eventTitle = sanitize_text_field($parameters['eventTitle']);
 
     $mail = new PHPMailer();
-    
+
     // to choose subject and message to send
     if ($motive === 'participer') {
         $subject = utf8_decode("Inscription à ") . html_entity_decode($eventTitle);
@@ -83,7 +83,7 @@ function ape_rest_user_send_email($request)
     $mail->Port = 587;
     $mail->SMTPSecure = "tls";
 
-    
+
     //email settings
     $mail->CharSet = 'utf-8';
     $mail->isHTML(true);
