@@ -61,7 +61,7 @@
           </router-link>
         </div>
 
-        <div v-if="this.$store.getters.getRole === 'administrator' || this.$store.getters.getRole === 'membreape'"
+        <div v-if="this.$store.getters.getRole === 'administrator' || this.$store.getters.getRole === 'apemember'"
           class=" header--nav__backoffice">
           <router-link v-bind:to="{ name: 'back-office' }" class="header--nav__backoffice">Administration</router-link>
         </div>
