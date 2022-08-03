@@ -254,6 +254,25 @@ export default {
                     width: 26%;
                     height: 37px;
                 }
+                .createEvent{
+                    order: 1;
+                }
+                .createSale{
+                    order: 1;
+                }
+                .home{
+                    order: -1;
+                }
+                .listUser{
+                    order: 1;
+                }
+                .updateEvent{
+                    order: -1;
+                }
+                .updateSale{
+                    order: -1;
+                }
+
             }
             .back-office--container__components {
                 .event--card{
