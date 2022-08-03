@@ -33,7 +33,9 @@ export default {
     SalesHomeLayout,
     FooterLayout,
     SalesHomeSliders
+
 },
+
 }
 </script>
 
