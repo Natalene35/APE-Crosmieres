@@ -67,9 +67,6 @@ li:after {
     transition: transform 0.5s cubic-bezier(0, 0, 0.42, 0.76);
     filter: brightness(1.5);
     }
-    li:nth-child(2n+0):after{
-        background-color: #b0ca00;
-    }
 li:hover:after {
     transform: scaleX(1);
     transform-origin: bottom left;

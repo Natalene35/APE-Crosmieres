@@ -4,7 +4,7 @@
   <main>
     <SalesHomeSliders />
     <EventsHomeLayout />
-    <SalesHomeLayout v-bind:hiddenSale="this.hiddenSale" />
+    <SalesHomeLayout />
   </main>
   <FooterLayout />
 
@@ -23,7 +23,6 @@ export default {
   name: 'HomeView',
   data(){
     return{
-      hiddenSale: false,
     }
   },
   components: {
@@ -33,13 +32,6 @@ export default {
     FooterLayout,
     SalesHomeSliders
 },
-  mounted(){
-    //HER FIX FOR SLIDERS 
-    console.log(screen.width)
-      if(screen.width<=425){
-        this.hiddenSale=true;
-      }
-  }
 }
 </script>
 

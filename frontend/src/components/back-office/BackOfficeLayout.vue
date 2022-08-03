@@ -11,6 +11,7 @@
                         Accueil
                     </router-link>
                 </div>
+                <div class="listUser" v-on:click="showMenu">Liste des utilisateurs</div>
                 <div class="updateEvent" v-on:click="showMenu">Modifier un évènement</div>
                 <div class="createEvent" v-on:click="showMenu">Créer un évènement</div>
                 <div class="updateSale" v-on:click="showMenu">Modifier une vente</div>
@@ -90,6 +91,14 @@ export default {
             if (e.currentTarget.classList == "createEvent") {
                 if (this.menu != 4) {
                     this.menu = 4
+                }
+                else {
+                    this.menu = null
+                }
+            }
+            if (e.currentTarget.classList == "listUser") {
+                if (this.menu != 5) {
+                    this.menu = 5
                 }
                 else {
                     this.menu = null
@@ -221,6 +230,10 @@ export default {
                 background-color: $orange;
                 color: white;
                 margin-right: 0;
+            }
+            .listUser{
+                background-color: $purple;
+                color: white;
             }
         }
     }
