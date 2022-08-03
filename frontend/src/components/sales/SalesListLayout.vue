@@ -62,17 +62,16 @@ export default {
 
 
 <style scopped lang="scss">
-
-.sale--section__list {  
-height: 100%;
+.sale--section__list {
+    height: 100%;
 
     h1 {
-    color: $orange;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-shadow: 0px 1px 1px $grey;
-    font-family: 'Merienda', cursive;
-    margin-top: 0.5rem;
+        color: $orange;
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-shadow: 0px 1px 1px $grey;
+        font-family: 'Merienda', cursive;
+        margin-top: 0.5rem;
     }
 
 
@@ -90,7 +89,7 @@ height: 100%;
         align-items: center;
 
         .sale--card {
-            width: 90%;
+            width: 60%;
         }
     }
 
@@ -125,11 +124,16 @@ height: 100%;
 @media (max-width: 576px) {
     .sale--section__list {
         .search-icon {
-        margin-left: 1rem;
+            margin-left: 1rem;
+        }
+
+        .sale--list {
+            .sale--card {
+                width: 90%;
+            }
         }
     }
 }
-    
 </style>
 
  
