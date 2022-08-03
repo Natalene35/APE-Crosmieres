@@ -2,11 +2,11 @@
    <!--Events list-->
     <section class="event--section">
         <div class="event--section__title">
-            <h1 class="title--event">
-                <div class="title--imgage">
-            <img v-bind:src="treePicture" alt="icône de tilleul"/>
-                </div>
+            <h1 class="title--event">   
             Vos évènements du moment <span>à l'école des Tilleuls</span>
+            <div class="title--imgage">
+                    <img v-bind:src="treePicture" alt="icône de tilleul"/>
+                </div>
             </h1>
         </div>
 
