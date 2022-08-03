@@ -8,6 +8,7 @@
                     Confidentialité, mentions légales,<br>conditions générales
                 </router-link>
             </li>
+            <li class="footer--list__link"><a target="_blank" href="https://icones8.fr/">Merci à icones8</a></li>
         </ul>
 
     </footer>
