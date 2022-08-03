@@ -115,8 +115,7 @@ function ape_rest_event_meta_handler($request)
         'content' => $content, 
         'lieu' => $lieu[0]->meta_value,
         'date' => $eventDate[0]->meta_value,
-        'terms' => $terms[0]->name,
-        'content' => $content
+        'terms' => $terms[0]->name
     ];
 };
 
