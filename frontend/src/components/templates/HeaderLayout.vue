@@ -27,7 +27,7 @@
         <!-- /*<--------------------Button menu BURGER HIDDEN IN DESKTOP---------------------------->
         <div class="header--burger__container">
           <div id="menu_button">
-            <input type="checkbox" id="menu_checkbox" v-on:click="showMenu">
+            <input type="checkbox" id="menu_checkbox" v-on:click="showMenu" :checked="menuBurger">
             <label for="menu_checkbox" id="menu_label">
               <div id="menu_text_bar"></div>
 
@@ -143,15 +143,14 @@ export default {
   methods: {
     hiddenMenu(){
       let body = document.querySelector("body");
-       this.menuBurger=false
-       body.classList.remove("overflow--hidden");
+      this.menuBurger=false
+      body.classList.remove("overflow--hidden");
   },
     showMenu() {
       let body = document.querySelector("body");
       if(this.menuBurger==true){
         this.menuBurger=false
           body.classList.remove("overflow--hidden");
-
       }
       else{
         this.menuBurger=true

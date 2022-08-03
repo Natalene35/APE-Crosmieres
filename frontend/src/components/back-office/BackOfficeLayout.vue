@@ -252,6 +252,7 @@ export default {
                 div{
                     margin: 1%;
                     width: 26%;
+                    height: 37px;
                 }
             }
             .back-office--container__components {
