@@ -1,11 +1,11 @@
 <template>
     <footer>
         <ul class="footer--list">
-            <li class="footer--list__link">Facebook</li>
-            <li class="footer--list__link">Nous contacter</li>
+            <li class="footer--list__link"><a target="_blank" href="https://www.facebook.com/groups/apecrosmieres/">Facebook</a></li>  
+            <li class="footer--list__link"><a href="mailto: chrisdmar12@gmail.com">Nous contacter</a></li>
             <li class="footer--list__link">
-                <router-link v-bind:to="{ name: 'legals-mentions' }" class="link">
-                    Mentions légales
+                <router-link v-bind:to="{ name: 'legal-notices' }" class="link">
+                    Confidentialité, mentions légales,<br>conditions générales
                 </router-link>
             </li>
         </ul>
@@ -24,7 +24,7 @@ export default {
 <style lang="scss">
 footer {
     background-color: $blue-bg-header;
-    height: 4rem;
+    height: 4.3rem;
     font-weight: bold;
     font-size: small;
     border-radius: 10px 10px;

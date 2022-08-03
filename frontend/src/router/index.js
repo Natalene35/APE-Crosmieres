@@ -111,9 +111,9 @@ const routes = [{
 
   //Road for legals mentions
   {
-    path: '/legals-mentions',
-    name: 'legals-mentions',
-     component: () => import(/* webpackChunkName: "legals-mentions" */ '../views/legals-mentions/LegalsMentionsView.vue')
+    path: '/mentions-legales',
+    name: 'legal-notices',
+     component: () => import(/* webpackChunkName: "legal-notices" */ '../views/legal-notices/LegalNoticesView.vue')
   },
 ]
 
@@ -143,7 +143,8 @@ router.beforeEach((to) => {
     case '404':
       return true;
     
-    case 'legals-mentions':
+      
+    case 'legal-notices':
       return true;
     
     // Road page for Registered 
