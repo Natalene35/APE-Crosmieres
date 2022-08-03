@@ -34,6 +34,7 @@
 
             <SaleCreateLayout v-if="this.menu == 2" class="back-office--container__components" />
             <EventCreateLayout v-if="this.menu == 4" class="back-office--container__components" />
+            <UsersListLayout v-if="this.menu == 5" class="back-office--container__components" />
         </section>
        
         
@@ -49,6 +50,7 @@ import SaleListLayout from '../sales/SaleListLayout.vue';
 //SERVICES
 import EventService from '@/services/events/EventService';
 import SaleService from '@/services/sales/SaleService';
+import UsersListLayout from '../user/UsersListLayout.vue';
 export default {
     name: "BackOfficeLayout",
     data() {
@@ -111,7 +113,7 @@ export default {
         },       
 
     },
-    components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout }
+    components: { EventCreateLayout, SaleCreateLayout, EventListLayout, SaleListLayout, UsersListLayout }
     ,
     async mounted() {
         this.eventsList = await EventService.findAll();
@@ -121,6 +123,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrapper{
+    .container{
+        .field{
+            .field_title{
+                .title{
+                    color: #946973;
+                    font-size: 1.5rem;
+                    font-weight: bold;
+                    font-family: "Merienda", cursive;
+                    margin-top: 0.5rem;
+                    margin-bottom: 1rem;
+                    text-shadow: 0px 0px 0px #313846;
+                }
+            }
+        }
+    }
+}
 .back-office--container__all {
     width: 100%;
     .back-office--container__nav {
@@ -138,6 +157,15 @@ export default {
             margin: auto;
             flex-direction: column;
             align-items: center;
+            h1{
+                color: #946973;
+                font-size: 1.5rem;
+                font-weight: bold;
+                font-family: "Merienda", cursive;
+                margin-top: 0.5rem;
+                margin-bottom: 1rem;
+                text-shadow: 0px 0px 0px #313846;
+            }
             .event--card{
                 min-width: 44vh;
                 margin-top: 5%;
