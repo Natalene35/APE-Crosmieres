@@ -49,7 +49,7 @@ export default {
     flex-direction: column;
     margin-bottom: 3rem;
     box-sizing: border-box;
-    padding-bottom: 5rem;
+    padding-bottom: 3rem;
 
 
     .event--card__title {
@@ -59,7 +59,6 @@ export default {
         padding-left: 2rem;
         font-size: 1.2rem;
         padding-top: 1rem;
-
     }
 
     .event--card__media--image {
@@ -68,16 +67,13 @@ export default {
         background-position: center;
         background-size: cover;
         border-radius: 2rem 2rem 0 0;
-
-
-
     }
 
     .event--card__excerpt {
         color: $grey;
         margin: 1rem 3rem 1rem 3rem;
-
-    }
+        text-align: left;
+    } 
 
 }
 
@@ -86,8 +82,28 @@ export default {
     .event--card {
         width: 90%;
     }
-
 }
+
+@media (max-width: 576px) {
+    .event--card {
+        width: 93%;
+        padding-bottom: 2rem; 
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .event--card {
+        margin-bottom: 2rem;
+        padding-bottom: 2rem;
+
+        .event--card__excerpt {
+            margin: 1rem 1rem 1rem 1rem;     
+        }
+    }
+
+}      
+
 </style>
 
 

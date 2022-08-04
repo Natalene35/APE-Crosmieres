@@ -158,7 +158,7 @@ export default {
             align-items: center;
             margin-top: 2rem;
             flex-direction: column;
-            width: 80%;
+            margin-bottom: 1rem;
 
             .back-office--components__title--sale {
                 color: $orange;

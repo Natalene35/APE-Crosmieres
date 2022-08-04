@@ -129,7 +129,11 @@ export default {
     margin: 1rem auto;
   }
 
-  // Media query
+    .event--card__content {
+        width: 100%;
+        margin: auto;
+        text-align: left;
+    }
 
   @media (min-width: 450px) {
     .event--card {

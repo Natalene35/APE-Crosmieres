@@ -108,15 +108,17 @@ export default {
         align-items: center;
         align-content: center;
 
-        .event-card {
-            width: 93%;
-            padding-bottom: 2rem;
-        }
-
         .title--imgage {
             display: none;
         }
     }
+    .event-card {
+            width: 93%;
+            padding-bottom: 2rem; 
+            margin-bottom: 2rem;
+    
+   
+        }
 
 }
 

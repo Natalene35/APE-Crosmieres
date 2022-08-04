@@ -107,6 +107,7 @@ export default {
     padding-left: 2rem;
     font-size: 1.2rem;
     padding-top: 1rem;
+    text-align: center;
   }
 
   .event--card__media--image {
@@ -139,6 +140,7 @@ export default {
   .event--card__content {
     color: $grey;
     margin: 1rem 3rem 1rem 3rem;
+    text-align: left;
   }
 
   .event--card__term {
