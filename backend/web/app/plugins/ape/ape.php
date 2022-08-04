@@ -3,9 +3,8 @@
 Plugin Name: APE Crosmières custom
 Description: ajout de gestion d'évenements et ventes initiatives pour les Association de parent d'élèves
 Author: Natalène D, Emilie P, Loïc D, Julien L et Christophe D
-Version: 0.0.4
+Version: 0.0.5
 */
-
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -20,7 +19,6 @@ require_once plugin_dir_path(__FILE__) . "Migration/User_Child_Migration.php";
 require_once plugin_dir_path(__FILE__) . "post-types/event.php";
 require_once plugin_dir_path(__FILE__) . "post-types/sale.php";
 
-
 // add files to create custom endpoint
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/event.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/sale.php";
@@ -28,11 +26,6 @@ require_once plugin_dir_path(__FILE__) . "custom-endpoints/registration.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/child.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/user.php";
 require_once plugin_dir_path(__FILE__) . "custom-endpoints/mail.php";
-
-// add files to use PHP Mailer for email send
-require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/PHPMailer.php";
-require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/SMTP.php";
-require_once  plugin_dir_path(__FILE__) . "vendor/phpmailer/phpmailer/src/Exception.php";
 
 // add files to create custom role
 require_once plugin_dir_path(__FILE__) . "custom-roles/ApeMember.php";
@@ -62,6 +55,7 @@ function ape_create_custom_roles()
     ape_create_apeuser_role();
 }
 
+// comment this line to keep the data in database
 function ape_remove_custom_tables()
 {
     // Link_PostMigration::deleteTable();
@@ -73,6 +67,3 @@ function ape_remove_custom_roles()
     ape_remove_apemember_role();
     ape_remove_apeuser_role();
 }
-
-
-
