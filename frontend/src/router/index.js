@@ -88,6 +88,13 @@ const routes = [{
     component: () => import( /* webpackChunkName: "login" */ '../views/user/ProfilView.vue')
   },
 
+  //Road for user list
+  {
+    path: '/users',
+    name: 'users',
+    component: () => import( /* webpackChunkName: "users" */ '../views/user/UsersListView.vue')
+  },
+
   // route for creating event
   {
     path: '/presentation-des-membres-APE',
@@ -111,9 +118,9 @@ const routes = [{
 
   //Road for legals mentions
   {
-    path: '/legals-mentions',
-    name: 'legals-mentions',
-     component: () => import(/* webpackChunkName: "legals-mentions" */ '../views/legals-mentions/LegalsMentionsView.vue')
+    path: '/mentions-legales',
+    name: 'legal-notices',
+     component: () => import(/* webpackChunkName: "legal-notices" */ '../views/legal-notices/LegalNoticesView.vue')
   },
 ]
 
@@ -143,7 +150,8 @@ router.beforeEach((to) => {
     case '404':
       return true;
     
-    case 'legals-mentions':
+      
+    case 'legal-notices':
       return true;
     
     // Road page for Registered 
@@ -186,19 +194,19 @@ router.beforeEach((to) => {
     // Road for members 
     case 'back-office':
       // Only with if connected and the role 'admin' or APE members 
-      if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+      if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
         return true
       }
       return { name: "login" };
     
        case 'saleUpdate':
-    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
         return true
       }
       return { name: "login" };
     
      case 'saleCreate':
-    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
         return true
       }
       return { name: "login" };
@@ -210,7 +218,13 @@ router.beforeEach((to) => {
       return { name: "login" };
     
     case 'eventUpdate':
-    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'membreape') {
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
+        return true
+      }
+      return { name: "login" };
+
+      case 'users':
+    if(store.getters.getToken && store.getters.getRole === 'administrator' || store.getters.getRole === 'apemember') {
         return true
       }
       return { name: "login" };

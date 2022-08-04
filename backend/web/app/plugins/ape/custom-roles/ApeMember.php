@@ -6,7 +6,8 @@ function ape_create_apemember_role()
         $capabilities = [
             'upload_files' => true,
             'read' => true,
-            'remove_users'=> true
+            'remove_users'=> true,
+            'list_users'=> true
         ];
     add_role('apemember', 'APE Membre', get_role('editor')->capabilities);
 }
