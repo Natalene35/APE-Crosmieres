@@ -312,6 +312,7 @@ export default {
             }
 
             .back-office--components {
+                width: 100%;
                 .event--card {
                     width: 95%;
                 }

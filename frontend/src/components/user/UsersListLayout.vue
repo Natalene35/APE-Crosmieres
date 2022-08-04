@@ -11,8 +11,8 @@
             <input type="text" placeholder="Rechercher par nom" v-model="searchString">
         </div>
 
-        <div v-if="this.$store.getters.getRole === 'administrator'">
-             <ul style="width:100%">
+        <div style="width: 100%;display:flex;justify-content: center;" v-if="this.$store.getters.getRole === 'administrator'">
+             <ul class="userlist--ul__container">
                 <li v-for="user in usersNewList" v-bind:key="user.id">
                     <div class="detail">
                         <div>
@@ -43,8 +43,8 @@
             </ul>
         </div>
 
-        <div v-if="this.$store.getters.getRole === 'apemember'">
-            <ul>
+        <div style="width: 100%;display:flex;justify-content: center;" v-if="this.$store.getters.getRole === 'apemember'">
+            <ul class="userlist--ul__container">
                 <li v-for="user in usersNewListMember" v-bind:key="user.id">
                     <div class="detail">
                         <div>
@@ -324,9 +324,12 @@ section {
         margin-left: 2rem;
 
     }
-
+    .userlist--ul__container{
+        width: 100%;
+    }
     // SCSS for the li boxes
     li {
+        max-width: 65rem;
         background-color: $white;
         width: 100%;
         height: auto;
@@ -465,6 +468,11 @@ section {
                 cursor: pointer;
             }
         }
+    }
+}
+@media (max-width: 600px) {
+    .userlist--ul__container{
+        width: 100%;
     }
 }
 </style>
