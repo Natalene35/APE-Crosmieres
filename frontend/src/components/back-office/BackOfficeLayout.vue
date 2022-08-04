@@ -158,6 +158,7 @@ export default {
             align-items: center;
             margin-top: 2rem;
             flex-direction: column;
+            width: 80%;
 
             .back-office--components__title--sale {
                 color: $orange;
@@ -310,6 +311,7 @@ export default {
             }
 
             .back-office--components {
+                width: 100%;
                 .event--card {
                     width: 95%;
                 }

@@ -1,13 +1,6 @@
 <template>
 
     <section class="sale--sliders__all">
-        <!-- <------------------BUBBLE---------------->
-        <div class="background--bubble__container" v-if="this.nameRoute=='home'">
-            <div class="background--design__bubble"></div>
-            <div class="background--design__bubble"></div>
-            <div class="background--design__bubble"></div>
-            <div class="background--design__bubble"></div>
-        </div>
 
         <div class="sale--sliders__titre">
             <h2>Ventes</h2>
@@ -115,10 +108,8 @@ export default {
             color: $orange;
         }
 
-        @import "../../assets/animations/bubbleAnim.scss";
-
         .background--design__all {
-            height: 750vh;
+            height: 616vh;
             width: 1320VH;
             background-color: transparent;
             position: absolute;
@@ -175,10 +166,10 @@ export default {
 
             h2 {
                 text-shadow: 1px 1px 1px black;
-                font-style: italic;
+                font-weight: bold;
                 width: 100%;
                 color: $white;
-                font-weight: bold;
+                font-size: larger;
                 font-family: Merianda;
                 margin-bottom: 0.3rem;
                 margin-top: -4%;
