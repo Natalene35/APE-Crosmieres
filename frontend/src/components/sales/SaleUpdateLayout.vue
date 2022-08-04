@@ -232,6 +232,8 @@ export default {
     display: grid;
     place-items: center;
     box-shadow: 0px 17px 34px -20px $blue-bg-header;
+    
+
     .preview {
       width: 50%;
       border-radius: 5px;
@@ -298,7 +300,7 @@ export default {
         margin-left: auto;
         margin-right: auto;
         border-radius: 5px;
-        color: white;
+        color: $white;
       }
       .alert {
         background-color: lightblue;
@@ -309,7 +311,7 @@ export default {
         margin-left: auto;
         margin-right: auto;
         border-radius: 5px;
-        color: Black;
+        color: $black;
       }
     }
 
@@ -322,17 +324,18 @@ export default {
       margin-left: auto;
       margin-right: auto;
       border-radius: 5px;
-      border: 1px solid #ffc107;
+      border: 1px solid $yellow;
       box-shadow: 0 5px 5px #0000001a;
     }
 
     button:hover {
-      color: white;
-      background-color: #ffc107;
+      color: $white;
+      background-color: $yellow;
       box-shadow: 0 2px 2px #0000001a;
     }
   }
 
+//<---------------------MEDIA QUERIES ------------------------>
   @media (max-width: 600px) {
     .container {
       background-color: transparent;
