@@ -140,7 +140,6 @@ export default {
     upload(postId) {
       EventService.upload(this.currentImage, this.title, postId)
         .then((images) => {
-          console.log(images);
           this.imageInfos = images.data;
           // pour executer la fct createpost avec l'id du média
           EventService.addMediaToEvent(postId, this.imageInfos.id).then(
@@ -171,7 +170,6 @@ export default {
           this.errors.push(
             "Veuillez modifier dans la page de modification d'événement svp."
           );
-          console.log(err);
           this.currentImage = undefined;
         });
     },
@@ -206,14 +204,12 @@ export default {
         };
         
       const response = await EventService.updateCustom(params);
-      console.log(response.code);
 
       //native request from wordpress for the types taxonomy
       const updateTaxonomy = await EventService.update({
         id: this.id,
         types: this.selected,
       });
-      console.log(updateTaxonomy);
 
       if (this.currentImage != undefined && this.previewImage != undefined) {
         this.upload(this.id);

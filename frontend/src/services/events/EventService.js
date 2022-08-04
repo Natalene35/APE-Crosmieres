@@ -99,7 +99,6 @@ export default {
 
     // to view an event
     async readEvent(postId, param) {
-        console.log(postId, param);
         apiClient.defaults.headers.common['Content-Type'] = "application/json";
         try {
             const response = await apiClient.post('/event/' + postId, param);

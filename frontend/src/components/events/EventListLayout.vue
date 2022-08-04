@@ -79,7 +79,6 @@ export default {
       });
 
       this.$emit("reloadEvent");
-      console.log(response);
     },
   },
   components: { PopUpLayout },

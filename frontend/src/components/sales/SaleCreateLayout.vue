@@ -128,7 +128,6 @@ export default {
           this.errors.push(
             "Veuillez modifier dans la page de modification des ventes svp."
           );
-          console.log(err);
           this.currentImage = undefined;
         });
     },
@@ -176,13 +175,11 @@ export default {
 
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
-          console.log(response);
           //for take the post publish
           const majPost = await SaleService.update({
             "status": "publish",
             "id": response.data.id
           });
-          console.log(majPost)
           //response.data.id is the post id
           this.upload(response.data.id);
         } else if (response) {

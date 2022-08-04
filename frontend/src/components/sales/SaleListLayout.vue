@@ -71,7 +71,6 @@ export default {
                 "id": this.selectSale
             });
             this.$emit("reloadSal");
-            console.log(response);
         },
     },
     components: { PopUpLayout }

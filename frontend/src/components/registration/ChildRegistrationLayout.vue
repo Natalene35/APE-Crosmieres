@@ -96,7 +96,6 @@ export default {
                     "child_class": this.picked,
                     "user_id": this.user_id
                 });
-                console.log(response);
                 if (response === 200) {
                     this.succes.push('Ajout réussi');
                     this.$emit("reloadChilds");

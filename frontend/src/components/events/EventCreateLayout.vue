@@ -133,7 +133,6 @@ export default {
     upload(postId) {
       EventService.upload(this.currentImage, this.title, postId)
         .then((images) => {
-          console.log(images);
           this.imageInfos = images.data;
           // pour executer la fct createpost avec l'id du média
           EventService.addMediaToEvent(postId, this.imageInfos.id).then(
@@ -164,7 +163,6 @@ export default {
           this.errors.push(
             "Veuillez modifier dans la page de modification d'événement svp."
           );
-          console.log(err);
           this.currentImage = undefined;
         });
     },
@@ -212,7 +210,6 @@ export default {
         //   id: response.data.id,
         //   types: this.selected,
         // });
-        // console.log(updateTaxonomy);
 
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
@@ -222,7 +219,6 @@ export default {
           //   status: "publish",
           //   id: response.data.id,
           // });
-          // console.log(majPost);
           
           //response.data.id is the post id
           this.upload(response.data.id);

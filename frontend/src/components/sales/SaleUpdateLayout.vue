@@ -181,7 +181,6 @@ export default {
           id: this.id
         };
         const response = await SaleService.updateCustom(params);
-        console.log(response.code)
         if(this.currentImage!=undefined&&this.previewImage!=undefined){
          this.upload(this.id);   
         }
@@ -194,7 +193,6 @@ export default {
   async mounted() {
     this.id = this.$route.params.id;
     const selectSale=await SaleService.find(this.id);
-    console.log(selectSale.featured_media)    
     const selectSaleMeta=await SaleService.findMeta(this.id);
     this.thumbnail_id=selectSale.featured_media
     this.title=selectSale.title.rendered

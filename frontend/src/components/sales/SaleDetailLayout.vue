@@ -42,7 +42,6 @@ export default {
         let id = this.$route.params.id;
         if (id) {
             let arrayMeta = await SaleService.getMeta(id)
-            // console.log(arrayMeta.lien);
             this.date = arrayMeta.date;
             this.link = arrayMeta.lien;
 

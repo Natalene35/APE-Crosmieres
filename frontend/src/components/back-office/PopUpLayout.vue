@@ -33,10 +33,8 @@ export default {
     },
     methods:{    
         showpopup(e){
-            console.log(e)
         },
         hiddenPopUp(e){
-           console.log(e.currentTarget.name)
            if(e.currentTarget.name=="yes"){
             this.$emit("yes", this.id)
            }
@@ -47,7 +45,6 @@ export default {
         },
         mounted(){
             let popUpContainer=document.querySelector(".back-office--container__popUp")
-            console.log(popUpContainer)
         }
     },
 }
