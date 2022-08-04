@@ -2,7 +2,7 @@
     <section class="back-office--container__all">
         <section class="back-office--container__nav">
 
-            <h1 class="bacck-office--container__title">Espace Administration de <span>{{ userName }}</span></h1>
+            <h1 class="back-office--container__title">Espace Administration de <span>{{ userName }}</span></h1>
             <!-- //MENU NAV -->
             <div class="back-office--menu__nav">
 
@@ -20,24 +20,27 @@
 
             </div>
 
-            <div v-if="this.menu == 3" class="back-office--container__components">
+            <div v-if="this.menu == 3" class="back-office--components">
+                <h1 class="back-office--components__title--event">Modifier un évènement</h1>
                 <EventListLayout v-on:reloadEvent="reload" v-bind:backOffice="this.backOffice"
                     v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'"
                     v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered"
                     v-for="event in eventsList" v-bind:key="event.id" />
             </div>
-            <div v-if="this.menu == 1" class="back-office--container__components">
+
+            <div v-if="this.menu == 1" class="back-office--components">
+                <h1 class="back-office--components__title--sale">Modifier une vente</h1>
                 <SaleListLayout v-on:reloadSal="reload" v-bind:backOffice="this.backOffice" v-bind:id="sale.id"
                     v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesList"
                     v-bind:key="sale.id" />
             </div>
 
-            <SaleCreateLayout v-if="this.menu == 2" class="back-office--container__components" />
-            <EventCreateLayout v-if="this.menu == 4" class="back-office--container__components" />
+            <SaleCreateLayout v-if="this.menu == 2" class="back-office--components" />
+            <EventCreateLayout v-if="this.menu == 4" class="back-office--components" />
 
-             <UsersListLayout v-if="this.menu == 5" class="back-office--container__components" />
+             <UsersListLayout v-if="this.menu == 5" class="back-office--components" />
 
-            <img v-if="menu==null" class="picture" alt="Bonhomme costaud" v-bind:src="picture" />
+            <img v-if="menu==null" class="picture" alt="bonhomme costaud" v-bind:src="picture" />
 
         </section>
 
@@ -130,23 +133,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrapper{
-    .container{
-        .field{
-            .field_title{
-                .title{
-                    color: #946973;
-                    font-size: 1.5rem;
-                    font-weight: bold;
-                    font-family: "Merienda", cursive;
-                    margin-top: 0.5rem;
-                    margin-bottom: 1rem;
-                    text-shadow: 0px 0px 0px #313846;
-                }
-            }
-        }
-    }
-}
+
 .back-office--container__all {
     width: 100%;
 
@@ -158,10 +145,28 @@ export default {
         align-items: center;
         padding: 0% 3% 0% 3%;
 
-        .back-office--container__components {
+        .back-office--components {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
+<<<<<<< HEAD
+            margin: auto;
+            align-items: center;
+            margin-top: 2rem;
+            flex-direction: column;
+
+            .back-office--components__title--sale {
+                color: $orange;
+                font-size: 1.5rem;
+                font-weight: bold;
+                font-family: 'Merienda', cursive;
+                margin-top: 0.5rem;
+                margin-bottom: 2rem;
+                text-shadow: 0px 0px 0px $grey;
+            }
+
+            .back-office--components__title--event {
+                color: $red;
+=======
             width: 80%;
             flex-direction: column;
             align-items: center;
@@ -170,14 +175,15 @@ export default {
             }
             h1{
                 color: #946973;
+>>>>>>> master
                 font-size: 1.5rem;
                 font-weight: bold;
-                font-family: "Merienda", cursive;
+                font-family: 'Merienda', cursive;
                 margin-top: 0.5rem;
-                margin-bottom: 1rem;
-                text-shadow: 0px 0px 0px #313846;
+                text-shadow: 0px 0px 0px $grey;
             }
-            .event--card{
+
+            .event--card {
                 min-width: 44vh;
                 margin-top: 5%;
 
@@ -208,7 +214,7 @@ export default {
             }
         }
 
-        .bacck-office--container__title {
+        .back-office--container__title {
             color: $purple;
             font-size: 1.5rem;
             font-weight: bold;
@@ -294,6 +300,7 @@ export default {
     }
 }
 
+//<---------------------MEDIA QUERIES ------------------------>
 
 @media (max-width: 555px) {
     .back-office--container__all {
@@ -328,20 +335,20 @@ export default {
 
             }
 
+<<<<<<< HEAD
+            .back-office--components {
+=======
             .back-office--container__components {
                 width: 100%;
+>>>>>>> master
                 .event--card {
                     width: 90%;
 
-                    .event--card__media--image {}
                 }
 
                 .sale--card {
                     width: 80%;
 
-                    .sale--card__title {
-                        div {}
-                    }
                 }
             }
         }
