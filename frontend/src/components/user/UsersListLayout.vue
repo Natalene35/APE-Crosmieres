@@ -12,7 +12,7 @@
         </div>
 
         <div v-if="this.$store.getters.getRole === 'administrator'">
-            <ul>
+             <ul style="width:100%">
                 <li v-for="user in usersNewList" v-bind:key="user.id">
                     <div class="detail">
                         <div>
@@ -26,6 +26,7 @@
                             <p class="role" v-if="user.roles[0] === 'apeuser'">Rôle : Utilisateur APE</p>
                             <p class="role" v-if="user.roles[0] === 'apemember'">Rôle : Membre APE</p>
                         </div>
+
                     </div>
                     <!-- Only the admin can modify the users list -->
                     <div v-if="this.$store.getters.getRole === 'administrator'" class="change">

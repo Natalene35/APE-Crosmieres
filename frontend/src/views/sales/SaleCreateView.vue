@@ -18,9 +18,7 @@ export default {
     FooterLayout,
     SaleCreateLayout,
   },
-  mounted() {
-    document.title = "Ajout vente";
-  },
+
 };
 </script>
 

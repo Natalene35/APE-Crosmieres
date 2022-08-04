@@ -17,6 +17,10 @@ export default {
     FooterLayout,
     MemberLayout,
   },
+  mounted() {
+    //for change title view page
+    document.title = "Membres";
+  },
 };
 </script>
 

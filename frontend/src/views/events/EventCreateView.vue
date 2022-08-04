@@ -17,11 +17,6 @@ export default {
     FooterLayout,
     EventCreateLayout,
   },
-  mounted() {
-
-    //for change title view page
-    document.title = "Ajout événement";
-  },
 };
 </script>
 
