@@ -1,8 +1,10 @@
 <?php
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\SMTP;
+
+// call files in wordpress installation to use PHP Mailer for email send
+require_once  ABSPATH . 'wp-includes/PHPMailer/PHPMailer.php';
+require_once  ABSPATH . 'wp-includes/PHPMailer/SMTP.php';
 
 // add function to the init hook
 add_action('rest_api_init', 'ape_rest_user_email');
@@ -20,7 +22,6 @@ function ape_rest_user_email()
     ));
 }
 
-
 function ape_rest_user_send_email($request)
 {
     // translate request with JSON and sanitize every field send
@@ -36,7 +37,7 @@ function ape_rest_user_send_email($request)
     $eventTitle = sanitize_text_field($parameters['eventTitle']);
 
     $mail = new PHPMailer();
-    
+
     // to choose subject and message to send
     if ($motive === 'participer') {
         $subject = utf8_decode("Inscription à ") . html_entity_decode($eventTitle);
@@ -67,14 +68,14 @@ function ape_rest_user_send_email($request)
     }
 
 
-    // configuration avec hotmail
+    // smtp settings with Hotmail
     // Parametre SMTP
     // Nom de serveur : smtp.office365.com
     // Port : 587
     // Méthode de chiffrement : STARTTLS
 
 
-    //smtp settings
+    // smtp settings with Google (to configure with password application)
     $mail->isSMTP();
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
@@ -83,7 +84,7 @@ function ape_rest_user_send_email($request)
     $mail->Port = 587;
     $mail->SMTPSecure = "tls";
 
-    
+
     //email settings
     $mail->CharSet = 'utf-8';
     $mail->isHTML(true);

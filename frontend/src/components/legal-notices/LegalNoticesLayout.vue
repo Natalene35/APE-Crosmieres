@@ -1,8 +1,8 @@
 <template>
   <section>
-    <h1>Politique de confidentialité et mentions légales</h1>
+    <h1>Politique de confidentialité, mentions légales et conditions générales</h1>
 
-        <h2>Politique de confidentialité</h2>
+        <h2 id="policy">Politique de confidentialité</h2>
             <p>
                 Le traitement de vos données à caractère personnel est régi par notre Charte du respect de la vie privée, disponible depuis la section "Charte de Protection des Données Personnelles", conformément au Règlement Général sur la Protection des Données 2016/679 du 27 avril 2016 («RGPD»).
             </p>
@@ -67,7 +67,7 @@
                 leur publication sur le site web.
                 </p>
 
-        <h2>Mentions légales</h2>
+        <h2 id="legal">Mentions légales</h2>
             <p>
             Conformément aux dispositions de la loi n° 2004-575 du 21 juin 2004 pour
             la confiance en l'économie numérique, il est précisé aux utilisateurs du
@@ -87,7 +87,7 @@
                         <li>Adresse postale: APE de Crosmières, Foyer Rural Rue Taffary, 72200 Crosmières</li>
                     </ul>
             
-        <h2>Conditions générales d'utilisation</h2>
+        <h2 id="condition">Conditions générales d'utilisation</h2>
                 <p>
                     La création de liens hypertextes vers le site de APE de Crosmières ainsi
                     que les liens hypertextes établis en direction d'autres sites à partir
@@ -147,15 +147,18 @@ section {
     font-size: 1.5rem;
     font-weight: bold;
     margin-top: 1.5rem;
-    margin-bottom: 1.8rem;
+    margin-bottom: 2rem;
     font-family: 'Merienda', cursive;
+    text-align: center;
     }
 
     h2 {
     font-family: 'Merienda', cursive;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
     margin-bottom:0.5rem;
-    margin-top:1rem;
+    margin-top:1.8rem;
+    margin-left: 1.5rem;
 
     }
 

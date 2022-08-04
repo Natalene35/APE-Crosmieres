@@ -24,9 +24,7 @@ export default {
     FooterLayout,
     EventUpdateLayout,
   },
-  mounted() {
-    document.title = "Mise à jour événement";
-  },
+
 };
 </script>
 

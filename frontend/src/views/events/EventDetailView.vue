@@ -21,7 +21,8 @@ export default {
     EventDetailLayout,
     EventRegisterForm,
   },
-    mounted() {
+  mounted() {
+    //for change title view page
     document.title = "Detail événement";
   },
 };

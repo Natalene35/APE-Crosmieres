@@ -1,5 +1,9 @@
 
 .background--bubble__container{   
+    
+    position: absolute;
+    top: 17%;
+
     .background--design__bubble{
         background-color: $blue-light-bg;
         height: 1.5VH;

@@ -10,7 +10,7 @@
             <button class="search-icon"> <i class="fa fa-search"></i></button>
             <input type="text" placeholder="Rechercher par nom" v-model="searchString">
         </div>
-        <ul>
+        <ul style="width:100%">
             <li v-for="user in usersNewList" v-bind:key="user.id">
                 <div class="detail">
                     <div>
