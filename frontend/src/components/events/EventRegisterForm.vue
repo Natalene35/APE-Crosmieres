@@ -37,9 +37,9 @@
           <div class="button--radio__group">
             <div class="button--radio__element">
               <input
-                type="radio"
+                type="checkbox"
                 class="button--radio"
-                v-model="picked"
+                v-model="participate"
                 value="participer"
                 id="participate"
               />
@@ -49,9 +49,9 @@
             </div>
             <div class="button--radio__element">
               <input
-                type="radio"
+                type="checkbox"
                 class="button--radio"
-                v-model="picked"
+                v-model="help"
                 value="aider"
                 id="help"
               />
@@ -61,9 +61,9 @@
             </div>
             <div class="button--radio__element">
               <input
-                type="radio"
+                type="checkbox"
                 class="button--radio"
-                v-model="picked"
+                v-model="order"
                 value="commander"
                 id="order"
               />
@@ -73,10 +73,8 @@
             </div>
           </div>
 
-          <label v-if="picked === 'aider'" class="field__label">
-            Je suis disponible
-          </label>
-          <div v-if="picked === 'aider'" class="field__time">
+          <label v-if="help" class="field__label"> Je suis disponible </label>
+          <div v-if="help" class="field__time">
             <div class="field__input--start">
               <label class="field__label--time"> à partir de </label>
               <input
@@ -96,11 +94,11 @@
               />
             </div>
           </div>
-          <label v-if="picked === 'commander'" class="field__label">
+          <label v-if="order" class="field__label">
             Combien de saucisses voulez vous
           </label>
           <input
-            v-if="picked === 'commander'"
+            v-if="order"
             type="text"
             v-model="nbsaucisse"
             class="field__input"
@@ -143,7 +141,9 @@ export default {
       file: null,
       errors: [],
       alerts: null,
-      picked: null,
+      participate: null,
+      help: null,
+      order: null,
       nbsaucisse: null,
       showForm: false,
       startTime: null,
@@ -156,6 +156,7 @@ export default {
       // Reset error and alert table
       this.errors = [];
       this.alerts = null;
+
       // Form Content Validation
       if (!this.name) {
         this.errors.push("Veuillez remplir un nom svp");
@@ -166,67 +167,70 @@ export default {
       if (!this.message) {
         this.message = "pas de message";
       }
-      if (!this.picked) {
-        this.errors.push("Veuillez choisir la raison de votre inscription");
-      }
-      if (
-        this.picked === "aider" &&
-        (this.startTime === null || this.endTime === null)
-      ) {
+
+      if (this.help && (this.startTime === null || this.endTime === null)) {
         this.errors.push(
           "Veuillez remplir une heure de début et une heure de fin svp"
         );
       }
-      console.log(isNaN(this.nbsaucisse));
-      if (this.picked === "commander" && isNaN(this.nbsaucisse)) {
+      if (this.order && isNaN(this.nbsaucisse)) {
         this.errors.push(
           "Veuillez remplir un nombre de saucisses correct (0-99)"
         );
       }
+
+      // Send form request if no error
+      if (this.participate || this.help || this.order) {
+        if (this.errors.length === 0) {
+          let id = this.$route.params.id;
+          const event = await EventService.find(id);
+          if (event.code) {
+            this.$router.push({ name: "404" });
+          }
+          let params = {
+            name: this.name,
+            email: this.email,
+            message: this.message,
+            nbsaucisse: this.nbsaucisse,
+            participate: this.participate,
+            help: this.help,
+            order: this.order,
+            startTime: this.startTime,
+            endTime: this.endTime,
+            eventTitle: event.title.rendered,
+          };
+          const response = await UserService.sendEmail(params);
+          // reset field if send ok
+          if (response.data.status === "success") {
+            this.name = null;
+            this.email = null;
+            this.message = null;
+            this.nbsaucisse = null;
+            this.participate = null;
+            this.help = null;
+            this.order = null;
+            this.startTime = null;
+            this.endTime = null;
+            this.alerts = response.data.message;
+            setTimeout(() => {
+              this.alerts = null;
+              this.showForm = false;
+            }, 1500);
+
+            // home redirect
+            setTimeout(() => this.$router.push({ name: "home" }), 1500);
+          } else {
+            this.errors.push(response.data.message);
+          }
+        }
+      } else {
+        this.errors.push("Veuillez choisir la raison de votre inscription");
+      }
+
+      // reset error after 5s
       setTimeout(() => {
         this.errors = [];
       }, 5000);
-      // Send form request if no error
-      if (this.errors.length === 0) {
-        let id = this.$route.params.id;
-        const event = await EventService.find(id);
-        console.log(event);
-        if (event.code) {
-          this.$router.push({ name: "404" });
-        }
-        let params = {
-          name: this.name,
-          email: this.email,
-          message: this.message,
-          nbsaucisse: this.nbsaucisse,
-          motive: this.picked,
-          startTime: this.startTime,
-          endTime: this.endTime,
-          eventTitle: event.title.rendered,
-        };
-        const response = await UserService.sendEmail(params);
-        console.log(response);
-        // reset field if send ok
-        if (response.data.status === "success") {
-          this.name = null;
-          this.email = null;
-          this.message = null;
-          this.nbsaucisse = null;
-          this.picked = null;
-          this.startTime = null;
-          this.endTime = null;
-          this.alerts = response.data.message;
-          setTimeout(() => {
-            this.alerts = null;
-            this.showForm = false;
-          }, 1500);
-
-          // home redirect
-          setTimeout(() => this.$router.push({ name: "home" }), 1500);
-        } else {
-          this.errors.push(response.data.message);
-        }
-      }
     },
   },
 };
