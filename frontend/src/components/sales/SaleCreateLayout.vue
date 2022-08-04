@@ -20,9 +20,6 @@
         </label>
         <input class="field__input" type="text" v-model="saleDate" />
 
-        <label class="field__label">Lieu de la vente </label>
-        <input class="field__input" type="text" v-model="location" />
-
         <label class="field__label">Lien du site marchand </label>
         <input class="field__input" type="text" v-model="link" />
 
@@ -72,7 +69,6 @@ export default {
       title: null,
       content: null,
       saleDate: null,
-      location: null,
       link: null,
       currentImage: undefined,
       previewImage: undefined,
@@ -107,7 +103,6 @@ export default {
                 this.title = null;
                 this.content = null;
                 this.saleDate = null;
-                this.location = null;
                 this.link = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
@@ -150,9 +145,6 @@ export default {
       if (!this.saleDate) {
         this.errors.push("Veuillez remplir une date svp");
       }
-      if (!this.location) {
-        this.errors.push("Veuillez remplir un lieu svp");
-      }
       if (!this.link) {
         this.errors.push("Veuillez remplir un lien svp");
       }
@@ -167,7 +159,6 @@ export default {
           title: this.title,
           content: this.content,
           date: this.saleDate,
-          lieu: this.location,
           lien: this.link,
         };
 
@@ -187,7 +178,6 @@ export default {
           this.title = null;
           this.content = null;
           this.saleDate = null;
-          this.location = null;
           this.link = null;
           this.currentImage = undefined;
           this.previewImage = undefined;

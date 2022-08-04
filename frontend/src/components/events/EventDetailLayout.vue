@@ -121,64 +121,64 @@ export default {
 
   .event--card__media--image {
     width: 100%;
-
-    height: 30vh;
+    min-height: 18rem;
     background-position: center;
     background-size: cover;
     border-radius: 1rem;
     margin: 1rem auto;
   }
+}
 
-    .event--card__content {
-        width: 100%;
-        margin: auto;
-        text-align: left;
-    }
+// Media query
 
-  @media (min-width: 450px) {
-    .event--card {
-      width: 80%;
-
-      .event--card__picture--container {
-        max-width: 70%;
-      }
-
-      h2 {
-        font-size: 1.6rem;
-      }
-    }
-  }
-
-  @media (min-width: 700px) {
-    .event--card {
-      width: 70%;
-    }
+@media (min-width: 480px) {
+  .event--card {
+    width: 80%;
 
     .event--card__picture--container {
-      max-width: 50%;
+      max-width: 70%;
     }
 
     h2 {
       font-size: 1.6rem;
     }
+  }
+}
 
-    .event--card__media--image {
-      width: 100vh;
-      height: 50vh;
-    }
-
-    .event--card__content {
-      width: 90%;
-    }
-
-    .event--card__map {
-      width: 40%;
-    }
+@media (min-width: 768px) {
+  .event--card {
+    width: 70%;
   }
 
-  @media (min-width: 1000px) {
-    .event--card {
-      width: 70%;
+  .event--card__picture--container {
+    max-width: 50%;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  .event--card__media--image {
+    width: 90%;
+    min-height: 25rem;
+  }
+
+  .event--card__content {
+    width: 90%;
+  }
+
+  .event--card__map {
+    width: 40%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .event--card {
+    width: 70%;
+
+    .event--card__media--image {
+      width: 80%;
+      min-height: 35rem;
     }
 
     .event--card__picture--container {
