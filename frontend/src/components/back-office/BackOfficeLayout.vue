@@ -162,9 +162,12 @@ export default {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin: auto;
+            width: 80%;
             flex-direction: column;
             align-items: center;
+            ul{
+                width: 100%;
+            }
             h1{
                 color: #946973;
                 font-size: 1.5rem;
@@ -326,6 +329,7 @@ export default {
             }
 
             .back-office--container__components {
+                width: 100%;
                 .event--card {
                     width: 90%;
 
