@@ -157,7 +157,7 @@ export default {
 .event--section {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; 
 
   h1 {
     color: $red;
