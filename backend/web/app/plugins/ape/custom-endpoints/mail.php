@@ -84,10 +84,6 @@ function ape_rest_user_send_email($request)
         </p>";
 
 
-
-
-
-
     // smtp settings with Hotmail
     // Parametre SMTP
     // Nom de serveur : smtp.office365.com
@@ -115,7 +111,6 @@ function ape_rest_user_send_email($request)
 
     if ($mail->send()) {
         return [
-            "motive" => $motive,
             "status" => "success",
             "message" => "Message envoyé"
         ];
