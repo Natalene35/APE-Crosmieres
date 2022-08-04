@@ -185,20 +185,17 @@ export default {
             last_name: this.user.last_name,
           }
         );
-        //if update ok
-        if (response.id) {
+        //update the meta data user phone
+        const newphone = await UserService.updatePhone(this.$store.getters.getUserID, {
+          phone: this.phone,
+        })
 
-          //update the meta data user phone
-          const newphone = await UserService.updatePhone(this.$store.getters.getUserID, {
-            phone: this.phone,
-          })
+        if (newphone === true || response.id) {
+          this.succesUpdate.push("Mise à jour réussie");
+          setTimeout(() => {
+            this.succesUpdate = [];
+          }, 500);
 
-          if (newphone === true) {
-            this.succesUpdate.push("Mise à jour réussie");
-            setTimeout(() => {
-              this.succesUpdate = [];
-            }, 500);
-          }
         }
       } else {
         this.errors.push("Echec de la mise à jour, veuillez recommencer");
@@ -232,15 +229,15 @@ export default {
    place-items: center;
    border-radius: 1em;
    width: 55vh;
-
+ 
    .wrapper--title {
-    color: $blue-dark;
-    font-size: 1.5rem;
-    font-weight: bold;
-    text-shadow: 0px 0px 0px $grey;
-    font-family: 'Merienda', cursive;
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
+     color: $blue-dark;
+     font-size: 1.5rem;
+     font-weight: bold;
+     text-shadow: 0px 0px 0px $grey;
+     font-family: 'Merienda', cursive;
+     margin-top: 0.5rem;
+     margin-bottom: 1rem;
    }
  
    .container {
@@ -397,23 +394,21 @@ export default {
  }
  
  //<---------------------MEDIA QUERIES ------------------------>
-@media (max-width: 576px) {
-  .wrapper {
-    .button--link {
-      width: 80%;
-    }
-  }
-}
-
-@media (max-width: 800px) {
-  .wrapper {
-    width: 44vh;
-
-    .button--link .deleteUser {
-      opacity: 1;
-    }
-  }
+ @media (max-width: 576px) {
+   .wrapper {
+     .button--link {
+       width: 80%;
+     }
+   }
  }
-
-
+ 
+ @media (max-width: 800px) {
+   .wrapper {
+     width: 44vh;
+ 
+     .button--link .deleteUser {
+       opacity: 1;
+     }
+   }
+ }
  </style>
