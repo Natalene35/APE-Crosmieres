@@ -106,6 +106,7 @@ export default {
         display:flex;
         flex-direction: column;
         align-items: center;
+        align-content: center;
 
         .event-card {
             width: 93%;
