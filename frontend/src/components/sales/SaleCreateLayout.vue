@@ -10,7 +10,7 @@
         <label class="field__label">Titre de la vente </label>
         <input class="field__input" type="text" v-model="title" />
 
-        <label class="field__label">Decription </label>
+        <label class="field__label">Description </label>
         <textarea class="textarea field__input" type="text" rows="3" v-model="content"></textarea>
 
         <label class="field__label">Date de la vente
