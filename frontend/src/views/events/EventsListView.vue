@@ -18,7 +18,8 @@ export default {
     FooterLayout,
   },
   mounted() {
-    document.title = "Liste événement";
+    //for change title view page
+    document.title = "Evénements";
   },
 };
 </script>

@@ -19,6 +19,10 @@ export default {
     FooterLayout,
     ProfilLayout,
   },
+    mounted() {
+    //for change title view page
+    document.title = "Mon profil";
+  },
 };
 </script>
 
