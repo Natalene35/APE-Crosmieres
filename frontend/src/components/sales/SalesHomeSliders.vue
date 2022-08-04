@@ -60,12 +60,12 @@ export default {
                 if (this.slide != this.maxSlide){
                     this.slide++
                     this.title=this.saleSlide[this.slide].title.rendered 
-                    this.content=this.saleSlide[this.slide].content.rendered 
+                    this.content=this.saleSlide[this.slide].excerpt.rendered 
                 }
                 else{
                     this.slide=0
                     this.title=this.saleSlide[this.slide].title.rendered 
-                    this.content=this.saleSlide[this.slide].content.rendered
+                    this.content=this.saleSlide[this.slide].excerpt.rendered
                 }
             }
             
@@ -76,7 +76,7 @@ export default {
         this.saleSlide = await SaleService.findAll();
         this.maxSlide = this.saleSlide.length - 1;
         this.title=this.saleSlide[this.slide].title.rendered 
-        this.content=this.saleSlide[this.slide].content.rendered 
+        this.content=this.saleSlide[this.slide].excerpt.rendered 
     }
 }
 </script>
@@ -118,7 +118,7 @@ export default {
         @import "../../assets/animations/bubbleAnim.scss";
 
         .background--design__all {
-            height: 616vh;
+            height: 750vh;
             width: 1320VH;
             background-color: transparent;
             position: absolute;
@@ -166,28 +166,28 @@ export default {
             height: 18REM;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
             opacity: 1;
             color: #313846;
             width: 100%;
             height: 65%;
+            justify-content: flex-start;
             
 
             h2 {
                 text-shadow: 1px 1px 1px black;
                 font-style: italic;
-                padding: 3%;
                 width: 100%;
-                margin-bottom: 2%;
                 color: $white;
-                font-size: large;
                 font-weight: bold;
-                margin-top: 7%;
+                font-family: Merianda;
+                margin-bottom: 0.3rem;
+                margin-top: -4%;
             }
 
             p {
                 margin-right: 300px;
-                padding: 1% 5% 0% 5%;
+                padding: 1% 2% 6% 2%;
+                    font-size: 15px;
 
             }
 
