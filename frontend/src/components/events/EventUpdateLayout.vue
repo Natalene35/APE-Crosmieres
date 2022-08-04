@@ -163,7 +163,7 @@ export default {
             }
           );
         })
-        .catch((err) => {
+        .catch(() => {
           this.progress = 0;
           this.errors.push("Erreur sur le chargement de l'image !");
           this.errors.push("L'événement a été modifié sans l'image");
@@ -206,7 +206,7 @@ export default {
       const response = await EventService.updateCustom(params);
 
       //native request from wordpress for the types taxonomy
-      const updateTaxonomy = await EventService.update({
+      await EventService.update({
         id: this.id,
         types: this.selected,
       });

@@ -122,7 +122,7 @@ export default {
             }
           );
         })
-        .catch((err) => {
+        .catch(() => {
           this.errors.push("Erreur sur le chargement de l'image !");
           this.errors.push("La vente a été créée sans l'image");
           this.errors.push(
@@ -176,7 +176,7 @@ export default {
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
           //for take the post publish
-          const majPost = await SaleService.update({
+          await SaleService.update({
             "status": "publish",
             "id": response.data.id
           });

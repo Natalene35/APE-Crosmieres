@@ -67,7 +67,7 @@ export default {
         async del() {
             this.opacity = 0
             this.zindex = -20
-            const response = await SaleService.delete({
+            await SaleService.delete({
                 "id": this.selectSale
             });
             this.$emit("reloadSal");

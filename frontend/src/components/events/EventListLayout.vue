@@ -74,7 +74,7 @@ export default {
     async del() {
       this.opacity = 0;
       this.zindex = -20;
-      const response = await EventService.delete({
+      await EventService.delete({
         id: this.selectEvent,
       });
 

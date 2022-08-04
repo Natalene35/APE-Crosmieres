@@ -27,7 +27,13 @@
         />
 
         <label class="field__label">Description </label>
-        <textarea class="textarea field__input" type="text" placeholder="" rows="3" v-model="content"></textarea>
+        <textarea
+          class="textarea field__input"
+          type="text"
+          placeholder=""
+          rows="3"
+          v-model="content"
+        ></textarea>
 
         <label class="field__label">Date de l'évènement </label>
         <input
@@ -156,13 +162,14 @@ export default {
             }
           );
         })
-        .catch((err) => {
+        .catch(() => {
           this.progress = 0;
           this.errors.push("Erreur sur le chargement de l'image !");
           this.errors.push("L'événement a été crée sans l'image");
           this.errors.push(
             "Veuillez modifier dans la page de modification d'événement svp."
           );
+
           this.currentImage = undefined;
         });
     },
@@ -213,13 +220,12 @@ export default {
 
         // if event create status is ok and if there was an image to uplaod
         if (response && this.currentImage) {
-
           // //for take the post publish
           // const majPost = await EventService.update({
           //   status: "publish",
           //   id: response.data.id,
           // });
-          
+
           //response.data.id is the post id
           this.upload(response.data.id);
         } else if (response) {
@@ -309,9 +315,9 @@ export default {
         float: left;
         margin: 0.5rem;
       }
-        select{
-          border: 1px solid $blue;
-        }
+      select {
+        border: 1px solid $blue;
+      }
       .field__input {
         line-height: 3;
         border: 1px solid $blue;
