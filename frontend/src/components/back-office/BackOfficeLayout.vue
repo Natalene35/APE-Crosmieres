@@ -158,6 +158,7 @@ export default {
             align-items: center;
             margin-top: 2rem;
             flex-direction: column;
+            margin-bottom: 1rem;
             width: 80%;
 
             .back-office--components__title--sale {

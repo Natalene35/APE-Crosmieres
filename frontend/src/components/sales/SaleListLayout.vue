@@ -132,6 +132,7 @@ export default {
     .sale--card__content {
         color: $grey;
         margin: 1rem 3rem 1rem 3rem;
+        text-align: left;
     }
 
     .sale--card__term {

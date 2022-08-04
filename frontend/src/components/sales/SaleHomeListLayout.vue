@@ -53,18 +53,13 @@ export default {
         border-radius: 1rem 1rem 0 0;
         background-color: $orange;
         color: $white;
-        font-weight: bold;
-        
+        font-weight: bold; 
     }
 
     .sale--card__excerpt {
         padding-right: 0.5rem;
-        padding-left: 0.5rem;
+        padding-left: 0.8rem;
+        text-align: left;
     }
 }
-
-
-
-
-
 </style>
