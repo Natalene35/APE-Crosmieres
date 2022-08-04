@@ -1,7 +1,6 @@
 <template>
   <HeaderLayout />
   <EventDetailLayout />
-  <event-register-form />
   <FooterLayout />
 </template>
 
@@ -11,7 +10,6 @@
 import HeaderLayout from "@/components/templates/HeaderLayout.vue";
 import EventDetailLayout from "@/components/events/EventDetailLayout.vue";
 import FooterLayout from "@/components/templates/FooterLayout.vue";
-import EventRegisterForm from "../../components/events/EventRegisterForm.vue";
 
 export default {
   name: "EventDetailView",
@@ -19,7 +17,6 @@ export default {
     HeaderLayout,
     FooterLayout,
     EventDetailLayout,
-    EventRegisterForm,
   },
   mounted() {
     //for change title view page
