@@ -10,8 +10,11 @@
             <input type="text" placeholder="Rechercher..." v-model="searchString">
         </div>
         <div class="sale--list">
-            <SaleListLayout v-bind:id="sale.id" v-bind:title="sale.title.rendered"
-                v-bind:content="sale.content.rendered" v-for="sale in salesNewList" v-bind:key="sale.id" />
+            <SaleListLayout v-bind:image="
+        sale.featured_media !== 0
+            ? sale._embedded['wp:featuredmedia'][0].source_url : defaultPicture" v-bind:id="sale.id"
+                v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesNewList"
+                v-bind:key="sale.id" />
         </div>
     </section>
 </template>
@@ -21,6 +24,7 @@
 import SaleListLayout from '@/components/sales/SaleListLayout.vue';
 import SaleService from '@/services/sales/SaleService';
 import picture from '@/assets/images/purchases.png';
+import defaultPicture from "@/assets/images/sales/colorful.jpg";
 
 export default {
     name: 'SalesListLayout',
@@ -55,6 +59,7 @@ export default {
             salesList: [],
             salePicture: picture,
             searchString: "",
+            defaultPicture,
         }
     },
 }
@@ -63,7 +68,9 @@ export default {
 
 <style scopped lang="scss">
 .sale--section__list {
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     h1 {
         color: $orange;
@@ -82,16 +89,16 @@ export default {
         justify-content: center;
     }
 
-    .sale--list {
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
+    // .sale--list {
+    //     display: flex;
+    //     justify-content: center;
+    //     flex-direction: column;
+    //     align-items: center;
 
-        .sale--card {
-            width: 60%;
-        }
-    }
+    //     .sale--card {
+    //         width: 60%;
+    //     }
+    // }
 
     input {
         padding: 11px;
