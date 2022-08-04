@@ -49,6 +49,7 @@
                         <div>
                             <p>{{ user.display_name }}</p>
                             <p>{{ user.user_email }}</p>
+                            <p>{{ user.phone }}</p>
                         </div>
                     </div>
                 </li>
@@ -150,6 +151,21 @@ export default {
         if (this.$store.getters.getRole === 'apemember') {
             // Contain the users list returns by the API
             this.usersMember = await UserLoginService.findAllForMember();
+            this.usersMember.forEach(async (user) => {
+                let phone = "";
+                // for current user, we retrieve the meta data
+                let arrayMeta = await UserLoginService.getMeta(user.id);
+                for (let index = 0; index < arrayMeta.length; index++) {
+                    const metaElmt = arrayMeta[index];
+                    // when the meta key match with this meta desired
+                    // we put value in variable 'phone' in this case
+                    if (metaElmt.meta_key == "phone") {
+                        phone = metaElmt.meta_value;
+                    }
+                }
+                // we add meta key and meta value to the current user object for use later
+                user["phone"] = phone;
+            });
         }
     },
 
@@ -341,7 +357,7 @@ section {
         }
 
         .detail {
-            margin: 0.5rem 0rem 0.5rem 1rem;
+            padding: 1rem;
         }
 
     }

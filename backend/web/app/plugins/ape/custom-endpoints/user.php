@@ -90,6 +90,6 @@ function ape_rest_user_list()
 function ape_rest_user_list_for_member_ape_handler()
 {
     global $wpdb;
-    $rows = $wpdb->get_results("SELECT `user_email`, `display_name` FROM wp_users");
+    $rows = $wpdb->get_results("SELECT `user_email`, `display_name`, id FROM wp_users");
     return $rows;
 }
