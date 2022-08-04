@@ -23,14 +23,16 @@
             <div v-if="this.menu == 3" class="back-office--components">
                 <h1 class="back-office--components__title--event">Modifier un évènement</h1>
                 <EventListLayout v-on:reloadEvent="reload" v-bind:backOffice="this.backOffice"
-                    v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : 'https://source.unsplash.com/collection/157&random=100'"
+                    v-bind:image="event.featured_media !== 0 ? event._embedded['wp:featuredmedia'][0].source_url : defaultPictureEvent"
                     v-bind:id="event.id" v-bind:title="event.title.rendered" v-bind:content="event.content.rendered"
                     v-for="event in eventsList" v-bind:key="event.id" />
             </div>
 
             <div v-if="this.menu == 1" class="back-office--components">
                 <h1 class="back-office--components__title--sale">Modifier une vente</h1>
-                <SaleListLayout v-on:reloadSal="reload" v-bind:backOffice="this.backOffice" v-bind:id="sale.id"
+                <SaleListLayout v-on:reloadSal="reload" v-bind:backOffice="this.backOffice" 
+                    v-bind:image="sale.featured_media !== 0 ? sale._embedded['wp:featuredmedia'][0].source_url : defaultPictureSale" 
+                    v-bind:id="sale.id"
                     v-bind:title="sale.title.rendered" v-bind:content="sale.content.rendered" v-for="sale in salesList"
                     v-bind:key="sale.id" />
             </div>
@@ -60,6 +62,8 @@ import EventService from '@/services/events/EventService';
 import SaleService from '@/services/sales/SaleService';
 //PICTURE
 import jelly from '@/assets/images/jelly-security-guard-wearing-sunglasses.png';
+import defaultPictureSale from "@/assets/images/sales/colorful.jpg";
+import defaultPictureEvent from "@/assets/images/events/flags.jpg";
 
 export default {
     name: "BackOfficeLayout",
@@ -70,7 +74,9 @@ export default {
             eventsList: null,
             salesList: null,
             backOffice: true,
-            picture: jelly
+            picture: jelly,
+            defaultPictureSale,
+            defaultPictureEvent
         };
     },
     methods: {
@@ -159,7 +165,6 @@ export default {
                 font-weight: bold;
                 font-family: 'Merienda', cursive;
                 margin-top: 0.5rem;
-                margin-bottom: 2rem;
                 text-shadow: 0px 0px 0px $grey;
             }
 
@@ -174,32 +179,13 @@ export default {
 
             .event--card {
                 min-width: 44vh;
-                margin-top: 5%;
+
 
                 .event--card__media--image {
                     background-position: center;
                     background-size: cover;
                     background-repeat: no-repeat;
                 }
-            }
-
-            .sale--card {
-                width: 100%;
-
-                .sale--card__title {
-                    display: flex;
-                    flex-direction: row-reverse;
-                    align-items: center;
-                    justify-content: flex-start;
-                    text-align: end;
-
-                    div {
-                        display: flex;
-                        width: 100%;
-                        justify-content: center;
-                    }
-                }
-
             }
         }
 
@@ -326,13 +312,11 @@ export default {
 
             .back-office--components {
                 .event--card {
-                    width: 90%;
-
+                    width: 95%;
                 }
 
                 .sale--card {
-                    width: 80%;
-
+                    width: 95%;
                 }
             }
         }

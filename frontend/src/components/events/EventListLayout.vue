@@ -1,13 +1,8 @@
 <template>
   <div class="event--card">
-    <router-link
-      v-if="backOffice == false"
-      v-bind:to="{ name: 'event', params: { id: id } }"
-    >
-      <div
-        class="event--card__media--image"
-        v-bind:style="'background-image:url(' + image + ')'"
-      ></div>
+    <router-link v-if="backOffice == false" v-bind:to="{ name: 'event', params: { id: id } }">
+
+      <div class="event--card__media--image" v-bind:style="'background-image:url(' + image + ')'"></div>
       <h2 class="event--card__title">
         <div v-html="title"></div>
       </h2>
@@ -21,26 +16,17 @@
       </div>
     </router-link>
 
+    <!-- VERSION BACK-OFFICE -->
     <div v-if="backOffice == true">
-      <div
-        class="event--card__media--image"
-        v-bind:style="'background-image:url(' + image + ')'"
-      >
+      <div class="event--card__media--image" v-bind:style="'background-image:url(' + image + ')'">
         <div class="event--backoffice__img">
-          <img
-            v-on:click="
-              opacity = 1;
-              zindex = 20;
-              selectEvent = id;
-            "
-            v-bind:src="trashPic"
-            v-if="backOffice == true"
-          />
-          <router-link
-            class="event--card__editPic"
-            v-if="backOffice == true"
-            v-bind:to="{ name: 'eventUpdate', params: { id: id } }"
-          >
+          <img v-on:click="
+            opacity = 1;
+          zindex = 20;
+          selectEvent = id;
+          " v-bind:src="trashPic" v-if="backOffice == true" />
+          <router-link class="event--card__editPic" v-if="backOffice == true"
+            v-bind:to="{ name: 'eventUpdate', params: { id: id } }">
             <img v-bind:src="editPic" />
           </router-link>
         </div>
@@ -52,13 +38,8 @@
         <div v-html="content"></div>
       </div>
 
-      <PopUpLayout
-        v-bind:id="id"
-        v-bind:opacity="this.opacity"
-        v-bind:zindex="this.zindex"
-        v-on:yes="del"
-        v-on:no="(this.opacity = 0), (this.zindex = -20)"
-      />
+      <PopUpLayout v-bind:id="id" v-bind:opacity="this.opacity" v-bind:zindex="this.zindex" v-on:yes="del"
+        v-on:no="(this.opacity = 0), (this.zindex = -20)" />
     </div>
   </div>
 </template>
@@ -114,7 +95,7 @@ export default {
   margin: 1%;
   display: flex;
   flex-direction: column;
-  margin-bottom: 3rem;
+  margin: 2rem auto;
   box-sizing: border-box;
   padding-bottom: 1rem;
   width: 65%;
@@ -136,7 +117,6 @@ export default {
 
     .event--backoffice__img {
       display: flex;
-
       justify-content: flex-end;
       align-items: center;
       align-content: center;
