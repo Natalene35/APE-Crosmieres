@@ -157,6 +157,8 @@ export default {
       this.errors = [];
       this.alerts = null;
 
+
+
       // Form Content Validation
       if (!this.name) {
         this.errors.push("Veuillez remplir un nom svp");
