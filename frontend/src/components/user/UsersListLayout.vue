@@ -10,34 +10,50 @@
             <button class="search-icon"> <i class="fa fa-search"></i></button>
             <input type="text" placeholder="Rechercher par nom" v-model="searchString">
         </div>
-        <ul>
-            <li v-for="user in usersNewList" v-bind:key="user.id">
-                <div class="detail">
-                    <div>
-                        <p>{{ user.last_name }} {{ user.first_name }}</p>
-                        <p>{{ user.email }}</p>
-                        <p>{{ user.phone }}</p>
-                    </div>
-                    <div>
-                        <!-- <p class="role">Rôle : {{ user.roles[0] }}</p> -->
-                        <p class="role" v-if="user.roles[0] === 'administrator'">Rôle : Administrateur</p>
-                        <p class="role" v-if="user.roles[0] === 'apeuser'">Rôle : Utilisateur APE</p>
-                        <p class="role" v-if="user.roles[0] === 'apemember'">Rôle : Membre APE</p>
-                    </div>
-                </div>
-                <!-- Only the admin can modify the users list -->
-                <div v-if="this.$store.getters.getRole === 'administrator'" class="change">
 
-                    <!-- Calls the chooseARole methods et make appears the selected form -->
-                    <img v-on:click="chooseARole(user)" v-bind:src="edit" class="picture"
-                        title="Modifier le rôle de ce compte" />
+        <div v-if="this.$store.getters.getRole === 'administrator'">
+            <ul>
+                <li v-for="user in usersNewList" v-bind:key="user.id">
+                    <div class="detail">
+                        <div>
+                            <p>{{ user.last_name }} {{ user.first_name }}</p>
+                            <p>{{ user.email }}</p>
+                            <p>{{ user.phone }}</p>
+                        </div>
+                        <div>
+                            <!-- <p class="role">Rôle : {{ user.roles[0] }}</p> -->
+                            <p class="role" v-if="user.roles[0] === 'administrator'">Rôle : Administrateur</p>
+                            <p class="role" v-if="user.roles[0] === 'apeuser'">Rôle : Utilisateur APE</p>
+                            <p class="role" v-if="user.roles[0] === 'apemember'">Rôle : Membre APE</p>
+                        </div>
+                    </div>
+                    <!-- Only the admin can modify the users list -->
+                    <div v-if="this.$store.getters.getRole === 'administrator'" class="change">
 
-                    <!-- Calls a popup to confirm the user's delete -->
-                    <img v-on:click="deleteUserConfirm(user)" class="picture" title="Supprimer ce compte" alt="trash"
-                        v-bind:src="trash" />
-                </div>
-            </li>
-        </ul>
+                        <!-- Calls the chooseARole methods et make appears the selected form -->
+                        <img v-on:click="chooseARole(user)" v-bind:src="edit" class="picture"
+                            title="Modifier le rôle de ce compte" />
+
+                        <!-- Calls a popup to confirm the user's delete -->
+                        <img v-on:click="deleteUserConfirm(user)" class="picture" title="Supprimer ce compte"
+                            alt="trash" v-bind:src="trash" />
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div v-if="this.$store.getters.getRole === 'apemember'">
+            <ul>
+                <li v-for="user in usersNewListMember" v-bind:key="user.id">
+                    <div class="detail">
+                        <div>
+                            <p>{{ user.display_name }}</p>
+                            <p>{{ user.user_email }}</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
         <!-- The selected form appears on the click of the button by the chooseARole method -->
         <div class="select" v-if="showSelected">
@@ -95,6 +111,7 @@ export default {
     data() {
         return {
             users: [],
+            usersMember: [],
             trash: trash,
             edit: edit,
             selectedRole: null,
@@ -109,25 +126,33 @@ export default {
         }
     },
     async mounted() {
-        // Contain the users list returns by the API
-        this.users = await UserLoginService.findAll();
-        // to add the phone meta, we browse all users
-        this.users.forEach(async (user) => {
-            let phone = "";
-            // for current user, we retrieve the meta data
-            let arrayMeta = await UserLoginService.getMeta(user.id);
-            for (let index = 0; index < arrayMeta.length; index++) {
-                const metaElmt = arrayMeta[index];
-                // when the meta key match with this meta desired
-                // we put value in variable 'phone' in this case
-                if (metaElmt.meta_key == "phone") {
-                    phone = metaElmt.meta_value;
+        if (this.$store.getters.getRole === 'administrator') {
+            // Contain the users list returns by the API
+            this.users = await UserLoginService.findAll();
+            // to add the phone meta, we browse all users
+            this.users.forEach(async (user) => {
+                let phone = "";
+                // for current user, we retrieve the meta data
+                let arrayMeta = await UserLoginService.getMeta(user.id);
+                for (let index = 0; index < arrayMeta.length; index++) {
+                    const metaElmt = arrayMeta[index];
+                    // when the meta key match with this meta desired
+                    // we put value in variable 'phone' in this case
+                    if (metaElmt.meta_key == "phone") {
+                        phone = metaElmt.meta_value;
+                    }
                 }
-            }
-            // we add meta key and meta value to the current user object for use later
-            user["phone"] = phone;
-        });
+                // we add meta key and meta value to the current user object for use later
+                user["phone"] = phone;
+            });
+        }
+
+        if (this.$store.getters.getRole === 'apemember') {
+            // Contain the users list returns by the API
+            this.usersMember = await UserLoginService.findAllForMember();
+        }
     },
+
 
     methods: {
 
@@ -217,9 +242,23 @@ export default {
                     return false;
                 }
             });
+        },
+
+        usersNewListMember() {
+            //Return an array that contains the rows where the callback returned true
+            return this.usersMember.filter((user) => {
+                // We take the name of the current user and we check if the searched term is contained in this name.
+                // If yes, return true   
+                if (user.display_name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(this.searchString.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase())) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
         }
     },
 }
+
 </script>
 
 <style lang="scss" scoped>
@@ -400,8 +439,9 @@ section {
         input {
             width: 40%;
         }
+
         li {
-       
+
 
             .picture {
                 height: 4rem;
