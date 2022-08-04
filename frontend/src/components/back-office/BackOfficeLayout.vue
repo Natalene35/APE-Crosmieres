@@ -276,7 +276,6 @@ export default {
 }
 
 //<---------------------MEDIA QUERIES ------------------------>
-
 @media (max-width: 555px) {
     .back-office--container__all {
 
