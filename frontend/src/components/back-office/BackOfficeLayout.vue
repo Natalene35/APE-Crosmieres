@@ -37,7 +37,7 @@
 
              <UsersListLayout v-if="this.menu == 5" class="back-office--container__components" />
 
-            <img class="picture" alt="Bonhomme costaud" v-bind:src="picture" />
+            <img v-if="menu==null" class="picture" alt="Bonhomme costaud" v-bind:src="picture" />
 
         </section>
 
