@@ -1,20 +1,21 @@
 <template>
-    <section class="event--card">
+
+    <section class="sale--card">
 
         <div class="picture--container">
             <img class="picture" alt="Illustration" v-bind:src="picture" />
         </div>
-        <h2 class="event--card__title">{{ title }}</h2>
+        <h2 class="sale--card__title">{{ title }}</h2>
 
-        <div class="event--card__date">{{ date }}</div>
-
-        <div class="event--card__content" v-html="content"></div>
-
-        <a class="event--card__link" target="_blank" v-bind:href="link">Lien vers le site marchand
-            <img class="snake" alt="Arrow" v-bind:src="bigSnake" />
-        </a>
+        <div class="sale--card__date">{{ date }}</div>
 
         <img class="media-image" v-bind:src="image">
+
+        <div class="sale--card__content" v-html="content"></div>
+
+        <a class="sale--card__link" target="_blank" v-bind:href="link">Lien vers le site marchand
+            <img class="snake" alt="Arrow" v-bind:src="bigSnake" />
+        </a>
 
     </section>
 </template>
@@ -64,7 +65,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.event--card {
+.sale--card {
     width: 90%;
     margin: 1rem auto;
     height: auto;
@@ -83,7 +84,7 @@ export default {
 
     }
 
-    .event--card__content {
+    .sale--card__content {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -110,13 +111,13 @@ export default {
         margin-top: -2rem;
     }
 
-    .event--card__date {
+    .sale--card__date {
         margin-bottom: 1rem;
     }
 
-    .event--card__date,
-    .event--card__img,
-    .event--card__content {
+    .sale--card__date,
+    .sale--card__img,
+    .sale--card__content {
         padding: 1rem;
     }
 
@@ -129,16 +130,16 @@ export default {
         margin: 1rem auto;
     }
 
-    .event--card__link {
+    .sale--card__link {
         color: $orange;
         text-shadow: 1px 1px 1px $black;
         transition: 1s;
         padding-bottom: 2rem;
     }
 
-    .event--card__link:hover {
+    .sale--card__link:hover {
         transform: scale(1.25);
-        font-size: 1.1em;
+        font-size: 0.9rem;
     }
 
     .snake {
@@ -148,10 +149,10 @@ export default {
 
 // Media query
 
-@media (min-width: 450px) {
+@media (min-width: 480px) {
 
-    .event--card {
-        .event--card__content {
+    .sale--card {
+        .sale--card__content {
             width: none;
         }
     }
@@ -165,8 +166,8 @@ export default {
     }
 }
 
-@media (min-width: 700px) {
-    .event--card {
+@media (min-width: 768px) {
+    .sale--card {
         width: 80%;
 
         .picture--container {
@@ -188,8 +189,8 @@ export default {
     }
 }
 
-@media (min-width: 1000px) {
-    .event--card {
+@media (min-width: 1024px) {
+    .sale--card {
         width: 70%;
 
         .picture--container {
@@ -205,7 +206,7 @@ export default {
             min-height: 35rem;
         }
 
-        .event--card__content {
+        .sale--card__content {
             width: 80%;
         }
     }
