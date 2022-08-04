@@ -3,6 +3,7 @@
 // add function to the init hook
 add_action('rest_api_init', 'ape_rest_user_delete_personnal_account');
 add_action('rest_api_init', 'ape_rest_user_update_personnal_meta');
+add_action('rest_api_init', 'ape_rest_user_list');
 
 
 // create route WP for customize
@@ -71,4 +72,24 @@ function ape_rest_user_update_personnal_meta_handler($request)
     );
 
     return $new_Phone;
+}
+
+//Road for users list for memberape
+function ape_rest_user_list()
+{
+    register_rest_route('wp/v2', 'user/list', array(
+        'methods' => 'GET',
+        'Content-type: application/json',
+        'callback' => 'ape_rest_user_list_for_member_ape_handler',
+        'permission_callback' => function () {
+            return true;
+        }
+    ));
+}
+
+function ape_rest_user_list_for_member_ape_handler()
+{
+    global $wpdb;
+    $rows = $wpdb->get_results("SELECT `user_email`, `display_name`, id FROM wp_users");
+    return $rows;
 }
