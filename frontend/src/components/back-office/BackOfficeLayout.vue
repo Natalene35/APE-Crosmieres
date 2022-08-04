@@ -148,6 +148,7 @@ export default {
         .back-office--components {
             display: flex;
             justify-content: center;
+<<<<<<< HEAD
             margin: auto;
             align-items: center;
             margin-top: 2rem;
@@ -165,6 +166,16 @@ export default {
 
             .back-office--components__title--event {
                 color: $red;
+=======
+            width: 80%;
+            flex-direction: column;
+            align-items: center;
+            ul{
+                width: 100%;
+            }
+            h1{
+                color: #946973;
+>>>>>>> master
                 font-size: 1.5rem;
                 font-weight: bold;
                 font-family: 'Merienda', cursive;
@@ -324,7 +335,12 @@ export default {
 
             }
 
+<<<<<<< HEAD
             .back-office--components {
+=======
+            .back-office--container__components {
+                width: 100%;
+>>>>>>> master
                 .event--card {
                     width: 90%;
 
