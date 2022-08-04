@@ -59,4 +59,13 @@ export default {
         }
     },
 
-}
+    async findAllForMember() {
+         apiClient.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('token') + '';
+        try {
+            const response = await apiClient.get("/wp/v2/user/list");
+            return response.data;
+        } catch (error) {
+            return error.response.data
+        }
+    },
+    }

@@ -31,7 +31,9 @@ function ape_rest_user_send_email($request)
     $email = sanitize_text_field($parameters['email']);
     $message = sanitize_text_field($parameters['message']);
     $nbsaucisse = sanitize_text_field($parameters['nbsaucisse']);
-    $motive = sanitize_text_field($parameters['motive']);
+    $participate = sanitize_text_field($parameters['participate']);
+    $help = sanitize_text_field($parameters['help']);
+    $order = sanitize_text_field($parameters['order']);
     $startTime = sanitize_text_field($parameters['startTime']);
     $endTime = sanitize_text_field($parameters['endTime']);
     $eventTitle = sanitize_text_field($parameters['eventTitle']);
@@ -39,20 +41,20 @@ function ape_rest_user_send_email($request)
     $mail = new PHPMailer();
 
     // to choose subject and message to send
-    if ($motive === 'participer') {
+    if ($participate) {
         $subject = utf8_decode("Inscription à ") . html_entity_decode($eventTitle);
         $body = "
         <h3>$name viens à l'événement : $eventTitle</h3>
         <p>mail : $email</p>
         <p>Message :</p> $message";
-    } else if ($motive === 'aider') {
+    } else if ($help) {
         $subject = utf8_decode("Volontariat pour ") . html_entity_decode($eventTitle);
         $body = "
         <h3>$name veux participer à l'événement : $eventTitle</h3>
         <p>Il est disponible de $startTime à $endTime</p>
         <p>mail : $email</p>
         <p>Message :</p> $message";
-    } else  if ($motive === 'commander') {
+    } else  if ($order) {
         $subject = utf8_decode("Commande pour ") . html_entity_decode($eventTitle);
         $body = "
         <h3>$name veux $nbsaucisse saucisses pour l'événement : $eventTitle</h3>
@@ -66,6 +68,20 @@ function ape_rest_user_send_email($request)
         <p>mail : $email</p>
         <p>Message :</p> $message";
     }
+
+
+    $subject = utf8_decode('Inscription pour "') . html_entity_decode($eventTitle) . '"';
+    $body = "
+    <h3>$name s'est inscrit à l'événement : $eventTitle</h3>
+    <p>Il veut :</p>" .
+        ($participate ? "<p>- Participer à l'événement</p>" : "") .
+        ($help ? "<p>- Aider de " . $startTime . " jusqu'à " . $endTime . "</p>" : "") .
+        ($order ? "<p>- Commander " . $nbsaucisse . " saucisse(s)" . "</p>" : "") .
+        "<p>Infos : 
+        <br> Nom : $name
+        <br> Mail : $email
+        <br> Message : $message
+        </p>";
 
 
     // smtp settings with Hotmail

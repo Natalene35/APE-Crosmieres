@@ -113,8 +113,9 @@
         </li>
 
         <li class="header--nav__backoffice" @click="hiddenMenu">
-          <router-link v-if="this.$store.getters.getRole === 'administrator'" v-bind:to="{ name: 'back-office' }"
-            class="header--nav__backoffice burger--ul">Administration
+          <router-link
+            v-if="this.$store.getters.getRole === 'administrator' || this.$store.getters.getRole === 'apemember'"
+            v-bind:to="{ name: 'back-office' }" class="header--nav__backoffice burger--ul">Administration
           </router-link>
         </li>
       </ul>
@@ -141,20 +142,20 @@ export default {
   },
 
   methods: {
-    hiddenMenu(){
+    hiddenMenu() {
       let body = document.querySelector("body");
-      this.menuBurger=false
+      this.menuBurger = false
       body.classList.remove("overflow--hidden");
-  },
+    },
     showMenu() {
       let body = document.querySelector("body");
-      if(this.menuBurger==true){
-        this.menuBurger=false
-          body.classList.remove("overflow--hidden");
+      if (this.menuBurger == true) {
+        this.menuBurger = false
+        body.classList.remove("overflow--hidden");
       }
-      else{
-        this.menuBurger=true
-          body.classList.add("overflow--hidden");
+      else {
+        this.menuBurger = true
+        body.classList.add("overflow--hidden");
       }
     },
 
