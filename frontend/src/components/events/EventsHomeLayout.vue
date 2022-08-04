@@ -102,8 +102,19 @@ export default {
 }
 
 @media (max-width: 576px) {
-    .title--imgage {
-        display: none;
+    .event--section {
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+
+        .event-card {
+            width: 93%;
+            padding-bottom: 2rem;
+        }
+
+        .title--imgage {
+            display: none;
+        }
     }
 
 }
