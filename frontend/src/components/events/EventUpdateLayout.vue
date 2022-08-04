@@ -27,7 +27,7 @@
           v-model="title"
         />
 
-        <label class="field__label">Decription </label>
+        <label class="field__label">Description</label>
         <textarea
           class="textarea field__input"
           type="text"
@@ -52,7 +52,7 @@
           v-model="location"
         />
 
-        <label class="field__label"> Image </label>
+        <label class="field__label">Image</label>
         <input
           class="field__input"
           type="file"
