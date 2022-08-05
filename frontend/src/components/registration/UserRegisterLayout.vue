@@ -9,72 +9,27 @@
         <h2 class="subtitle">Inscrivez vous !</h2>
 
         <label class="field__label">Prénom</label>
-        <input
-          v-model="firstname"
-          type="text"
-          class="inputbox"
-          placeholder="Votre prénom"
-          name="firstname"
-        />
+        <input v-model="firstname" type="text" class="inputbox" placeholder="Votre prénom" name="firstname" />
 
         <label class="field__label">Nom</label>
-        <input
-          v-model="lastname"
-          type="text"
-          class="inputbox"
-          placeholder="Votre Nom"
-          name="lastname"
-        />
+        <input v-model="lastname" type="text" class="inputbox" placeholder="Votre Nom" name="lastname" />
 
         <label class="field__label">Votre e-mail</label>
-        <input
-          v-model="email"
-          type="email"
-          class="inputbox"
-          placeholder="Votre e-mail"
-          name="mail"
-        />
+        <input v-model="email" type="email" class="inputbox" placeholder="Votre e-mail" name="mail" />
 
         <label class="field__label">Votre numéro de téléphone</label>
-        <input
-          v-model="phone"
-          type="text"
-          class="inputbox"
-          placeholder="Votre numéro de contact"
-          name="phone"
-        />
+        <input v-model="phone" type="text" class="inputbox" placeholder="Votre numéro de contact" name="phone" />
 
         <label class="field__label">Votre identifiant de connexion</label>
-        <input
-          v-model="username"
-          type="text"
-          class="inputbox"
-          placeholder="Votre pseudo"
-          name="username"
-        />
+        <input v-model="username" type="text" class="inputbox" placeholder="Votre pseudo" name="username" />
 
         <label class="field__label">Mot de passe</label>
-        <input
-          v-model="password"
-          class="inputbox"
-          type="password"
-          placeholder="Mot de passe"
-        />
+        <input v-model="password" class="inputbox" type="password" placeholder="Mot de passe" />
 
         <label class="field__label">Confirmer le mot de passe</label>
-        <input
-          v-model="passwordconfirm"
-          class="inputbox"
-          type="password"
-          placeholder="Mot de passe"
-          required
-        />
+        <input v-model="passwordconfirm" class="inputbox" type="password" placeholder="Mot de passe" required />
 
-        <p
-          class="succesregistration"
-          v-for="succesMsg in succesRegistration"
-          v-bind:key="succesMsg"
-        >
+        <p class="succesregistration" v-for="succesMsg in succesRegistration" v-bind:key="succesMsg">
           {{ succesMsg }}
         </p>
         <p class="push--error" v-for="error in errors" v-bind:key="error">
@@ -136,8 +91,8 @@ export default {
           this.errors.push("Confirmer votre mot de passe !");
         }
       }
-      if (this.checkPhoneNumber(this.phone) === false) {
-        this.errors.push("Format numéro de téléphone non pris en charge !");
+      if (this.checkPhoneNumber(this.phone) === false || this.phone == null) {
+        this.errors.push("numéro de téléphone absent ou format non pris en charge !");
       }
 
       // Check if error array is empty and if it's ok transmission of the data
@@ -161,7 +116,7 @@ export default {
             (this.passwordconfirm = null);
 
           // Push alert registration succes
-          this.succesRegistration.push("Inscription réussi");
+          this.succesRegistration.push("Inscription réussie");
 
           // redirect after showing success message
           setTimeout(() => this.$router.push({ name: "login" }), 1000);

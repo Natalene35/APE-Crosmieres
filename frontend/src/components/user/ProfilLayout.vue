@@ -194,7 +194,7 @@ export default {
           this.succesUpdate.push("Mise à jour réussie");
           setTimeout(() => {
             this.succesUpdate = [];
-          }, 500);
+          }, 10000);
 
         }
       } else {
