@@ -9,7 +9,7 @@
             alt=""
           />
           <button class="btn--return" v-on:click="rtn()">Retour</button>
-          <h1 class="title">Modifier une vente</h1> 
+          <h1 class="title">Modifier la vente</h1> 
         </div>
 
         <label class="field__label">Titre de la vente </label>
@@ -20,7 +20,7 @@
           v-model="title"
         />
 
-        <label class="field__label">Decription </label>
+        <label class="field__label">Description </label>
         <textarea
           class="textarea field__input"
           type="text"
@@ -35,14 +35,6 @@
           type="text"
           placeholder=""
           v-model="saleDate"
-        />
-
-        <label class="field__label">Lieu de la vente </label>
-        <input
-          class="field__input"
-          type="text"
-          placeholder=""
-          v-model="location"
         />
 
         <label class="field__label">Lien du site marchand </label>
@@ -105,7 +97,6 @@ export default {
       title: null,
       content: null,
       saleDate: null,
-      location: null,
       link: null,
       currentImage: undefined,
       previewImage: undefined,
@@ -145,16 +136,15 @@ export default {
                 this.title = null;
                 this.content = null;
                 this.saleDate = null;
-                this.location = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
                 this.progress = 0;
-                this.alerts = "Vente modifié";
+                this.alerts = "Vente modifiée";
                 //redirection vers la home
                 setTimeout(() => this.$router.push({ name: "sale", params: {id: this.id} }), 1500);
               } else {
                 this.errors.push(
-                  "Erreur d'enregistrement, veuillez verifier la présence de l'image dans la vente"
+                  "Erreur d'enregistrement, veuillez vérifier la présence de l'image dans la vente"
                 );
               }
             }
@@ -176,7 +166,6 @@ export default {
           title: this.title,
           content: this.content,
           date: this.saleDate,
-          lieu: this.location,
           lien: this.link,
           id: this.id
         };
@@ -198,7 +187,6 @@ export default {
     this.title=selectSale.title.rendered
     this.content=selectSaleMeta.content
     this.saleDate=selectSaleMeta.date
-    this.location=selectSaleMeta.lieu
     this.link=selectSaleMeta.lien
     this.thumbnail_id=selectSaleMeta._thumbnail_id
 

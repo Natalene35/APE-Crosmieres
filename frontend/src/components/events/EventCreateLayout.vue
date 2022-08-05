@@ -82,7 +82,7 @@
       <div class="image--modal__mask" v-if="showModal">
         <div class="image--modal__wrapper">
           <div class="image--modal__container">
-            <p>Il n'y a pas d'image selectionnée</p>
+            <p>Il n'y a pas d'image sélectionnée</p>
             <button class="confirm" @click="submitForm">Continuer</button>
             <button class="abort" @click="showModal = false">Annuler</button>
           </div>
