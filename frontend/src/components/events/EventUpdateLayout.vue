@@ -9,7 +9,7 @@
             alt=""
           />
           <button class="btn--return" v-on:click="rtn()">Retour</button>
-          <h1 class="title">Modification d'un évènement</h1>
+          <h1 class="title">Modifier l'évènement</h1>
         </div>
 
         <label class="field__label">Catégorie</label>
@@ -157,7 +157,7 @@ export default {
                 setTimeout(() => this.$router.push({ name: "home" }), 1500);
               } else {
                 this.errors.push(
-                  "Erreur d'enregistrement, veuillez verifier la présence de l'image dans l'événement"
+                  "Erreur d'enregistrement, veuillez vérifier la présence de l'image dans l'évènement"
                 );
               }
             }
@@ -166,9 +166,9 @@ export default {
         .catch(() => {
           this.progress = 0;
           this.errors.push("Erreur sur le chargement de l'image !");
-          this.errors.push("L'événement a été modifié sans l'image");
+          this.errors.push("L'évènement a été modifié sans l'image");
           this.errors.push(
-            "Veuillez modifier dans la page de modification d'événement svp."
+            "Veuillez modifier dans la page de modification d'évènement svp."
           );
           this.currentImage = undefined;
         });

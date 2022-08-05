@@ -45,7 +45,7 @@
       <div class="image--modal__mask" v-if="showModal">
         <div class="image--modal__wrapper">
           <div class="image--modal__container">
-            <p>Il n'y a pas d'image selectionnée</p>
+            <p>Il n'y a pas d'image sélectionnée</p>
             <button class="confirm" @click="submitForm">Continuer</button>
             <button class="abort" @click="showModal = false">Annuler</button>
           </div>
@@ -106,12 +106,12 @@ export default {
                 this.link = null;
                 this.currentImage = undefined;
                 this.previewImage = undefined;
-                this.alerts = "Vente créé";
+                this.alerts = "Vente créée";
                 //redirection vers la home
                 setTimeout(() => this.$router.push({ name: "home" }), 1500);
               } else {
                 this.errors.push(
-                  "Erreur d'enregistrement, veuillez verifier la présence de l'image dans la vente"
+                  "Erreur d'enregistrement, veuillez vérifier la présence de l'image dans la vente"
                 );
               }
             }
@@ -186,7 +186,7 @@ export default {
           setTimeout(() => this.$router.push({ name: "home" }), 1500);
         } else {
           this.errors.push(
-            "Erreur d'enregistrement de la vente ! Veuillez verifier la présence de la vente"
+            "Erreur d'enregistrement de la vente ! Veuillez vérifier la présence de la vente"
           );
         }
       }
