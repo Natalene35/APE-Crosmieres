@@ -1,58 +1,51 @@
-## Que voulez-vous faire ?
-Créer un site pour gérer les évènements pour un association de parents d'élèves (APE) à Crosmières en Sarthe
+![APE - Accueil](banniere%20ape.jpg)
 
-Le site sera composé de 2 parties : 
-- client : pour voir les évènements ou les news de l'association
-- back office : pour gérer l'association et le contenu
+## Présentation
+Le site “apecrosmieres” est une plateforme de communication pour les événements organisés par l’association de parents d'élèves (APE).
+Ce projet répond à un vrai besoin de l’association de l’école de Crosmières en Sarthe dans les Pays-de-La-Loire.
+Il permettra de communiquer sur les ventes et les événements de l’école et de pouvoir s’y inscrire.
+
+~~lien du site en ligne : [apecrosmieres]()~~
 
 ## Description
 
-### Wireframe
-![APE - Accueil](https://user-images.githubusercontent.com/99028035/176445596-9af0a131-243e-4f1a-afa4-2500a2ffcb58.png)
+### Les pages
 
-### Affichage
-- page d'accueil (code couleurs d'après le logo)
-  - calendrier des manifestations
-  - afficher les ventes initiatives
-- page présentation des membres APE
-- page inscription, réservation
+La page 'Accueil' est accessible pour tous. Nous pouvons voir les 4 derniers évènements et la liste des ventes initiatives.
 
-### Utilisateurs possibles :
-- admin (administrateur du site)
-- membre APE (MAPE)
-- visiteur connecté (VC)
-- visiteur non connecté (VNC : pas l'application)
+Pour acceder aux pages 'Evènements', 'Ventes' et 'Présentation des membres', il faut se créer un compte puis se connecter. 
+Sur la page 'Mon Compte', nous avons la possibilité d'ajouter/modifier nos informations personnelles, d'ajouter nos enfants inscrits à l'école et de supprimer notre compte.
 
-### Liste des actions :
-- [ ] pouvoir gérer des évènement avec descriptif (CRUD) (admin, MAPE)
-- [ ] voir la liste des évènements (admin, MAPE, VC, VNC)
-- [ ] s'inscrire aux évènements (VC)
-- [ ] pour chaque évènement, créer des listes de fournitures (admin, MAPE)
-- [ ] gérer la liste d'utilisateur (admin)
+Sur la page 'Ventes' se trouve la liste des ventes de l'APE. En cliquant sur la vignette, nous accedons aux détails de cette ventes ainsi que le lien du site marchand.
 
-**fonctionnalités à confirmer, modifier ou ajouter**
-- [ ] pour chaque évènements, créer des assignements de tâches suivant les membres inscrit (admin)
-- [ ] gérer le budget global et par évènement (dépense et recette) (admin)
-- [ ] ajouter l'évènement dans mon calendrier (peut être avec [google calendar API](https://developers.google.com/calendar/api) )
+La page 'Evènement' fonctionne à l'identique à l'exeption qu'elle retourne une liste des évènements et des réunions de l'association.
+Nous avons la possibilité de nous inscrire pour chaque évènement pour y participer, pour aider ou pour commander.
+
+
+### Les Utilisateurs
+
+Plusieurs rôles sont accessibles :
+
+- L'utilisateur non connecté qui a un accès limité à la vie de
+  l'association
+- L'utilisateur connecté qui peux voir chaque vente et évènement. Il
+  peut aussi s'inscrire.
+- Sur demande, l'utilisateur peut s'inscrire à l'APE et devenir membre.
+  Il aura accès à l'écriture d'évènements ou de ventes ainsi que la modification et suppression. Il pourra acceder aussi à la liste d'utilisateur.
+- L'administrateur est celui qui définit les rôles de chacun. Il
+  s'occupe de la modération des comptes utilisateurs
+
 
 ### Opportunités
-Pouvoir fournir un outil adapté pour une utilisation régulière.
-Pouvoir l'ouvrir  pour d'autres communes de France et à d'autres associations.
-Pouvoir proposer une autre alternative à [toutemonannee.com](https://www.toutemonannee.com/association) avec une gestion de l'association.
 
-## Quelles seront/pourraient être les technologies utilisées ?
-- Vue.JS
-- WordPress
-
-## Avez-vous une idée de l'équipe qui conviendrait à ce projet ?
-5 Team WordPress 🥇 
-- 1 Product Owner 
-- 1 Scrum Master
-- 3 devs (front + back)
+- Fourniture d'un outil adapté pour une utilisation régulière.
+- Ouverture possible pour d'autres communes de France et à d'autres associations.
 
 
-@Loïc Debruille, 
-@Christophe Desmarres, 
-@Natalène Dubois, 
-@Julien Le Brenn, 
-@Emilie Potier
+## L'équipe
+
+Natalène Dubois, 
+Emilie Potier,
+Loïc Debruille, 
+Julien Le Brenn, 
+Christophe Desmarres
