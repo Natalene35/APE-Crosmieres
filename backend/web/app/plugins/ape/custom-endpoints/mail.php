@@ -69,7 +69,7 @@ function ape_rest_user_send_email($request)
         <p>Message :</p> $message";
     }
 
-
+    // utf8_decode and html_entity_decode for return validate values for user reading
     $subject = utf8_decode('Inscription pour "') . html_entity_decode($eventTitle) . '"';
     $body = "
     <h3>$name s'est inscrit à l'événement : $eventTitle</h3>
@@ -92,6 +92,7 @@ function ape_rest_user_send_email($request)
 
 
     // smtp settings with Google (to configure with password application)
+    // source : https://www.youtube.com/watch?v=oBzae4DUjs0 
     $mail->isSMTP();
     $mail->Host = "smtp.gmail.com";
     $mail->SMTPAuth = true;
@@ -109,6 +110,7 @@ function ape_rest_user_send_email($request)
     $mail->Subject = $subject;
     $mail->Body = $body;
 
+    // $mail->send return true if ok
     if ($mail->send()) {
         return [
             "status" => "success",
